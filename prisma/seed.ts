@@ -13,7 +13,7 @@ async function main(){
   const start=new Date(Date.UTC(2026,6,1)),end=new Date(Date.UTC(2027,5,30,23,59,59));const season=await db.season.upsert({where:{name:"2026/2027"},update:{startDate:start,endDate:end},create:{name:"2026/2027",startDate:start,endDate:end}});
   await db.teamSeason.upsert({where:{teamId_seasonId_competition:{teamId:team.id,seasonId:season.id,competition:"Poule A"}},update:{},create:{teamId:team.id,seasonId:season.id,competition:"Poule A"}});
   await db.clubMembership.upsert({where:{userId_clubId:{userId:user.id,clubId:club.id}},update:{role:"club_admin"},create:{userId:user.id,clubId:club.id,role:"club_admin"}});
-  await db.teamMembership.upsert({where:{userId_teamId:{userId:user.id,teamId:team.id}},update:{role:"team_admin"},create:{userId:user.id,teamId:team.id,role:"team_admin"}});
+  await db.teamMembership.upsert({where:{userId_teamId:{userId:user.id,teamId:team.id}},update:{roles:["team_admin"]},create:{userId:user.id,teamId:team.id,roles:["team_admin"]}});
   console.info("StickStat seed voltooid",{email,club:club.name,team:team.name});
 }
 main().finally(()=>db.$disconnect()).catch(e=>{console.error(e instanceof Error?e.message:e);process.exit(1)});

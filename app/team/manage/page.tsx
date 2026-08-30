@@ -1,0 +1,21 @@
+import {redirect} from "next/navigation";
+import {PageShell} from "@/components/page-shell";
+import {TeamManagementPanel} from "@/components/team-management-panel";
+import {TeamSelector} from "@/components/team-selector";
+import {currentUser} from "@/lib/auth";
+import {db} from "@/lib/db";
+
+export const dynamic="force-dynamic";
+
+export default async function TeamManage({searchParams}:{searchParams:Promise<{team?:string}>}){
+  const [query,user]=await Promise.all([searchParams,currentUser()]);
+  if(!user)redirect("/login");
+  const teams=await db.team.findMany({where:user.platformRole==="admin"?{}:{memberships:{some:{userId:user.id,roles:{hasSome:["team_admin","coach"]}}}},include:{club:true},orderBy:{name:"asc"}});
+  const team=teams.find(item=>item.id===query.team)??teams[0];
+  if(!team)redirect("/dashboard");
+  const [memberships,players]=await Promise.all([
+    db.teamMembership.findMany({where:{teamId:team.id},include:{user:true},orderBy:{createdAt:"asc"}}),
+    db.player.findMany({where:{teamId:team.id,active:true},orderBy:{displayName:"asc"}}),
+  ]);
+  return <PageShell user={user}><div className="page-head"><div><span className="eyebrow">{team.club.name}</span><h1>Teambeheer</h1></div><TeamSelector teams={teams} current={team.id}/></div><TeamManagementPanel teamId={team.id} members={memberships.map(membership=>({userId:membership.userId,name:membership.user.name,email:membership.user.email,roles:membership.roles}))} players={players.map(player=>({id:player.id,displayName:player.displayName,userId:player.userId}))}/></PageShell>;
+}

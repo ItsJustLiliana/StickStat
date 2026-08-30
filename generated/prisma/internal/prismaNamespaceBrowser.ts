@@ -88,6 +88,7 @@ export const UserScalarFieldEnum = {
   name: 'name',
   email: 'email',
   passwordHash: 'passwordHash',
+  photoPath: 'photoPath',
   platformRole: 'platformRole',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -151,7 +152,7 @@ export const TeamMembershipScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   teamId: 'teamId',
-  role: 'role',
+  roles: 'roles',
   createdAt: 'createdAt'
 } as const
 

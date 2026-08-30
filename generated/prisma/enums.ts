@@ -28,6 +28,7 @@ export type ClubRole = (typeof ClubRole)[keyof typeof ClubRole]
 export const TeamRole = {
   team_admin: 'team_admin',
   coach: 'coach',
+  trainer: 'trainer',
   player: 'player',
   viewer: 'viewer'
 } as const

@@ -2,9 +2,10 @@ import { cookies } from "next/headers";
 import { createHash, randomBytes } from "node:crypto";
 import { hash, verify } from "@node-rs/argon2";
 import { db } from "./db";
-import type {ClubRole,TeamRole} from "@/generated/prisma/client";
+import type {ClubRole} from "@/generated/prisma/client";
 import { HttpError } from "./api";
 import {shouldUseSecureSessionCookie} from "./session-cookie";
+import {hasAnyTeamRole,teamManagementRoles,teamWriteRoles} from "./team-roles";
 
 const COOKIE = "stickstat_session";
 const SESSION_DAYS = 30;
@@ -38,12 +39,18 @@ export async function currentUser() {
 export async function requireUser() { const user = await currentUser(); if (!user) throw new HttpError(401, "UNAUTHENTICATED", "Log in om door te gaan"); return user; }
 export async function requirePlatformAdmin() { const user = await requireUser(); if (user.platformRole !== "admin") throw new HttpError(403, "FORBIDDEN", "Geen toegang"); return user; }
 
-const teamWriteRoles: TeamRole[] = ["team_admin", "coach"];
 export async function authorizeTeam(teamId: string, write = false) {
   const user = await requireUser();
   if (user.platformRole === "admin") return user;
   const membership = user.teamMemberships.find((m) => m.teamId === teamId);
-  if (!membership || (write && !teamWriteRoles.includes(membership.role))) throw new HttpError(403, "FORBIDDEN", "Geen toegang tot dit team");
+  if (!membership || (write && !hasAnyTeamRole(membership.roles,teamWriteRoles))) throw new HttpError(403, "FORBIDDEN", "Geen toegang tot dit team");
+  return user;
+}
+export async function authorizeTeamManagement(teamId:string){
+  const user=await requireUser();
+  if(user.platformRole==="admin")return user;
+  const membership=user.teamMemberships.find(item=>item.teamId===teamId);
+  if(!membership||!hasAnyTeamRole(membership.roles,teamManagementRoles))throw new HttpError(403,"FORBIDDEN","Geen beheerrechten voor dit team");
   return user;
 }
 export async function authorizeClub(clubId: string, write = false) {

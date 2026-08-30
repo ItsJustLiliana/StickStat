@@ -1,9 +1,10 @@
 import { z } from "zod";
 export const loginSchema = z.object({ email: z.string().email().max(254).transform((v) => v.toLowerCase()), password: z.string().min(8).max(128) });
+export const strongPasswordSchema=z.string().min(12).max(128).regex(/[a-z]/,"Gebruik een kleine letter").regex(/[A-Z]/,"Gebruik een hoofdletter").regex(/[0-9]/,"Gebruik een cijfer");
 export const registerSchema = z.object({
   name: z.string().trim().min(2).max(120),
   email: z.string().email().max(254).transform((v)=>v.toLowerCase()),
-  password: z.string().min(12).max(128).regex(/[a-z]/,"Gebruik een kleine letter").regex(/[A-Z]/,"Gebruik een hoofdletter").regex(/[0-9]/,"Gebruik een cijfer"),
+  password: strongPasswordSchema,
   confirmPassword: z.string().min(1),
 }).refine((value)=>value.password===value.confirmPassword,{message:"Wachtwoorden komen niet overeen",path:["confirmPassword"]});
 export const playerSchema = z.object({ firstName: z.string().trim().min(1).max(80), lastName: z.string().trim().min(1).max(80), displayName: z.string().trim().min(1).max(120), shirtNumber: z.number().int().min(0).max(999).nullable().optional(), position: z.string().trim().max(80).nullable().optional(), active: z.boolean().default(true) });

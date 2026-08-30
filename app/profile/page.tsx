@@ -1,0 +1,14 @@
+import {redirect} from "next/navigation";
+import {PageShell} from "@/components/page-shell";
+import {ProfileForms} from "@/components/profile-forms";
+import {ProfilePhotoEditor} from "@/components/profile-photo-editor";
+import {currentUser} from "@/lib/auth";
+import {db} from "@/lib/db";
+
+export const dynamic="force-dynamic";
+
+export default async function Profile(){
+  const user=await currentUser();if(!user)redirect("/login");
+  const account=await db.user.findUniqueOrThrow({where:{id:user.id},include:{player:{select:{displayName:true}}}}),name=account.player?.displayName??account.name;
+  return <PageShell user={user}><div className="page-head"><div><span className="eyebrow">Mijn account</span><h1>Profiel</h1></div>{account.player&&<span className="badge accent">GEKOPPELD AAN SPELER</span>}</div><ProfilePhotoEditor currentPhoto={account.photoPath} name={name}/><div style={{marginTop:18}}><ProfileForms name={name} email={account.email} lockedName={Boolean(account.player)}/></div></PageShell>;
+}

@@ -28,7 +28,6 @@ export type TeamMembershipMinAggregateOutputType = {
   id: string | null
   userId: string | null
   teamId: string | null
-  role: $Enums.TeamRole | null
   createdAt: Date | null
 }
 
@@ -36,7 +35,6 @@ export type TeamMembershipMaxAggregateOutputType = {
   id: string | null
   userId: string | null
   teamId: string | null
-  role: $Enums.TeamRole | null
   createdAt: Date | null
 }
 
@@ -44,7 +42,7 @@ export type TeamMembershipCountAggregateOutputType = {
   id: number
   userId: number
   teamId: number
-  role: number
+  roles: number
   createdAt: number
   _all: number
 }
@@ -54,7 +52,6 @@ export type TeamMembershipMinAggregateInputType = {
   id?: true
   userId?: true
   teamId?: true
-  role?: true
   createdAt?: true
 }
 
@@ -62,7 +59,6 @@ export type TeamMembershipMaxAggregateInputType = {
   id?: true
   userId?: true
   teamId?: true
-  role?: true
   createdAt?: true
 }
 
@@ -70,7 +66,7 @@ export type TeamMembershipCountAggregateInputType = {
   id?: true
   userId?: true
   teamId?: true
-  role?: true
+  roles?: true
   createdAt?: true
   _all?: true
 }
@@ -151,7 +147,7 @@ export type TeamMembershipGroupByOutputType = {
   id: string
   userId: string
   teamId: string
-  role: $Enums.TeamRole
+  roles: $Enums.TeamRole[]
   createdAt: Date
   _count: TeamMembershipCountAggregateOutputType | null
   _min: TeamMembershipMinAggregateOutputType | null
@@ -180,7 +176,7 @@ export type TeamMembershipWhereInput = {
   id?: Prisma.StringFilter<"TeamMembership"> | string
   userId?: Prisma.StringFilter<"TeamMembership"> | string
   teamId?: Prisma.StringFilter<"TeamMembership"> | string
-  role?: Prisma.EnumTeamRoleFilter<"TeamMembership"> | $Enums.TeamRole
+  roles?: Prisma.EnumTeamRoleNullableListFilter<"TeamMembership">
   createdAt?: Prisma.DateTimeFilter<"TeamMembership"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   team?: Prisma.XOR<Prisma.TeamScalarRelationFilter, Prisma.TeamWhereInput>
@@ -190,7 +186,7 @@ export type TeamMembershipOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   teamId?: Prisma.SortOrder
-  role?: Prisma.SortOrder
+  roles?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
   team?: Prisma.TeamOrderByWithRelationInput
@@ -204,7 +200,7 @@ export type TeamMembershipWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.TeamMembershipWhereInput | Prisma.TeamMembershipWhereInput[]
   userId?: Prisma.StringFilter<"TeamMembership"> | string
   teamId?: Prisma.StringFilter<"TeamMembership"> | string
-  role?: Prisma.EnumTeamRoleFilter<"TeamMembership"> | $Enums.TeamRole
+  roles?: Prisma.EnumTeamRoleNullableListFilter<"TeamMembership">
   createdAt?: Prisma.DateTimeFilter<"TeamMembership"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   team?: Prisma.XOR<Prisma.TeamScalarRelationFilter, Prisma.TeamWhereInput>
@@ -214,7 +210,7 @@ export type TeamMembershipOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   teamId?: Prisma.SortOrder
-  role?: Prisma.SortOrder
+  roles?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.TeamMembershipCountOrderByAggregateInput
   _max?: Prisma.TeamMembershipMaxOrderByAggregateInput
@@ -228,13 +224,13 @@ export type TeamMembershipScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"TeamMembership"> | string
   userId?: Prisma.StringWithAggregatesFilter<"TeamMembership"> | string
   teamId?: Prisma.StringWithAggregatesFilter<"TeamMembership"> | string
-  role?: Prisma.EnumTeamRoleWithAggregatesFilter<"TeamMembership"> | $Enums.TeamRole
+  roles?: Prisma.EnumTeamRoleNullableListFilter<"TeamMembership">
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"TeamMembership"> | Date | string
 }
 
 export type TeamMembershipCreateInput = {
   id?: string
-  role?: $Enums.TeamRole
+  roles?: Prisma.TeamMembershipCreaterolesInput | $Enums.TeamRole[]
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutTeamMembershipsInput
   team: Prisma.TeamCreateNestedOneWithoutMembershipsInput
@@ -244,13 +240,13 @@ export type TeamMembershipUncheckedCreateInput = {
   id?: string
   userId: string
   teamId: string
-  role?: $Enums.TeamRole
+  roles?: Prisma.TeamMembershipCreaterolesInput | $Enums.TeamRole[]
   createdAt?: Date | string
 }
 
 export type TeamMembershipUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.EnumTeamRoleFieldUpdateOperationsInput | $Enums.TeamRole
+  roles?: Prisma.TeamMembershipUpdaterolesInput | $Enums.TeamRole[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutTeamMembershipsNestedInput
   team?: Prisma.TeamUpdateOneRequiredWithoutMembershipsNestedInput
@@ -260,7 +256,7 @@ export type TeamMembershipUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   teamId?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.EnumTeamRoleFieldUpdateOperationsInput | $Enums.TeamRole
+  roles?: Prisma.TeamMembershipUpdaterolesInput | $Enums.TeamRole[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -268,13 +264,13 @@ export type TeamMembershipCreateManyInput = {
   id?: string
   userId: string
   teamId: string
-  role?: $Enums.TeamRole
+  roles?: Prisma.TeamMembershipCreaterolesInput | $Enums.TeamRole[]
   createdAt?: Date | string
 }
 
 export type TeamMembershipUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.EnumTeamRoleFieldUpdateOperationsInput | $Enums.TeamRole
+  roles?: Prisma.TeamMembershipUpdaterolesInput | $Enums.TeamRole[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -282,7 +278,7 @@ export type TeamMembershipUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   teamId?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.EnumTeamRoleFieldUpdateOperationsInput | $Enums.TeamRole
+  roles?: Prisma.TeamMembershipUpdaterolesInput | $Enums.TeamRole[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -296,6 +292,14 @@ export type TeamMembershipOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
+export type EnumTeamRoleNullableListFilter<$PrismaModel = never> = {
+  equals?: $Enums.TeamRole[] | Prisma.ListEnumTeamRoleFieldRefInput<$PrismaModel> | null
+  has?: $Enums.TeamRole | Prisma.EnumTeamRoleFieldRefInput<$PrismaModel> | null
+  hasEvery?: $Enums.TeamRole[] | Prisma.ListEnumTeamRoleFieldRefInput<$PrismaModel>
+  hasSome?: $Enums.TeamRole[] | Prisma.ListEnumTeamRoleFieldRefInput<$PrismaModel>
+  isEmpty?: boolean
+}
+
 export type TeamMembershipUserIdTeamIdCompoundUniqueInput = {
   userId: string
   teamId: string
@@ -305,7 +309,7 @@ export type TeamMembershipCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   teamId?: Prisma.SortOrder
-  role?: Prisma.SortOrder
+  roles?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -313,7 +317,6 @@ export type TeamMembershipMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   teamId?: Prisma.SortOrder
-  role?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -321,7 +324,6 @@ export type TeamMembershipMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   teamId?: Prisma.SortOrder
-  role?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -409,13 +411,18 @@ export type TeamMembershipUncheckedUpdateManyWithoutTeamNestedInput = {
   deleteMany?: Prisma.TeamMembershipScalarWhereInput | Prisma.TeamMembershipScalarWhereInput[]
 }
 
-export type EnumTeamRoleFieldUpdateOperationsInput = {
-  set?: $Enums.TeamRole
+export type TeamMembershipCreaterolesInput = {
+  set: $Enums.TeamRole[]
+}
+
+export type TeamMembershipUpdaterolesInput = {
+  set?: $Enums.TeamRole[]
+  push?: $Enums.TeamRole | $Enums.TeamRole[]
 }
 
 export type TeamMembershipCreateWithoutUserInput = {
   id?: string
-  role?: $Enums.TeamRole
+  roles?: Prisma.TeamMembershipCreaterolesInput | $Enums.TeamRole[]
   createdAt?: Date | string
   team: Prisma.TeamCreateNestedOneWithoutMembershipsInput
 }
@@ -423,7 +430,7 @@ export type TeamMembershipCreateWithoutUserInput = {
 export type TeamMembershipUncheckedCreateWithoutUserInput = {
   id?: string
   teamId: string
-  role?: $Enums.TeamRole
+  roles?: Prisma.TeamMembershipCreaterolesInput | $Enums.TeamRole[]
   createdAt?: Date | string
 }
 
@@ -460,13 +467,13 @@ export type TeamMembershipScalarWhereInput = {
   id?: Prisma.StringFilter<"TeamMembership"> | string
   userId?: Prisma.StringFilter<"TeamMembership"> | string
   teamId?: Prisma.StringFilter<"TeamMembership"> | string
-  role?: Prisma.EnumTeamRoleFilter<"TeamMembership"> | $Enums.TeamRole
+  roles?: Prisma.EnumTeamRoleNullableListFilter<"TeamMembership">
   createdAt?: Prisma.DateTimeFilter<"TeamMembership"> | Date | string
 }
 
 export type TeamMembershipCreateWithoutTeamInput = {
   id?: string
-  role?: $Enums.TeamRole
+  roles?: Prisma.TeamMembershipCreaterolesInput | $Enums.TeamRole[]
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutTeamMembershipsInput
 }
@@ -474,7 +481,7 @@ export type TeamMembershipCreateWithoutTeamInput = {
 export type TeamMembershipUncheckedCreateWithoutTeamInput = {
   id?: string
   userId: string
-  role?: $Enums.TeamRole
+  roles?: Prisma.TeamMembershipCreaterolesInput | $Enums.TeamRole[]
   createdAt?: Date | string
 }
 
@@ -507,13 +514,13 @@ export type TeamMembershipUpdateManyWithWhereWithoutTeamInput = {
 export type TeamMembershipCreateManyUserInput = {
   id?: string
   teamId: string
-  role?: $Enums.TeamRole
+  roles?: Prisma.TeamMembershipCreaterolesInput | $Enums.TeamRole[]
   createdAt?: Date | string
 }
 
 export type TeamMembershipUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.EnumTeamRoleFieldUpdateOperationsInput | $Enums.TeamRole
+  roles?: Prisma.TeamMembershipUpdaterolesInput | $Enums.TeamRole[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   team?: Prisma.TeamUpdateOneRequiredWithoutMembershipsNestedInput
 }
@@ -521,27 +528,27 @@ export type TeamMembershipUpdateWithoutUserInput = {
 export type TeamMembershipUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   teamId?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.EnumTeamRoleFieldUpdateOperationsInput | $Enums.TeamRole
+  roles?: Prisma.TeamMembershipUpdaterolesInput | $Enums.TeamRole[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type TeamMembershipUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   teamId?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.EnumTeamRoleFieldUpdateOperationsInput | $Enums.TeamRole
+  roles?: Prisma.TeamMembershipUpdaterolesInput | $Enums.TeamRole[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type TeamMembershipCreateManyTeamInput = {
   id?: string
   userId: string
-  role?: $Enums.TeamRole
+  roles?: Prisma.TeamMembershipCreaterolesInput | $Enums.TeamRole[]
   createdAt?: Date | string
 }
 
 export type TeamMembershipUpdateWithoutTeamInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.EnumTeamRoleFieldUpdateOperationsInput | $Enums.TeamRole
+  roles?: Prisma.TeamMembershipUpdaterolesInput | $Enums.TeamRole[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutTeamMembershipsNestedInput
 }
@@ -549,14 +556,14 @@ export type TeamMembershipUpdateWithoutTeamInput = {
 export type TeamMembershipUncheckedUpdateWithoutTeamInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.EnumTeamRoleFieldUpdateOperationsInput | $Enums.TeamRole
+  roles?: Prisma.TeamMembershipUpdaterolesInput | $Enums.TeamRole[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type TeamMembershipUncheckedUpdateManyWithoutTeamInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.EnumTeamRoleFieldUpdateOperationsInput | $Enums.TeamRole
+  roles?: Prisma.TeamMembershipUpdaterolesInput | $Enums.TeamRole[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -566,7 +573,7 @@ export type TeamMembershipSelect<ExtArgs extends runtime.Types.Extensions.Intern
   id?: boolean
   userId?: boolean
   teamId?: boolean
-  role?: boolean
+  roles?: boolean
   createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   team?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
@@ -576,7 +583,7 @@ export type TeamMembershipSelectCreateManyAndReturn<ExtArgs extends runtime.Type
   id?: boolean
   userId?: boolean
   teamId?: boolean
-  role?: boolean
+  roles?: boolean
   createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   team?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
@@ -586,7 +593,7 @@ export type TeamMembershipSelectUpdateManyAndReturn<ExtArgs extends runtime.Type
   id?: boolean
   userId?: boolean
   teamId?: boolean
-  role?: boolean
+  roles?: boolean
   createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   team?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
@@ -596,11 +603,11 @@ export type TeamMembershipSelectScalar = {
   id?: boolean
   userId?: boolean
   teamId?: boolean
-  role?: boolean
+  roles?: boolean
   createdAt?: boolean
 }
 
-export type TeamMembershipOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "teamId" | "role" | "createdAt", ExtArgs["result"]["teamMembership"]>
+export type TeamMembershipOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "teamId" | "roles" | "createdAt", ExtArgs["result"]["teamMembership"]>
 export type TeamMembershipInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   team?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
@@ -624,7 +631,7 @@ export type $TeamMembershipPayload<ExtArgs extends runtime.Types.Extensions.Inte
     id: string
     userId: string
     teamId: string
-    role: $Enums.TeamRole
+    roles: $Enums.TeamRole[]
     createdAt: Date
   }, ExtArgs["result"]["teamMembership"]>
   composites: {}
@@ -1054,7 +1061,7 @@ export interface TeamMembershipFieldRefs {
   readonly id: Prisma.FieldRef<"TeamMembership", 'String'>
   readonly userId: Prisma.FieldRef<"TeamMembership", 'String'>
   readonly teamId: Prisma.FieldRef<"TeamMembership", 'String'>
-  readonly role: Prisma.FieldRef<"TeamMembership", 'TeamRole'>
+  readonly roles: Prisma.FieldRef<"TeamMembership", 'TeamRole[]'>
   readonly createdAt: Prisma.FieldRef<"TeamMembership", 'DateTime'>
 }
     

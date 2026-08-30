@@ -412,10 +412,6 @@ export type ClubScalarRelationFilter = {
   isNot?: Prisma.ClubWhereInput
 }
 
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
-}
-
 export type ClubCreateNestedOneWithoutMembershipsInput = {
   create?: Prisma.XOR<Prisma.ClubCreateWithoutMembershipsInput, Prisma.ClubUncheckedCreateWithoutMembershipsInput>
   connectOrCreate?: Prisma.ClubCreateOrConnectWithoutMembershipsInput

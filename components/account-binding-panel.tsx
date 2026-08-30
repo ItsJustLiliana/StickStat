@@ -1,40 +1,21 @@
 "use client";
 import {useRouter} from "next/navigation";
-import {useState} from "react";
+import {useMemo,useState} from "react";
 
 type UserOption={id:string;label:string};
 type TeamOption={id:string;label:string};
-type PlayerOption={id:string;label:string;linkedAccount?:string};
-
-async function post(url:string,data:Record<string,string>){
-  const response=await fetch(url,{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(data)});
-  const body=await response.json();
-  if(!response.ok)throw new Error(body.error?.message??"Opslaan mislukt");
-}
+type PlayerOption={id:string;teamId:string;label:string;linkedAccount?:string};
+const roles=[["team_admin","Teambeheerder"],["coach","Coach"],["trainer","Trainer"],["player","Speler"],["viewer","Kijker"]] as const;
 
 export function AccountBindingPanel({users,teams,players,currentUserId}:{users:UserOption[];teams:TeamOption[];players:PlayerOption[];currentUserId:string}){
-  const router=useRouter();
-  const [message,setMessage]=useState("");
-  const [busy,setBusy]=useState(false);
-  const defaultUser=users.some(user=>user.id===currentUserId)?currentUserId:users[0]?.id;
+  const router=useRouter(),[busy,setBusy]=useState(false),[message,setMessage]=useState(""),[teamId,setTeamId]=useState(teams[0]?.id??"");
+  const defaultUser=users.some(user=>user.id===currentUserId)?currentUserId:users[0]?.id,teamPlayers=useMemo(()=>players.filter(player=>player.teamId===teamId),[players,teamId]);
 
-  async function saveMembership(event:React.FormEvent<HTMLFormElement>){
-    event.preventDefault();setBusy(true);setMessage("");
-    const form=new FormData(event.currentTarget);
-    try{
-      await post("/api/admin/memberships",{scope:"team",userId:String(form.get("userId")),teamId:String(form.get("teamId")),role:String(form.get("role"))});
-      setMessage("Teamtoegang opgeslagen.");router.refresh();
-    }catch(error){setMessage(error instanceof Error?error.message:"Opslaan mislukt")}finally{setBusy(false)}
+  async function submit(event:React.FormEvent<HTMLFormElement>){
+    event.preventDefault();setBusy(true);setMessage("");const form=new FormData(event.currentTarget),playerId=String(form.get("playerId")??"");
+    const response=await fetch("/api/admin/account-bindings",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({userId:String(form.get("userId")),teamId:String(form.get("teamId")),playerId:playerId||null,roles:form.getAll("roles").map(String)})}),body=await response.json();
+    setBusy(false);if(!response.ok){setMessage(body.error?.message??"Koppelen mislukt");return}setMessage("Account, team, rollen en speler zijn opgeslagen.");router.refresh();
   }
 
-  async function linkPlayer(event:React.FormEvent<HTMLFormElement>){
-    event.preventDefault();setBusy(true);setMessage("");
-    const form=new FormData(event.currentTarget);
-    try{
-      await post("/api/admin/player-links",{userId:String(form.get("userId")),playerId:String(form.get("playerId"))});
-      setMessage("Account aan speler gekoppeld.");router.refresh();
-    }catch(error){setMessage(error instanceof Error?error.message:"Koppelen mislukt")}finally{setBusy(false)}
-  }
-
-  return <section className="card" style={{marginTop:18}}><div className="card-head"><h2>Accounts koppelen</h2><span className="badge">BEHEER</span></div><div className="admin-grid"><form onSubmit={saveMembership}><h3>Teamtoegang</h3><p className="muted">Geef een account toegang tot een team en kies de rol.</p><div className="form-row" style={{flexWrap:"wrap"}}><select className="input" name="userId" defaultValue={defaultUser} required>{users.map(user=><option value={user.id} key={user.id}>{user.label}</option>)}</select><select className="input" name="teamId" required>{teams.map(team=><option value={team.id} key={team.id}>{team.label}</option>)}</select><select className="input" name="role" defaultValue="player"><option value="team_admin">Teambeheerder</option><option value="coach">Coach</option><option value="player">Speler</option><option value="viewer">Kijker</option></select><button className="button" disabled={busy||!users.length||!teams.length}>Opslaan</button></div></form><form onSubmit={linkPlayer}><h3>Spelersprofiel</h3><p className="muted">Verbind een account met de bijbehorende speler en geef automatisch teamtoegang.</p><div className="form-row" style={{flexWrap:"wrap"}}><select className="input" name="userId" defaultValue={defaultUser} required>{users.map(user=><option value={user.id} key={user.id}>{user.label}</option>)}</select><select className="input" name="playerId" required>{players.map(player=><option value={player.id} key={player.id}>{player.label}{player.linkedAccount?` · ${player.linkedAccount}`:""}</option>)}</select><button className="button" disabled={busy||!users.length||!players.length}>Koppelen</button></div></form></div>{message&&<p className="muted" role="status" style={{marginTop:16,marginBottom:0}}>{message}</p>}</section>;
+  return <section className="card" style={{marginTop:18}}><div className="card-head"><div><h2>Account koppelen</h2><p className="muted" style={{margin:0}}>Regel teamtoegang, rollen en het spelersprofiel in één keer.</p></div><span className="badge">ÉÉN STAP</span></div><form className="binding-form" onSubmit={submit}><label><span>1. Geregistreerde gebruiker</span><select className="input" name="userId" defaultValue={defaultUser} required>{users.map(user=><option value={user.id} key={user.id}>{user.label}</option>)}</select></label><label><span>2. Team</span><select className="input" name="teamId" value={teamId} onChange={event=>setTeamId(event.target.value)} required>{teams.map(team=><option value={team.id} key={team.id}>{team.label}</option>)}</select></label><label><span>3. Spelersprofiel</span><select className="input" name="playerId" defaultValue=""><option value="">Geen spelersprofiel</option>{teamPlayers.map(player=><option value={player.id} key={player.id}>{player.label}{player.linkedAccount?` · gekoppeld aan ${player.linkedAccount}`:""}</option>)}</select><small className="muted">Bij een koppeling wordt Speler automatisch toegevoegd als rol.</small></label><fieldset><legend>4. Rollen</legend><div className="role-options">{roles.map(([value,label])=><label key={value}><input type="checkbox" name="roles" value={value} defaultChecked={value==="player"}/>{label}</label>)}</div></fieldset><button className="button" disabled={busy||!users.length||!teams.length}>{busy?"Opslaan…":"Alles koppelen"}</button></form>{message&&<p className="muted" role="status" style={{marginTop:16,marginBottom:0}}>{message}</p>}</section>;
 }
