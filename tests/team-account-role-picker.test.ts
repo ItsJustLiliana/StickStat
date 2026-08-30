@@ -26,9 +26,9 @@ describe("teamaccount- en rollenbeheer",()=>{
     expect(order).toEqual([...order].sort((a,b)=>a-b));
   });
 
-  it("toont spelers als compacte lijst en de overige rollen als kaarten",()=>{
-    expect(players).toContain('section.role==="player"?<div className="roster-list"');
+  it("toont alle rollen als compacte lijsten",()=>{
+    expect(players).toContain('<div className="roster-list"');
     expect(players).toContain("<RosterListItem person={person}");
-    expect(players).toContain("<RosterCard person={person}");
+    expect(players).not.toContain("<RosterCard person={person}");
   });
 });

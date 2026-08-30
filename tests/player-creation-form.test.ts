@@ -22,4 +22,11 @@ describe("speler toevoegen",()=>{
     expect(form).toContain('placeholder="Rugnummer (optioneel)"');
     expect(form).toContain('placeholder="Positie (optioneel)"');
   });
+
+  it("kan een speler veilig uit de actieve selectie verwijderen",()=>{
+    expect(form).toContain("Spelersprofielen");
+    expect(form).toContain('"DELETE",{playerId:player.id}');
+    expect(route).toContain("data:{active:false,userId:null}");
+    expect(route).toContain('filter(role=>role!=="player")');
+  });
 });
