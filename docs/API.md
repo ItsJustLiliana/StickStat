@@ -5,6 +5,7 @@ Alle responses zijn JSON: succes `{ "data": ... }`; fout `{ "error": { "code", "
 | Method | Pad | Toegang / doel |
 |---|---|---|
 | POST | `/api/auth/login` | publiek, rate-limited |
+| POST | `/api/auth/register` | publiek, rate-limited; maakt standaardgebruiker |
 | POST | `/api/auth/logout` | ingelogd |
 | GET | `/api/me` | eigen account en memberships |
 | GET/POST | `/api/clubs` | zichtbare clubs / platform-admin maakt club |

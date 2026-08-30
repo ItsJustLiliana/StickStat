@@ -1,0 +1,17 @@
+"use client";
+import Link from "next/link";
+import {useRouter} from "next/navigation";
+import {useState} from "react";
+
+export function RegisterForm(){
+  const [error,setError]=useState(""),[loading,setLoading]=useState(false),router=useRouter();
+  async function submit(event:React.FormEvent<HTMLFormElement>){
+    event.preventDefault();setLoading(true);setError("");
+    const form=new FormData(event.currentTarget);
+    const response=await fetch("/api/auth/register",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({name:form.get("name"),email:form.get("email"),password:form.get("password"),confirmPassword:form.get("confirmPassword")})});
+    const body=await response.json();setLoading(false);
+    if(!response.ok)return setError(body.error?.message??"Registreren mislukt");
+    router.replace("/dashboard");router.refresh();
+  }
+  return <form className="login-form" onSubmit={submit}><span className="eyebrow">Nieuw bij StickStat</span><h2 style={{fontSize:36,margin:"9px 0 5px"}}>Maak je account</h2><p className="muted">Een clubbeheerder kan je daarna aan een team koppelen.</p><label htmlFor="name">Naam</label><input className="input" id="name" name="name" autoComplete="name" required minLength={2}/><label htmlFor="email">E-mailadres</label><input className="input" id="email" name="email" type="email" autoComplete="email" required/><label htmlFor="password">Wachtwoord</label><input className="input" id="password" name="password" type="password" autoComplete="new-password" minLength={12} required/><small className="muted">Minimaal 12 tekens, met hoofdletter, kleine letter en cijfer.</small><label htmlFor="confirmPassword">Herhaal wachtwoord</label><input className="input" id="confirmPassword" name="confirmPassword" type="password" autoComplete="new-password" minLength={12} required/>{error&&<div className="error" role="alert">{error}</div>}<button className="button" disabled={loading}>{loading?"Account maken…":"Account maken"}</button><p className="muted" style={{textAlign:"center",marginTop:18}}>Al een account? <Link className="link" href="/login">Log in</Link></p></form>;
+}

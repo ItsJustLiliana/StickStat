@@ -39,6 +39,14 @@ npm --prefix "${project_dir}" run test
 npm --prefix "${project_dir}" run build
 npm --prefix "${project_dir}" run prisma:deploy
 
+service_dir="${HOME}/.config/systemd/user"
+service_file="${service_dir}/stickstat.service"
+mkdir -p "${service_dir}"
+if ! cmp -s "${project_dir}/deploy/stickstat.service" "${service_file}"; then
+  cp "${project_dir}/deploy/stickstat.service" "${service_file}"
+  systemctl --user daemon-reload
+fi
+
 systemctl --user restart stickstat.service
 systemctl --user is-active --quiet stickstat.service
 

@@ -11,6 +11,7 @@ describe("automatische deployment",()=>{
     expect(script).toContain("merge --ff-only origin/main");
     expect(script.indexOf("run build")).toBeLessThan(script.indexOf("run prisma:deploy"));
     expect(script.indexOf("run prisma:deploy")).toBeLessThan(script.indexOf("restart stickstat.service"));
+    expect(script).toContain("systemctl --user daemon-reload");
   });
   it("reageert op main-pushes via Tailscale SSH",()=>{
     expect(workflow).toMatch(/push:[\s\S]*branches:[\s\S]*- main/);

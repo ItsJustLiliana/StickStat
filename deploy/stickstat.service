@@ -13,6 +13,7 @@ EnvironmentFile=/projects/StickStat/.env
 ExecStart=/usr/bin/npm run start
 Restart=always
 RestartSec=5
+SuccessExitStatus=143
 TimeoutStopSec=20
 NoNewPrivileges=true
 PrivateTmp=true
