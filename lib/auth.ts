@@ -4,6 +4,7 @@ import { hash, verify } from "@node-rs/argon2";
 import { db } from "./db";
 import type {ClubRole,TeamRole} from "@/generated/prisma/client";
 import { HttpError } from "./api";
+import {useSecureSessionCookie} from "./session-cookie";
 
 const COOKIE = "stickstat_session";
 const SESSION_DAYS = 30;
@@ -16,7 +17,7 @@ export async function createSession(userId: string) {
   const token = randomBytes(32).toString("base64url");
   const expiresAt = new Date(Date.now() + SESSION_DAYS * 86400000);
   await db.session.create({ data: { userId, tokenHash: tokenHash(token), expiresAt } });
-  (await cookies()).set(COOKIE, token, { httpOnly: true, sameSite: "lax", secure: process.env.NODE_ENV === "production", path: "/", expires: expiresAt });
+  (await cookies()).set(COOKIE, token, { httpOnly: true, sameSite: "lax", secure: useSecureSessionCookie(), path: "/", expires: expiresAt });
 }
 
 export async function destroySession() {
