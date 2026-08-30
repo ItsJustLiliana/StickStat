@@ -3,6 +3,8 @@ set -euo pipefail
 
 project_dir="${STICKSTAT_DIR:-/projects/StickStat}"
 lock_file="${XDG_RUNTIME_DIR:-/tmp}/stickstat-auto-update.lock"
+state_dir="${XDG_STATE_HOME:-${HOME}/.local/state}/stickstat"
+deployed_commit_file="${state_dir}/deployed-commit"
 
 if [[ ! -d "${project_dir}/.git" ]]; then
   echo "StickStat checkout not found at ${project_dir}." >&2
@@ -27,27 +29,77 @@ fi
 git -C "${project_dir}" fetch --prune origin main
 previous_commit="$(git -C "${project_dir}" rev-parse HEAD)"
 target_commit="$(git -C "${project_dir}" rev-parse origin/main)"
+baseline_commit="${previous_commit}"
+force_full_deploy=false
+
+if [[ -f "${deployed_commit_file}" ]]; then
+  recorded_commit="$(<"${deployed_commit_file}")"
+  if git -C "${project_dir}" cat-file -e "${recorded_commit}^{commit}" 2>/dev/null \
+    && git -C "${project_dir}" merge-base --is-ancestor "${recorded_commit}" "${target_commit}"; then
+    baseline_commit="${recorded_commit}"
+  else
+    force_full_deploy=true
+  fi
+elif [[ "${previous_commit}" == "${target_commit}" ]]; then
+  force_full_deploy=true
+fi
+
+changed_files="$(git -C "${project_dir}" diff --name-only "${baseline_commit}" "${target_commit}")"
 
 git -C "${project_dir}" checkout main
 git -C "${project_dir}" merge --ff-only origin/main
 
-npm --prefix "${project_dir}" ci
-npm --prefix "${project_dir}" run prisma:generate
-npm --prefix "${project_dir}" run lint
-npm --prefix "${project_dir}" run typecheck
-npm --prefix "${project_dir}" run test
-npm --prefix "${project_dir}" run build
-npm --prefix "${project_dir}" run prisma:deploy
+app_changed=false
+service_changed=false
+if grep -Eq '^(app/|components/|generated/|lib/|providers/|public/|services/|prisma/|instrumentation\.ts$|proxy\.ts$|next\.config\.ts$|package(-lock)?\.json$|postcss\.config\.mjs$|tsconfig\.json$)' <<<"${changed_files}"; then
+  app_changed=true
+fi
+if grep -Eq '^(deploy/stickstat\.service$)' <<<"${changed_files}"; then
+  service_changed=true
+fi
+if [[ "${force_full_deploy}" == "true" ]]; then
+  app_changed=true
+fi
+
+if [[ "${app_changed}" == "true" ]]; then
+  if [[ ! -x "${project_dir}/node_modules/.bin/next" ]] || grep -Eq '^package(-lock)?\.json$' <<<"${changed_files}"; then
+    npm --prefix "${project_dir}" ci
+  else
+    echo "Dependencies unchanged; keeping existing node_modules."
+  fi
+
+  if grep -Eq '^(prisma/schema\.prisma$|prisma\.config\.ts$|package(-lock)?\.json$)' <<<"${changed_files}"; then
+    npm --prefix "${project_dir}" run prisma:generate
+  fi
+
+  npm --prefix "${project_dir}" run test
+  npm --prefix "${project_dir}" run build
+
+  if grep -Eq '^(prisma/migrations/|prisma/schema\.prisma$|prisma\.config\.ts$)' <<<"${changed_files}"; then
+    npm --prefix "${project_dir}" run prisma:deploy
+  else
+    echo "Database schema unchanged; skipping migration check."
+  fi
+else
+  echo "No production application files changed; skipping tests and build."
+fi
 
 service_dir="${HOME}/.config/systemd/user"
 service_file="${service_dir}/stickstat.service"
 mkdir -p "${service_dir}"
-if ! cmp -s "${project_dir}/deploy/stickstat.service" "${service_file}"; then
+if [[ "${service_changed}" == "true" ]] || ! cmp -s "${project_dir}/deploy/stickstat.service" "${service_file}"; then
   cp "${project_dir}/deploy/stickstat.service" "${service_file}"
   systemctl --user daemon-reload
+  service_changed=true
 fi
 
-systemctl --user restart stickstat.service
-systemctl --user is-active --quiet stickstat.service
+if [[ "${app_changed}" == "true" || "${service_changed}" == "true" ]]; then
+  systemctl --user restart stickstat.service
+  systemctl --user is-active --quiet stickstat.service
+else
+  echo "A service restart is not required."
+fi
 
+mkdir -p "${state_dir}"
+printf '%s\n' "${target_commit}" >"${deployed_commit_file}"
 echo "StickStat deployed from ${previous_commit:0:7} to ${target_commit:0:7}."

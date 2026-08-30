@@ -12,6 +12,12 @@ describe("automatische deployment",()=>{
     expect(script.indexOf("run build")).toBeLessThan(script.indexOf("run prisma:deploy"));
     expect(script.indexOf("run prisma:deploy")).toBeLessThan(script.indexOf("restart stickstat.service"));
     expect(script).toContain("systemctl --user daemon-reload");
+    expect(script).toContain("Dependencies unchanged; keeping existing node_modules.");
+    expect(script).toContain("No production application files changed; skipping tests and build.");
+    expect(script).toContain("deployed-commit");
+    expect(script.indexOf("restart stickstat.service")).toBeLessThan(script.lastIndexOf("deployed_commit_file"));
+    expect(script).not.toContain('run lint');
+    expect(script).not.toContain('run typecheck');
   });
   it("reageert op main-pushes via Tailscale SSH",()=>{
     expect(workflow).toMatch(/push:[\s\S]*branches:[\s\S]*- main/);
