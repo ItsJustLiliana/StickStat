@@ -1,0 +1,3 @@
+import {HockeyStandenProvider} from "../providers/hockeystanden";
+async function main(){const provider=new HockeyStandenProvider(),identifier="mhc-rapide/h1";const [team,matches,standings]=await Promise.all([provider.getTeam(identifier),provider.getMatches(identifier),provider.getStandings(identifier)]);if(!team||!matches.length||!standings.length)throw new Error(`Live parsercheck mislukt: team=${Boolean(team)}, matches=${matches.length}, standings=${standings.length}`);console.info(JSON.stringify({team,matchCount:matches.length,standingCount:standings.length,firstMatch:matches[0]},null,2));}
+main().catch(error=>{console.error(error instanceof Error?error.message:error);process.exit(1)});

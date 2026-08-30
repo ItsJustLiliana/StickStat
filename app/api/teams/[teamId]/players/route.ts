@@ -1,0 +1,3 @@
+import { apiError, ok } from "@/lib/api"; import { authorizeTeam } from "@/lib/auth"; import { db } from "@/lib/db"; import { playerSchema } from "@/lib/validation";
+export async function GET(_:Request,{params}:{params:Promise<{teamId:string}>}){try{const {teamId}=await params;await authorizeTeam(teamId);return ok(await db.player.findMany({where:{teamId},include:{matchStats:true,events:true},orderBy:[{active:"desc"},{shirtNumber:"asc"}]}));}catch(e){return apiError(e);}}
+export async function POST(r:Request,{params}:{params:Promise<{teamId:string}>}){try{const {teamId}=await params;await authorizeTeam(teamId,true);const d=playerSchema.parse(await r.json());return ok(await db.player.create({data:{teamId,...d}}),{status:201});}catch(e){return apiError(e);}}

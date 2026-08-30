@@ -1,0 +1,4 @@
+import {apiError,ok} from "@/lib/api";import {authorizeClub} from "@/lib/auth";import {db} from "@/lib/db";import {z} from "zod";
+const schema=z.object({name:z.string().min(2).max(120).optional(),externalProvider:z.string().max(50).nullable().optional(),externalIdentifier:z.string().max(200).nullable().optional(),logoUrl:z.string().url().nullable().optional()});
+export async function GET(_:Request,{params}:{params:Promise<{clubId:string}>}){try{const {clubId}=await params;await authorizeClub(clubId);return ok(await db.club.findUnique({where:{id:clubId},include:{teams:true,memberships:true}}));}catch(e){return apiError(e)}}
+export async function PATCH(r:Request,{params}:{params:Promise<{clubId:string}>}){try{const {clubId}=await params;await authorizeClub(clubId,true);return ok(await db.club.update({where:{id:clubId},data:schema.parse(await r.json())}));}catch(e){return apiError(e)}}

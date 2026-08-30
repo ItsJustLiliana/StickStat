@@ -1,0 +1,4 @@
+import {apiError,ok} from "@/lib/api";import {hashPassword,requirePlatformAdmin} from "@/lib/auth";import {db} from "@/lib/db";import {z} from "zod";
+const schema=z.object({name:z.string().min(2).max(120),email:z.string().email().transform(v=>v.toLowerCase()),password:z.string().min(12).max(128),platformRole:z.enum(["admin","user"]).default("user")});
+export async function GET(){try{await requirePlatformAdmin();return ok(await db.user.findMany({select:{id:true,name:true,email:true,platformRole:true,createdAt:true,clubMemberships:true,teamMemberships:true}}));}catch(e){return apiError(e)}}
+export async function POST(r:Request){try{await requirePlatformAdmin();const d=schema.parse(await r.json()),passwordHash=await hashPassword(d.password);return ok(await db.user.create({data:{name:d.name,email:d.email,passwordHash,platformRole:d.platformRole},select:{id:true,name:true,email:true,platformRole:true}}),{status:201});}catch(e){return apiError(e)}}

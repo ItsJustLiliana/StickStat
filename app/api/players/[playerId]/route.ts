@@ -1,0 +1,2 @@
+import { apiError, HttpError, ok } from "@/lib/api"; import { authorizeTeam } from "@/lib/auth"; import { db } from "@/lib/db";
+export async function GET(_:Request,{params}:{params:Promise<{playerId:string}>}){try{const {playerId}=await params;const p=await db.player.findUnique({where:{id:playerId},include:{team:{include:{club:true}},matchStats:{include:{match:true}},events:true}});if(!p)throw new HttpError(404,"NOT_FOUND","Speler niet gevonden");await authorizeTeam(p.teamId);return ok(p);}catch(e){return apiError(e);}}

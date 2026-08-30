@@ -1,0 +1,1 @@
+import {AppNav} from "./app-nav";export function PageShell({user,children}:{user:{name:string;platformRole:string};children:React.ReactNode}){return <div className="app-shell"><AppNav name={user.name} admin={user.platformRole==="admin"}/><main className="content">{children}</main></div>}

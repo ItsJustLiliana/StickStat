@@ -1,0 +1,2 @@
+"use client";import {useState} from "react";import {useRouter} from "next/navigation";
+export function SyncButton({teamId}:{teamId:string}){const [busy,setBusy]=useState(false),router=useRouter();return <button className="button" disabled={busy} onClick={async()=>{setBusy(true);const r=await fetch(`/api/teams/${teamId}/sync`,{method:"POST"});setBusy(false);if(!r.ok){const b=await r.json();alert(b.error?.message??"Synchronisatie mislukt");}else router.refresh();}}>{busy?"Synchroniseren…":"Nu synchroniseren"}</button>}

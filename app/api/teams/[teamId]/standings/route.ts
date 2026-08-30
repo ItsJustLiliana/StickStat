@@ -1,0 +1,2 @@
+import { apiError, ok } from "@/lib/api"; import { authorizeTeam } from "@/lib/auth"; import { db } from "@/lib/db";
+export async function GET(_:Request,{params}:{params:Promise<{teamId:string}>}){try{const {teamId}=await params;await authorizeTeam(teamId);const own=await db.standing.findFirst({where:{teamId},orderBy:{lastSyncedAt:"desc"}});return ok(own?await db.standing.findMany({where:{seasonId:own.seasonId,competition:own.competition},include:{team:{include:{club:true}}},orderBy:{position:"asc"}}):[]);}catch(e){return apiError(e);}}

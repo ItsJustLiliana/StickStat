@@ -1,0 +1,3 @@
+import {describe,expect,it} from "vitest";import {readFileSync} from "node:fs";
+const schema=readFileSync(new URL("../prisma/schema.prisma",import.meta.url),"utf8"),sync=readFileSync(new URL("../services/sync.ts",import.meta.url),"utf8");
+describe("data-integriteit",()=>{it("voorkomt dubbele provider- en natuurlijke wedstrijden",()=>{expect(schema).toContain("@@unique([externalProvider, externalId])");expect(schema).toContain("@@unique([seasonId, homeTeamId, awayTeamId, date])")});it("houdt handmatige stats buiten externe updates",()=>{const updatePayload=sync.match(/const data=\{([^;]+)\}; if\(existing\)/s)?.[1]??"";expect(updatePayload).not.toMatch(/playerStats|events|notes|mvp|assists|saves/)});});

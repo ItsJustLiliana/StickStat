@@ -1,0 +1,2 @@
+import {redirect} from "next/navigation";import {currentUser} from "./auth";import {db} from "./db";
+export async function pageContext(requested?:string){const user=await currentUser();if(!user)redirect("/login");const teams=await db.team.findMany({where:user.platformRole==="admin"?{}:{OR:[{memberships:{some:{userId:user.id}}},{club:{memberships:{some:{userId:user.id}}}}]},include:{club:true},orderBy:{name:"asc"}});const team=teams.find(t=>t.id===requested)??teams[0]??null;return {user,teams,team};}

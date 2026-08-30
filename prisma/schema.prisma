@@ -1,0 +1,266 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum PlatformRole {
+  admin
+  user
+}
+
+enum ClubRole {
+  club_admin
+  member
+}
+
+enum TeamRole {
+  team_admin
+  coach
+  player
+  viewer
+}
+
+enum MatchStatus {
+  scheduled
+  live
+  finished
+  cancelled
+  unknown
+}
+
+enum MatchEventType {
+  goal
+  assist
+  green_card
+  yellow_card
+  red_card
+  substitution
+  save
+  penalty_corner
+  penalty_stroke
+  custom
+}
+
+enum SyncStatus {
+  running
+  success
+  failed
+}
+
+model User {
+  id String @id @default(cuid())
+  name String
+  email String @unique
+  passwordHash String
+  platformRole PlatformRole @default(user)
+  sessions Session[]
+  clubMemberships ClubMembership[]
+  teamMemberships TeamMembership[]
+  player Player?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Session {
+  id String @id @default(cuid())
+  tokenHash String @unique
+  userId String
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  @@index([userId])
+}
+
+model Club {
+  id String @id @default(cuid())
+  name String
+  slug String @unique
+  externalProvider String?
+  externalIdentifier String?
+  logoUrl String?
+  logoLocalPath String?
+  teams Team[]
+  memberships ClubMembership[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ClubMembership {
+  id String @id @default(cuid())
+  userId String
+  clubId String
+  role ClubRole @default(member)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  club Club @relation(fields: [clubId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  @@unique([userId, clubId])
+}
+
+model Team {
+  id String @id @default(cuid())
+  clubId String
+  club Club @relation(fields: [clubId], references: [id], onDelete: Cascade)
+  name String
+  shortName String
+  externalProvider String?
+  externalIdentifier String?
+  memberships TeamMembership[]
+  seasons TeamSeason[]
+  homeMatches Match[] @relation("HomeTeam")
+  awayMatches Match[] @relation("AwayTeam")
+  standings Standing[]
+  players Player[]
+  syncRuns SyncRun[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@unique([clubId, name])
+  @@index([externalProvider, externalIdentifier])
+}
+
+model TeamMembership {
+  id String @id @default(cuid())
+  userId String
+  teamId String
+  role TeamRole @default(viewer)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  team Team @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  @@unique([userId, teamId])
+}
+
+model Season {
+  id String @id @default(cuid())
+  name String @unique
+  startDate DateTime
+  endDate DateTime
+  teams TeamSeason[]
+  matches Match[]
+  standings Standing[]
+}
+
+model TeamSeason {
+  id String @id @default(cuid())
+  teamId String
+  seasonId String
+  competition String?
+  team Team @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  season Season @relation(fields: [seasonId], references: [id], onDelete: Cascade)
+  @@unique([teamId, seasonId, competition])
+}
+
+model Match {
+  id String @id @default(cuid())
+  externalProvider String?
+  externalId String?
+  seasonId String
+  season Season @relation(fields: [seasonId], references: [id])
+  competition String?
+  homeTeamId String
+  awayTeamId String
+  homeTeam Team @relation("HomeTeam", fields: [homeTeamId], references: [id])
+  awayTeam Team @relation("AwayTeam", fields: [awayTeamId], references: [id])
+  date DateTime
+  startTime String?
+  venue String?
+  status MatchStatus @default(unknown)
+  homeScore Int?
+  awayScore Int?
+  lastSyncedAt DateTime?
+  playerStats PlayerMatchStats[]
+  events MatchEvent[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@unique([externalProvider, externalId])
+  @@unique([seasonId, homeTeamId, awayTeamId, date])
+  @@index([homeTeamId, date])
+  @@index([awayTeamId, date])
+}
+
+model Standing {
+  id String @id @default(cuid())
+  seasonId String
+  season Season @relation(fields: [seasonId], references: [id], onDelete: Cascade)
+  competition String
+  teamId String
+  team Team @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  position Int
+  played Int @default(0)
+  won Int @default(0)
+  drawn Int @default(0)
+  lost Int @default(0)
+  goalsFor Int @default(0)
+  goalsAgainst Int @default(0)
+  goalDifference Int @default(0)
+  points Int @default(0)
+  lastSyncedAt DateTime
+  @@unique([seasonId, competition, teamId])
+}
+
+model Player {
+  id String @id @default(cuid())
+  teamId String
+  team Team @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  userId String? @unique
+  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+  firstName String
+  lastName String
+  displayName String
+  shirtNumber Int?
+  position String?
+  photoPath String?
+  active Boolean @default(true)
+  matchStats PlayerMatchStats[]
+  events MatchEvent[] @relation("EventPlayer")
+  relatedEvents MatchEvent[] @relation("RelatedPlayer")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@index([teamId, active])
+}
+
+model PlayerMatchStats {
+  id String @id @default(cuid())
+  matchId String
+  match Match @relation(fields: [matchId], references: [id], onDelete: Cascade)
+  playerId String
+  player Player @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  started Boolean @default(false)
+  minutesPlayed Int?
+  goals Int @default(0)
+  assists Int @default(0)
+  saves Int @default(0)
+  mvp Boolean @default(false)
+  notes String?
+  @@unique([matchId, playerId])
+}
+
+model MatchEvent {
+  id String @id @default(cuid())
+  matchId String
+  match Match @relation(fields: [matchId], references: [id], onDelete: Cascade)
+  playerId String?
+  player Player? @relation("EventPlayer", fields: [playerId], references: [id], onDelete: SetNull)
+  relatedPlayerId String?
+  relatedPlayer Player? @relation("RelatedPlayer", fields: [relatedPlayerId], references: [id], onDelete: SetNull)
+  minute Int?
+  type MatchEventType
+  notes String?
+  createdAt DateTime @default(now())
+  @@index([matchId, type])
+}
+
+model SyncRun {
+  id String @id @default(cuid())
+  teamId String
+  team Team @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  status SyncStatus
+  startedAt DateTime @default(now())
+  completedAt DateTime?
+  newMatches Int @default(0)
+  updatedMatches Int @default(0)
+  error String?
+  @@index([teamId, startedAt])
+}

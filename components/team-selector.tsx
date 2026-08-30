@@ -1,0 +1,2 @@
+"use client";import {useRouter,useSearchParams} from "next/navigation";
+export function TeamSelector({teams,current}:{teams:{id:string;name:string;club:{name:string}}[];current:string}){const router=useRouter(),search=useSearchParams();return <select className="team-switch" value={current} onChange={e=>{const p=new URLSearchParams(search);p.set("team",e.target.value);router.push(`?${p}`)}} aria-label="Selecteer team">{teams.map(t=><option value={t.id} key={t.id}>{t.club.name} · {t.name}</option>)}</select>}

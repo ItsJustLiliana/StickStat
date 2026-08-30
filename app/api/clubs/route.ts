@@ -1,0 +1,3 @@
+import { apiError, ok } from "@/lib/api"; import { requirePlatformAdmin, requireUser } from "@/lib/auth"; import { db } from "@/lib/db"; import { z } from "zod";
+export async function GET(){try{const u=await requireUser();const where=u.platformRole==="admin"?{}:{OR:[{memberships:{some:{userId:u.id}}},{teams:{some:{memberships:{some:{userId:u.id}}}}}]};return ok(await db.club.findMany({where,include:{teams:true},orderBy:{name:"asc"}}));}catch(e){return apiError(e);}}
+export async function POST(r:Request){try{await requirePlatformAdmin();const d=z.object({name:z.string().min(2).max(120),slug:z.string().regex(/^[a-z0-9-]+$/)}).parse(await r.json());return ok(await db.club.create({data:d}),{status:201});}catch(e){return apiError(e);}}

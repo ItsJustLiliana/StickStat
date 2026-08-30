@@ -1,0 +1,4 @@
+export type ExternalTeam = { name: string; clubName?: string; logoUrl?: string };
+export type ExternalMatch = { externalId: string; competition?: string; date: Date; startTime?: string; homeTeam: string; awayTeam: string; homeScore?: number; awayScore?: number; status: "scheduled"|"live"|"finished"|"cancelled"|"unknown"; venue?: string };
+export type ExternalStanding = { position: number; team: string; played: number; won: number; drawn: number; lost: number; goalsFor: number; goalsAgainst: number; goalDifference: number; points: number; competition: string };
+export interface HockeyDataProvider { getClub(identifier:string):Promise<{name:string;logoUrl?:string}|null>; getTeam(identifier:string):Promise<ExternalTeam|null>; getMatches(identifier:string):Promise<ExternalMatch[]>; getStandings(identifier:string):Promise<ExternalStanding[]>; }

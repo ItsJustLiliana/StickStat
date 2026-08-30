@@ -1,0 +1,2 @@
+import { apiError, ok } from "@/lib/api"; import { authorizeTeam } from "@/lib/auth"; import { db } from "@/lib/db";
+export async function GET(_:Request,{params}:{params:Promise<{teamId:string}>}){try{const {teamId}=await params;await authorizeTeam(teamId);return ok(await db.match.findMany({where:{OR:[{homeTeamId:teamId},{awayTeamId:teamId}]},include:{homeTeam:{include:{club:true}},awayTeam:{include:{club:true}},season:true},orderBy:{date:"desc"}}));}catch(e){return apiError(e);}}

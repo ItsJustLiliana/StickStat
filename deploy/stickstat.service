@@ -1,0 +1,23 @@
+[Unit]
+Description=StickStat Hockey Statistics
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/projects/StickStat
+Environment=NODE_ENV=production
+Environment=PORT=4000
+Environment=HOSTNAME=0.0.0.0
+EnvironmentFile=/projects/StickStat/.env
+ExecStart=/usr/bin/npm run start
+Restart=always
+RestartSec=5
+TimeoutStopSec=20
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ReadWritePaths=/projects/StickStat/public/uploads
+
+[Install]
+WantedBy=default.target
