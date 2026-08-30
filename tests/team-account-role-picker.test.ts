@@ -59,4 +59,9 @@ describe("teamaccount- en rollenbeheer",()=>{
     expect(players).toContain("sortByLastName(people)");
     expect(players).toContain("sortByLastName(memberships.filter");
   });
+
+  it("zet een account met spelersrol maar zonder spelersprofiel niet bij Spelers",()=>{
+    expect(players).toContain('section.role!=="player"||membership.user.player?.teamId===team.id');
+    expect(players).toContain("!membership.user.player");
+  });
 });
