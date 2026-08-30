@@ -43,12 +43,20 @@ describe("teamaccount- en rollenbeheer",()=>{
     expect(form).toContain("Wijs eerst een tweede teambeheerder aan");
   });
 
-  it("houdt accounts zonder rol onderaan als niet ingedeeld",()=>{
+  it("houdt accounts zonder spelerskoppeling onderaan",()=>{
     expect(route).toContain("roles:z.array(role)");
     expect(route).not.toContain("roles:z.array(role).min(1)");
-    expect(form).toContain("Nog niet ingedeeld");
-    expect(players).toContain("!membership.roles.length");
-    expect(players).toContain("Accounts zonder toegewezen rol");
-    expect(players.indexOf("Accounts zonder toegewezen rol")).toBeGreaterThan(players.indexOf("sections.map"));
+    expect(form).toContain("geen spelersprofiel is gekoppeld");
+    expect(players).toContain("!membership.user.player");
+    expect(players).toContain("Geregistreerde accounts zonder spelersprofiel");
+    expect(players.indexOf("Geregistreerde accounts zonder spelersprofiel")).toBeGreaterThan(players.indexOf("sections.map"));
+  });
+
+  it("sorteert iedere lijst op achternaam",()=>{
+    expect(players).toContain('new Intl.Collator("nl"');
+    expect(players).toContain("sortName:player?.lastName??accountLastName");
+    expect(players).toContain("sortName:player.lastName");
+    expect(players).toContain("sortByLastName(people)");
+    expect(players).toContain("sortByLastName(memberships.filter");
   });
 });

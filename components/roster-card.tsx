@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-export type RosterPerson={key:string;name:string;photoPath:string|null;subtitle:string;href?:string;shirtNumber?:number|null;matches?:number;goals?:number;assists?:number};
+export type RosterPerson={key:string;name:string;sortName?:string;photoPath:string|null;subtitle:string;href?:string;shirtNumber?:number|null;matches?:number;goals?:number;assists?:number};
 
 function Photo({person}:{person:RosterPerson}){
   return person.photoPath?<Image unoptimized width={52} height={52} className="player-photo image" src={person.photoPath} alt={`Profielfoto van ${person.name}`}/>:<div className="player-photo">{person.name.split(/\s+/).map(part=>part[0]).join("").slice(0,2).toUpperCase()}</div>;

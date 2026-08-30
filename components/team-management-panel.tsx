@@ -35,7 +35,7 @@ export function TeamManagementPanel({teamId,accounts,members,players,protectedAd
         <fieldset><legend>Rollen</legend><div className="role-options">{roleOptions.map(([value,label])=><label key={value}><input type="checkbox" checked={selectedRoles.includes(value)} onChange={()=>toggleRole(value)}/>{label}</label>)}</div></fieldset>
         <button className="button" disabled={busy||!selectedUserId}>Account en rollen opslaan</button>
       </form>
-      {!selectedRoles.length&&<p className="muted admin-protection-note">Zonder aangevinkte rol blijft het account bij het team onder ‘Nog niet ingedeeld’ staan.</p>}
+      {!selectedRoles.length&&<p className="muted admin-protection-note">Zonder aangevinkte rol blijft het account aan het team gekoppeld. Zolang er geen spelersprofiel is gekoppeld, staat het onderaan Teamleden.</p>}
       {selectedUserId===protectedAdminUserId&&<p className="muted admin-protection-note">Dit account is de enige teambeheerder. Die rol kan pas weg nadat je een tweede teambeheerder hebt aangewezen.</p>}
       {message&&<p className="form-message" role="status">{message}</p>}
     </section>
