@@ -15,26 +15,29 @@ async function request(url:string,method:string,data:Record<string,unknown>){
   if(!response.ok)throw new Error(body.error?.message??"Actie mislukt");
 }
 
-export function TeamManagementPanel({teamId,accounts,members,players}:{teamId:string;accounts:Account[];members:Member[];players:Player[]}){
+export function TeamManagementPanel({teamId,accounts,members,players,protectedAdminUserId}:{teamId:string;accounts:Account[];members:Member[];players:Player[];protectedAdminUserId:string|null}){
   const router=useRouter(),[busy,setBusy]=useState(false),[message,setMessage]=useState("");
   const [selectedUserId,setSelectedUserId]=useState(accounts[0]?.id??"");
-  const [selectedRoles,setSelectedRoles]=useState<Role[]>(accounts[0]?.roles.length?accounts[0].roles:["player"]);
+  const [selectedRoles,setSelectedRoles]=useState<Role[]>(accounts[0]?.roles??[]);
   const [selectedPlayerId,setSelectedPlayerId]=useState(accounts[0]?.playerId??"");
 
   async function run(action:()=>Promise<void>,success:string){setBusy(true);setMessage("");try{await action();setMessage(success);router.refresh()}catch(error){setMessage(error instanceof Error?error.message:"Actie mislukt")}finally{setBusy(false)}}
-  function toggleRole(role:Role){setSelectedRoles(current=>current.includes(role)?current.filter(item=>item!==role):[...current,role])}
-  function selectAccount(userId:string){const account=accounts.find(item=>item.id===userId);setSelectedUserId(userId);setSelectedRoles(account?.roles.length?account.roles:["player"]);setSelectedPlayerId(account?.playerId??"")}
+  function toggleRole(role:Role){if(role==="team_admin"&&selectedUserId===protectedAdminUserId&&selectedRoles.includes(role)){setMessage("Dit is de enige teambeheerder. Wijs eerst een tweede teambeheerder aan voordat je deze rol verwijdert.");return}setSelectedRoles(current=>current.includes(role)?current.filter(item=>item!==role):[...current,role])}
+  function selectAccount(userId:string){const account=accounts.find(item=>item.id===userId);setSelectedUserId(userId);setSelectedRoles(account?.roles??[]);setSelectedPlayerId(account?.playerId??"")}
 
   return <>
     <section className="card">
       <div className="card-head"><div><span className="eyebrow">Accounttoegang</span><h2>Account en rollen</h2></div><span className="badge">{members.length} GEKOPPELD</span></div>
       <p className="muted">Kies een geregistreerd account. De huidige rollen worden direct aangevinkt; je kunt ze aanpassen en het account eventueel aan een speler koppelen.</p>
-      <form className="binding-form" onSubmit={event=>{event.preventDefault();void run(()=>request(`/api/teams/${teamId}/members`,"POST",{userId:selectedUserId,playerId:selectedPlayerId||null,roles:selectedRoles}),"Account, rollen en spelerskoppeling opgeslagen.")}}>
+      <form className="binding-form" onSubmit={event=>{event.preventDefault();const roles=selectedUserId===protectedAdminUserId?[...new Set<Role>([...selectedRoles,"team_admin"])]:selectedRoles;void run(()=>request(`/api/teams/${teamId}/members`,"POST",{userId:selectedUserId,playerId:selectedPlayerId||null,roles}),"Account, rollen en spelerskoppeling opgeslagen.")}}>
         <label>Geregistreerd account<select className="input" value={selectedUserId} onChange={event=>selectAccount(event.target.value)} required>{accounts.map(account=><option value={account.id} key={account.id}>{account.name} ({account.email})</option>)}</select></label>
         <label>Spelersprofiel (optioneel)<select className="input" value={selectedPlayerId} onChange={event=>setSelectedPlayerId(event.target.value)}><option value="">Niet aan een speler koppelen</option>{players.map(player=><option value={player.id} key={player.id}>{player.displayName}{player.userId&&player.userId!==selectedUserId?" · gekoppeld aan ander account":""}</option>)}</select></label>
         <fieldset><legend>Rollen</legend><div className="role-options">{roleOptions.map(([value,label])=><label key={value}><input type="checkbox" checked={selectedRoles.includes(value)} onChange={()=>toggleRole(value)}/>{label}</label>)}</div></fieldset>
-        <button className="button" disabled={busy||!selectedUserId||!selectedRoles.length}>Account en rollen opslaan</button>
+        <button className="button" disabled={busy||!selectedUserId}>Account en rollen opslaan</button>
       </form>
+      {!selectedRoles.length&&<p className="muted admin-protection-note">Zonder aangevinkte rol blijft het account bij het team onder ‘Nog niet ingedeeld’ staan.</p>}
+      {selectedUserId===protectedAdminUserId&&<p className="muted admin-protection-note">Dit account is de enige teambeheerder. Die rol kan pas weg nadat je een tweede teambeheerder hebt aangewezen.</p>}
+      {message&&<p className="form-message" role="status">{message}</p>}
     </section>
 
     <section className="card" style={{marginTop:18}}>
@@ -48,6 +51,5 @@ export function TeamManagementPanel({teamId,accounts,members,players}:{teamId:st
     </section>
 
     <div className="profile-grid" style={{marginTop:18}}><section className="card"><h2>Speler toevoegen</h2><p className="muted">De naam op de spelerslijst wordt automatisch samengesteld. Daarna kun je hierboven een geregistreerd account eraan koppelen.</p><form className="form-stack" onSubmit={event=>{event.preventDefault();const form=new FormData(event.currentTarget);void run(()=>request(`/api/teams/${teamId}/players`,"POST",{firstName:String(form.get("firstName")),namePrefix:String(form.get("namePrefix"))||null,lastName:String(form.get("lastName")),shirtNumber:form.get("shirtNumber")?Number(form.get("shirtNumber")):null,position:String(form.get("position"))||null,active:true}),"Speler toegevoegd.")}}><div className="player-name-fields"><input className="input" name="firstName" aria-label="Voornaam" placeholder="Voornaam" required/><input className="input" name="namePrefix" aria-label="Tussenvoegsel" placeholder="Tussenvoegsel (optioneel)"/><input className="input" name="lastName" aria-label="Achternaam" placeholder="Achternaam" required/></div><input className="input" name="shirtNumber" type="number" min="0" max="999" placeholder="Rugnummer (optioneel)"/><input className="input" name="position" placeholder="Positie (optioneel)"/><button className="button" disabled={busy}>Speler toevoegen</button></form></section></div>
-    {message&&<p className="card" role="status" style={{marginTop:18}}>{message}</p>}
   </>;
 }

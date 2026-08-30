@@ -5,7 +5,7 @@ import type {TeamRole} from "@/generated/prisma/client";
 import {z} from "zod";
 
 const role=z.enum(["team_admin","coach","trainer","player","viewer"]);
-const saveSchema=z.object({userId:z.string().cuid(),playerId:z.string().cuid().nullable(),roles:z.array(role).min(1)});
+const saveSchema=z.object({userId:z.string().cuid(),playerId:z.string().cuid().nullable(),roles:z.array(role)});
 const removeSchema=z.object({userId:z.string().cuid()});
 
 function canGrantTeamAdmin(actor:{platformRole:string;teamMemberships:{teamId:string;roles:TeamRole[]}[]},teamId:string){

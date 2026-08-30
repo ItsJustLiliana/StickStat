@@ -15,7 +15,7 @@ describe("teamaccount- en rollenbeheer",()=>{
   });
 
   it("laadt rollen en spelerskoppeling van het gekozen account",()=>{
-    expect(form).toContain("account?.roles.length");
+    expect(form).toContain("account?.roles??[]");
     expect(form).toContain("account?.playerId");
     expect(form).toContain("checked={selectedRoles.includes(value)}");
   });
@@ -30,5 +30,25 @@ describe("teamaccount- en rollenbeheer",()=>{
     expect(players).toContain('<div className="roster-list"');
     expect(players).toContain("<RosterListItem person={person}");
     expect(players).not.toContain("<RosterCard person={person}");
+  });
+
+  it("verbergt een rolsectie zonder leden",()=>{
+    expect(players).toContain("if(!people.length)return null");
+    expect(players).not.toContain("Nog niemand met deze rol");
+  });
+
+  it("houdt de rol van de laatste teambeheerder vast in het formulier",()=>{
+    expect(form).toContain("protectedAdminUserId");
+    expect(form).toContain('new Set<Role>([...selectedRoles,"team_admin"])');
+    expect(form).toContain("Wijs eerst een tweede teambeheerder aan");
+  });
+
+  it("houdt accounts zonder rol onderaan als niet ingedeeld",()=>{
+    expect(route).toContain("roles:z.array(role)");
+    expect(route).not.toContain("roles:z.array(role).min(1)");
+    expect(form).toContain("Nog niet ingedeeld");
+    expect(players).toContain("!membership.roles.length");
+    expect(players).toContain("Accounts zonder toegewezen rol");
+    expect(players.indexOf("Accounts zonder toegewezen rol")).toBeGreaterThan(players.indexOf("sections.map"));
   });
 });
