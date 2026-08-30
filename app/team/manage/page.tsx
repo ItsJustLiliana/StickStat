@@ -13,9 +13,10 @@ export default async function TeamManage({searchParams}:{searchParams:Promise<{t
   const teams=await db.team.findMany({where:user.platformRole==="admin"?{}:{memberships:{some:{userId:user.id,roles:{hasSome:["team_admin","coach"]}}}},include:{club:true},orderBy:{name:"asc"}});
   const team=teams.find(item=>item.id===query.team)??teams[0];
   if(!team)redirect("/dashboard");
-  const [memberships,players]=await Promise.all([
+  const [memberships,players,accounts]=await Promise.all([
     db.teamMembership.findMany({where:{teamId:team.id},include:{user:true},orderBy:{createdAt:"asc"}}),
     db.player.findMany({where:{teamId:team.id,active:true},orderBy:{displayName:"asc"}}),
+    db.user.findMany({select:{id:true,name:true,email:true,teamMemberships:{where:{teamId:team.id},select:{roles:true}},player:{select:{id:true,teamId:true}}},orderBy:[{name:"asc"},{email:"asc"}]}),
   ]);
-  return <PageShell user={user}><div className="page-head"><div><span className="eyebrow">{team.club.name}</span><h1>Teambeheer</h1></div><TeamSelector teams={teams} current={team.id}/></div><TeamManagementPanel teamId={team.id} members={memberships.map(membership=>({userId:membership.userId,name:membership.user.name,email:membership.user.email,roles:membership.roles}))} players={players.map(player=>({id:player.id,displayName:player.displayName,userId:player.userId}))}/></PageShell>;
+  return <PageShell user={user}><div className="page-head"><div><span className="eyebrow">{team.club.name}</span><h1>Teambeheer</h1></div><TeamSelector teams={teams} current={team.id}/></div><TeamManagementPanel teamId={team.id} accounts={accounts.map(account=>({id:account.id,name:account.name,email:account.email,roles:account.teamMemberships[0]?.roles??[],playerId:account.player?.teamId===team.id?account.player.id:null}))} members={memberships.map(membership=>({userId:membership.userId,name:membership.user.name,email:membership.user.email,roles:membership.roles}))} players={players.map(player=>({id:player.id,displayName:player.displayName,userId:player.userId}))}/></PageShell>;
 }

@@ -1648,6 +1648,7 @@ export const PlayerScalarFieldEnum = {
   teamId: 'teamId',
   userId: 'userId',
   firstName: 'firstName',
+  namePrefix: 'namePrefix',
   lastName: 'lastName',
   displayName: 'displayName',
   shirtNumber: 'shirtNumber',

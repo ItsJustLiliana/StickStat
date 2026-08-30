@@ -209,6 +209,7 @@ model Player {
   userId String? @unique
   user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
   firstName String
+  namePrefix String?
   lastName String
   displayName String
   shirtNumber Int?
