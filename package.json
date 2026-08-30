@@ -14,6 +14,7 @@
     "test:live-provider": "tsx scripts/check-provider.ts",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
+    "prisma:deploy": "prisma migrate deploy",
     "prisma:seed": "tsx prisma/seed.ts",
     "sync": "tsx scripts/sync.ts"
   },

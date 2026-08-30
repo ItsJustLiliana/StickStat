@@ -54,6 +54,8 @@ Open `http://localhost:3000` (of voeg `PORT=4000` toe aan het dev-command). De s
 
 Development: `npx prisma migrate dev`. Productie: `npx prisma migrate deploy`. De productie-app gebruikt altijd `npm run build` en `npm run start`, nooit de devserver. Volledige serverinstructies staan in [Arch Linux deployment](docs/ARCH_LINUX_DEPLOYMENT.md).
 
+Pushes naar `main` kunnen automatisch worden uitgerold via `.github/workflows/deploy.yml`. GitHub Actions verbindt via Tailscale SSH en voert `deploy/auto-update.sh` uit; de service wordt alleen na geslaagde controles, build en migraties herstart.
+
 ## Rollen
 
 - `platformRole=admin`: alle clubs, teams, users, memberships, providers en syncs.

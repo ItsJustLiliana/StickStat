@@ -1,0 +1,33 @@
+name: Deploy StickStat
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: stickstat-production-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Update StickStat over Tailscale
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Connect to the StickStat tailnet
+        uses: tailscale/github-action@v4
+        with:
+          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+          tags: tag:github-actions
+          ping: archlinux.tail50bfa9.ts.net
+
+      - name: Pull, validate, build and restart StickStat
+        run: |
+          tailscale ssh marijn@archlinux.tail50bfa9.ts.net \
+            "/usr/bin/bash -lc 'git -C /projects/StickStat fetch --prune origin main && git -C /projects/StickStat show origin/main:deploy/auto-update.sh | /usr/bin/bash'"
