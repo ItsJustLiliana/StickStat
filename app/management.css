@@ -34,3 +34,19 @@
 @media(max-width:900px){.ranking-grid{grid-template-columns:1fr}}
 @media(max-width:420px){.role-sections .player-grid{grid-template-columns:1fr}}
 @media(max-width:560px){.player-detail-fields{grid-template-columns:1fr 1fr}.player-detail-fields .input{width:100%;min-width:0}.player-detail-actions{align-items:center}.management-dialog-backdrop{padding:10px}.management-dialog{max-height:calc(100vh - 20px)}}
+html[data-theme="dark"] .team-switch,html[data-theme="dark"] .input,html[data-theme="dark"] .player-card,html[data-theme="dark"] .roster-list,html[data-theme="dark"] .icon-button,html[data-theme="dark"] .stepper button,html[data-theme="dark"] .logo,html[data-theme="dark"] .club-logo-preview{background:var(--card);color:var(--ink)}
+html[data-theme="dark"] .roster-list-item:hover,html[data-theme="dark"] .icon-button:hover{background:#1d332a}
+html[data-theme="dark"] .player-photo,html[data-theme="dark"] .profile-photo.placeholder{background:#20372d;color:var(--green)}
+html[data-theme="dark"] .badge,html[data-theme="dark"] .role-options label,html[data-theme="dark"] .form-message{background:#20372d;color:var(--green)}
+html[data-theme="dark"] .badge.accent{background:var(--lime);color:#17300e}
+html[data-theme="dark"] .active-row{background:#20372d}
+html[data-theme="dark"] .button{background:#126a4d}
+html[data-theme="dark"] .button:hover{background:#16805d}
+html[data-theme="dark"] .button.secondary{background:#243b31;color:var(--green)}
+html[data-theme="dark"] .role-options label:has(input:checked){background:#126a4d;color:white}
+html[data-theme="dark"] .danger-button{background:#48251f!important;color:#ff9c83!important}
+html[data-theme="dark"] .danger-button:hover{background:#5b2d25!important}
+html[data-theme="dark"] .team-settings-grid>.card{background:#192a23}
+html[data-theme="dark"] .recharts-cartesian-axis-tick-value{fill:var(--muted)}
+html[data-theme="dark"] .recharts-cartesian-grid line{stroke:var(--line)}
+html[data-theme="dark"] .recharts-default-tooltip{background-color:var(--card)!important;border-color:var(--line)!important;color:var(--ink)!important}
