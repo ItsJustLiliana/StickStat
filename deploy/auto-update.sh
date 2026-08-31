@@ -21,6 +21,10 @@ user_id="$(id -u)"
 export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-/run/user/${user_id}}"
 export DBUS_SESSION_BUS_ADDRESS="${DBUS_SESSION_BUS_ADDRESS:-unix:path=${XDG_RUNTIME_DIR}/bus}"
 
+# Prisma generation can change comment whitespace in tracked output between
+# platforms. These are reproducible build artifacts and may be reset safely.
+git -C "${project_dir}" restore --worktree --source=HEAD -- generated/prisma
+
 if [[ -n "$(git -C "${project_dir}" status --porcelain --untracked-files=no)" ]]; then
   echo "StickStat contains tracked changes; refusing automatic deployment." >&2
   exit 1
@@ -80,6 +84,8 @@ if [[ "${app_changed}" == "true" ]]; then
   else
     echo "Database schema unchanged; skipping migration check."
   fi
+
+  git -C "${project_dir}" restore --worktree --source=HEAD -- generated/prisma
 else
   echo "No production application files changed; skipping tests and build."
 fi

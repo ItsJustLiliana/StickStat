@@ -15,6 +15,7 @@ describe("automatische deployment",()=>{
     expect(script).toContain("Dependencies unchanged; keeping existing node_modules.");
     expect(script).toContain("No production application files changed; skipping tests and build.");
     expect(script).toContain("deployed-commit");
+    expect(script.match(/restore --worktree --source=HEAD -- generated\/prisma/g)).toHaveLength(2);
     expect(script.indexOf("restart stickstat.service")).toBeLessThan(script.lastIndexOf("deployed_commit_file"));
     expect(script).not.toContain('run lint');
     expect(script).not.toContain('run typecheck');
