@@ -1,23 +1,24 @@
 import {readFileSync} from "node:fs";
 import {describe,expect,it} from "vitest";
 
-const form=readFileSync("components/team-management-panel.tsx","utf8");
+const form=readFileSync("components/team-member-management.tsx","utf8");
+const details=readFileSync("app/team-members/[userId]/page.tsx","utf8");
 const route=readFileSync("app/api/teams/[teamId]/members/route.ts","utf8");
 const players=readFileSync("app/players/page.tsx","utf8");
 
 describe("teamaccount- en rollenbeheer",()=>{
-  it("kiest een geregistreerd account en gebruikt geen vrij e-mailveld",()=>{
-    expect(form).toContain("Geregistreerd account");
-    expect(form).toContain("selectAccount");
+  it("bewerkt het gekozen teamlid zonder vrij e-mailveld",()=>{
+    expect(details).toContain("<TeamMemberManagement");
+    expect(form).toContain("Rollen en spelerskoppeling");
     expect(form).not.toContain('name="email"');
     expect(route).toContain("userId:z.string().cuid()");
     expect(route).not.toContain("input.email");
   });
 
-  it("laadt rollen en spelerskoppeling van het gekozen account",()=>{
-    expect(form).toContain("account?.roles??[]");
-    expect(form).toContain("account?.playerId");
-    expect(form).toContain("checked={selectedRoles.includes(value)}");
+  it("laadt rollen en spelerskoppeling van het teamlid",()=>{
+    expect(form).toContain("useState(roles)");
+    expect(form).toContain('useState(playerId??"")');
+    expect(form).toContain("checked={selectedRoles.includes(role)}");
   });
 
   it("toont de rolsecties in de gewenste volgorde",()=>{
@@ -26,29 +27,25 @@ describe("teamaccount- en rollenbeheer",()=>{
     expect(order).toEqual([...order].sort((a,b)=>a-b));
   });
 
-  it("toont alle rollen als compacte lijsten",()=>{
+  it("toont alle rollen als compacte lijsten en verbergt lege secties",()=>{
     expect(players).toContain('<div className="roster-list"');
     expect(players).toContain("<RosterListItem person={person}");
-    expect(players).not.toContain("<RosterCard person={person}");
-  });
-
-  it("verbergt een rolsectie zonder leden",()=>{
     expect(players).toContain("if(!people.length)return null");
     expect(players).not.toContain("Nog niemand met deze rol");
   });
 
-  it("houdt de rol van de laatste teambeheerder vast in het formulier",()=>{
-    expect(form).toContain("protectedAdminUserId");
-    expect(form).toContain('new Set<Role>([...selectedRoles,"team_admin"])');
-    expect(form).toContain("Wijs eerst een tweede teambeheerder aan");
+  it("beschermt de laatste teambeheerder",()=>{
+    expect(form).toContain("protectedAdmin");
+    expect(form).toContain('protectedAdmin?["team_admin" as const]');
+    expect(form).toContain("Wijs eerst iemand anders als teambeheerder aan");
   });
 
-  it("houdt accounts zonder spelerskoppeling onderaan",()=>{
+  it("houdt accounts zonder spelerskoppeling onderaan en alleen voor beheerders",()=>{
     expect(route).toContain("roles:z.array(role)");
     expect(route).not.toContain("roles:z.array(role).min(1)");
-    expect(form).toContain("geen spelersprofiel is gekoppeld");
     expect(players).toContain("!membership.user.player");
     expect(players).toContain("Geregistreerde accounts zonder spelersprofiel");
+    expect(players).toContain("canAdmin&&unlinkedAccounts.length>0");
     expect(players.indexOf("Geregistreerde accounts zonder spelersprofiel")).toBeGreaterThan(players.indexOf("sections.map"));
   });
 
@@ -60,8 +57,9 @@ describe("teamaccount- en rollenbeheer",()=>{
     expect(players).toContain("sortByLastName(memberships.filter");
   });
 
-  it("zet een account met spelersrol maar zonder spelersprofiel niet bij Spelers",()=>{
-    expect(players).toContain('section.role!=="player"||membership.user.player?.teamId===team.id');
-    expect(players).toContain("!membership.user.player");
+  it("laat uitsluitend teambeheerders accounts en rollen wijzigen",()=>{
+    expect(details).toContain("canAdmin&&<TeamMemberManagement");
+    expect(route.match(/authorizeTeamAdmin\(teamId\)/g)).toHaveLength(2);
+    expect(form).toContain("Account uit team verwijderen");
   });
 });

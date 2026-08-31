@@ -234,6 +234,8 @@ export const PlayerScalarFieldEnum = {
   position: 'position',
   photoPath: 'photoPath',
   active: 'active',
+  trainingMember: 'trainingMember',
+  matchMember: 'matchMember',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

@@ -1,5 +1,5 @@
 import {apiError,HttpError,ok} from "@/lib/api";
-import {authorizeTeamManagement} from "@/lib/auth";
+import {authorizeTeamAdmin} from "@/lib/auth";
 import {db} from "@/lib/db";
 import type {TeamRole} from "@/generated/prisma/client";
 import {z} from "zod";
@@ -14,7 +14,7 @@ function canGrantTeamAdmin(actor:{platformRole:string;teamMemberships:{teamId:st
 
 export async function POST(request:Request,{params}:{params:Promise<{teamId:string}>}){
   try{
-    const {teamId}=await params,actor=await authorizeTeamManagement(teamId),input=saveSchema.parse(await request.json());
+    const {teamId}=await params,actor=await authorizeTeamAdmin(teamId),input=saveSchema.parse(await request.json());
     const [user,player]=await Promise.all([db.user.findUnique({where:{id:input.userId},select:{id:true}}),input.playerId?db.player.findUnique({where:{id:input.playerId},select:{id:true,teamId:true,displayName:true}}):null]);
     if(!user)throw new HttpError(404,"ACCOUNT_NOT_FOUND","Dit StickStat-account bestaat niet meer");
     if(input.playerId&&(!player||player.teamId!==teamId))throw new HttpError(400,"PLAYER_TEAM_MISMATCH","Deze speler hoort niet bij dit team");
@@ -33,7 +33,7 @@ export async function POST(request:Request,{params}:{params:Promise<{teamId:stri
 
 export async function DELETE(request:Request,{params}:{params:Promise<{teamId:string}>}){
   try{
-    const {teamId}=await params,actor=await authorizeTeamManagement(teamId),input=removeSchema.parse(await request.json());
+    const {teamId}=await params,actor=await authorizeTeamAdmin(teamId),input=removeSchema.parse(await request.json());
     const membership=await db.teamMembership.findUnique({where:{userId_teamId:{userId:input.userId,teamId}}});
     if(!membership)throw new HttpError(404,"NOT_FOUND","Teamlid niet gevonden");
     if(membership.roles.includes("team_admin")&&!canGrantTeamAdmin(actor,teamId))throw new HttpError(403,"FORBIDDEN","Alleen een teambeheerder kan een teambeheerder verwijderen");

@@ -46,6 +46,8 @@ export type PlayerMinAggregateOutputType = {
   position: string | null
   photoPath: string | null
   active: boolean | null
+  trainingMember: boolean | null
+  matchMember: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -62,6 +64,8 @@ export type PlayerMaxAggregateOutputType = {
   position: string | null
   photoPath: string | null
   active: boolean | null
+  trainingMember: boolean | null
+  matchMember: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -78,6 +82,8 @@ export type PlayerCountAggregateOutputType = {
   position: number
   photoPath: number
   active: number
+  trainingMember: number
+  matchMember: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -104,6 +110,8 @@ export type PlayerMinAggregateInputType = {
   position?: true
   photoPath?: true
   active?: true
+  trainingMember?: true
+  matchMember?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -120,6 +128,8 @@ export type PlayerMaxAggregateInputType = {
   position?: true
   photoPath?: true
   active?: true
+  trainingMember?: true
+  matchMember?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -136,6 +146,8 @@ export type PlayerCountAggregateInputType = {
   position?: true
   photoPath?: true
   active?: true
+  trainingMember?: true
+  matchMember?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -239,6 +251,8 @@ export type PlayerGroupByOutputType = {
   position: string | null
   photoPath: string | null
   active: boolean
+  trainingMember: boolean
+  matchMember: boolean
   createdAt: Date
   updatedAt: Date
   _count: PlayerCountAggregateOutputType | null
@@ -278,6 +292,8 @@ export type PlayerWhereInput = {
   position?: Prisma.StringNullableFilter<"Player"> | string | null
   photoPath?: Prisma.StringNullableFilter<"Player"> | string | null
   active?: Prisma.BoolFilter<"Player"> | boolean
+  trainingMember?: Prisma.BoolFilter<"Player"> | boolean
+  matchMember?: Prisma.BoolFilter<"Player"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Player"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Player"> | Date | string
   team?: Prisma.XOR<Prisma.TeamScalarRelationFilter, Prisma.TeamWhereInput>
@@ -299,6 +315,8 @@ export type PlayerOrderByWithRelationInput = {
   position?: Prisma.SortOrderInput | Prisma.SortOrder
   photoPath?: Prisma.SortOrderInput | Prisma.SortOrder
   active?: Prisma.SortOrder
+  trainingMember?: Prisma.SortOrder
+  matchMember?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   team?: Prisma.TeamOrderByWithRelationInput
@@ -323,6 +341,8 @@ export type PlayerWhereUniqueInput = Prisma.AtLeast<{
   position?: Prisma.StringNullableFilter<"Player"> | string | null
   photoPath?: Prisma.StringNullableFilter<"Player"> | string | null
   active?: Prisma.BoolFilter<"Player"> | boolean
+  trainingMember?: Prisma.BoolFilter<"Player"> | boolean
+  matchMember?: Prisma.BoolFilter<"Player"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Player"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Player"> | Date | string
   team?: Prisma.XOR<Prisma.TeamScalarRelationFilter, Prisma.TeamWhereInput>
@@ -344,6 +364,8 @@ export type PlayerOrderByWithAggregationInput = {
   position?: Prisma.SortOrderInput | Prisma.SortOrder
   photoPath?: Prisma.SortOrderInput | Prisma.SortOrder
   active?: Prisma.SortOrder
+  trainingMember?: Prisma.SortOrder
+  matchMember?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.PlayerCountOrderByAggregateInput
@@ -368,6 +390,8 @@ export type PlayerScalarWhereWithAggregatesInput = {
   position?: Prisma.StringNullableWithAggregatesFilter<"Player"> | string | null
   photoPath?: Prisma.StringNullableWithAggregatesFilter<"Player"> | string | null
   active?: Prisma.BoolWithAggregatesFilter<"Player"> | boolean
+  trainingMember?: Prisma.BoolWithAggregatesFilter<"Player"> | boolean
+  matchMember?: Prisma.BoolWithAggregatesFilter<"Player"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Player"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Player"> | Date | string
 }
@@ -382,6 +406,8 @@ export type PlayerCreateInput = {
   position?: string | null
   photoPath?: string | null
   active?: boolean
+  trainingMember?: boolean
+  matchMember?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   team: Prisma.TeamCreateNestedOneWithoutPlayersInput
@@ -403,6 +429,8 @@ export type PlayerUncheckedCreateInput = {
   position?: string | null
   photoPath?: string | null
   active?: boolean
+  trainingMember?: boolean
+  matchMember?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   matchStats?: Prisma.PlayerMatchStatsUncheckedCreateNestedManyWithoutPlayerInput
@@ -420,6 +448,8 @@ export type PlayerUpdateInput = {
   position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  trainingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  matchMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   team?: Prisma.TeamUpdateOneRequiredWithoutPlayersNestedInput
@@ -441,6 +471,8 @@ export type PlayerUncheckedUpdateInput = {
   position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  trainingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  matchMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   matchStats?: Prisma.PlayerMatchStatsUncheckedUpdateManyWithoutPlayerNestedInput
@@ -460,6 +492,8 @@ export type PlayerCreateManyInput = {
   position?: string | null
   photoPath?: string | null
   active?: boolean
+  trainingMember?: boolean
+  matchMember?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -474,6 +508,8 @@ export type PlayerUpdateManyMutationInput = {
   position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  trainingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  matchMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -490,6 +526,8 @@ export type PlayerUncheckedUpdateManyInput = {
   position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  trainingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  matchMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -521,6 +559,8 @@ export type PlayerCountOrderByAggregateInput = {
   position?: Prisma.SortOrder
   photoPath?: Prisma.SortOrder
   active?: Prisma.SortOrder
+  trainingMember?: Prisma.SortOrder
+  matchMember?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -541,6 +581,8 @@ export type PlayerMaxOrderByAggregateInput = {
   position?: Prisma.SortOrder
   photoPath?: Prisma.SortOrder
   active?: Prisma.SortOrder
+  trainingMember?: Prisma.SortOrder
+  matchMember?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -557,6 +599,8 @@ export type PlayerMinOrderByAggregateInput = {
   position?: Prisma.SortOrder
   photoPath?: Prisma.SortOrder
   active?: Prisma.SortOrder
+  trainingMember?: Prisma.SortOrder
+  matchMember?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -704,6 +748,8 @@ export type PlayerCreateWithoutUserInput = {
   position?: string | null
   photoPath?: string | null
   active?: boolean
+  trainingMember?: boolean
+  matchMember?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   team: Prisma.TeamCreateNestedOneWithoutPlayersInput
@@ -723,6 +769,8 @@ export type PlayerUncheckedCreateWithoutUserInput = {
   position?: string | null
   photoPath?: string | null
   active?: boolean
+  trainingMember?: boolean
+  matchMember?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   matchStats?: Prisma.PlayerMatchStatsUncheckedCreateNestedManyWithoutPlayerInput
@@ -756,6 +804,8 @@ export type PlayerUpdateWithoutUserInput = {
   position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  trainingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  matchMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   team?: Prisma.TeamUpdateOneRequiredWithoutPlayersNestedInput
@@ -775,6 +825,8 @@ export type PlayerUncheckedUpdateWithoutUserInput = {
   position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  trainingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  matchMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   matchStats?: Prisma.PlayerMatchStatsUncheckedUpdateManyWithoutPlayerNestedInput
@@ -792,6 +844,8 @@ export type PlayerCreateWithoutTeamInput = {
   position?: string | null
   photoPath?: string | null
   active?: boolean
+  trainingMember?: boolean
+  matchMember?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   user?: Prisma.UserCreateNestedOneWithoutPlayerInput
@@ -811,6 +865,8 @@ export type PlayerUncheckedCreateWithoutTeamInput = {
   position?: string | null
   photoPath?: string | null
   active?: boolean
+  trainingMember?: boolean
+  matchMember?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   matchStats?: Prisma.PlayerMatchStatsUncheckedCreateNestedManyWithoutPlayerInput
@@ -859,6 +915,8 @@ export type PlayerScalarWhereInput = {
   position?: Prisma.StringNullableFilter<"Player"> | string | null
   photoPath?: Prisma.StringNullableFilter<"Player"> | string | null
   active?: Prisma.BoolFilter<"Player"> | boolean
+  trainingMember?: Prisma.BoolFilter<"Player"> | boolean
+  matchMember?: Prisma.BoolFilter<"Player"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Player"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Player"> | Date | string
 }
@@ -873,6 +931,8 @@ export type PlayerCreateWithoutMatchStatsInput = {
   position?: string | null
   photoPath?: string | null
   active?: boolean
+  trainingMember?: boolean
+  matchMember?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   team: Prisma.TeamCreateNestedOneWithoutPlayersInput
@@ -893,6 +953,8 @@ export type PlayerUncheckedCreateWithoutMatchStatsInput = {
   position?: string | null
   photoPath?: string | null
   active?: boolean
+  trainingMember?: boolean
+  matchMember?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   events?: Prisma.MatchEventUncheckedCreateNestedManyWithoutPlayerInput
@@ -925,6 +987,8 @@ export type PlayerUpdateWithoutMatchStatsInput = {
   position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  trainingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  matchMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   team?: Prisma.TeamUpdateOneRequiredWithoutPlayersNestedInput
@@ -945,6 +1009,8 @@ export type PlayerUncheckedUpdateWithoutMatchStatsInput = {
   position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  trainingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  matchMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   events?: Prisma.MatchEventUncheckedUpdateManyWithoutPlayerNestedInput
@@ -961,6 +1027,8 @@ export type PlayerCreateWithoutEventsInput = {
   position?: string | null
   photoPath?: string | null
   active?: boolean
+  trainingMember?: boolean
+  matchMember?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   team: Prisma.TeamCreateNestedOneWithoutPlayersInput
@@ -981,6 +1049,8 @@ export type PlayerUncheckedCreateWithoutEventsInput = {
   position?: string | null
   photoPath?: string | null
   active?: boolean
+  trainingMember?: boolean
+  matchMember?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   matchStats?: Prisma.PlayerMatchStatsUncheckedCreateNestedManyWithoutPlayerInput
@@ -1002,6 +1072,8 @@ export type PlayerCreateWithoutRelatedEventsInput = {
   position?: string | null
   photoPath?: string | null
   active?: boolean
+  trainingMember?: boolean
+  matchMember?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   team: Prisma.TeamCreateNestedOneWithoutPlayersInput
@@ -1022,6 +1094,8 @@ export type PlayerUncheckedCreateWithoutRelatedEventsInput = {
   position?: string | null
   photoPath?: string | null
   active?: boolean
+  trainingMember?: boolean
+  matchMember?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   matchStats?: Prisma.PlayerMatchStatsUncheckedCreateNestedManyWithoutPlayerInput
@@ -1054,6 +1128,8 @@ export type PlayerUpdateWithoutEventsInput = {
   position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  trainingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  matchMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   team?: Prisma.TeamUpdateOneRequiredWithoutPlayersNestedInput
@@ -1074,6 +1150,8 @@ export type PlayerUncheckedUpdateWithoutEventsInput = {
   position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  trainingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  matchMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   matchStats?: Prisma.PlayerMatchStatsUncheckedUpdateManyWithoutPlayerNestedInput
@@ -1101,6 +1179,8 @@ export type PlayerUpdateWithoutRelatedEventsInput = {
   position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  trainingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  matchMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   team?: Prisma.TeamUpdateOneRequiredWithoutPlayersNestedInput
@@ -1121,6 +1201,8 @@ export type PlayerUncheckedUpdateWithoutRelatedEventsInput = {
   position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  trainingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  matchMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   matchStats?: Prisma.PlayerMatchStatsUncheckedUpdateManyWithoutPlayerNestedInput
@@ -1138,6 +1220,8 @@ export type PlayerCreateManyTeamInput = {
   position?: string | null
   photoPath?: string | null
   active?: boolean
+  trainingMember?: boolean
+  matchMember?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1152,6 +1236,8 @@ export type PlayerUpdateWithoutTeamInput = {
   position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  trainingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  matchMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneWithoutPlayerNestedInput
@@ -1171,6 +1257,8 @@ export type PlayerUncheckedUpdateWithoutTeamInput = {
   position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  trainingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  matchMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   matchStats?: Prisma.PlayerMatchStatsUncheckedUpdateManyWithoutPlayerNestedInput
@@ -1189,6 +1277,8 @@ export type PlayerUncheckedUpdateManyWithoutTeamInput = {
   position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  trainingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  matchMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1254,6 +1344,8 @@ export type PlayerSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   position?: boolean
   photoPath?: boolean
   active?: boolean
+  trainingMember?: boolean
+  matchMember?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   team?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
@@ -1276,6 +1368,8 @@ export type PlayerSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   position?: boolean
   photoPath?: boolean
   active?: boolean
+  trainingMember?: boolean
+  matchMember?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   team?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
@@ -1294,6 +1388,8 @@ export type PlayerSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   position?: boolean
   photoPath?: boolean
   active?: boolean
+  trainingMember?: boolean
+  matchMember?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   team?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
@@ -1312,11 +1408,13 @@ export type PlayerSelectScalar = {
   position?: boolean
   photoPath?: boolean
   active?: boolean
+  trainingMember?: boolean
+  matchMember?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type PlayerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "teamId" | "userId" | "firstName" | "namePrefix" | "lastName" | "displayName" | "shirtNumber" | "position" | "photoPath" | "active" | "createdAt" | "updatedAt", ExtArgs["result"]["player"]>
+export type PlayerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "teamId" | "userId" | "firstName" | "namePrefix" | "lastName" | "displayName" | "shirtNumber" | "position" | "photoPath" | "active" | "trainingMember" | "matchMember" | "createdAt" | "updatedAt", ExtArgs["result"]["player"]>
 export type PlayerInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   team?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
   user?: boolean | Prisma.Player$userArgs<ExtArgs>
@@ -1355,6 +1453,8 @@ export type $PlayerPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     position: string | null
     photoPath: string | null
     active: boolean
+    trainingMember: boolean
+    matchMember: boolean
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["player"]>
@@ -1796,6 +1896,8 @@ export interface PlayerFieldRefs {
   readonly position: Prisma.FieldRef<"Player", 'String'>
   readonly photoPath: Prisma.FieldRef<"Player", 'String'>
   readonly active: Prisma.FieldRef<"Player", 'Boolean'>
+  readonly trainingMember: Prisma.FieldRef<"Player", 'Boolean'>
+  readonly matchMember: Prisma.FieldRef<"Player", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"Player", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Player", 'DateTime'>
 }

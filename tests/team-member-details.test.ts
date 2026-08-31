@@ -14,7 +14,7 @@ describe("teamliddetails",()=>{
     expect(details).toContain("Rugnummer");
     expect(details).toContain("Positie");
     expect(details).toContain("Goals");
-    expect(details).toContain("Dit account heeft geen spelersrol");
+    expect(details).toContain("Dit account heeft geen gekoppeld spelersprofiel");
   });
 
   it("beperkt de detailpagina tot het gekozen teamlidmaatschap",()=>{

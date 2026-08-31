@@ -17,7 +17,7 @@ export default async function MatchDetail({params,searchParams}:{params:Promise<
   const ownScore=ownTeam?(match.homeTeamId===ownTeam.id?match.homeScore:match.awayScore):null;
   const membership=ownTeam?user.teamMemberships.find(item=>item.teamId===ownTeam.id):null;
   const canEdit=Boolean(match.status==="finished"&&ownTeam&&(user.platformRole==="admin"||(membership&&hasAnyTeamRole(membership.roles,teamManagementRoles))));
-  const roster=ownTeam?await db.player.findMany({where:{teamId:ownTeam.id,OR:[{active:true},{matchStats:{some:{matchId:match.id}}}]},orderBy:[{shirtNumber:"asc"},{displayName:"asc"}]}):[];
+  const roster=ownTeam?await db.player.findMany({where:{teamId:ownTeam.id,OR:[{active:true,matchMember:true},{matchStats:{some:{matchId:match.id}}}]},orderBy:[{shirtNumber:"asc"},{displayName:"asc"}]}):[];
   const ownStats=ownTeam?match.playerStats.filter(stat=>stat.player.teamId===ownTeam.id):[];
   const cards=(playerId:string,type:"green_card"|"yellow_card"|"red_card")=>match.events.filter(event=>event.playerId===playerId&&event.type===type).length;
   const initialRows=roster.map(player=>{const stat=ownStats.find(item=>item.playerId===player.id);return {playerId:player.id,name:player.displayName,participation:stat?(stat.started?"starter" as const:"substitute" as const):"absent" as const,goals:stat?.goals??0,greenCards:cards(player.id,"green_card"),yellowCards:cards(player.id,"yellow_card"),redCards:cards(player.id,"red_card"),mvp:stat?.mvp??false,notes:stat?.notes??""}});

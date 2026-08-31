@@ -1,0 +1,3 @@
+ALTER TABLE "Player"
+ADD COLUMN "trainingMember" BOOLEAN NOT NULL DEFAULT true,
+ADD COLUMN "matchMember" BOOLEAN NOT NULL DEFAULT true;

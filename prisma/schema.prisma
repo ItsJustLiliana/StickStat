@@ -219,6 +219,8 @@ model Player {
   position String?
   photoPath String?
   active Boolean @default(true)
+  trainingMember Boolean @default(true)
+  matchMember Boolean @default(true)
   matchStats PlayerMatchStats[]
   events MatchEvent[] @relation("EventPlayer")
   relatedEvents MatchEvent[] @relation("RelatedPlayer")

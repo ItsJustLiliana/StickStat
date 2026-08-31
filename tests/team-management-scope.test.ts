@@ -1,21 +1,27 @@
 import {readFileSync} from "node:fs";
 import {describe,expect,it} from "vitest";
 
-const page=readFileSync("app/team/manage/page.tsx","utf8");
+const legacy=readFileSync("app/team/manage/page.tsx","utf8");
+const nav=readFileSync("components/app-nav.tsx","utf8");
+const players=readFileSync("app/players/page.tsx","utf8");
+const details=readFileSync("app/team-members/[userId]/page.tsx","utf8");
+const settings=readFileSync("components/team-settings-control.tsx","utf8");
 
-describe("teamscope in teambeheer",()=>{
-  it("haalt alleen spelersprofielen van het geselecteerde team op",()=>{
-    expect(page).toContain("where:{teamId:team.id}");
-    expect(page).toContain('{active:"desc"}');
+describe("centraal teamledenbeheer",()=>{
+  it("verwijdert Teambeheer uit desktop- en mobiele navigatie",()=>{
+    expect(nav).not.toContain("/team/manage");
+    expect(nav).not.toContain("Teambeheer");
   });
 
-  it("verbergt spelersaccounts van andere teams uit de kandidatenlijst",()=>{
-    expect(page).toContain("{teamMemberships:{some:{teamId:team.id}}}");
-    expect(page).toContain("{player:{is:null}}");
-    expect(page).toContain("{player:{is:{teamId:team.id}}}");
+  it("stuurt oude beheerlinks door met behoud van teamkeuze",()=>{
+    expect(legacy).toContain("/players?team=${encodeURIComponent(team)}");
+    expect(legacy).toContain("redirect(team?");
   });
 
-  it("stelt het beheerformulier opnieuw in bij een teamwissel",()=>{
-    expect(page).toContain("<TeamManagementPanel key={team.id}");
+  it("plaatst instellingen op Teamleden en rollen op het teamlidprofiel",()=>{
+    expect(players).toContain("<TeamSettingsControl");
+    expect(settings).toContain("<ClubLogoEditor");
+    expect(settings).toContain("<TeamInvitePanel");
+    expect(details).toContain("<TeamMemberManagement");
   });
 });
