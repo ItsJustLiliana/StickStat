@@ -20,7 +20,7 @@ describe("centraal teamledenbeheer",()=>{
 
   it("plaatst instellingen op Teamleden en rollen op het teamlidprofiel",()=>{
     expect(players).toContain("<TeamSettingsControl");
-    expect(settings).toContain("<ClubLogoEditor");
+    expect(settings).not.toContain("ClubLogoEditor");
     expect(settings).toContain("<TeamInvitePanel");
     expect(details).toContain("<TeamMemberManagement");
   });

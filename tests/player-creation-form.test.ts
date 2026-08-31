@@ -9,11 +9,11 @@ const route=readFileSync("app/api/teams/[teamId]/players/route.ts","utf8");
 const schema=readFileSync("prisma/schema.prisma","utf8");
 
 describe("speler toevoegen",()=>{
-  it("vraagt voornaam, optioneel tussenvoegsel en achternaam",()=>{
-    expect(form).toContain('name="firstName"');
-    expect(form).toContain('name="namePrefix"');
-    expect(form).toContain('name="lastName"');
-    expect(form).not.toContain('name="displayName"');
+  it("vraagt één volledige naam en splitst die automatisch",()=>{
+    expect(form).toContain('name="fullName"');
+    expect(form).toContain("splitPlayerName");
+    expect(form).toContain('"van","von"');
+    expect(form).not.toContain('name="firstName"');
   });
 
   it("maakt de zichtbare naam op de server",()=>{
@@ -22,6 +22,7 @@ describe("speler toevoegen",()=>{
   });
 
   it("houdt rugnummer en positie optioneel",()=>{
+    expect(form).toContain('className="player-detail-fields"');
     expect(form).toContain('placeholder="Rugnummer (optioneel)"');
     expect(form).toContain('placeholder="Positie (optioneel)"');
   });

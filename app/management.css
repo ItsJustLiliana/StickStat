@@ -1,7 +1,7 @@
 .avatar{color:white;text-decoration:none}
 .form-stack{display:grid;gap:12px}
 .form-stack .input{width:100%}
-.player-name-fields{display:grid;grid-template-columns:minmax(0,1fr) minmax(110px,.55fr) minmax(0,1fr);gap:10px}.player-name-fields .input{min-width:0}
+.player-detail-fields{display:grid;grid-template-columns:minmax(0,.55fr) minmax(0,1fr);gap:10px}.player-detail-fields .input{min-width:0}
 .role-options{display:flex;flex-wrap:wrap;gap:8px}
 .role-options label{display:flex;align-items:center;gap:6px;background:#eef4f0;border:1px solid var(--line);border-radius:999px;padding:7px 10px;font-size:12px;font-weight:750}
 .role-options label:has(input:checked){background:var(--green);border-color:var(--green);color:white}.role-options input{accent-color:var(--lime)}
@@ -27,10 +27,10 @@
 .ranking-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:18px}.ranking-list{display:grid}.ranking-row{display:grid;grid-template-columns:30px 1fr auto;align-items:center;gap:10px;color:inherit;text-decoration:none;padding:12px 0;border-top:1px solid var(--line)}.ranking-row:first-child{border-top:0}.ranking-row:hover strong{color:var(--green)}.ranking-position{font-weight:950;color:var(--muted)}.ranking-row small{display:block;color:var(--muted);margin-top:3px}.ranking-value{font-size:20px}.card-summary{display:flex;align-items:center;gap:5px}.card-summary i{width:10px;height:15px;border-radius:2px}.card-summary .green{background:#29a36a}.card-summary .yellow{background:#f2ca32}.card-summary .red{background:#dc3f32}
 .invite-link{display:flex;gap:8px;margin-top:14px}.invite-link .input{flex:1}.invite-link-button{display:inline-block;text-decoration:none;margin-top:10px}
 .icon-button{width:38px;height:38px;border:1px solid var(--line);border-radius:11px;background:white;color:var(--green);display:grid;place-items:center;cursor:pointer}.icon-button:hover{background:#eef4f0}
-.player-detail-actions{display:flex;align-items:center;gap:12px}.player-detail-actions>.member-actions{align-self:flex-end}.management-dialog-backdrop{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;padding:20px;background:#092f2580;backdrop-filter:blur(4px)}.management-dialog{width:min(100%,620px);max-height:calc(100vh - 40px);overflow:auto;box-shadow:0 24px 80px #092f2540}.management-dialog .card-head{margin-bottom:18px}.management-dialog p:first-of-type{margin-top:0}
+.compact-button{display:inline-flex;align-items:center;gap:6px;padding:9px 12px;border-radius:10px;font-size:13px;white-space:nowrap}.player-detail-actions{display:flex;flex-direction:row-reverse;align-items:center;gap:10px}.player-action-stack{display:grid;gap:6px}.player-action-stack .icon-button{width:34px;height:34px;border-radius:10px}.management-dialog-backdrop{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;padding:20px;background:#092f2580;backdrop-filter:blur(4px)}.management-dialog{width:min(100%,620px);max-height:calc(100vh - 40px);overflow:auto;box-shadow:0 24px 80px #092f2540}.management-dialog .card-head{margin-bottom:18px}.management-dialog p:first-of-type{margin-top:0}
 .management-dialog fieldset{border:1px solid var(--line);border-radius:14px;padding:12px}.management-dialog fieldset legend{padding:0 6px;font-size:13px;font-weight:850}.management-dialog fieldset small{display:block;margin-top:8px}
 .team-settings-grid{display:grid;gap:14px}.team-settings-grid>.card{box-shadow:none;background:#f8fbf9}
 @media(max-width:900px){.profile-grid,.binding-form{grid-template-columns:1fr}.match-entry{overflow-x:auto}.match-entry-list{min-width:1050px}}
 @media(max-width:900px){.ranking-grid{grid-template-columns:1fr}}
 @media(max-width:420px){.role-sections .player-grid{grid-template-columns:1fr}}
-@media(max-width:560px){.player-name-fields{grid-template-columns:1fr}.player-name-fields .input{width:100%}.player-detail-actions{align-items:flex-end}.management-dialog-backdrop{padding:10px}.management-dialog{max-height:calc(100vh - 20px)}}
+@media(max-width:560px){.player-detail-fields{grid-template-columns:1fr 1fr}.player-detail-fields .input{width:100%;min-width:0}.player-detail-actions{align-items:center}.management-dialog-backdrop{padding:10px}.management-dialog{max-height:calc(100vh - 20px)}}
