@@ -64,7 +64,8 @@ export const ModelName = {
   Player: 'Player',
   PlayerMatchStats: 'PlayerMatchStats',
   MatchEvent: 'MatchEvent',
-  SyncRun: 'SyncRun'
+  SyncRun: 'SyncRun',
+  TeamInvite: 'TeamInvite'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -282,6 +283,20 @@ export const SyncRunScalarFieldEnum = {
 } as const
 
 export type SyncRunScalarFieldEnum = (typeof SyncRunScalarFieldEnum)[keyof typeof SyncRunScalarFieldEnum]
+
+
+export const TeamInviteScalarFieldEnum = {
+  id: 'id',
+  teamId: 'teamId',
+  tokenHash: 'tokenHash',
+  createdById: 'createdById',
+  expiresAt: 'expiresAt',
+  usedAt: 'usedAt',
+  usedById: 'usedById',
+  createdAt: 'createdAt'
+} as const
+
+export type TeamInviteScalarFieldEnum = (typeof TeamInviteScalarFieldEnum)[keyof typeof TeamInviteScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -6,6 +6,7 @@ export const registerSchema = z.object({
   email: z.string().email().max(254).transform((v)=>v.toLowerCase()),
   password: strongPasswordSchema,
   confirmPassword: z.string().min(1),
+  inviteToken: z.string().regex(/^[A-Za-z0-9_-]{32}$/).optional(),
 }).refine((value)=>value.password===value.confirmPassword,{message:"Wachtwoorden komen niet overeen",path:["confirmPassword"]});
 export const playerSchema = z.object({ firstName: z.string().trim().min(1).max(80), namePrefix: z.string().trim().max(30).nullable().optional(), lastName: z.string().trim().min(1).max(80), shirtNumber: z.number().int().min(0).max(999).nullable().optional(), position: z.string().trim().max(80).nullable().optional(), active: z.boolean().default(true) });
 export const eventSchema = z.object({ playerId: z.string().cuid().nullable().optional(), relatedPlayerId: z.string().cuid().nullable().optional(), minute: z.number().int().min(0).max(120).nullable().optional(), type: z.enum(["goal","assist","green_card","yellow_card","red_card","substitution","save","penalty_corner","penalty_stroke","custom"]), notes: z.string().max(1000).nullable().optional() });

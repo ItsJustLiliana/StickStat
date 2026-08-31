@@ -53,6 +53,20 @@ export async function authorizeTeamManagement(teamId:string){
   if(!membership||!hasAnyTeamRole(membership.roles,teamManagementRoles))throw new HttpError(403,"FORBIDDEN","Geen beheerrechten voor dit team");
   return user;
 }
+export async function authorizeTeamAdmin(teamId:string){
+  const user=await requireUser();
+  if(user.platformRole==="admin")return user;
+  const membership=user.teamMemberships.find(item=>item.teamId===teamId);
+  if(!membership?.roles.includes("team_admin"))throw new HttpError(403,"FORBIDDEN","Alleen een teambeheerder mag dit wijzigen");
+  return user;
+}
+export async function authorizeClubBranding(clubId:string){
+  const user=await requireUser();
+  if(user.platformRole==="admin"||user.clubMemberships.some(item=>item.clubId===clubId&&item.role==="club_admin"))return user;
+  const allowed=await db.teamMembership.findFirst({where:{userId:user.id,roles:{has:"team_admin"},team:{clubId}},select:{id:true}});
+  if(!allowed)throw new HttpError(403,"FORBIDDEN","Alleen een team- of clubbeheerder mag het clublogo wijzigen");
+  return user;
+}
 export async function authorizeClub(clubId: string, write = false) {
   const user = await requireUser();
   if (user.platformRole === "admin") return user;

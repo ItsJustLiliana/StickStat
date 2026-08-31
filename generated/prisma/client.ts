@@ -24,7 +24,7 @@ export * as $Enums from './enums'
 export * from "./enums"
 /**
  * ## Prisma Client
- * 
+ *
  * Type-safe database client for TypeScript
  * @example
  * ```
@@ -111,3 +111,8 @@ export type MatchEvent = Prisma.MatchEventModel
  * 
  */
 export type SyncRun = Prisma.SyncRunModel
+/**
+ * Model TeamInvite
+ *
+ */
+export type TeamInvite = Prisma.TeamInviteModel

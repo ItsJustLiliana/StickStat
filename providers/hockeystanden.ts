@@ -25,7 +25,7 @@ export function parseHockeyStandenTeam(html:string):ExternalTeam|null{
   const heading=String(structured?.name??$("h1").first().text()).trim();
   if(!heading)return null;
   const member=structured?.memberOf as {name?:string}|undefined;
-  const logo=$(".team-hero img, img[alt*='Rapide' i]").first().attr("src");
+  const logo=$(".team-hero img, .club-logo img, img[alt*='logo' i]").first().attr("src");
   return{name:heading,clubName:member?.name,logoUrl:logo?.startsWith("/")?`https://hockeystanden.nl${logo}`:logo};
 }
 

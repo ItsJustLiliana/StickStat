@@ -14,7 +14,7 @@ describe("speler toevoegen",()=>{
   });
 
   it("maakt de zichtbare naam op de server",()=>{
-    expect(route).toContain("[d.firstName,d.namePrefix,d.lastName].filter(Boolean).join");
+    expect(route).toContain("[data.firstName,data.namePrefix,data.lastName].filter(Boolean).join");
     expect(schema).toContain("namePrefix String?");
   });
 
@@ -28,5 +28,12 @@ describe("speler toevoegen",()=>{
     expect(form).toContain('"DELETE",{playerId:player.id}');
     expect(route).toContain("data:{active:false,userId:null}");
     expect(route).toContain('filter(role=>role!=="player")');
+  });
+
+  it("laat alleen teambeheerders spelers maken, wijzigen en archiveren",()=>{
+    expect(route.match(/authorizeTeamAdmin\(teamId\)/g)).toHaveLength(3);
+    expect(route).toContain("export async function PATCH");
+    expect(form).toContain("Gearchiveerde spelers");
+    expect(form).toContain("Herstellen");
   });
 });

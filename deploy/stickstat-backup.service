@@ -1,0 +1,15 @@
+[Unit]
+Description=Back up StickStat database and uploads
+After=postgresql.service
+
+[Service]
+Type=oneshot
+WorkingDirectory=/projects/StickStat
+EnvironmentFile=/projects/StickStat/.env
+Environment=STICKSTAT_BACKUP_DIR=/projects/StickStat-backups
+Environment=STICKSTAT_BACKUP_RETENTION_DAYS=14
+ExecStart=/usr/bin/bash /projects/StickStat/deploy/backup.sh
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ReadWritePaths=/projects/StickStat-backups

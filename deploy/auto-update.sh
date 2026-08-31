@@ -54,7 +54,7 @@ service_changed=false
 if grep -Eq '^(app/|components/|generated/|lib/|providers/|public/|services/|prisma/|instrumentation\.ts$|proxy\.ts$|next\.config\.ts$|package(-lock)?\.json$|postcss\.config\.mjs$|tsconfig\.json$)' <<<"${changed_files}"; then
   app_changed=true
 fi
-if grep -Eq '^(deploy/stickstat\.service$)' <<<"${changed_files}"; then
+if grep -Eq '^(deploy/(stickstat\.service|stickstat-backup\.service|stickstat-backup\.timer|backup\.sh)$)' <<<"${changed_files}"; then
   service_changed=true
 fi
 if [[ "${force_full_deploy}" == "true" ]]; then
@@ -85,19 +85,27 @@ else
 fi
 
 service_dir="${HOME}/.config/systemd/user"
-service_file="${service_dir}/stickstat.service"
 mkdir -p "${service_dir}"
-if [[ "${service_changed}" == "true" ]] || ! cmp -s "${project_dir}/deploy/stickstat.service" "${service_file}"; then
-  cp "${project_dir}/deploy/stickstat.service" "${service_file}"
+mkdir -p /projects/StickStat-backups
+for unit in stickstat.service stickstat-backup.service stickstat-backup.timer; do
+  if [[ "${service_changed}" == "true" ]] || ! cmp -s "${project_dir}/deploy/${unit}" "${service_dir}/${unit}"; then
+    cp "${project_dir}/deploy/${unit}" "${service_dir}/${unit}"
+    service_changed=true
+  fi
+done
+if [[ "${service_changed}" == "true" ]]; then
   systemctl --user daemon-reload
-  service_changed=true
 fi
+systemctl --user enable --now stickstat-backup.timer
 
 if [[ "${app_changed}" == "true" || "${service_changed}" == "true" ]]; then
   systemctl --user restart stickstat.service
   systemctl --user is-active --quiet stickstat.service
 else
   echo "A service restart is not required."
+fi
+if [[ "${service_changed}" == "true" ]]; then
+  systemctl --user restart stickstat-backup.timer
 fi
 
 mkdir -p "${state_dir}"

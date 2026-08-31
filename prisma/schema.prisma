@@ -63,6 +63,8 @@ model User {
   clubMemberships ClubMembership[]
   teamMemberships TeamMembership[]
   player Player?
+  createdTeamInvites TeamInvite[] @relation("InviteCreator")
+  usedTeamInvites TeamInvite[] @relation("InviteUser")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -117,6 +119,7 @@ model Team {
   standings Standing[]
   players Player[]
   syncRuns SyncRun[]
+  invites TeamInvite[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   @@unique([clubId, name])
@@ -266,4 +269,19 @@ model SyncRun {
   updatedMatches Int @default(0)
   error String?
   @@index([teamId, startedAt])
+}
+
+model TeamInvite {
+  id String @id @default(cuid())
+  teamId String
+  team Team @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  tokenHash String @unique
+  createdById String
+  createdBy User @relation("InviteCreator", fields: [createdById], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  usedAt DateTime?
+  usedById String?
+  usedBy User? @relation("InviteUser", fields: [usedById], references: [id], onDelete: SetNull)
+  createdAt DateTime @default(now())
+  @@index([teamId, expiresAt])
 }

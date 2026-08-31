@@ -11,7 +11,7 @@ const roleLabels:Record<TeamRole,string>={player:"Speler",coach:"Coach",trainer:
 export default async function TeamMemberDetails({params,searchParams}:{params:Promise<{userId:string}>;searchParams:Promise<{team?:string}>}){
   const [{userId},query]=await Promise.all([params,searchParams]),{user,team}=await pageContext(query.team);
   if(!team)notFound();
-  const membership=await db.teamMembership.findUnique({where:{userId_teamId:{userId,teamId:team.id}},include:{user:{include:{player:{include:{matchStats:true,events:true}}}}}});
+  const membership=await db.teamMembership.findUnique({where:{userId_teamId:{userId,teamId:team.id}},include:{user:{include:{player:{include:{matchStats:{where:{match:{status:"finished"}}},events:{where:{match:{status:"finished"}}}}}}}}});
   if(!membership)notFound();
   const hasPlayerRole=membership.roles.includes("player"),player=hasPlayerRole&&membership.user.player?.teamId===team.id?membership.user.player:null,photo=membership.user.photoPath??player?.photoPath??null;
   const matches=player?.matchStats.length??0,goals=player?.matchStats.reduce((total,stat)=>total+stat.goals,0)??0,assists=player?.matchStats.reduce((total,stat)=>total+stat.assists,0)??0,mvps=player?.matchStats.filter(stat=>stat.mvp).length??0,cards=player?.events.filter(event=>event.type.endsWith("_card")).length??0;
