@@ -13,7 +13,8 @@ describe("spelersranglijsten",()=>{
   });
 
   it("telt alleen afgeronde wedstrijden van het gekozen team",()=>{
-    expect(page.match(/status:"finished"/g)?.length).toBeGreaterThanOrEqual(3);
+    expect(page).toContain('const matchFilter={status:"finished" as const');
+    expect(page.match(/matchFilter/g)?.length).toBeGreaterThanOrEqual(3);
     expect(api).toContain('status:"finished" as const');
     expect(api).toContain("matchStats:{where:{match:matchFilter}}");
     expect(api).toContain("events:{where:{match:matchFilter}}");
@@ -22,5 +23,13 @@ describe("spelersranglijsten",()=>{
   it("behoudt de teamselectie in links en beperkt grafieken tot tien spelers",()=>{
     expect(page).toContain("?team=${teamId}");
     expect(page).toContain(".slice(0,10)");
+  });
+
+  it("toont verdiepende team- en spelerstatistieken",()=>{
+    expect(page).toContain("detailedSummary");
+    expect(page).toContain("Thuis en uit");
+    expect(page).toContain("Spelerstatistieken");
+    expect(page).toContain("player.starts");
+    expect(page).toContain("player.perGame");
   });
 });
