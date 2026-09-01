@@ -40,6 +40,7 @@ html[data-theme="dark"] .player-photo,html[data-theme="dark"] .profile-photo.pla
 html[data-theme="dark"] .badge,html[data-theme="dark"] .role-options label,html[data-theme="dark"] .form-message{background:#20372d;color:var(--green)}
 html[data-theme="dark"] .badge.accent{background:var(--lime);color:#17300e}
 html[data-theme="dark"] .active-row{background:#20372d}
+html[data-theme="dark"] .standings-table .active-row .points{background:#20372d}
 html[data-theme="dark"] .button{background:#126a4d}
 html[data-theme="dark"] .button:hover{background:#16805d}
 html[data-theme="dark"] .button.secondary{background:#243b31;color:var(--green)}

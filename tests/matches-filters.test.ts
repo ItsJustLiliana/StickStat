@@ -8,14 +8,15 @@ describe("wedstrijdfilters", () => {
     it("biedt alle filters in een direct toegepaste popup", () => {
         expect(page).toContain("<MatchFilters");
         expect(page).not.toContain(">Filter</button>");
-        expect(filters).toContain('<details className="match-filters">');
+        expect(filters).toContain('className="match-filters"');
         expect(filters).toContain("router.replace(`/matches?");
-        expect(filters).toContain("Zoek tegenstander");
+        expect(filters).toContain("Tegenstander");
     });
 
     it("filtert op de tegenstander en markeert het eigen team", () => {
         expect(page).toMatch(/match\.homeTeamId\s*===\s*team\.id\s*\?\s*match\.awayTeam\.name\s*:\s*match\.homeTeam\.name/);
         expect(page).toContain('"own-team"');
-        expect(page).toContain("Jouw team");
+        expect(page).not.toContain("Jouw team");
+        expect(filters).toContain("closeOutside");
     });
 });

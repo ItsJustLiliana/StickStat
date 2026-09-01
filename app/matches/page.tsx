@@ -24,11 +24,10 @@ export default async function Matches({ searchParams }: { searchParams: Promise<
   if (query.q) matches = matches.filter(match => (match.homeTeamId === team.id ? match.awayTeam.name : match.homeTeam.name).toLowerCase().includes(query.q!.toLowerCase()));
 
   return <PageShell user={user}>
-    <div className="page-head"><div><span className="eyebrow">Programma & resultaten</span><h1>Wedstrijden</h1></div><TeamSelector teams={teams} current={team.id} /></div>
-    <MatchFilters key={query.q ?? ""} teamId={team.id} seasons={seasons} />
-    <section className="card" style={{ overflowX: "auto" }}>
+    <div className="page-head page-head-with-tools"><div><span className="eyebrow">Programma & resultaten</span><h1>Wedstrijden</h1></div><div className="page-head-tools"><TeamSelector teams={teams} current={team.id} /><MatchFilters key={query.q ?? ""} teamId={team.id} seasons={seasons} /></div></div>
+    <section className="card matches-table-card" style={{ overflowX: "auto" }}>
       <table><thead><tr><th>Datum</th><th>Wedstrijd</th><th>Uitslag</th></tr></thead><tbody>
-        {matches.map(match => <tr key={match.id}><td>{match.date.toLocaleDateString("nl-NL")}{match.startTime && <small className="muted"><br />{match.startTime}</small>}</td><td><Link className="match-teams" href={`/matches/${match.id}?team=${team.id}`}><span className={match.homeTeamId === team.id ? "own-team" : "opponent-team"}>{match.homeTeam.shortName}{match.homeTeamId === team.id && <small>Jouw team</small>}</span><span className="match-versus">–</span><span className={match.awayTeamId === team.id ? "own-team" : "opponent-team"}>{match.awayTeam.shortName}{match.awayTeamId === team.id && <small>Jouw team</small>}</span></Link></td><td className="score">{match.homeScore == null ? "–" : `${match.homeScore}–${match.awayScore}`}</td></tr>)}
+        {matches.map(match => <tr key={match.id}><td>{match.date.toLocaleDateString("nl-NL")}{match.startTime && <small className="muted"><br />{match.startTime}</small>}</td><td><Link className="match-teams" href={`/matches/${match.id}?team=${team.id}`}><span className={match.homeTeamId === team.id ? "own-team" : "opponent-team"}>{match.homeTeam.shortName}</span><span className="match-versus">–</span><span className={match.awayTeamId === team.id ? "own-team" : "opponent-team"}>{match.awayTeam.shortName}</span></Link></td><td className="score">{match.homeScore == null ? "–" : `${match.homeScore}–${match.awayScore}`}</td></tr>)}
       </tbody></table>
       {!matches.length && <div className="empty">Geen wedstrijden gevonden.</div>}
     </section>

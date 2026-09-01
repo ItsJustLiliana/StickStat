@@ -1,6 +1,6 @@
 import {EmptyTeam} from "@/components/empty-team";
 import {PageShell} from "@/components/page-shell";
-import {TeamSelector} from "@/components/team-selector";
+import {StandingsView} from "@/components/standings-view";
 import {db} from "@/lib/db";
 import {pageContext} from "@/lib/page-data";
 
@@ -17,13 +17,5 @@ export default async function Standings({searchParams}:{searchParams:Promise<{te
     orderBy:{position:"asc"},
   }):[];
 
-  return <PageShell user={user}>
-    <div className="page-head"><div><span className="eyebrow">{own?.competition??"Competitie"}</span><h1>Stand</h1></div><TeamSelector teams={teams} current={team.id}/></div>
-    <section className="card" style={{overflowX:"auto"}}>
-      <table><thead><tr><th>#</th><th>Team</th><th>GS</th><th>W</th><th>G</th><th>V</th><th>DV</th><th>DT</th><th>DS</th><th>P</th></tr></thead><tbody>
-        {rows.map(row=><tr className={row.teamId===team.id?"active-row":""} key={row.id}><td><strong>{row.position}</strong></td><td><strong>{row.team.shortName}</strong></td><td>{row.played}</td><td>{row.won}</td><td>{row.drawn}</td><td>{row.lost}</td><td>{row.goalsFor}</td><td>{row.goalsAgainst}</td><td>{row.goalDifference}</td><td><strong>{row.points}</strong></td></tr>)}
-      </tbody></table>
-      {!rows.length&&<div className="empty">De stand verschijnt na de eerste succesvolle synchronisatie.</div>}
-    </section>
-  </PageShell>;
+  return <PageShell user={user}><StandingsView competition={own?.competition??"Competitie"} teams={teams} currentTeamId={team.id} rows={rows.map(row=>({id:row.id,teamId:row.teamId,teamName:row.team.name,position:row.position,played:row.played,won:row.won,drawn:row.drawn,lost:row.lost,goalsFor:row.goalsFor,goalsAgainst:row.goalsAgainst,goalDifference:row.goalDifference,points:row.points}))}/></PageShell>;
 }

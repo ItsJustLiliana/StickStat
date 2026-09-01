@@ -569,29 +569,47 @@ td {
     flex-wrap: wrap
 }
 
+.page-head-tools {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px
+}
+
 .match-filters {
     position: relative;
     width: max-content;
     max-width: 100%;
-    margin-bottom: 18px
+    margin: 0
 }
 
 .match-filters summary {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
+    position: relative;
     list-style: none
 }
 
+.filter-trigger {
+    flex: 0 0 auto
+}
+
+.match-filters[open] .filter-trigger {
+    background: var(--green);
+    color: white
+}
+
 .filter-count {
-    min-width: 20px;
-    height: 20px;
+    min-width: 17px;
+    height: 17px;
     display: inline-grid;
     place-items: center;
+    position: absolute;
+    top: -6px;
+    right: -6px;
     border-radius: 999px;
-    background: #092f25;
-    color: var(--lime);
-    font-size: 11px
+    background: var(--orange);
+    color: white;
+    font-size: 10px;
+    box-shadow: 0 0 0 2px var(--paper)
 }
 
 .match-filters summary::-webkit-details-marker {
@@ -602,15 +620,30 @@ td {
     position: absolute;
     z-index: 10;
     top: calc(100% + 8px);
-    left: 0;
+    right: 0;
     display: grid;
     gap: 12px;
-    width: min(340px, calc(100vw - 36px));
-    padding: 16px;
+    width: min(390px, calc(100vw - 28px));
+    padding: 18px;
     border: 1px solid var(--line);
-    border-radius: 8px;
+    border-radius: 18px;
     background: var(--card);
-    box-shadow: 0 16px 32px #17392d24
+    box-shadow: 0 22px 60px #17392d2e
+}
+
+.match-filter-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line)
+}
+
+.match-filter-head strong {
+    display: block;
+    margin-top: 3px;
+    font-size: 18px
 }
 
 .match-filter-popup label {
@@ -619,6 +652,34 @@ td {
     color: var(--muted);
     font-size: 12px;
     font-weight: 800
+}
+
+.filter-select-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px
+}
+
+.filter-search {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding-left: 12px;
+    background: var(--card);
+    color: var(--muted)
+}
+
+.filter-search:focus-within {
+    border-color: var(--green);
+    box-shadow: 0 0 0 3px #0c5c4214
+}
+
+.filter-search .input {
+    border: 0;
+    padding-left: 0;
+    box-shadow: none
 }
 
 .match-filter-popup .input {
@@ -650,6 +711,101 @@ td {
     font-size: 10px;
     font-weight: 800;
     text-transform: uppercase
+}
+
+.matches-table-card tbody tr {
+    transition: background .15s ease
+}
+
+.matches-table-card tbody tr:hover {
+    background: #f2f7f4
+}
+
+.standings-card {
+    overflow-x: auto
+}
+
+.standings-table .team-name {
+    min-width: 210px;
+    white-space: nowrap
+}
+
+.standings-table .goal-difference,
+.standings-table .points {
+    font-variant-numeric: tabular-nums
+}
+
+.standings-table .points {
+    position: sticky;
+    right: 0;
+    z-index: 2;
+    background: var(--card);
+    box-shadow: -10px 0 16px #13382a0b
+}
+
+.standings-table .active-row .points {
+    background: #eefbd2
+}
+
+.standings-table .points strong {
+    display: inline-grid;
+    min-width: 34px;
+    height: 34px;
+    place-items: center;
+    border-radius: 10px;
+    background: #eaf2ed;
+    color: var(--green)
+}
+
+.detail-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    min-height: 38px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 850;
+    cursor: pointer
+}
+
+.detail-toggle i {
+    width: 42px;
+    height: 24px;
+    padding: 3px;
+    border-radius: 999px;
+    background: #cfdad4;
+    transition: background .18s ease
+}
+
+.detail-toggle b {
+    display: block;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: white;
+    box-shadow: 0 2px 6px #092f2530;
+    transition: transform .18s ease
+}
+
+.detail-toggle[aria-checked="true"] {
+    color: var(--green)
+}
+
+.detail-toggle[aria-checked="true"] i {
+    background: var(--green)
+}
+
+.detail-toggle[aria-checked="true"] b {
+    transform: translateX(18px)
+}
+
+.detail-toggle:focus-visible {
+    outline: 2px solid var(--green);
+    outline-offset: 4px;
+    border-radius: 6px
 }
 
 .opponent-team,
@@ -895,6 +1051,22 @@ td {
         flex-direction: column
     }
 
+    .page-head-with-tools {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: end;
+        width: 100%
+    }
+
+    .page-head-tools {
+        min-width: 0
+    }
+
+    .page-head-tools .team-switch {
+        width: min(220px, 32vw);
+        min-width: 0
+    }
+
     .filters>* {
         flex: 1 1 220px
     }
@@ -1013,6 +1185,33 @@ td {
     .page-head>.member-actions {
         width: 100%
     }
+
+    .page-head-with-tools .team-switch {
+        width: min(150px, 34vw)
+    }
+
+    .match-filter-popup {
+        top: calc(100% + 10px)
+    }
+
+    .filter-select-grid {
+        grid-template-columns: 1fr
+    }
+
+    .standings-card {
+        padding: 8px
+    }
+
+    .standings-table th,
+    .standings-table td {
+        padding-left: 8px;
+        padding-right: 8px
+    }
+
+    .standings-table .team-name {
+        min-width: 190px
+    }
+
 
     .filters {
         display: grid;
