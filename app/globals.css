@@ -736,15 +736,7 @@ td {
 }
 
 .standings-table .points {
-    position: sticky;
-    right: 0;
-    z-index: 2;
-    background: var(--card);
-    box-shadow: -10px 0 16px #13382a0b
-}
-
-.standings-table .active-row .points {
-    background: #eefbd2
+    background: transparent
 }
 
 .standings-table .points strong {
