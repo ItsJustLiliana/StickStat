@@ -9,7 +9,7 @@ const management = readFileSync("app/management.css", "utf8");
 
 describe("darkmode", () => {
   it("plaatst een toegankelijke schakelaar naast het profiel", () => {
-    expect(nav).toContain('<div className="account-actions"><ThemeToggle/><Link className="avatar"');
+    expect(nav).toMatch(/className="account-actions"[\s\S]*<ThemeToggle\s*\/>[\s\S]*className="avatar"/);
     expect(toggle).toContain('aria-label={dark?"Lichte modus inschakelen":"Donkere modus inschakelen"}');
     expect(toggle).toContain("Moon");
     expect(toggle).toContain("Sun");

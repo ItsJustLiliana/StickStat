@@ -19,6 +19,6 @@ describe("vereenvoudigde overzichten",()=>{
   });
 
   it("sorteert wedstrijden van vroeg naar laat",()=>{
-    expect(matches).toContain('orderBy:[{date:"asc"},{startTime:"asc"}]');
+    expect(matches).toMatch(/orderBy:\s*\[\s*\{\s*date:\s*"asc"\s*\},\s*\{\s*startTime:\s*"asc"\s*\}\s*\]/);
   });
 });

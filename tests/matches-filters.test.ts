@@ -14,7 +14,7 @@ describe("wedstrijdfilters", () => {
     });
 
     it("filtert op de tegenstander en markeert het eigen team", () => {
-        expect(page).toContain("match.homeTeamId===team.id?match.awayTeam.name:match.homeTeam.name");
+        expect(page).toMatch(/match\.homeTeamId\s*===\s*team\.id\s*\?\s*match\.awayTeam\.name\s*:\s*match\.homeTeam\.name/);
         expect(page).toContain('"own-team"');
         expect(page).toContain("Jouw team");
     });

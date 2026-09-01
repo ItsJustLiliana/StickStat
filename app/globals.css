@@ -583,6 +583,17 @@ td {
     list-style: none
 }
 
+.filter-count {
+    min-width: 20px;
+    height: 20px;
+    display: inline-grid;
+    place-items: center;
+    border-radius: 999px;
+    background: #092f25;
+    color: var(--lime);
+    font-size: 11px
+}
+
 .match-filters summary::-webkit-details-marker {
     display: none
 }
@@ -613,6 +624,10 @@ td {
 .match-filter-popup .input {
     width: 100%;
     min-width: 0
+}
+
+.clear-filters {
+    width: 100%
 }
 
 .match-teams {

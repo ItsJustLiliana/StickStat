@@ -1,3 +1,33 @@
-"use client"; import Link from "next/link"; import Image from "next/image"; import { usePathname } from "next/navigation"; import { BarChart3, CalendarDays, LayoutDashboard, Shield, Table2, Users } from "lucide-react"; import { ThemeToggle } from "./theme-toggle";
-const links = [{ href: "/dashboard", label: "Dashboard", icon: LayoutDashboard }, { href: "/matches", label: "Wedstrijden", icon: CalendarDays }, { href: "/standings", label: "Stand", icon: Table2 }, { href: "/players", label: "Spelers", icon: Users }, { href: "/statistics", label: "Statistieken", icon: BarChart3 }];
-export function AppNav({ name, photoPath, admin }: { name: string; photoPath: string | null; admin: boolean }) { const pathname = usePathname(), isCurrent = (href: string) => pathname === href || pathname.startsWith(`${href}/`); return <><header className="topbar"><Link className="brand" href="/dashboard"><span className="brand-mark">S</span>StickStat</Link><nav className="topnav">{links.map(x => <Link key={x.href} href={x.href} aria-current={isCurrent(x.href) ? "page" : undefined}>{x.label}</Link>)}{admin && <Link href="/admin" aria-current={isCurrent("/admin") ? "page" : undefined}><Shield size={14} style={{ display: "inline", verticalAlign: "-2px", marginRight: 4 }} />Platform</Link>}</nav><div className="account-actions"><ThemeToggle /><Link className="avatar" href="/profile" title={`${name} · Profiel`}>{photoPath ? <Image unoptimized width={36} height={36} src={photoPath} alt="" /> : name[0]?.toUpperCase()}</Link></div></header><nav className="mobile-nav">{links.map(({ href, label, icon: Icon }) => <Link key={href} href={href} aria-current={isCurrent(href) ? "page" : undefined}><Icon size={19} />{label}</Link>)}</nav></> }
+"use client";
+
+import Image from "next/image";
+import Link from "next/link";
+import {usePathname} from "next/navigation";
+import {BarChart3,CalendarDays,LayoutDashboard,Shield,Table2,Users} from "lucide-react";
+import {ThemeToggle} from "./theme-toggle";
+
+const links=[
+  {href:"/dashboard",label:"Dashboard",icon:LayoutDashboard},
+  {href:"/matches",label:"Wedstrijden",icon:CalendarDays},
+  {href:"/standings",label:"Stand",icon:Table2},
+  {href:"/players",label:"Spelers",icon:Users},
+  {href:"/statistics",label:"Statistieken",icon:BarChart3},
+];
+
+export function AppNav({name,photoPath,admin}:{name:string;photoPath:string|null;admin:boolean}){
+  const pathname=usePathname();
+  const isCurrent=(href:string)=>pathname===href||pathname.startsWith(`${href}/`);
+  return <>
+    <header className="topbar">
+      <Link className="brand" href="/dashboard"><span className="brand-mark">S</span>StickStat</Link>
+      <nav className="topnav" aria-label="Hoofdnavigatie">
+        {links.map(link=><Link key={link.href} href={link.href} aria-current={isCurrent(link.href)?"page":undefined}>{link.label}</Link>)}
+        {admin&&<Link href="/admin" aria-current={isCurrent("/admin")?"page":undefined}><Shield size={14} style={{display:"inline",verticalAlign:"-2px",marginRight:4}}/>Platform</Link>}
+      </nav>
+      <div className="account-actions"><ThemeToggle/><Link className="avatar" href="/profile" aria-current={isCurrent("/profile")?"page":undefined} title={`${name} · Profiel`}>{photoPath?<Image unoptimized width={36} height={36} src={photoPath} alt=""/>:name[0]?.toUpperCase()}</Link></div>
+    </header>
+    <nav className="mobile-nav" aria-label="Mobiele navigatie">
+      {links.map(({href,label,icon:Icon})=><Link key={href} href={href} aria-current={isCurrent(href)?"page":undefined}><Icon size={19}/>{label}</Link>)}
+    </nav>
+  </>;
+}
