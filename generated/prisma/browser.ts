@@ -6,7 +6,7 @@
 /*
  * This file should be your main import to use Prisma-related types and utilities in a browser. 
  * Use it to get access to models, enums, and input types.
- *
+ * 
  * This file does not contain a `PrismaClient` class, nor several other helpers that are intended as server-side only.
  * See `client.ts` for the standard, server-side entry point.
  *
@@ -73,6 +73,36 @@ export type Standing = Prisma.StandingModel
  */
 export type Player = Prisma.PlayerModel
 /**
+ * Model MatchAttendance
+ * 
+ */
+export type MatchAttendance = Prisma.MatchAttendanceModel
+/**
+ * Model Training
+ * 
+ */
+export type Training = Prisma.TrainingModel
+/**
+ * Model TrainingAttendance
+ * 
+ */
+export type TrainingAttendance = Prisma.TrainingAttendanceModel
+/**
+ * Model StatisticPreference
+ * 
+ */
+export type StatisticPreference = Prisma.StatisticPreferenceModel
+/**
+ * Model Notification
+ * 
+ */
+export type Notification = Prisma.NotificationModel
+/**
+ * Model AppRelease
+ * 
+ */
+export type AppRelease = Prisma.AppReleaseModel
+/**
  * Model PlayerMatchStats
  * 
  */
@@ -89,6 +119,6 @@ export type MatchEvent = Prisma.MatchEventModel
 export type SyncRun = Prisma.SyncRunModel
 /**
  * Model TeamInvite
- *
+ * 
  */
 export type TeamInvite = Prisma.TeamInviteModel

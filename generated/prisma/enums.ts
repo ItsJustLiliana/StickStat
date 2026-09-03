@@ -70,3 +70,20 @@ export const SyncStatus = {
 } as const
 
 export type SyncStatus = (typeof SyncStatus)[keyof typeof SyncStatus]
+
+
+export const AttendanceStatus = {
+  present: 'present',
+  unknown: 'unknown',
+  absent: 'absent'
+} as const
+
+export type AttendanceStatus = (typeof AttendanceStatus)[keyof typeof AttendanceStatus]
+
+
+export const NotificationType = {
+  app_update: 'app_update',
+  general: 'general'
+} as const
+
+export type NotificationType = (typeof NotificationType)[keyof typeof NotificationType]

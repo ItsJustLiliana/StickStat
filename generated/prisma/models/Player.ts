@@ -301,6 +301,8 @@ export type PlayerWhereInput = {
   matchStats?: Prisma.PlayerMatchStatsListRelationFilter
   events?: Prisma.MatchEventListRelationFilter
   relatedEvents?: Prisma.MatchEventListRelationFilter
+  matchAttendance?: Prisma.MatchAttendanceListRelationFilter
+  trainingAttendance?: Prisma.TrainingAttendanceListRelationFilter
 }
 
 export type PlayerOrderByWithRelationInput = {
@@ -324,6 +326,8 @@ export type PlayerOrderByWithRelationInput = {
   matchStats?: Prisma.PlayerMatchStatsOrderByRelationAggregateInput
   events?: Prisma.MatchEventOrderByRelationAggregateInput
   relatedEvents?: Prisma.MatchEventOrderByRelationAggregateInput
+  matchAttendance?: Prisma.MatchAttendanceOrderByRelationAggregateInput
+  trainingAttendance?: Prisma.TrainingAttendanceOrderByRelationAggregateInput
 }
 
 export type PlayerWhereUniqueInput = Prisma.AtLeast<{
@@ -350,6 +354,8 @@ export type PlayerWhereUniqueInput = Prisma.AtLeast<{
   matchStats?: Prisma.PlayerMatchStatsListRelationFilter
   events?: Prisma.MatchEventListRelationFilter
   relatedEvents?: Prisma.MatchEventListRelationFilter
+  matchAttendance?: Prisma.MatchAttendanceListRelationFilter
+  trainingAttendance?: Prisma.TrainingAttendanceListRelationFilter
 }, "id" | "userId">
 
 export type PlayerOrderByWithAggregationInput = {
@@ -415,6 +421,8 @@ export type PlayerCreateInput = {
   matchStats?: Prisma.PlayerMatchStatsCreateNestedManyWithoutPlayerInput
   events?: Prisma.MatchEventCreateNestedManyWithoutPlayerInput
   relatedEvents?: Prisma.MatchEventCreateNestedManyWithoutRelatedPlayerInput
+  matchAttendance?: Prisma.MatchAttendanceCreateNestedManyWithoutPlayerInput
+  trainingAttendance?: Prisma.TrainingAttendanceCreateNestedManyWithoutPlayerInput
 }
 
 export type PlayerUncheckedCreateInput = {
@@ -436,6 +444,8 @@ export type PlayerUncheckedCreateInput = {
   matchStats?: Prisma.PlayerMatchStatsUncheckedCreateNestedManyWithoutPlayerInput
   events?: Prisma.MatchEventUncheckedCreateNestedManyWithoutPlayerInput
   relatedEvents?: Prisma.MatchEventUncheckedCreateNestedManyWithoutRelatedPlayerInput
+  matchAttendance?: Prisma.MatchAttendanceUncheckedCreateNestedManyWithoutPlayerInput
+  trainingAttendance?: Prisma.TrainingAttendanceUncheckedCreateNestedManyWithoutPlayerInput
 }
 
 export type PlayerUpdateInput = {
@@ -457,6 +467,8 @@ export type PlayerUpdateInput = {
   matchStats?: Prisma.PlayerMatchStatsUpdateManyWithoutPlayerNestedInput
   events?: Prisma.MatchEventUpdateManyWithoutPlayerNestedInput
   relatedEvents?: Prisma.MatchEventUpdateManyWithoutRelatedPlayerNestedInput
+  matchAttendance?: Prisma.MatchAttendanceUpdateManyWithoutPlayerNestedInput
+  trainingAttendance?: Prisma.TrainingAttendanceUpdateManyWithoutPlayerNestedInput
 }
 
 export type PlayerUncheckedUpdateInput = {
@@ -478,6 +490,8 @@ export type PlayerUncheckedUpdateInput = {
   matchStats?: Prisma.PlayerMatchStatsUncheckedUpdateManyWithoutPlayerNestedInput
   events?: Prisma.MatchEventUncheckedUpdateManyWithoutPlayerNestedInput
   relatedEvents?: Prisma.MatchEventUncheckedUpdateManyWithoutRelatedPlayerNestedInput
+  matchAttendance?: Prisma.MatchAttendanceUncheckedUpdateManyWithoutPlayerNestedInput
+  trainingAttendance?: Prisma.TrainingAttendanceUncheckedUpdateManyWithoutPlayerNestedInput
 }
 
 export type PlayerCreateManyInput = {
@@ -692,6 +706,34 @@ export type BoolFieldUpdateOperationsInput = {
   set?: boolean
 }
 
+export type PlayerCreateNestedOneWithoutMatchAttendanceInput = {
+  create?: Prisma.XOR<Prisma.PlayerCreateWithoutMatchAttendanceInput, Prisma.PlayerUncheckedCreateWithoutMatchAttendanceInput>
+  connectOrCreate?: Prisma.PlayerCreateOrConnectWithoutMatchAttendanceInput
+  connect?: Prisma.PlayerWhereUniqueInput
+}
+
+export type PlayerUpdateOneRequiredWithoutMatchAttendanceNestedInput = {
+  create?: Prisma.XOR<Prisma.PlayerCreateWithoutMatchAttendanceInput, Prisma.PlayerUncheckedCreateWithoutMatchAttendanceInput>
+  connectOrCreate?: Prisma.PlayerCreateOrConnectWithoutMatchAttendanceInput
+  upsert?: Prisma.PlayerUpsertWithoutMatchAttendanceInput
+  connect?: Prisma.PlayerWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PlayerUpdateToOneWithWhereWithoutMatchAttendanceInput, Prisma.PlayerUpdateWithoutMatchAttendanceInput>, Prisma.PlayerUncheckedUpdateWithoutMatchAttendanceInput>
+}
+
+export type PlayerCreateNestedOneWithoutTrainingAttendanceInput = {
+  create?: Prisma.XOR<Prisma.PlayerCreateWithoutTrainingAttendanceInput, Prisma.PlayerUncheckedCreateWithoutTrainingAttendanceInput>
+  connectOrCreate?: Prisma.PlayerCreateOrConnectWithoutTrainingAttendanceInput
+  connect?: Prisma.PlayerWhereUniqueInput
+}
+
+export type PlayerUpdateOneRequiredWithoutTrainingAttendanceNestedInput = {
+  create?: Prisma.XOR<Prisma.PlayerCreateWithoutTrainingAttendanceInput, Prisma.PlayerUncheckedCreateWithoutTrainingAttendanceInput>
+  connectOrCreate?: Prisma.PlayerCreateOrConnectWithoutTrainingAttendanceInput
+  upsert?: Prisma.PlayerUpsertWithoutTrainingAttendanceInput
+  connect?: Prisma.PlayerWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PlayerUpdateToOneWithWhereWithoutTrainingAttendanceInput, Prisma.PlayerUpdateWithoutTrainingAttendanceInput>, Prisma.PlayerUncheckedUpdateWithoutTrainingAttendanceInput>
+}
+
 export type PlayerCreateNestedOneWithoutMatchStatsInput = {
   create?: Prisma.XOR<Prisma.PlayerCreateWithoutMatchStatsInput, Prisma.PlayerUncheckedCreateWithoutMatchStatsInput>
   connectOrCreate?: Prisma.PlayerCreateOrConnectWithoutMatchStatsInput
@@ -756,6 +798,8 @@ export type PlayerCreateWithoutUserInput = {
   matchStats?: Prisma.PlayerMatchStatsCreateNestedManyWithoutPlayerInput
   events?: Prisma.MatchEventCreateNestedManyWithoutPlayerInput
   relatedEvents?: Prisma.MatchEventCreateNestedManyWithoutRelatedPlayerInput
+  matchAttendance?: Prisma.MatchAttendanceCreateNestedManyWithoutPlayerInput
+  trainingAttendance?: Prisma.TrainingAttendanceCreateNestedManyWithoutPlayerInput
 }
 
 export type PlayerUncheckedCreateWithoutUserInput = {
@@ -776,6 +820,8 @@ export type PlayerUncheckedCreateWithoutUserInput = {
   matchStats?: Prisma.PlayerMatchStatsUncheckedCreateNestedManyWithoutPlayerInput
   events?: Prisma.MatchEventUncheckedCreateNestedManyWithoutPlayerInput
   relatedEvents?: Prisma.MatchEventUncheckedCreateNestedManyWithoutRelatedPlayerInput
+  matchAttendance?: Prisma.MatchAttendanceUncheckedCreateNestedManyWithoutPlayerInput
+  trainingAttendance?: Prisma.TrainingAttendanceUncheckedCreateNestedManyWithoutPlayerInput
 }
 
 export type PlayerCreateOrConnectWithoutUserInput = {
@@ -812,6 +858,8 @@ export type PlayerUpdateWithoutUserInput = {
   matchStats?: Prisma.PlayerMatchStatsUpdateManyWithoutPlayerNestedInput
   events?: Prisma.MatchEventUpdateManyWithoutPlayerNestedInput
   relatedEvents?: Prisma.MatchEventUpdateManyWithoutRelatedPlayerNestedInput
+  matchAttendance?: Prisma.MatchAttendanceUpdateManyWithoutPlayerNestedInput
+  trainingAttendance?: Prisma.TrainingAttendanceUpdateManyWithoutPlayerNestedInput
 }
 
 export type PlayerUncheckedUpdateWithoutUserInput = {
@@ -832,6 +880,8 @@ export type PlayerUncheckedUpdateWithoutUserInput = {
   matchStats?: Prisma.PlayerMatchStatsUncheckedUpdateManyWithoutPlayerNestedInput
   events?: Prisma.MatchEventUncheckedUpdateManyWithoutPlayerNestedInput
   relatedEvents?: Prisma.MatchEventUncheckedUpdateManyWithoutRelatedPlayerNestedInput
+  matchAttendance?: Prisma.MatchAttendanceUncheckedUpdateManyWithoutPlayerNestedInput
+  trainingAttendance?: Prisma.TrainingAttendanceUncheckedUpdateManyWithoutPlayerNestedInput
 }
 
 export type PlayerCreateWithoutTeamInput = {
@@ -852,6 +902,8 @@ export type PlayerCreateWithoutTeamInput = {
   matchStats?: Prisma.PlayerMatchStatsCreateNestedManyWithoutPlayerInput
   events?: Prisma.MatchEventCreateNestedManyWithoutPlayerInput
   relatedEvents?: Prisma.MatchEventCreateNestedManyWithoutRelatedPlayerInput
+  matchAttendance?: Prisma.MatchAttendanceCreateNestedManyWithoutPlayerInput
+  trainingAttendance?: Prisma.TrainingAttendanceCreateNestedManyWithoutPlayerInput
 }
 
 export type PlayerUncheckedCreateWithoutTeamInput = {
@@ -872,6 +924,8 @@ export type PlayerUncheckedCreateWithoutTeamInput = {
   matchStats?: Prisma.PlayerMatchStatsUncheckedCreateNestedManyWithoutPlayerInput
   events?: Prisma.MatchEventUncheckedCreateNestedManyWithoutPlayerInput
   relatedEvents?: Prisma.MatchEventUncheckedCreateNestedManyWithoutRelatedPlayerInput
+  matchAttendance?: Prisma.MatchAttendanceUncheckedCreateNestedManyWithoutPlayerInput
+  trainingAttendance?: Prisma.TrainingAttendanceUncheckedCreateNestedManyWithoutPlayerInput
 }
 
 export type PlayerCreateOrConnectWithoutTeamInput = {
@@ -921,6 +975,214 @@ export type PlayerScalarWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Player"> | Date | string
 }
 
+export type PlayerCreateWithoutMatchAttendanceInput = {
+  id?: string
+  firstName: string
+  namePrefix?: string | null
+  lastName: string
+  displayName: string
+  shirtNumber?: number | null
+  position?: string | null
+  photoPath?: string | null
+  active?: boolean
+  trainingMember?: boolean
+  matchMember?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  team: Prisma.TeamCreateNestedOneWithoutPlayersInput
+  user?: Prisma.UserCreateNestedOneWithoutPlayerInput
+  matchStats?: Prisma.PlayerMatchStatsCreateNestedManyWithoutPlayerInput
+  events?: Prisma.MatchEventCreateNestedManyWithoutPlayerInput
+  relatedEvents?: Prisma.MatchEventCreateNestedManyWithoutRelatedPlayerInput
+  trainingAttendance?: Prisma.TrainingAttendanceCreateNestedManyWithoutPlayerInput
+}
+
+export type PlayerUncheckedCreateWithoutMatchAttendanceInput = {
+  id?: string
+  teamId: string
+  userId?: string | null
+  firstName: string
+  namePrefix?: string | null
+  lastName: string
+  displayName: string
+  shirtNumber?: number | null
+  position?: string | null
+  photoPath?: string | null
+  active?: boolean
+  trainingMember?: boolean
+  matchMember?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  matchStats?: Prisma.PlayerMatchStatsUncheckedCreateNestedManyWithoutPlayerInput
+  events?: Prisma.MatchEventUncheckedCreateNestedManyWithoutPlayerInput
+  relatedEvents?: Prisma.MatchEventUncheckedCreateNestedManyWithoutRelatedPlayerInput
+  trainingAttendance?: Prisma.TrainingAttendanceUncheckedCreateNestedManyWithoutPlayerInput
+}
+
+export type PlayerCreateOrConnectWithoutMatchAttendanceInput = {
+  where: Prisma.PlayerWhereUniqueInput
+  create: Prisma.XOR<Prisma.PlayerCreateWithoutMatchAttendanceInput, Prisma.PlayerUncheckedCreateWithoutMatchAttendanceInput>
+}
+
+export type PlayerUpsertWithoutMatchAttendanceInput = {
+  update: Prisma.XOR<Prisma.PlayerUpdateWithoutMatchAttendanceInput, Prisma.PlayerUncheckedUpdateWithoutMatchAttendanceInput>
+  create: Prisma.XOR<Prisma.PlayerCreateWithoutMatchAttendanceInput, Prisma.PlayerUncheckedCreateWithoutMatchAttendanceInput>
+  where?: Prisma.PlayerWhereInput
+}
+
+export type PlayerUpdateToOneWithWhereWithoutMatchAttendanceInput = {
+  where?: Prisma.PlayerWhereInput
+  data: Prisma.XOR<Prisma.PlayerUpdateWithoutMatchAttendanceInput, Prisma.PlayerUncheckedUpdateWithoutMatchAttendanceInput>
+}
+
+export type PlayerUpdateWithoutMatchAttendanceInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  namePrefix?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  shirtNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  trainingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  matchMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  team?: Prisma.TeamUpdateOneRequiredWithoutPlayersNestedInput
+  user?: Prisma.UserUpdateOneWithoutPlayerNestedInput
+  matchStats?: Prisma.PlayerMatchStatsUpdateManyWithoutPlayerNestedInput
+  events?: Prisma.MatchEventUpdateManyWithoutPlayerNestedInput
+  relatedEvents?: Prisma.MatchEventUpdateManyWithoutRelatedPlayerNestedInput
+  trainingAttendance?: Prisma.TrainingAttendanceUpdateManyWithoutPlayerNestedInput
+}
+
+export type PlayerUncheckedUpdateWithoutMatchAttendanceInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  teamId?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  namePrefix?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  shirtNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  trainingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  matchMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  matchStats?: Prisma.PlayerMatchStatsUncheckedUpdateManyWithoutPlayerNestedInput
+  events?: Prisma.MatchEventUncheckedUpdateManyWithoutPlayerNestedInput
+  relatedEvents?: Prisma.MatchEventUncheckedUpdateManyWithoutRelatedPlayerNestedInput
+  trainingAttendance?: Prisma.TrainingAttendanceUncheckedUpdateManyWithoutPlayerNestedInput
+}
+
+export type PlayerCreateWithoutTrainingAttendanceInput = {
+  id?: string
+  firstName: string
+  namePrefix?: string | null
+  lastName: string
+  displayName: string
+  shirtNumber?: number | null
+  position?: string | null
+  photoPath?: string | null
+  active?: boolean
+  trainingMember?: boolean
+  matchMember?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  team: Prisma.TeamCreateNestedOneWithoutPlayersInput
+  user?: Prisma.UserCreateNestedOneWithoutPlayerInput
+  matchStats?: Prisma.PlayerMatchStatsCreateNestedManyWithoutPlayerInput
+  events?: Prisma.MatchEventCreateNestedManyWithoutPlayerInput
+  relatedEvents?: Prisma.MatchEventCreateNestedManyWithoutRelatedPlayerInput
+  matchAttendance?: Prisma.MatchAttendanceCreateNestedManyWithoutPlayerInput
+}
+
+export type PlayerUncheckedCreateWithoutTrainingAttendanceInput = {
+  id?: string
+  teamId: string
+  userId?: string | null
+  firstName: string
+  namePrefix?: string | null
+  lastName: string
+  displayName: string
+  shirtNumber?: number | null
+  position?: string | null
+  photoPath?: string | null
+  active?: boolean
+  trainingMember?: boolean
+  matchMember?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  matchStats?: Prisma.PlayerMatchStatsUncheckedCreateNestedManyWithoutPlayerInput
+  events?: Prisma.MatchEventUncheckedCreateNestedManyWithoutPlayerInput
+  relatedEvents?: Prisma.MatchEventUncheckedCreateNestedManyWithoutRelatedPlayerInput
+  matchAttendance?: Prisma.MatchAttendanceUncheckedCreateNestedManyWithoutPlayerInput
+}
+
+export type PlayerCreateOrConnectWithoutTrainingAttendanceInput = {
+  where: Prisma.PlayerWhereUniqueInput
+  create: Prisma.XOR<Prisma.PlayerCreateWithoutTrainingAttendanceInput, Prisma.PlayerUncheckedCreateWithoutTrainingAttendanceInput>
+}
+
+export type PlayerUpsertWithoutTrainingAttendanceInput = {
+  update: Prisma.XOR<Prisma.PlayerUpdateWithoutTrainingAttendanceInput, Prisma.PlayerUncheckedUpdateWithoutTrainingAttendanceInput>
+  create: Prisma.XOR<Prisma.PlayerCreateWithoutTrainingAttendanceInput, Prisma.PlayerUncheckedCreateWithoutTrainingAttendanceInput>
+  where?: Prisma.PlayerWhereInput
+}
+
+export type PlayerUpdateToOneWithWhereWithoutTrainingAttendanceInput = {
+  where?: Prisma.PlayerWhereInput
+  data: Prisma.XOR<Prisma.PlayerUpdateWithoutTrainingAttendanceInput, Prisma.PlayerUncheckedUpdateWithoutTrainingAttendanceInput>
+}
+
+export type PlayerUpdateWithoutTrainingAttendanceInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  namePrefix?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  shirtNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  trainingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  matchMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  team?: Prisma.TeamUpdateOneRequiredWithoutPlayersNestedInput
+  user?: Prisma.UserUpdateOneWithoutPlayerNestedInput
+  matchStats?: Prisma.PlayerMatchStatsUpdateManyWithoutPlayerNestedInput
+  events?: Prisma.MatchEventUpdateManyWithoutPlayerNestedInput
+  relatedEvents?: Prisma.MatchEventUpdateManyWithoutRelatedPlayerNestedInput
+  matchAttendance?: Prisma.MatchAttendanceUpdateManyWithoutPlayerNestedInput
+}
+
+export type PlayerUncheckedUpdateWithoutTrainingAttendanceInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  teamId?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  namePrefix?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  shirtNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  trainingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  matchMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  matchStats?: Prisma.PlayerMatchStatsUncheckedUpdateManyWithoutPlayerNestedInput
+  events?: Prisma.MatchEventUncheckedUpdateManyWithoutPlayerNestedInput
+  relatedEvents?: Prisma.MatchEventUncheckedUpdateManyWithoutRelatedPlayerNestedInput
+  matchAttendance?: Prisma.MatchAttendanceUncheckedUpdateManyWithoutPlayerNestedInput
+}
+
 export type PlayerCreateWithoutMatchStatsInput = {
   id?: string
   firstName: string
@@ -939,6 +1201,8 @@ export type PlayerCreateWithoutMatchStatsInput = {
   user?: Prisma.UserCreateNestedOneWithoutPlayerInput
   events?: Prisma.MatchEventCreateNestedManyWithoutPlayerInput
   relatedEvents?: Prisma.MatchEventCreateNestedManyWithoutRelatedPlayerInput
+  matchAttendance?: Prisma.MatchAttendanceCreateNestedManyWithoutPlayerInput
+  trainingAttendance?: Prisma.TrainingAttendanceCreateNestedManyWithoutPlayerInput
 }
 
 export type PlayerUncheckedCreateWithoutMatchStatsInput = {
@@ -959,6 +1223,8 @@ export type PlayerUncheckedCreateWithoutMatchStatsInput = {
   updatedAt?: Date | string
   events?: Prisma.MatchEventUncheckedCreateNestedManyWithoutPlayerInput
   relatedEvents?: Prisma.MatchEventUncheckedCreateNestedManyWithoutRelatedPlayerInput
+  matchAttendance?: Prisma.MatchAttendanceUncheckedCreateNestedManyWithoutPlayerInput
+  trainingAttendance?: Prisma.TrainingAttendanceUncheckedCreateNestedManyWithoutPlayerInput
 }
 
 export type PlayerCreateOrConnectWithoutMatchStatsInput = {
@@ -995,6 +1261,8 @@ export type PlayerUpdateWithoutMatchStatsInput = {
   user?: Prisma.UserUpdateOneWithoutPlayerNestedInput
   events?: Prisma.MatchEventUpdateManyWithoutPlayerNestedInput
   relatedEvents?: Prisma.MatchEventUpdateManyWithoutRelatedPlayerNestedInput
+  matchAttendance?: Prisma.MatchAttendanceUpdateManyWithoutPlayerNestedInput
+  trainingAttendance?: Prisma.TrainingAttendanceUpdateManyWithoutPlayerNestedInput
 }
 
 export type PlayerUncheckedUpdateWithoutMatchStatsInput = {
@@ -1015,6 +1283,8 @@ export type PlayerUncheckedUpdateWithoutMatchStatsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   events?: Prisma.MatchEventUncheckedUpdateManyWithoutPlayerNestedInput
   relatedEvents?: Prisma.MatchEventUncheckedUpdateManyWithoutRelatedPlayerNestedInput
+  matchAttendance?: Prisma.MatchAttendanceUncheckedUpdateManyWithoutPlayerNestedInput
+  trainingAttendance?: Prisma.TrainingAttendanceUncheckedUpdateManyWithoutPlayerNestedInput
 }
 
 export type PlayerCreateWithoutEventsInput = {
@@ -1035,6 +1305,8 @@ export type PlayerCreateWithoutEventsInput = {
   user?: Prisma.UserCreateNestedOneWithoutPlayerInput
   matchStats?: Prisma.PlayerMatchStatsCreateNestedManyWithoutPlayerInput
   relatedEvents?: Prisma.MatchEventCreateNestedManyWithoutRelatedPlayerInput
+  matchAttendance?: Prisma.MatchAttendanceCreateNestedManyWithoutPlayerInput
+  trainingAttendance?: Prisma.TrainingAttendanceCreateNestedManyWithoutPlayerInput
 }
 
 export type PlayerUncheckedCreateWithoutEventsInput = {
@@ -1055,6 +1327,8 @@ export type PlayerUncheckedCreateWithoutEventsInput = {
   updatedAt?: Date | string
   matchStats?: Prisma.PlayerMatchStatsUncheckedCreateNestedManyWithoutPlayerInput
   relatedEvents?: Prisma.MatchEventUncheckedCreateNestedManyWithoutRelatedPlayerInput
+  matchAttendance?: Prisma.MatchAttendanceUncheckedCreateNestedManyWithoutPlayerInput
+  trainingAttendance?: Prisma.TrainingAttendanceUncheckedCreateNestedManyWithoutPlayerInput
 }
 
 export type PlayerCreateOrConnectWithoutEventsInput = {
@@ -1080,6 +1354,8 @@ export type PlayerCreateWithoutRelatedEventsInput = {
   user?: Prisma.UserCreateNestedOneWithoutPlayerInput
   matchStats?: Prisma.PlayerMatchStatsCreateNestedManyWithoutPlayerInput
   events?: Prisma.MatchEventCreateNestedManyWithoutPlayerInput
+  matchAttendance?: Prisma.MatchAttendanceCreateNestedManyWithoutPlayerInput
+  trainingAttendance?: Prisma.TrainingAttendanceCreateNestedManyWithoutPlayerInput
 }
 
 export type PlayerUncheckedCreateWithoutRelatedEventsInput = {
@@ -1100,6 +1376,8 @@ export type PlayerUncheckedCreateWithoutRelatedEventsInput = {
   updatedAt?: Date | string
   matchStats?: Prisma.PlayerMatchStatsUncheckedCreateNestedManyWithoutPlayerInput
   events?: Prisma.MatchEventUncheckedCreateNestedManyWithoutPlayerInput
+  matchAttendance?: Prisma.MatchAttendanceUncheckedCreateNestedManyWithoutPlayerInput
+  trainingAttendance?: Prisma.TrainingAttendanceUncheckedCreateNestedManyWithoutPlayerInput
 }
 
 export type PlayerCreateOrConnectWithoutRelatedEventsInput = {
@@ -1136,6 +1414,8 @@ export type PlayerUpdateWithoutEventsInput = {
   user?: Prisma.UserUpdateOneWithoutPlayerNestedInput
   matchStats?: Prisma.PlayerMatchStatsUpdateManyWithoutPlayerNestedInput
   relatedEvents?: Prisma.MatchEventUpdateManyWithoutRelatedPlayerNestedInput
+  matchAttendance?: Prisma.MatchAttendanceUpdateManyWithoutPlayerNestedInput
+  trainingAttendance?: Prisma.TrainingAttendanceUpdateManyWithoutPlayerNestedInput
 }
 
 export type PlayerUncheckedUpdateWithoutEventsInput = {
@@ -1156,6 +1436,8 @@ export type PlayerUncheckedUpdateWithoutEventsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   matchStats?: Prisma.PlayerMatchStatsUncheckedUpdateManyWithoutPlayerNestedInput
   relatedEvents?: Prisma.MatchEventUncheckedUpdateManyWithoutRelatedPlayerNestedInput
+  matchAttendance?: Prisma.MatchAttendanceUncheckedUpdateManyWithoutPlayerNestedInput
+  trainingAttendance?: Prisma.TrainingAttendanceUncheckedUpdateManyWithoutPlayerNestedInput
 }
 
 export type PlayerUpsertWithoutRelatedEventsInput = {
@@ -1187,6 +1469,8 @@ export type PlayerUpdateWithoutRelatedEventsInput = {
   user?: Prisma.UserUpdateOneWithoutPlayerNestedInput
   matchStats?: Prisma.PlayerMatchStatsUpdateManyWithoutPlayerNestedInput
   events?: Prisma.MatchEventUpdateManyWithoutPlayerNestedInput
+  matchAttendance?: Prisma.MatchAttendanceUpdateManyWithoutPlayerNestedInput
+  trainingAttendance?: Prisma.TrainingAttendanceUpdateManyWithoutPlayerNestedInput
 }
 
 export type PlayerUncheckedUpdateWithoutRelatedEventsInput = {
@@ -1207,6 +1491,8 @@ export type PlayerUncheckedUpdateWithoutRelatedEventsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   matchStats?: Prisma.PlayerMatchStatsUncheckedUpdateManyWithoutPlayerNestedInput
   events?: Prisma.MatchEventUncheckedUpdateManyWithoutPlayerNestedInput
+  matchAttendance?: Prisma.MatchAttendanceUncheckedUpdateManyWithoutPlayerNestedInput
+  trainingAttendance?: Prisma.TrainingAttendanceUncheckedUpdateManyWithoutPlayerNestedInput
 }
 
 export type PlayerCreateManyTeamInput = {
@@ -1244,6 +1530,8 @@ export type PlayerUpdateWithoutTeamInput = {
   matchStats?: Prisma.PlayerMatchStatsUpdateManyWithoutPlayerNestedInput
   events?: Prisma.MatchEventUpdateManyWithoutPlayerNestedInput
   relatedEvents?: Prisma.MatchEventUpdateManyWithoutRelatedPlayerNestedInput
+  matchAttendance?: Prisma.MatchAttendanceUpdateManyWithoutPlayerNestedInput
+  trainingAttendance?: Prisma.TrainingAttendanceUpdateManyWithoutPlayerNestedInput
 }
 
 export type PlayerUncheckedUpdateWithoutTeamInput = {
@@ -1264,6 +1552,8 @@ export type PlayerUncheckedUpdateWithoutTeamInput = {
   matchStats?: Prisma.PlayerMatchStatsUncheckedUpdateManyWithoutPlayerNestedInput
   events?: Prisma.MatchEventUncheckedUpdateManyWithoutPlayerNestedInput
   relatedEvents?: Prisma.MatchEventUncheckedUpdateManyWithoutRelatedPlayerNestedInput
+  matchAttendance?: Prisma.MatchAttendanceUncheckedUpdateManyWithoutPlayerNestedInput
+  trainingAttendance?: Prisma.TrainingAttendanceUncheckedUpdateManyWithoutPlayerNestedInput
 }
 
 export type PlayerUncheckedUpdateManyWithoutTeamInput = {
@@ -1292,12 +1582,16 @@ export type PlayerCountOutputType = {
   matchStats: number
   events: number
   relatedEvents: number
+  matchAttendance: number
+  trainingAttendance: number
 }
 
 export type PlayerCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   matchStats?: boolean | PlayerCountOutputTypeCountMatchStatsArgs
   events?: boolean | PlayerCountOutputTypeCountEventsArgs
   relatedEvents?: boolean | PlayerCountOutputTypeCountRelatedEventsArgs
+  matchAttendance?: boolean | PlayerCountOutputTypeCountMatchAttendanceArgs
+  trainingAttendance?: boolean | PlayerCountOutputTypeCountTrainingAttendanceArgs
 }
 
 /**
@@ -1331,6 +1625,20 @@ export type PlayerCountOutputTypeCountRelatedEventsArgs<ExtArgs extends runtime.
   where?: Prisma.MatchEventWhereInput
 }
 
+/**
+ * PlayerCountOutputType without action
+ */
+export type PlayerCountOutputTypeCountMatchAttendanceArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MatchAttendanceWhereInput
+}
+
+/**
+ * PlayerCountOutputType without action
+ */
+export type PlayerCountOutputTypeCountTrainingAttendanceArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TrainingAttendanceWhereInput
+}
+
 
 export type PlayerSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1353,6 +1661,8 @@ export type PlayerSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   matchStats?: boolean | Prisma.Player$matchStatsArgs<ExtArgs>
   events?: boolean | Prisma.Player$eventsArgs<ExtArgs>
   relatedEvents?: boolean | Prisma.Player$relatedEventsArgs<ExtArgs>
+  matchAttendance?: boolean | Prisma.Player$matchAttendanceArgs<ExtArgs>
+  trainingAttendance?: boolean | Prisma.Player$trainingAttendanceArgs<ExtArgs>
   _count?: boolean | Prisma.PlayerCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["player"]>
 
@@ -1421,6 +1731,8 @@ export type PlayerInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   matchStats?: boolean | Prisma.Player$matchStatsArgs<ExtArgs>
   events?: boolean | Prisma.Player$eventsArgs<ExtArgs>
   relatedEvents?: boolean | Prisma.Player$relatedEventsArgs<ExtArgs>
+  matchAttendance?: boolean | Prisma.Player$matchAttendanceArgs<ExtArgs>
+  trainingAttendance?: boolean | Prisma.Player$trainingAttendanceArgs<ExtArgs>
   _count?: boolean | Prisma.PlayerCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type PlayerIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1440,6 +1752,8 @@ export type $PlayerPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     matchStats: Prisma.$PlayerMatchStatsPayload<ExtArgs>[]
     events: Prisma.$MatchEventPayload<ExtArgs>[]
     relatedEvents: Prisma.$MatchEventPayload<ExtArgs>[]
+    matchAttendance: Prisma.$MatchAttendancePayload<ExtArgs>[]
+    trainingAttendance: Prisma.$TrainingAttendancePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1856,6 +2170,8 @@ export interface Prisma__PlayerClient<T, Null = never, ExtArgs extends runtime.T
   matchStats<T extends Prisma.Player$matchStatsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Player$matchStatsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PlayerMatchStatsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   events<T extends Prisma.Player$eventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Player$eventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MatchEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   relatedEvents<T extends Prisma.Player$relatedEventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Player$relatedEventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MatchEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  matchAttendance<T extends Prisma.Player$matchAttendanceArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Player$matchAttendanceArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MatchAttendancePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  trainingAttendance<T extends Prisma.Player$trainingAttendanceArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Player$trainingAttendanceArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TrainingAttendancePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2389,6 +2705,54 @@ export type Player$relatedEventsArgs<ExtArgs extends runtime.Types.Extensions.In
   take?: number
   skip?: number
   distinct?: Prisma.MatchEventScalarFieldEnum | Prisma.MatchEventScalarFieldEnum[]
+}
+
+/**
+ * Player.matchAttendance
+ */
+export type Player$matchAttendanceArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MatchAttendance
+   */
+  select?: Prisma.MatchAttendanceSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MatchAttendance
+   */
+  omit?: Prisma.MatchAttendanceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MatchAttendanceInclude<ExtArgs> | null
+  where?: Prisma.MatchAttendanceWhereInput
+  orderBy?: Prisma.MatchAttendanceOrderByWithRelationInput | Prisma.MatchAttendanceOrderByWithRelationInput[]
+  cursor?: Prisma.MatchAttendanceWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MatchAttendanceScalarFieldEnum | Prisma.MatchAttendanceScalarFieldEnum[]
+}
+
+/**
+ * Player.trainingAttendance
+ */
+export type Player$trainingAttendanceArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TrainingAttendance
+   */
+  select?: Prisma.TrainingAttendanceSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the TrainingAttendance
+   */
+  omit?: Prisma.TrainingAttendanceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TrainingAttendanceInclude<ExtArgs> | null
+  where?: Prisma.TrainingAttendanceWhereInput
+  orderBy?: Prisma.TrainingAttendanceOrderByWithRelationInput | Prisma.TrainingAttendanceOrderByWithRelationInput[]
+  cursor?: Prisma.TrainingAttendanceWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TrainingAttendanceScalarFieldEnum | Prisma.TrainingAttendanceScalarFieldEnum[]
 }
 
 /**

@@ -62,6 +62,12 @@ export const ModelName = {
   Match: 'Match',
   Standing: 'Standing',
   Player: 'Player',
+  MatchAttendance: 'MatchAttendance',
+  Training: 'Training',
+  TrainingAttendance: 'TrainingAttendance',
+  StatisticPreference: 'StatisticPreference',
+  Notification: 'Notification',
+  AppRelease: 'AppRelease',
   PlayerMatchStats: 'PlayerMatchStats',
   MatchEvent: 'MatchEvent',
   SyncRun: 'SyncRun',
@@ -87,7 +93,7 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 export const UserScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  email: 'email',
+  username: 'username',
   passwordHash: 'passwordHash',
   photoPath: 'photoPath',
   platformRole: 'platformRole',
@@ -241,6 +247,86 @@ export const PlayerScalarFieldEnum = {
 } as const
 
 export type PlayerScalarFieldEnum = (typeof PlayerScalarFieldEnum)[keyof typeof PlayerScalarFieldEnum]
+
+
+export const MatchAttendanceScalarFieldEnum = {
+  id: 'id',
+  matchId: 'matchId',
+  playerId: 'playerId',
+  status: 'status',
+  updatedById: 'updatedById',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MatchAttendanceScalarFieldEnum = (typeof MatchAttendanceScalarFieldEnum)[keyof typeof MatchAttendanceScalarFieldEnum]
+
+
+export const TrainingScalarFieldEnum = {
+  id: 'id',
+  teamId: 'teamId',
+  title: 'title',
+  date: 'date',
+  startTime: 'startTime',
+  endTime: 'endTime',
+  venue: 'venue',
+  notes: 'notes',
+  createdById: 'createdById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TrainingScalarFieldEnum = (typeof TrainingScalarFieldEnum)[keyof typeof TrainingScalarFieldEnum]
+
+
+export const TrainingAttendanceScalarFieldEnum = {
+  id: 'id',
+  trainingId: 'trainingId',
+  playerId: 'playerId',
+  status: 'status',
+  updatedById: 'updatedById',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TrainingAttendanceScalarFieldEnum = (typeof TrainingAttendanceScalarFieldEnum)[keyof typeof TrainingAttendanceScalarFieldEnum]
+
+
+export const StatisticPreferenceScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  teamId: 'teamId',
+  metricKeys: 'metricKeys',
+  updatedAt: 'updatedAt'
+} as const
+
+export type StatisticPreferenceScalarFieldEnum = (typeof StatisticPreferenceScalarFieldEnum)[keyof typeof StatisticPreferenceScalarFieldEnum]
+
+
+export const NotificationScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  type: 'type',
+  title: 'title',
+  body: 'body',
+  link: 'link',
+  readAt: 'readAt',
+  createdAt: 'createdAt'
+} as const
+
+export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
+
+
+export const AppReleaseScalarFieldEnum = {
+  id: 'id',
+  version: 'version',
+  buildNumber: 'buildNumber',
+  apkPath: 'apkPath',
+  sha256: 'sha256',
+  notes: 'notes',
+  publishedById: 'publishedById',
+  createdAt: 'createdAt'
+} as const
+
+export type AppReleaseScalarFieldEnum = (typeof AppReleaseScalarFieldEnum)[keyof typeof AppReleaseScalarFieldEnum]
 
 
 export const PlayerMatchStatsScalarFieldEnum = {

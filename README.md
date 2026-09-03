@@ -84,6 +84,12 @@ npx prisma validate
 - Geen toegang: controleer de club- en teammembership; UI-verbergen alleen verleent nooit rechten.
 - Poort bezet: controleer `ss -ltnp`; gebruik niet poort 3789 en wijzig zo nodig alleen StickStat `PORT`.
 
+## Agenda en Android-updates
+
+Wedstrijden uit de provider en handmatig aangemaakte trainingen staan samen onder **Agenda**. Teambeheer kan wekelijkse trainingsreeksen en de aanwezigheid van iedereen beheren; gekoppelde spelers beheren hun eigen status.
+
+Het platformbeheer bevat een dev-menu voor Android-releases. Zet uitsluitend op de vertrouwde buildmachine `ALLOW_APP_RELEASE_BUILDS=true`. De versieknoppen bouwen en publiceren een APK, berekenen SHA-256 en sturen alle accounts een notificatie. De Android-app controleert bij starten op updates, verifieert de download en opent daarna Androids installatieprompt. Gebruik voor distributie een vaste, veilig opgeslagen release-sleutel: Android accepteert updates alleen met dezelfde handtekening als de geïnstalleerde app.
+
 ## Documentatie
 
 - [Architectuur](docs/ARCHITECTURE.md)

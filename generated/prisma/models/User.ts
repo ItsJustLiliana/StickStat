@@ -27,7 +27,7 @@ export type AggregateUser = {
 export type UserMinAggregateOutputType = {
   id: string | null
   name: string | null
-  email: string | null
+  username: string | null
   passwordHash: string | null
   photoPath: string | null
   platformRole: $Enums.PlatformRole | null
@@ -38,7 +38,7 @@ export type UserMinAggregateOutputType = {
 export type UserMaxAggregateOutputType = {
   id: string | null
   name: string | null
-  email: string | null
+  username: string | null
   passwordHash: string | null
   photoPath: string | null
   platformRole: $Enums.PlatformRole | null
@@ -49,7 +49,7 @@ export type UserMaxAggregateOutputType = {
 export type UserCountAggregateOutputType = {
   id: number
   name: number
-  email: number
+  username: number
   passwordHash: number
   photoPath: number
   platformRole: number
@@ -62,7 +62,7 @@ export type UserCountAggregateOutputType = {
 export type UserMinAggregateInputType = {
   id?: true
   name?: true
-  email?: true
+  username?: true
   passwordHash?: true
   photoPath?: true
   platformRole?: true
@@ -73,7 +73,7 @@ export type UserMinAggregateInputType = {
 export type UserMaxAggregateInputType = {
   id?: true
   name?: true
-  email?: true
+  username?: true
   passwordHash?: true
   photoPath?: true
   platformRole?: true
@@ -84,7 +84,7 @@ export type UserMaxAggregateInputType = {
 export type UserCountAggregateInputType = {
   id?: true
   name?: true
-  email?: true
+  username?: true
   passwordHash?: true
   photoPath?: true
   platformRole?: true
@@ -168,7 +168,7 @@ export type UserGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 export type UserGroupByOutputType = {
   id: string
   name: string
-  email: string
+  username: string
   passwordHash: string
   photoPath: string | null
   platformRole: $Enums.PlatformRole
@@ -200,7 +200,7 @@ export type UserWhereInput = {
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   id?: Prisma.StringFilter<"User"> | string
   name?: Prisma.StringFilter<"User"> | string
-  email?: Prisma.StringFilter<"User"> | string
+  username?: Prisma.StringFilter<"User"> | string
   passwordHash?: Prisma.StringFilter<"User"> | string
   photoPath?: Prisma.StringNullableFilter<"User"> | string | null
   platformRole?: Prisma.EnumPlatformRoleFilter<"User"> | $Enums.PlatformRole
@@ -212,12 +212,16 @@ export type UserWhereInput = {
   player?: Prisma.XOR<Prisma.PlayerNullableScalarRelationFilter, Prisma.PlayerWhereInput> | null
   createdTeamInvites?: Prisma.TeamInviteListRelationFilter
   usedTeamInvites?: Prisma.TeamInviteListRelationFilter
+  createdTrainings?: Prisma.TrainingListRelationFilter
+  notifications?: Prisma.NotificationListRelationFilter
+  statisticPreferences?: Prisma.StatisticPreferenceListRelationFilter
+  publishedReleases?: Prisma.AppReleaseListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  email?: Prisma.SortOrder
+  username?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   photoPath?: Prisma.SortOrderInput | Prisma.SortOrder
   platformRole?: Prisma.SortOrder
@@ -229,11 +233,15 @@ export type UserOrderByWithRelationInput = {
   player?: Prisma.PlayerOrderByWithRelationInput
   createdTeamInvites?: Prisma.TeamInviteOrderByRelationAggregateInput
   usedTeamInvites?: Prisma.TeamInviteOrderByRelationAggregateInput
+  createdTrainings?: Prisma.TrainingOrderByRelationAggregateInput
+  notifications?: Prisma.NotificationOrderByRelationAggregateInput
+  statisticPreferences?: Prisma.StatisticPreferenceOrderByRelationAggregateInput
+  publishedReleases?: Prisma.AppReleaseOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  email?: string
+  username?: string
   AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
@@ -249,12 +257,16 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   player?: Prisma.XOR<Prisma.PlayerNullableScalarRelationFilter, Prisma.PlayerWhereInput> | null
   createdTeamInvites?: Prisma.TeamInviteListRelationFilter
   usedTeamInvites?: Prisma.TeamInviteListRelationFilter
-}, "id" | "email">
+  createdTrainings?: Prisma.TrainingListRelationFilter
+  notifications?: Prisma.NotificationListRelationFilter
+  statisticPreferences?: Prisma.StatisticPreferenceListRelationFilter
+  publishedReleases?: Prisma.AppReleaseListRelationFilter
+}, "id" | "username">
 
 export type UserOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  email?: Prisma.SortOrder
+  username?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   photoPath?: Prisma.SortOrderInput | Prisma.SortOrder
   platformRole?: Prisma.SortOrder
@@ -271,7 +283,7 @@ export type UserScalarWhereWithAggregatesInput = {
   NOT?: Prisma.UserScalarWhereWithAggregatesInput | Prisma.UserScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"User"> | string
   name?: Prisma.StringWithAggregatesFilter<"User"> | string
-  email?: Prisma.StringWithAggregatesFilter<"User"> | string
+  username?: Prisma.StringWithAggregatesFilter<"User"> | string
   passwordHash?: Prisma.StringWithAggregatesFilter<"User"> | string
   photoPath?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   platformRole?: Prisma.EnumPlatformRoleWithAggregatesFilter<"User"> | $Enums.PlatformRole
@@ -282,7 +294,7 @@ export type UserScalarWhereWithAggregatesInput = {
 export type UserCreateInput = {
   id?: string
   name: string
-  email: string
+  username: string
   passwordHash: string
   photoPath?: string | null
   platformRole?: $Enums.PlatformRole
@@ -294,12 +306,16 @@ export type UserCreateInput = {
   player?: Prisma.PlayerCreateNestedOneWithoutUserInput
   createdTeamInvites?: Prisma.TeamInviteCreateNestedManyWithoutCreatedByInput
   usedTeamInvites?: Prisma.TeamInviteCreateNestedManyWithoutUsedByInput
+  createdTrainings?: Prisma.TrainingCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  statisticPreferences?: Prisma.StatisticPreferenceCreateNestedManyWithoutUserInput
+  publishedReleases?: Prisma.AppReleaseCreateNestedManyWithoutPublishedByInput
 }
 
 export type UserUncheckedCreateInput = {
   id?: string
   name: string
-  email: string
+  username: string
   passwordHash: string
   photoPath?: string | null
   platformRole?: $Enums.PlatformRole
@@ -311,12 +327,16 @@ export type UserUncheckedCreateInput = {
   player?: Prisma.PlayerUncheckedCreateNestedOneWithoutUserInput
   createdTeamInvites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutCreatedByInput
   usedTeamInvites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutUsedByInput
+  createdTrainings?: Prisma.TrainingUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  statisticPreferences?: Prisma.StatisticPreferenceUncheckedCreateNestedManyWithoutUserInput
+  publishedReleases?: Prisma.AppReleaseUncheckedCreateNestedManyWithoutPublishedByInput
 }
 
 export type UserUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   platformRole?: Prisma.EnumPlatformRoleFieldUpdateOperationsInput | $Enums.PlatformRole
@@ -328,12 +348,16 @@ export type UserUpdateInput = {
   player?: Prisma.PlayerUpdateOneWithoutUserNestedInput
   createdTeamInvites?: Prisma.TeamInviteUpdateManyWithoutCreatedByNestedInput
   usedTeamInvites?: Prisma.TeamInviteUpdateManyWithoutUsedByNestedInput
+  createdTrainings?: Prisma.TrainingUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  statisticPreferences?: Prisma.StatisticPreferenceUpdateManyWithoutUserNestedInput
+  publishedReleases?: Prisma.AppReleaseUpdateManyWithoutPublishedByNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   platformRole?: Prisma.EnumPlatformRoleFieldUpdateOperationsInput | $Enums.PlatformRole
@@ -345,12 +369,16 @@ export type UserUncheckedUpdateInput = {
   player?: Prisma.PlayerUncheckedUpdateOneWithoutUserNestedInput
   createdTeamInvites?: Prisma.TeamInviteUncheckedUpdateManyWithoutCreatedByNestedInput
   usedTeamInvites?: Prisma.TeamInviteUncheckedUpdateManyWithoutUsedByNestedInput
+  createdTrainings?: Prisma.TrainingUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  statisticPreferences?: Prisma.StatisticPreferenceUncheckedUpdateManyWithoutUserNestedInput
+  publishedReleases?: Prisma.AppReleaseUncheckedUpdateManyWithoutPublishedByNestedInput
 }
 
 export type UserCreateManyInput = {
   id?: string
   name: string
-  email: string
+  username: string
   passwordHash: string
   photoPath?: string | null
   platformRole?: $Enums.PlatformRole
@@ -361,7 +389,7 @@ export type UserCreateManyInput = {
 export type UserUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   platformRole?: Prisma.EnumPlatformRoleFieldUpdateOperationsInput | $Enums.PlatformRole
@@ -372,7 +400,7 @@ export type UserUpdateManyMutationInput = {
 export type UserUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   platformRole?: Prisma.EnumPlatformRoleFieldUpdateOperationsInput | $Enums.PlatformRole
@@ -383,7 +411,7 @@ export type UserUncheckedUpdateManyInput = {
 export type UserCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  email?: Prisma.SortOrder
+  username?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   photoPath?: Prisma.SortOrder
   platformRole?: Prisma.SortOrder
@@ -394,7 +422,7 @@ export type UserCountOrderByAggregateInput = {
 export type UserMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  email?: Prisma.SortOrder
+  username?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   photoPath?: Prisma.SortOrder
   platformRole?: Prisma.SortOrder
@@ -405,7 +433,7 @@ export type UserMaxOrderByAggregateInput = {
 export type UserMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  email?: Prisma.SortOrder
+  username?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   photoPath?: Prisma.SortOrder
   platformRole?: Prisma.SortOrder
@@ -497,6 +525,62 @@ export type UserUpdateOneWithoutPlayerNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutPlayerInput, Prisma.UserUpdateWithoutPlayerInput>, Prisma.UserUncheckedUpdateWithoutPlayerInput>
 }
 
+export type UserCreateNestedOneWithoutCreatedTrainingsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCreatedTrainingsInput, Prisma.UserUncheckedCreateWithoutCreatedTrainingsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCreatedTrainingsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutCreatedTrainingsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCreatedTrainingsInput, Prisma.UserUncheckedCreateWithoutCreatedTrainingsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCreatedTrainingsInput
+  upsert?: Prisma.UserUpsertWithoutCreatedTrainingsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCreatedTrainingsInput, Prisma.UserUpdateWithoutCreatedTrainingsInput>, Prisma.UserUncheckedUpdateWithoutCreatedTrainingsInput>
+}
+
+export type UserCreateNestedOneWithoutStatisticPreferencesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutStatisticPreferencesInput, Prisma.UserUncheckedCreateWithoutStatisticPreferencesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutStatisticPreferencesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutStatisticPreferencesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutStatisticPreferencesInput, Prisma.UserUncheckedCreateWithoutStatisticPreferencesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutStatisticPreferencesInput
+  upsert?: Prisma.UserUpsertWithoutStatisticPreferencesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutStatisticPreferencesInput, Prisma.UserUpdateWithoutStatisticPreferencesInput>, Prisma.UserUncheckedUpdateWithoutStatisticPreferencesInput>
+}
+
+export type UserCreateNestedOneWithoutNotificationsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutNotificationsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutNotificationsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutNotificationsInput
+  upsert?: Prisma.UserUpsertWithoutNotificationsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutNotificationsInput, Prisma.UserUpdateWithoutNotificationsInput>, Prisma.UserUncheckedUpdateWithoutNotificationsInput>
+}
+
+export type UserCreateNestedOneWithoutPublishedReleasesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPublishedReleasesInput, Prisma.UserUncheckedCreateWithoutPublishedReleasesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPublishedReleasesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutPublishedReleasesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPublishedReleasesInput, Prisma.UserUncheckedCreateWithoutPublishedReleasesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPublishedReleasesInput
+  upsert?: Prisma.UserUpsertWithoutPublishedReleasesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutPublishedReleasesInput, Prisma.UserUpdateWithoutPublishedReleasesInput>, Prisma.UserUncheckedUpdateWithoutPublishedReleasesInput>
+}
+
 export type UserCreateNestedOneWithoutCreatedTeamInvitesInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutCreatedTeamInvitesInput, Prisma.UserUncheckedCreateWithoutCreatedTeamInvitesInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutCreatedTeamInvitesInput
@@ -530,7 +614,7 @@ export type UserUpdateOneWithoutUsedTeamInvitesNestedInput = {
 export type UserCreateWithoutSessionsInput = {
   id?: string
   name: string
-  email: string
+  username: string
   passwordHash: string
   photoPath?: string | null
   platformRole?: $Enums.PlatformRole
@@ -541,12 +625,16 @@ export type UserCreateWithoutSessionsInput = {
   player?: Prisma.PlayerCreateNestedOneWithoutUserInput
   createdTeamInvites?: Prisma.TeamInviteCreateNestedManyWithoutCreatedByInput
   usedTeamInvites?: Prisma.TeamInviteCreateNestedManyWithoutUsedByInput
+  createdTrainings?: Prisma.TrainingCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  statisticPreferences?: Prisma.StatisticPreferenceCreateNestedManyWithoutUserInput
+  publishedReleases?: Prisma.AppReleaseCreateNestedManyWithoutPublishedByInput
 }
 
 export type UserUncheckedCreateWithoutSessionsInput = {
   id?: string
   name: string
-  email: string
+  username: string
   passwordHash: string
   photoPath?: string | null
   platformRole?: $Enums.PlatformRole
@@ -557,6 +645,10 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   player?: Prisma.PlayerUncheckedCreateNestedOneWithoutUserInput
   createdTeamInvites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutCreatedByInput
   usedTeamInvites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutUsedByInput
+  createdTrainings?: Prisma.TrainingUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  statisticPreferences?: Prisma.StatisticPreferenceUncheckedCreateNestedManyWithoutUserInput
+  publishedReleases?: Prisma.AppReleaseUncheckedCreateNestedManyWithoutPublishedByInput
 }
 
 export type UserCreateOrConnectWithoutSessionsInput = {
@@ -578,7 +670,7 @@ export type UserUpdateToOneWithWhereWithoutSessionsInput = {
 export type UserUpdateWithoutSessionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   platformRole?: Prisma.EnumPlatformRoleFieldUpdateOperationsInput | $Enums.PlatformRole
@@ -589,12 +681,16 @@ export type UserUpdateWithoutSessionsInput = {
   player?: Prisma.PlayerUpdateOneWithoutUserNestedInput
   createdTeamInvites?: Prisma.TeamInviteUpdateManyWithoutCreatedByNestedInput
   usedTeamInvites?: Prisma.TeamInviteUpdateManyWithoutUsedByNestedInput
+  createdTrainings?: Prisma.TrainingUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  statisticPreferences?: Prisma.StatisticPreferenceUpdateManyWithoutUserNestedInput
+  publishedReleases?: Prisma.AppReleaseUpdateManyWithoutPublishedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSessionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   platformRole?: Prisma.EnumPlatformRoleFieldUpdateOperationsInput | $Enums.PlatformRole
@@ -605,12 +701,16 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   player?: Prisma.PlayerUncheckedUpdateOneWithoutUserNestedInput
   createdTeamInvites?: Prisma.TeamInviteUncheckedUpdateManyWithoutCreatedByNestedInput
   usedTeamInvites?: Prisma.TeamInviteUncheckedUpdateManyWithoutUsedByNestedInput
+  createdTrainings?: Prisma.TrainingUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  statisticPreferences?: Prisma.StatisticPreferenceUncheckedUpdateManyWithoutUserNestedInput
+  publishedReleases?: Prisma.AppReleaseUncheckedUpdateManyWithoutPublishedByNestedInput
 }
 
 export type UserCreateWithoutClubMembershipsInput = {
   id?: string
   name: string
-  email: string
+  username: string
   passwordHash: string
   photoPath?: string | null
   platformRole?: $Enums.PlatformRole
@@ -621,12 +721,16 @@ export type UserCreateWithoutClubMembershipsInput = {
   player?: Prisma.PlayerCreateNestedOneWithoutUserInput
   createdTeamInvites?: Prisma.TeamInviteCreateNestedManyWithoutCreatedByInput
   usedTeamInvites?: Prisma.TeamInviteCreateNestedManyWithoutUsedByInput
+  createdTrainings?: Prisma.TrainingCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  statisticPreferences?: Prisma.StatisticPreferenceCreateNestedManyWithoutUserInput
+  publishedReleases?: Prisma.AppReleaseCreateNestedManyWithoutPublishedByInput
 }
 
 export type UserUncheckedCreateWithoutClubMembershipsInput = {
   id?: string
   name: string
-  email: string
+  username: string
   passwordHash: string
   photoPath?: string | null
   platformRole?: $Enums.PlatformRole
@@ -637,6 +741,10 @@ export type UserUncheckedCreateWithoutClubMembershipsInput = {
   player?: Prisma.PlayerUncheckedCreateNestedOneWithoutUserInput
   createdTeamInvites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutCreatedByInput
   usedTeamInvites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutUsedByInput
+  createdTrainings?: Prisma.TrainingUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  statisticPreferences?: Prisma.StatisticPreferenceUncheckedCreateNestedManyWithoutUserInput
+  publishedReleases?: Prisma.AppReleaseUncheckedCreateNestedManyWithoutPublishedByInput
 }
 
 export type UserCreateOrConnectWithoutClubMembershipsInput = {
@@ -658,7 +766,7 @@ export type UserUpdateToOneWithWhereWithoutClubMembershipsInput = {
 export type UserUpdateWithoutClubMembershipsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   platformRole?: Prisma.EnumPlatformRoleFieldUpdateOperationsInput | $Enums.PlatformRole
@@ -669,12 +777,16 @@ export type UserUpdateWithoutClubMembershipsInput = {
   player?: Prisma.PlayerUpdateOneWithoutUserNestedInput
   createdTeamInvites?: Prisma.TeamInviteUpdateManyWithoutCreatedByNestedInput
   usedTeamInvites?: Prisma.TeamInviteUpdateManyWithoutUsedByNestedInput
+  createdTrainings?: Prisma.TrainingUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  statisticPreferences?: Prisma.StatisticPreferenceUpdateManyWithoutUserNestedInput
+  publishedReleases?: Prisma.AppReleaseUpdateManyWithoutPublishedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutClubMembershipsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   platformRole?: Prisma.EnumPlatformRoleFieldUpdateOperationsInput | $Enums.PlatformRole
@@ -685,12 +797,16 @@ export type UserUncheckedUpdateWithoutClubMembershipsInput = {
   player?: Prisma.PlayerUncheckedUpdateOneWithoutUserNestedInput
   createdTeamInvites?: Prisma.TeamInviteUncheckedUpdateManyWithoutCreatedByNestedInput
   usedTeamInvites?: Prisma.TeamInviteUncheckedUpdateManyWithoutUsedByNestedInput
+  createdTrainings?: Prisma.TrainingUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  statisticPreferences?: Prisma.StatisticPreferenceUncheckedUpdateManyWithoutUserNestedInput
+  publishedReleases?: Prisma.AppReleaseUncheckedUpdateManyWithoutPublishedByNestedInput
 }
 
 export type UserCreateWithoutTeamMembershipsInput = {
   id?: string
   name: string
-  email: string
+  username: string
   passwordHash: string
   photoPath?: string | null
   platformRole?: $Enums.PlatformRole
@@ -701,12 +817,16 @@ export type UserCreateWithoutTeamMembershipsInput = {
   player?: Prisma.PlayerCreateNestedOneWithoutUserInput
   createdTeamInvites?: Prisma.TeamInviteCreateNestedManyWithoutCreatedByInput
   usedTeamInvites?: Prisma.TeamInviteCreateNestedManyWithoutUsedByInput
+  createdTrainings?: Prisma.TrainingCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  statisticPreferences?: Prisma.StatisticPreferenceCreateNestedManyWithoutUserInput
+  publishedReleases?: Prisma.AppReleaseCreateNestedManyWithoutPublishedByInput
 }
 
 export type UserUncheckedCreateWithoutTeamMembershipsInput = {
   id?: string
   name: string
-  email: string
+  username: string
   passwordHash: string
   photoPath?: string | null
   platformRole?: $Enums.PlatformRole
@@ -717,6 +837,10 @@ export type UserUncheckedCreateWithoutTeamMembershipsInput = {
   player?: Prisma.PlayerUncheckedCreateNestedOneWithoutUserInput
   createdTeamInvites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutCreatedByInput
   usedTeamInvites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutUsedByInput
+  createdTrainings?: Prisma.TrainingUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  statisticPreferences?: Prisma.StatisticPreferenceUncheckedCreateNestedManyWithoutUserInput
+  publishedReleases?: Prisma.AppReleaseUncheckedCreateNestedManyWithoutPublishedByInput
 }
 
 export type UserCreateOrConnectWithoutTeamMembershipsInput = {
@@ -738,7 +862,7 @@ export type UserUpdateToOneWithWhereWithoutTeamMembershipsInput = {
 export type UserUpdateWithoutTeamMembershipsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   platformRole?: Prisma.EnumPlatformRoleFieldUpdateOperationsInput | $Enums.PlatformRole
@@ -749,12 +873,16 @@ export type UserUpdateWithoutTeamMembershipsInput = {
   player?: Prisma.PlayerUpdateOneWithoutUserNestedInput
   createdTeamInvites?: Prisma.TeamInviteUpdateManyWithoutCreatedByNestedInput
   usedTeamInvites?: Prisma.TeamInviteUpdateManyWithoutUsedByNestedInput
+  createdTrainings?: Prisma.TrainingUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  statisticPreferences?: Prisma.StatisticPreferenceUpdateManyWithoutUserNestedInput
+  publishedReleases?: Prisma.AppReleaseUpdateManyWithoutPublishedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTeamMembershipsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   platformRole?: Prisma.EnumPlatformRoleFieldUpdateOperationsInput | $Enums.PlatformRole
@@ -765,12 +893,16 @@ export type UserUncheckedUpdateWithoutTeamMembershipsInput = {
   player?: Prisma.PlayerUncheckedUpdateOneWithoutUserNestedInput
   createdTeamInvites?: Prisma.TeamInviteUncheckedUpdateManyWithoutCreatedByNestedInput
   usedTeamInvites?: Prisma.TeamInviteUncheckedUpdateManyWithoutUsedByNestedInput
+  createdTrainings?: Prisma.TrainingUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  statisticPreferences?: Prisma.StatisticPreferenceUncheckedUpdateManyWithoutUserNestedInput
+  publishedReleases?: Prisma.AppReleaseUncheckedUpdateManyWithoutPublishedByNestedInput
 }
 
 export type UserCreateWithoutPlayerInput = {
   id?: string
   name: string
-  email: string
+  username: string
   passwordHash: string
   photoPath?: string | null
   platformRole?: $Enums.PlatformRole
@@ -781,12 +913,16 @@ export type UserCreateWithoutPlayerInput = {
   teamMemberships?: Prisma.TeamMembershipCreateNestedManyWithoutUserInput
   createdTeamInvites?: Prisma.TeamInviteCreateNestedManyWithoutCreatedByInput
   usedTeamInvites?: Prisma.TeamInviteCreateNestedManyWithoutUsedByInput
+  createdTrainings?: Prisma.TrainingCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  statisticPreferences?: Prisma.StatisticPreferenceCreateNestedManyWithoutUserInput
+  publishedReleases?: Prisma.AppReleaseCreateNestedManyWithoutPublishedByInput
 }
 
 export type UserUncheckedCreateWithoutPlayerInput = {
   id?: string
   name: string
-  email: string
+  username: string
   passwordHash: string
   photoPath?: string | null
   platformRole?: $Enums.PlatformRole
@@ -797,6 +933,10 @@ export type UserUncheckedCreateWithoutPlayerInput = {
   teamMemberships?: Prisma.TeamMembershipUncheckedCreateNestedManyWithoutUserInput
   createdTeamInvites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutCreatedByInput
   usedTeamInvites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutUsedByInput
+  createdTrainings?: Prisma.TrainingUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  statisticPreferences?: Prisma.StatisticPreferenceUncheckedCreateNestedManyWithoutUserInput
+  publishedReleases?: Prisma.AppReleaseUncheckedCreateNestedManyWithoutPublishedByInput
 }
 
 export type UserCreateOrConnectWithoutPlayerInput = {
@@ -818,7 +958,7 @@ export type UserUpdateToOneWithWhereWithoutPlayerInput = {
 export type UserUpdateWithoutPlayerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   platformRole?: Prisma.EnumPlatformRoleFieldUpdateOperationsInput | $Enums.PlatformRole
@@ -829,12 +969,16 @@ export type UserUpdateWithoutPlayerInput = {
   teamMemberships?: Prisma.TeamMembershipUpdateManyWithoutUserNestedInput
   createdTeamInvites?: Prisma.TeamInviteUpdateManyWithoutCreatedByNestedInput
   usedTeamInvites?: Prisma.TeamInviteUpdateManyWithoutUsedByNestedInput
+  createdTrainings?: Prisma.TrainingUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  statisticPreferences?: Prisma.StatisticPreferenceUpdateManyWithoutUserNestedInput
+  publishedReleases?: Prisma.AppReleaseUpdateManyWithoutPublishedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPlayerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   platformRole?: Prisma.EnumPlatformRoleFieldUpdateOperationsInput | $Enums.PlatformRole
@@ -845,49 +989,16 @@ export type UserUncheckedUpdateWithoutPlayerInput = {
   teamMemberships?: Prisma.TeamMembershipUncheckedUpdateManyWithoutUserNestedInput
   createdTeamInvites?: Prisma.TeamInviteUncheckedUpdateManyWithoutCreatedByNestedInput
   usedTeamInvites?: Prisma.TeamInviteUncheckedUpdateManyWithoutUsedByNestedInput
+  createdTrainings?: Prisma.TrainingUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  statisticPreferences?: Prisma.StatisticPreferenceUncheckedUpdateManyWithoutUserNestedInput
+  publishedReleases?: Prisma.AppReleaseUncheckedUpdateManyWithoutPublishedByNestedInput
 }
 
-export type UserCreateWithoutCreatedTeamInvitesInput = {
+export type UserCreateWithoutCreatedTrainingsInput = {
   id?: string
   name: string
-  email: string
-  passwordHash: string
-  photoPath?: string | null
-  platformRole?: $Enums.PlatformRole
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
-  clubMemberships?: Prisma.ClubMembershipCreateNestedManyWithoutUserInput
-  teamMemberships?: Prisma.TeamMembershipCreateNestedManyWithoutUserInput
-  player?: Prisma.PlayerCreateNestedOneWithoutUserInput
-  usedTeamInvites?: Prisma.TeamInviteCreateNestedManyWithoutUsedByInput
-}
-
-export type UserUncheckedCreateWithoutCreatedTeamInvitesInput = {
-  id?: string
-  name: string
-  email: string
-  passwordHash: string
-  photoPath?: string | null
-  platformRole?: $Enums.PlatformRole
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
-  clubMemberships?: Prisma.ClubMembershipUncheckedCreateNestedManyWithoutUserInput
-  teamMemberships?: Prisma.TeamMembershipUncheckedCreateNestedManyWithoutUserInput
-  player?: Prisma.PlayerUncheckedCreateNestedOneWithoutUserInput
-  usedTeamInvites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutUsedByInput
-}
-
-export type UserCreateOrConnectWithoutCreatedTeamInvitesInput = {
-  where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutCreatedTeamInvitesInput, Prisma.UserUncheckedCreateWithoutCreatedTeamInvitesInput>
-}
-
-export type UserCreateWithoutUsedTeamInvitesInput = {
-  id?: string
-  name: string
-  email: string
+  username: string
   passwordHash: string
   photoPath?: string | null
   platformRole?: $Enums.PlatformRole
@@ -898,12 +1009,16 @@ export type UserCreateWithoutUsedTeamInvitesInput = {
   teamMemberships?: Prisma.TeamMembershipCreateNestedManyWithoutUserInput
   player?: Prisma.PlayerCreateNestedOneWithoutUserInput
   createdTeamInvites?: Prisma.TeamInviteCreateNestedManyWithoutCreatedByInput
+  usedTeamInvites?: Prisma.TeamInviteCreateNestedManyWithoutUsedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  statisticPreferences?: Prisma.StatisticPreferenceCreateNestedManyWithoutUserInput
+  publishedReleases?: Prisma.AppReleaseCreateNestedManyWithoutPublishedByInput
 }
 
-export type UserUncheckedCreateWithoutUsedTeamInvitesInput = {
+export type UserUncheckedCreateWithoutCreatedTrainingsInput = {
   id?: string
   name: string
-  email: string
+  username: string
   passwordHash: string
   photoPath?: string | null
   platformRole?: $Enums.PlatformRole
@@ -914,6 +1029,439 @@ export type UserUncheckedCreateWithoutUsedTeamInvitesInput = {
   teamMemberships?: Prisma.TeamMembershipUncheckedCreateNestedManyWithoutUserInput
   player?: Prisma.PlayerUncheckedCreateNestedOneWithoutUserInput
   createdTeamInvites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutCreatedByInput
+  usedTeamInvites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutUsedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  statisticPreferences?: Prisma.StatisticPreferenceUncheckedCreateNestedManyWithoutUserInput
+  publishedReleases?: Prisma.AppReleaseUncheckedCreateNestedManyWithoutPublishedByInput
+}
+
+export type UserCreateOrConnectWithoutCreatedTrainingsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutCreatedTrainingsInput, Prisma.UserUncheckedCreateWithoutCreatedTrainingsInput>
+}
+
+export type UserUpsertWithoutCreatedTrainingsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutCreatedTrainingsInput, Prisma.UserUncheckedUpdateWithoutCreatedTrainingsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutCreatedTrainingsInput, Prisma.UserUncheckedCreateWithoutCreatedTrainingsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutCreatedTrainingsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutCreatedTrainingsInput, Prisma.UserUncheckedUpdateWithoutCreatedTrainingsInput>
+}
+
+export type UserUpdateWithoutCreatedTrainingsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  platformRole?: Prisma.EnumPlatformRoleFieldUpdateOperationsInput | $Enums.PlatformRole
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  clubMemberships?: Prisma.ClubMembershipUpdateManyWithoutUserNestedInput
+  teamMemberships?: Prisma.TeamMembershipUpdateManyWithoutUserNestedInput
+  player?: Prisma.PlayerUpdateOneWithoutUserNestedInput
+  createdTeamInvites?: Prisma.TeamInviteUpdateManyWithoutCreatedByNestedInput
+  usedTeamInvites?: Prisma.TeamInviteUpdateManyWithoutUsedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  statisticPreferences?: Prisma.StatisticPreferenceUpdateManyWithoutUserNestedInput
+  publishedReleases?: Prisma.AppReleaseUpdateManyWithoutPublishedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutCreatedTrainingsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  platformRole?: Prisma.EnumPlatformRoleFieldUpdateOperationsInput | $Enums.PlatformRole
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  clubMemberships?: Prisma.ClubMembershipUncheckedUpdateManyWithoutUserNestedInput
+  teamMemberships?: Prisma.TeamMembershipUncheckedUpdateManyWithoutUserNestedInput
+  player?: Prisma.PlayerUncheckedUpdateOneWithoutUserNestedInput
+  createdTeamInvites?: Prisma.TeamInviteUncheckedUpdateManyWithoutCreatedByNestedInput
+  usedTeamInvites?: Prisma.TeamInviteUncheckedUpdateManyWithoutUsedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  statisticPreferences?: Prisma.StatisticPreferenceUncheckedUpdateManyWithoutUserNestedInput
+  publishedReleases?: Prisma.AppReleaseUncheckedUpdateManyWithoutPublishedByNestedInput
+}
+
+export type UserCreateWithoutStatisticPreferencesInput = {
+  id?: string
+  name: string
+  username: string
+  passwordHash: string
+  photoPath?: string | null
+  platformRole?: $Enums.PlatformRole
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  clubMemberships?: Prisma.ClubMembershipCreateNestedManyWithoutUserInput
+  teamMemberships?: Prisma.TeamMembershipCreateNestedManyWithoutUserInput
+  player?: Prisma.PlayerCreateNestedOneWithoutUserInput
+  createdTeamInvites?: Prisma.TeamInviteCreateNestedManyWithoutCreatedByInput
+  usedTeamInvites?: Prisma.TeamInviteCreateNestedManyWithoutUsedByInput
+  createdTrainings?: Prisma.TrainingCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  publishedReleases?: Prisma.AppReleaseCreateNestedManyWithoutPublishedByInput
+}
+
+export type UserUncheckedCreateWithoutStatisticPreferencesInput = {
+  id?: string
+  name: string
+  username: string
+  passwordHash: string
+  photoPath?: string | null
+  platformRole?: $Enums.PlatformRole
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  clubMemberships?: Prisma.ClubMembershipUncheckedCreateNestedManyWithoutUserInput
+  teamMemberships?: Prisma.TeamMembershipUncheckedCreateNestedManyWithoutUserInput
+  player?: Prisma.PlayerUncheckedCreateNestedOneWithoutUserInput
+  createdTeamInvites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutCreatedByInput
+  usedTeamInvites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutUsedByInput
+  createdTrainings?: Prisma.TrainingUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  publishedReleases?: Prisma.AppReleaseUncheckedCreateNestedManyWithoutPublishedByInput
+}
+
+export type UserCreateOrConnectWithoutStatisticPreferencesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutStatisticPreferencesInput, Prisma.UserUncheckedCreateWithoutStatisticPreferencesInput>
+}
+
+export type UserUpsertWithoutStatisticPreferencesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutStatisticPreferencesInput, Prisma.UserUncheckedUpdateWithoutStatisticPreferencesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutStatisticPreferencesInput, Prisma.UserUncheckedCreateWithoutStatisticPreferencesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutStatisticPreferencesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutStatisticPreferencesInput, Prisma.UserUncheckedUpdateWithoutStatisticPreferencesInput>
+}
+
+export type UserUpdateWithoutStatisticPreferencesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  platformRole?: Prisma.EnumPlatformRoleFieldUpdateOperationsInput | $Enums.PlatformRole
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  clubMemberships?: Prisma.ClubMembershipUpdateManyWithoutUserNestedInput
+  teamMemberships?: Prisma.TeamMembershipUpdateManyWithoutUserNestedInput
+  player?: Prisma.PlayerUpdateOneWithoutUserNestedInput
+  createdTeamInvites?: Prisma.TeamInviteUpdateManyWithoutCreatedByNestedInput
+  usedTeamInvites?: Prisma.TeamInviteUpdateManyWithoutUsedByNestedInput
+  createdTrainings?: Prisma.TrainingUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  publishedReleases?: Prisma.AppReleaseUpdateManyWithoutPublishedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutStatisticPreferencesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  platformRole?: Prisma.EnumPlatformRoleFieldUpdateOperationsInput | $Enums.PlatformRole
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  clubMemberships?: Prisma.ClubMembershipUncheckedUpdateManyWithoutUserNestedInput
+  teamMemberships?: Prisma.TeamMembershipUncheckedUpdateManyWithoutUserNestedInput
+  player?: Prisma.PlayerUncheckedUpdateOneWithoutUserNestedInput
+  createdTeamInvites?: Prisma.TeamInviteUncheckedUpdateManyWithoutCreatedByNestedInput
+  usedTeamInvites?: Prisma.TeamInviteUncheckedUpdateManyWithoutUsedByNestedInput
+  createdTrainings?: Prisma.TrainingUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  publishedReleases?: Prisma.AppReleaseUncheckedUpdateManyWithoutPublishedByNestedInput
+}
+
+export type UserCreateWithoutNotificationsInput = {
+  id?: string
+  name: string
+  username: string
+  passwordHash: string
+  photoPath?: string | null
+  platformRole?: $Enums.PlatformRole
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  clubMemberships?: Prisma.ClubMembershipCreateNestedManyWithoutUserInput
+  teamMemberships?: Prisma.TeamMembershipCreateNestedManyWithoutUserInput
+  player?: Prisma.PlayerCreateNestedOneWithoutUserInput
+  createdTeamInvites?: Prisma.TeamInviteCreateNestedManyWithoutCreatedByInput
+  usedTeamInvites?: Prisma.TeamInviteCreateNestedManyWithoutUsedByInput
+  createdTrainings?: Prisma.TrainingCreateNestedManyWithoutCreatedByInput
+  statisticPreferences?: Prisma.StatisticPreferenceCreateNestedManyWithoutUserInput
+  publishedReleases?: Prisma.AppReleaseCreateNestedManyWithoutPublishedByInput
+}
+
+export type UserUncheckedCreateWithoutNotificationsInput = {
+  id?: string
+  name: string
+  username: string
+  passwordHash: string
+  photoPath?: string | null
+  platformRole?: $Enums.PlatformRole
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  clubMemberships?: Prisma.ClubMembershipUncheckedCreateNestedManyWithoutUserInput
+  teamMemberships?: Prisma.TeamMembershipUncheckedCreateNestedManyWithoutUserInput
+  player?: Prisma.PlayerUncheckedCreateNestedOneWithoutUserInput
+  createdTeamInvites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutCreatedByInput
+  usedTeamInvites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutUsedByInput
+  createdTrainings?: Prisma.TrainingUncheckedCreateNestedManyWithoutCreatedByInput
+  statisticPreferences?: Prisma.StatisticPreferenceUncheckedCreateNestedManyWithoutUserInput
+  publishedReleases?: Prisma.AppReleaseUncheckedCreateNestedManyWithoutPublishedByInput
+}
+
+export type UserCreateOrConnectWithoutNotificationsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>
+}
+
+export type UserUpsertWithoutNotificationsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutNotificationsInput, Prisma.UserUncheckedUpdateWithoutNotificationsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutNotificationsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutNotificationsInput, Prisma.UserUncheckedUpdateWithoutNotificationsInput>
+}
+
+export type UserUpdateWithoutNotificationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  platformRole?: Prisma.EnumPlatformRoleFieldUpdateOperationsInput | $Enums.PlatformRole
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  clubMemberships?: Prisma.ClubMembershipUpdateManyWithoutUserNestedInput
+  teamMemberships?: Prisma.TeamMembershipUpdateManyWithoutUserNestedInput
+  player?: Prisma.PlayerUpdateOneWithoutUserNestedInput
+  createdTeamInvites?: Prisma.TeamInviteUpdateManyWithoutCreatedByNestedInput
+  usedTeamInvites?: Prisma.TeamInviteUpdateManyWithoutUsedByNestedInput
+  createdTrainings?: Prisma.TrainingUpdateManyWithoutCreatedByNestedInput
+  statisticPreferences?: Prisma.StatisticPreferenceUpdateManyWithoutUserNestedInput
+  publishedReleases?: Prisma.AppReleaseUpdateManyWithoutPublishedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutNotificationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  platformRole?: Prisma.EnumPlatformRoleFieldUpdateOperationsInput | $Enums.PlatformRole
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  clubMemberships?: Prisma.ClubMembershipUncheckedUpdateManyWithoutUserNestedInput
+  teamMemberships?: Prisma.TeamMembershipUncheckedUpdateManyWithoutUserNestedInput
+  player?: Prisma.PlayerUncheckedUpdateOneWithoutUserNestedInput
+  createdTeamInvites?: Prisma.TeamInviteUncheckedUpdateManyWithoutCreatedByNestedInput
+  usedTeamInvites?: Prisma.TeamInviteUncheckedUpdateManyWithoutUsedByNestedInput
+  createdTrainings?: Prisma.TrainingUncheckedUpdateManyWithoutCreatedByNestedInput
+  statisticPreferences?: Prisma.StatisticPreferenceUncheckedUpdateManyWithoutUserNestedInput
+  publishedReleases?: Prisma.AppReleaseUncheckedUpdateManyWithoutPublishedByNestedInput
+}
+
+export type UserCreateWithoutPublishedReleasesInput = {
+  id?: string
+  name: string
+  username: string
+  passwordHash: string
+  photoPath?: string | null
+  platformRole?: $Enums.PlatformRole
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  clubMemberships?: Prisma.ClubMembershipCreateNestedManyWithoutUserInput
+  teamMemberships?: Prisma.TeamMembershipCreateNestedManyWithoutUserInput
+  player?: Prisma.PlayerCreateNestedOneWithoutUserInput
+  createdTeamInvites?: Prisma.TeamInviteCreateNestedManyWithoutCreatedByInput
+  usedTeamInvites?: Prisma.TeamInviteCreateNestedManyWithoutUsedByInput
+  createdTrainings?: Prisma.TrainingCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  statisticPreferences?: Prisma.StatisticPreferenceCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutPublishedReleasesInput = {
+  id?: string
+  name: string
+  username: string
+  passwordHash: string
+  photoPath?: string | null
+  platformRole?: $Enums.PlatformRole
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  clubMemberships?: Prisma.ClubMembershipUncheckedCreateNestedManyWithoutUserInput
+  teamMemberships?: Prisma.TeamMembershipUncheckedCreateNestedManyWithoutUserInput
+  player?: Prisma.PlayerUncheckedCreateNestedOneWithoutUserInput
+  createdTeamInvites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutCreatedByInput
+  usedTeamInvites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutUsedByInput
+  createdTrainings?: Prisma.TrainingUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  statisticPreferences?: Prisma.StatisticPreferenceUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutPublishedReleasesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutPublishedReleasesInput, Prisma.UserUncheckedCreateWithoutPublishedReleasesInput>
+}
+
+export type UserUpsertWithoutPublishedReleasesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutPublishedReleasesInput, Prisma.UserUncheckedUpdateWithoutPublishedReleasesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutPublishedReleasesInput, Prisma.UserUncheckedCreateWithoutPublishedReleasesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutPublishedReleasesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutPublishedReleasesInput, Prisma.UserUncheckedUpdateWithoutPublishedReleasesInput>
+}
+
+export type UserUpdateWithoutPublishedReleasesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  platformRole?: Prisma.EnumPlatformRoleFieldUpdateOperationsInput | $Enums.PlatformRole
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  clubMemberships?: Prisma.ClubMembershipUpdateManyWithoutUserNestedInput
+  teamMemberships?: Prisma.TeamMembershipUpdateManyWithoutUserNestedInput
+  player?: Prisma.PlayerUpdateOneWithoutUserNestedInput
+  createdTeamInvites?: Prisma.TeamInviteUpdateManyWithoutCreatedByNestedInput
+  usedTeamInvites?: Prisma.TeamInviteUpdateManyWithoutUsedByNestedInput
+  createdTrainings?: Prisma.TrainingUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  statisticPreferences?: Prisma.StatisticPreferenceUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutPublishedReleasesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  platformRole?: Prisma.EnumPlatformRoleFieldUpdateOperationsInput | $Enums.PlatformRole
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  clubMemberships?: Prisma.ClubMembershipUncheckedUpdateManyWithoutUserNestedInput
+  teamMemberships?: Prisma.TeamMembershipUncheckedUpdateManyWithoutUserNestedInput
+  player?: Prisma.PlayerUncheckedUpdateOneWithoutUserNestedInput
+  createdTeamInvites?: Prisma.TeamInviteUncheckedUpdateManyWithoutCreatedByNestedInput
+  usedTeamInvites?: Prisma.TeamInviteUncheckedUpdateManyWithoutUsedByNestedInput
+  createdTrainings?: Prisma.TrainingUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  statisticPreferences?: Prisma.StatisticPreferenceUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutCreatedTeamInvitesInput = {
+  id?: string
+  name: string
+  username: string
+  passwordHash: string
+  photoPath?: string | null
+  platformRole?: $Enums.PlatformRole
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  clubMemberships?: Prisma.ClubMembershipCreateNestedManyWithoutUserInput
+  teamMemberships?: Prisma.TeamMembershipCreateNestedManyWithoutUserInput
+  player?: Prisma.PlayerCreateNestedOneWithoutUserInput
+  usedTeamInvites?: Prisma.TeamInviteCreateNestedManyWithoutUsedByInput
+  createdTrainings?: Prisma.TrainingCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  statisticPreferences?: Prisma.StatisticPreferenceCreateNestedManyWithoutUserInput
+  publishedReleases?: Prisma.AppReleaseCreateNestedManyWithoutPublishedByInput
+}
+
+export type UserUncheckedCreateWithoutCreatedTeamInvitesInput = {
+  id?: string
+  name: string
+  username: string
+  passwordHash: string
+  photoPath?: string | null
+  platformRole?: $Enums.PlatformRole
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  clubMemberships?: Prisma.ClubMembershipUncheckedCreateNestedManyWithoutUserInput
+  teamMemberships?: Prisma.TeamMembershipUncheckedCreateNestedManyWithoutUserInput
+  player?: Prisma.PlayerUncheckedCreateNestedOneWithoutUserInput
+  usedTeamInvites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutUsedByInput
+  createdTrainings?: Prisma.TrainingUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  statisticPreferences?: Prisma.StatisticPreferenceUncheckedCreateNestedManyWithoutUserInput
+  publishedReleases?: Prisma.AppReleaseUncheckedCreateNestedManyWithoutPublishedByInput
+}
+
+export type UserCreateOrConnectWithoutCreatedTeamInvitesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutCreatedTeamInvitesInput, Prisma.UserUncheckedCreateWithoutCreatedTeamInvitesInput>
+}
+
+export type UserCreateWithoutUsedTeamInvitesInput = {
+  id?: string
+  name: string
+  username: string
+  passwordHash: string
+  photoPath?: string | null
+  platformRole?: $Enums.PlatformRole
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  clubMemberships?: Prisma.ClubMembershipCreateNestedManyWithoutUserInput
+  teamMemberships?: Prisma.TeamMembershipCreateNestedManyWithoutUserInput
+  player?: Prisma.PlayerCreateNestedOneWithoutUserInput
+  createdTeamInvites?: Prisma.TeamInviteCreateNestedManyWithoutCreatedByInput
+  createdTrainings?: Prisma.TrainingCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  statisticPreferences?: Prisma.StatisticPreferenceCreateNestedManyWithoutUserInput
+  publishedReleases?: Prisma.AppReleaseCreateNestedManyWithoutPublishedByInput
+}
+
+export type UserUncheckedCreateWithoutUsedTeamInvitesInput = {
+  id?: string
+  name: string
+  username: string
+  passwordHash: string
+  photoPath?: string | null
+  platformRole?: $Enums.PlatformRole
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  clubMemberships?: Prisma.ClubMembershipUncheckedCreateNestedManyWithoutUserInput
+  teamMemberships?: Prisma.TeamMembershipUncheckedCreateNestedManyWithoutUserInput
+  player?: Prisma.PlayerUncheckedCreateNestedOneWithoutUserInput
+  createdTeamInvites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutCreatedByInput
+  createdTrainings?: Prisma.TrainingUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  statisticPreferences?: Prisma.StatisticPreferenceUncheckedCreateNestedManyWithoutUserInput
+  publishedReleases?: Prisma.AppReleaseUncheckedCreateNestedManyWithoutPublishedByInput
 }
 
 export type UserCreateOrConnectWithoutUsedTeamInvitesInput = {
@@ -935,7 +1483,7 @@ export type UserUpdateToOneWithWhereWithoutCreatedTeamInvitesInput = {
 export type UserUpdateWithoutCreatedTeamInvitesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   platformRole?: Prisma.EnumPlatformRoleFieldUpdateOperationsInput | $Enums.PlatformRole
@@ -946,12 +1494,16 @@ export type UserUpdateWithoutCreatedTeamInvitesInput = {
   teamMemberships?: Prisma.TeamMembershipUpdateManyWithoutUserNestedInput
   player?: Prisma.PlayerUpdateOneWithoutUserNestedInput
   usedTeamInvites?: Prisma.TeamInviteUpdateManyWithoutUsedByNestedInput
+  createdTrainings?: Prisma.TrainingUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  statisticPreferences?: Prisma.StatisticPreferenceUpdateManyWithoutUserNestedInput
+  publishedReleases?: Prisma.AppReleaseUpdateManyWithoutPublishedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedTeamInvitesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   platformRole?: Prisma.EnumPlatformRoleFieldUpdateOperationsInput | $Enums.PlatformRole
@@ -962,6 +1514,10 @@ export type UserUncheckedUpdateWithoutCreatedTeamInvitesInput = {
   teamMemberships?: Prisma.TeamMembershipUncheckedUpdateManyWithoutUserNestedInput
   player?: Prisma.PlayerUncheckedUpdateOneWithoutUserNestedInput
   usedTeamInvites?: Prisma.TeamInviteUncheckedUpdateManyWithoutUsedByNestedInput
+  createdTrainings?: Prisma.TrainingUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  statisticPreferences?: Prisma.StatisticPreferenceUncheckedUpdateManyWithoutUserNestedInput
+  publishedReleases?: Prisma.AppReleaseUncheckedUpdateManyWithoutPublishedByNestedInput
 }
 
 export type UserUpsertWithoutUsedTeamInvitesInput = {
@@ -978,7 +1534,7 @@ export type UserUpdateToOneWithWhereWithoutUsedTeamInvitesInput = {
 export type UserUpdateWithoutUsedTeamInvitesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   platformRole?: Prisma.EnumPlatformRoleFieldUpdateOperationsInput | $Enums.PlatformRole
@@ -989,12 +1545,16 @@ export type UserUpdateWithoutUsedTeamInvitesInput = {
   teamMemberships?: Prisma.TeamMembershipUpdateManyWithoutUserNestedInput
   player?: Prisma.PlayerUpdateOneWithoutUserNestedInput
   createdTeamInvites?: Prisma.TeamInviteUpdateManyWithoutCreatedByNestedInput
+  createdTrainings?: Prisma.TrainingUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  statisticPreferences?: Prisma.StatisticPreferenceUpdateManyWithoutUserNestedInput
+  publishedReleases?: Prisma.AppReleaseUpdateManyWithoutPublishedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUsedTeamInvitesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   platformRole?: Prisma.EnumPlatformRoleFieldUpdateOperationsInput | $Enums.PlatformRole
@@ -1005,6 +1565,10 @@ export type UserUncheckedUpdateWithoutUsedTeamInvitesInput = {
   teamMemberships?: Prisma.TeamMembershipUncheckedUpdateManyWithoutUserNestedInput
   player?: Prisma.PlayerUncheckedUpdateOneWithoutUserNestedInput
   createdTeamInvites?: Prisma.TeamInviteUncheckedUpdateManyWithoutCreatedByNestedInput
+  createdTrainings?: Prisma.TrainingUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  statisticPreferences?: Prisma.StatisticPreferenceUncheckedUpdateManyWithoutUserNestedInput
+  publishedReleases?: Prisma.AppReleaseUncheckedUpdateManyWithoutPublishedByNestedInput
 }
 
 
@@ -1018,6 +1582,10 @@ export type UserCountOutputType = {
   teamMemberships: number
   createdTeamInvites: number
   usedTeamInvites: number
+  createdTrainings: number
+  notifications: number
+  statisticPreferences: number
+  publishedReleases: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1026,6 +1594,10 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   teamMemberships?: boolean | UserCountOutputTypeCountTeamMembershipsArgs
   createdTeamInvites?: boolean | UserCountOutputTypeCountCreatedTeamInvitesArgs
   usedTeamInvites?: boolean | UserCountOutputTypeCountUsedTeamInvitesArgs
+  createdTrainings?: boolean | UserCountOutputTypeCountCreatedTrainingsArgs
+  notifications?: boolean | UserCountOutputTypeCountNotificationsArgs
+  statisticPreferences?: boolean | UserCountOutputTypeCountStatisticPreferencesArgs
+  publishedReleases?: boolean | UserCountOutputTypeCountPublishedReleasesArgs
 }
 
 /**
@@ -1073,11 +1645,39 @@ export type UserCountOutputTypeCountUsedTeamInvitesArgs<ExtArgs extends runtime.
   where?: Prisma.TeamInviteWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountCreatedTrainingsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TrainingWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountNotificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.NotificationWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountStatisticPreferencesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.StatisticPreferenceWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountPublishedReleasesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AppReleaseWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
-  email?: boolean
+  username?: boolean
   passwordHash?: boolean
   photoPath?: boolean
   platformRole?: boolean
@@ -1089,13 +1689,17 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   player?: boolean | Prisma.User$playerArgs<ExtArgs>
   createdTeamInvites?: boolean | Prisma.User$createdTeamInvitesArgs<ExtArgs>
   usedTeamInvites?: boolean | Prisma.User$usedTeamInvitesArgs<ExtArgs>
+  createdTrainings?: boolean | Prisma.User$createdTrainingsArgs<ExtArgs>
+  notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
+  statisticPreferences?: boolean | Prisma.User$statisticPreferencesArgs<ExtArgs>
+  publishedReleases?: boolean | Prisma.User$publishedReleasesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
-  email?: boolean
+  username?: boolean
   passwordHash?: boolean
   photoPath?: boolean
   platformRole?: boolean
@@ -1106,7 +1710,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
-  email?: boolean
+  username?: boolean
   passwordHash?: boolean
   photoPath?: boolean
   platformRole?: boolean
@@ -1117,7 +1721,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
 export type UserSelectScalar = {
   id?: boolean
   name?: boolean
-  email?: boolean
+  username?: boolean
   passwordHash?: boolean
   photoPath?: boolean
   platformRole?: boolean
@@ -1125,7 +1729,7 @@ export type UserSelectScalar = {
   updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "passwordHash" | "photoPath" | "platformRole" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "username" | "passwordHash" | "photoPath" | "platformRole" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   clubMemberships?: boolean | Prisma.User$clubMembershipsArgs<ExtArgs>
@@ -1133,6 +1737,10 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   player?: boolean | Prisma.User$playerArgs<ExtArgs>
   createdTeamInvites?: boolean | Prisma.User$createdTeamInvitesArgs<ExtArgs>
   usedTeamInvites?: boolean | Prisma.User$usedTeamInvitesArgs<ExtArgs>
+  createdTrainings?: boolean | Prisma.User$createdTrainingsArgs<ExtArgs>
+  notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
+  statisticPreferences?: boolean | Prisma.User$statisticPreferencesArgs<ExtArgs>
+  publishedReleases?: boolean | Prisma.User$publishedReleasesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1147,11 +1755,15 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     player: Prisma.$PlayerPayload<ExtArgs> | null
     createdTeamInvites: Prisma.$TeamInvitePayload<ExtArgs>[]
     usedTeamInvites: Prisma.$TeamInvitePayload<ExtArgs>[]
+    createdTrainings: Prisma.$TrainingPayload<ExtArgs>[]
+    notifications: Prisma.$NotificationPayload<ExtArgs>[]
+    statisticPreferences: Prisma.$StatisticPreferencePayload<ExtArgs>[]
+    publishedReleases: Prisma.$AppReleasePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     name: string
-    email: string
+    username: string
     passwordHash: string
     photoPath: string | null
     platformRole: $Enums.PlatformRole
@@ -1557,6 +2169,10 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   player<T extends Prisma.User$playerArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$playerArgs<ExtArgs>>): Prisma.Prisma__PlayerClient<runtime.Types.Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   createdTeamInvites<T extends Prisma.User$createdTeamInvitesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$createdTeamInvitesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TeamInvitePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   usedTeamInvites<T extends Prisma.User$usedTeamInvitesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$usedTeamInvitesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TeamInvitePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  createdTrainings<T extends Prisma.User$createdTrainingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$createdTrainingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TrainingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  notifications<T extends Prisma.User$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  statisticPreferences<T extends Prisma.User$statisticPreferencesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$statisticPreferencesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StatisticPreferencePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  publishedReleases<T extends Prisma.User$publishedReleasesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$publishedReleasesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AppReleasePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1588,7 +2204,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
 export interface UserFieldRefs {
   readonly id: Prisma.FieldRef<"User", 'String'>
   readonly name: Prisma.FieldRef<"User", 'String'>
-  readonly email: Prisma.FieldRef<"User", 'String'>
+  readonly username: Prisma.FieldRef<"User", 'String'>
   readonly passwordHash: Prisma.FieldRef<"User", 'String'>
   readonly photoPath: Prisma.FieldRef<"User", 'String'>
   readonly platformRole: Prisma.FieldRef<"User", 'PlatformRole'>
@@ -2123,6 +2739,102 @@ export type User$usedTeamInvitesArgs<ExtArgs extends runtime.Types.Extensions.In
   take?: number
   skip?: number
   distinct?: Prisma.TeamInviteScalarFieldEnum | Prisma.TeamInviteScalarFieldEnum[]
+}
+
+/**
+ * User.createdTrainings
+ */
+export type User$createdTrainingsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Training
+   */
+  select?: Prisma.TrainingSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Training
+   */
+  omit?: Prisma.TrainingOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TrainingInclude<ExtArgs> | null
+  where?: Prisma.TrainingWhereInput
+  orderBy?: Prisma.TrainingOrderByWithRelationInput | Prisma.TrainingOrderByWithRelationInput[]
+  cursor?: Prisma.TrainingWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TrainingScalarFieldEnum | Prisma.TrainingScalarFieldEnum[]
+}
+
+/**
+ * User.notifications
+ */
+export type User$notificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Notification
+   */
+  select?: Prisma.NotificationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Notification
+   */
+  omit?: Prisma.NotificationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.NotificationInclude<ExtArgs> | null
+  where?: Prisma.NotificationWhereInput
+  orderBy?: Prisma.NotificationOrderByWithRelationInput | Prisma.NotificationOrderByWithRelationInput[]
+  cursor?: Prisma.NotificationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.NotificationScalarFieldEnum | Prisma.NotificationScalarFieldEnum[]
+}
+
+/**
+ * User.statisticPreferences
+ */
+export type User$statisticPreferencesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the StatisticPreference
+   */
+  select?: Prisma.StatisticPreferenceSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the StatisticPreference
+   */
+  omit?: Prisma.StatisticPreferenceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.StatisticPreferenceInclude<ExtArgs> | null
+  where?: Prisma.StatisticPreferenceWhereInput
+  orderBy?: Prisma.StatisticPreferenceOrderByWithRelationInput | Prisma.StatisticPreferenceOrderByWithRelationInput[]
+  cursor?: Prisma.StatisticPreferenceWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.StatisticPreferenceScalarFieldEnum | Prisma.StatisticPreferenceScalarFieldEnum[]
+}
+
+/**
+ * User.publishedReleases
+ */
+export type User$publishedReleasesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AppRelease
+   */
+  select?: Prisma.AppReleaseSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AppRelease
+   */
+  omit?: Prisma.AppReleaseOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AppReleaseInclude<ExtArgs> | null
+  where?: Prisma.AppReleaseWhereInput
+  orderBy?: Prisma.AppReleaseOrderByWithRelationInput | Prisma.AppReleaseOrderByWithRelationInput[]
+  cursor?: Prisma.AppReleaseWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AppReleaseScalarFieldEnum | Prisma.AppReleaseScalarFieldEnum[]
 }
 
 /**

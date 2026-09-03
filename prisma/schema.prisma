@@ -52,10 +52,21 @@ enum SyncStatus {
   failed
 }
 
+enum AttendanceStatus {
+  present
+  unknown
+  absent
+}
+
+enum NotificationType {
+  app_update
+  general
+}
+
 model User {
   id String @id @default(cuid())
   name String
-  email String @unique
+  username String @unique
   passwordHash String
   photoPath String?
   platformRole PlatformRole @default(user)
@@ -65,6 +76,10 @@ model User {
   player Player?
   createdTeamInvites TeamInvite[] @relation("InviteCreator")
   usedTeamInvites TeamInvite[] @relation("InviteUser")
+  createdTrainings Training[] @relation("TrainingCreator")
+  notifications Notification[]
+  statisticPreferences StatisticPreference[]
+  publishedReleases AppRelease[] @relation("ReleasePublisher")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -120,6 +135,8 @@ model Team {
   players Player[]
   syncRuns SyncRun[]
   invites TeamInvite[]
+  trainings Training[]
+  statisticPreferences StatisticPreference[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   @@unique([clubId, name])
@@ -177,6 +194,7 @@ model Match {
   lastSyncedAt DateTime?
   playerStats PlayerMatchStats[]
   events MatchEvent[]
+  attendance MatchAttendance[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   @@unique([externalProvider, externalId])
@@ -224,9 +242,91 @@ model Player {
   matchStats PlayerMatchStats[]
   events MatchEvent[] @relation("EventPlayer")
   relatedEvents MatchEvent[] @relation("RelatedPlayer")
+  matchAttendance MatchAttendance[]
+  trainingAttendance TrainingAttendance[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   @@index([teamId, active])
+}
+
+model MatchAttendance {
+  id String @id @default(cuid())
+  matchId String
+  match Match @relation(fields: [matchId], references: [id], onDelete: Cascade)
+  playerId String
+  player Player @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  status AttendanceStatus @default(unknown)
+  updatedById String
+  updatedAt DateTime @updatedAt
+  @@unique([matchId, playerId])
+  @@index([playerId, status])
+}
+
+model Training {
+  id String @id @default(cuid())
+  teamId String
+  team Team @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  title String @default("Training")
+  date DateTime
+  startTime String?
+  endTime String?
+  venue String?
+  notes String?
+  createdById String
+  createdBy User @relation("TrainingCreator", fields: [createdById], references: [id])
+  attendance TrainingAttendance[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@index([teamId, date])
+}
+
+model TrainingAttendance {
+  id String @id @default(cuid())
+  trainingId String
+  training Training @relation(fields: [trainingId], references: [id], onDelete: Cascade)
+  playerId String
+  player Player @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  status AttendanceStatus @default(unknown)
+  updatedById String
+  updatedAt DateTime @updatedAt
+  @@unique([trainingId, playerId])
+  @@index([playerId, status])
+}
+
+model StatisticPreference {
+  id String @id @default(cuid())
+  userId String
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  teamId String
+  team Team @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  metricKeys String[]
+  updatedAt DateTime @updatedAt
+  @@unique([userId, teamId])
+}
+
+model Notification {
+  id String @id @default(cuid())
+  userId String
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type NotificationType @default(general)
+  title String
+  body String
+  link String?
+  readAt DateTime?
+  createdAt DateTime @default(now())
+  @@index([userId, readAt, createdAt])
+}
+
+model AppRelease {
+  id String @id @default(cuid())
+  version String @unique
+  buildNumber Int @unique
+  apkPath String
+  sha256 String
+  notes String?
+  publishedById String
+  publishedBy User @relation("ReleasePublisher", fields: [publishedById], references: [id])
+  createdAt DateTime @default(now())
 }
 
 model PlayerMatchStats {

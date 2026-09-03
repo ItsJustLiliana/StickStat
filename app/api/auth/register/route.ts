@@ -12,12 +12,12 @@ export async function POST(request:NextRequest){
     try{rateLimit(`register:${ip}`,5,60*60_000)}catch{throw new HttpError(429,"RATE_LIMITED","Te veel registratiepogingen. Probeer later opnieuw.")}
     const input=registerSchema.parse(await request.json());
     if(process.env.ALLOW_REGISTRATION==="false"&&!input.inviteToken)throw new HttpError(403,"REGISTRATION_DISABLED","Registratie is uitgeschakeld");
-    if(await db.user.findUnique({where:{email:input.email},select:{id:true}}))throw new HttpError(409,"EMAIL_EXISTS","Er bestaat al een account met dit e-mailadres");
+    if(await db.user.findUnique({where:{username:input.username},select:{id:true}}))throw new HttpError(409,"USERNAME_EXISTS","Deze gebruikersnaam is al in gebruik");
     const passwordHash=await hashPassword(input.password);
     const user=await db.$transaction(async transaction=>{
       const invite=input.inviteToken?await transaction.teamInvite.findUnique({where:{tokenHash:hashInviteToken(input.inviteToken)},select:{id:true,teamId:true,usedAt:true,expiresAt:true}}):null;
       if(input.inviteToken&&(!invite||invite.usedAt||invite.expiresAt<=new Date()))throw new HttpError(410,"INVITE_INVALID","Deze uitnodiging is verlopen of al gebruikt");
-      const created=await transaction.user.create({data:{name:input.name,email:input.email,passwordHash,platformRole:"user"},select:{id:true,name:true,email:true,platformRole:true}});
+      const created=await transaction.user.create({data:{name:input.name,username:input.username,passwordHash,platformRole:"user"},select:{id:true,name:true,username:true,platformRole:true}});
       if(invite){const claimed=await transaction.teamInvite.updateMany({where:{id:invite.id,usedAt:null,expiresAt:{gt:new Date()}},data:{usedAt:new Date(),usedById:created.id}});if(!claimed.count)throw new HttpError(410,"INVITE_INVALID","Deze uitnodiging is verlopen of al gebruikt");await transaction.teamMembership.create({data:{userId:created.id,teamId:invite.teamId,roles:[]}})}
       return created;
     });
