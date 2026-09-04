@@ -1631,14 +1631,26 @@ html[data-theme="dark"] body {
 
 .agenda-type {
     width: max-content;
+    display: inline-block;
+    padding: 6px 11px;
+    border-radius: 8px;
     text-transform: uppercase;
-    font-size: 9px !important;
+    font-size: 10px !important;
     font-weight: 900;
-    letter-spacing: .08em
+    letter-spacing: .08em;
+    border: 1.5px solid
+}
+
+.agenda-type.match {
+    background: color-mix(in srgb, var(--green) 12%, var(--card));
+    color: var(--green);
+    border-color: color-mix(in srgb, var(--green) 35%, var(--line))
 }
 
 .agenda-type.training {
-    color: #73520d
+    background: #f0e6d6;
+    color: #6d5421;
+    border-color: #d4c4a8
 }
 
 .statistics-toolbar {
@@ -1989,26 +2001,33 @@ html[data-theme="dark"] body {
 .agenda-tabs {
     display: inline-flex;
     align-items: center;
-    gap: 4px;
-    padding: 4px;
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    background: var(--paper)
+    gap: 6px;
+    padding: 6px;
+    border: 1.5px solid var(--line);
+    border-radius: 14px;
+    background: var(--card);
+    box-shadow: 0 2px 8px #0000080a
 }
 
 .agenda-tabs a {
-    padding: 9px 13px;
-    border-radius: 9px;
+    padding: 11px 15px;
+    border-radius: 10px;
     color: var(--muted);
     text-decoration: none;
     font-size: 14px;
-    font-weight: 850
+    font-weight: 850;
+    transition: all 0.2s ease
+}
+
+.agenda-tabs a:hover {
+    background: color-mix(in srgb, var(--lime) 8%, var(--card))
 }
 
 .agenda-tabs a.active {
-    background: var(--card);
-    color: var(--green);
-    box-shadow: 0 3px 10px #123c2b12
+    background: var(--green);
+    color: var(--lime);
+    box-shadow: 0 4px 12px color-mix(in srgb, var(--green) 20%, #000000);
+    font-weight: 900
 }
 
 .agenda-week-separator {
