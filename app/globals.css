@@ -486,20 +486,22 @@ h2 {
 }
 
 .teams {
-    display: grid;
-    gap: 5px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
     min-width: 0;
-    font-weight: 750
+    font-weight: 750;
+    white-space: nowrap
 }
 
 .teams span {
     overflow-wrap: anywhere
 }
 
-.teams .match-team-identity { width: fit-content }
+.teams .match-team-identity { width: auto }
 
 .next-match { padding: 26px 0 }
-.next-match-teams,.last-result,.agenda-match-teams { display:flex;align-items:center;gap:8px;flex-wrap:wrap }
+.next-match-teams,.last-result,.agenda-match-teams { display:flex;align-items:center;gap:8px;flex-wrap:nowrap;min-width:0 }
 .next-match-teams { margin:14px 0 }
 .last-result { margin-top:8px }
 .agenda-match-teams { margin-top:5px }
@@ -759,30 +761,16 @@ td {
 }
 
 .match-team-identity {
-    display: inline-grid;
-    gap: 3px;
+    display: inline-block;
     min-width: 0;
-    padding: 8px 10px;
-    border: 1px solid transparent;
-    border-radius: 11px;
-    line-height: 1.1
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height: inherit
 }
 
-.match-team-identity small {
-    font-size: 9px;
-    font-weight: 900;
-    letter-spacing: .07em;
-    text-transform: uppercase
-}
-
-.match-team-identity strong { overflow-wrap: anywhere }
-.match-team-identity.is-own { background: var(--lime);border-color:#a8d84b;color:#193d22 }
-.match-team-identity.is-own small { color:#315207 }
-.match-team-identity.is-opponent { background:#fff0eb;border-color:#f3b29e;color:#8a321b }
-.match-team-identity.is-opponent small { color:#a94b31 }
-
-html[data-theme="dark"] .match-team-identity.is-opponent { background:#3b211b;border-color:#814333;color:#ffd4c7 }
-html[data-theme="dark"] .match-team-identity.is-opponent small { color:#ffad94 }
+.match-team-identity.is-own { color:var(--green);font-weight:950;text-decoration:underline;text-decoration-color:var(--lime);text-decoration-thickness:3px;text-underline-offset:3px }
+.match-team-identity.is-opponent { color:var(--muted);font-weight:700 }
 
 .own-team {
     display: inline-grid;
@@ -1434,4 +1422,45 @@ html[data-theme="dark"] body {
     .account-actions {
         margin-left: auto
     }
+}
+
+/* Compact attendance controls: the status stays directly beside each player. */
+.attendance-row > strong {
+    min-width: 0;
+    overflow-wrap: anywhere
+}
+
+.attendance-options {
+    flex: 0 0 auto;
+    flex-wrap: nowrap;
+    margin-left: auto
+}
+
+.attendance-choice {
+    display: inline-grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border-radius: 10px;
+    font-size: 18px;
+    line-height: 1
+}
+
+.attendance-choice.present { background:#effbd7;color:#55731a;border-color:#cfe69d }
+.attendance-choice.unknown { background:#f0f3f1;color:#60706a;border-color:#cad3cf }
+.attendance-choice.absent { background:#fff0eb;color:#b2472a;border-color:#f2b9a8 }
+.attendance-choice[aria-pressed="true"] { box-shadow:0 0 0 2px currentColor inset }
+.attendance-choice:disabled { cursor:default;opacity:.55 }
+.attendance-choice:disabled[aria-pressed="true"] { opacity:1 }
+.agenda-row .agenda-match-teams { display:flex;align-items:center;gap:7px;white-space:nowrap }
+
+@media(max-width:700px) {
+    .attendance-row {
+        align-items: center;
+        flex-direction: row
+    }
+
+    .attendance-options { width:auto }
+    .attendance-choice { flex:0 0 34px;padding:0;font-size:18px }
 }

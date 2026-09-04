@@ -18,7 +18,8 @@ describe("wedstrijdfilters", () => {
         expect(page).toMatch(/match\.homeTeamId\s*===\s*team\.id\s*\?\s*match\.awayTeam\.name\s*:\s*match\.homeTeam\.name/);
         expect(page).toContain("<MatchTeamLabel");
         expect(teamLabel).toContain('own?"Mijn team":"Tegenstander"');
-        expect(teamLabel).toContain('side==="home"?"thuis":"uit"');
+        expect(teamLabel).toContain('aria-label={`${identity}, ${location}: ${name}`}');
+        expect(teamLabel).not.toContain("<small>");
         expect(filters).toContain("closeOutside");
     });
 });
