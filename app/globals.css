@@ -29,7 +29,7 @@ html[data-theme="dark"] {
 html {
     background: var(--paper);
     -webkit-text-size-adjust: 100%;
-    overscroll-behavior: none;
+    overscroll-behavior-y: none;
     -webkit-user-select: none
 }
 

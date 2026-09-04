@@ -111,18 +111,8 @@ export default async function Agenda({ searchParams }: { searchParams: Promise<{
       <section className="card agenda-card">
         <div className="card-head">
           <nav className="agenda-tabs" aria-label="Agendaweergave">
-            <Link
-              className={!showPast ? "active" : ""}
-              href={`/agenda?team=${team.id}`}
-            >
-              Teamagenda
-            </Link>
-            <Link
-              className={showPast ? "active" : ""}
-              href={`/agenda?team=${team.id}&view=past`}
-            >
-              Verlopen
-            </Link>
+            <Link className={!showPast ? "active" : ""} href={`/agenda?team=${team.id}`}>Teamagenda</Link>
+            <Link className={showPast ? "active" : ""} href={`/agenda?team=${team.id}&view=past`}>Verlopen</Link>
           </nav>
         </div>
 
@@ -138,7 +128,9 @@ export default async function Agenda({ searchParams }: { searchParams: Promise<{
                 )}
                 <Link className="agenda-row" href={item.href}>
                   <time>
-                    <strong>{item.date.toLocaleDateString("nl-NL", { day: "2-digit", month: "short" })}</strong>
+                    <strong>
+                      {item.date.toLocaleDateString("nl-NL", { day: "2-digit", month: "short" })}
+                    </strong>
                     <span>{item.time ?? "–"}</span>
                   </time>
                   <span>
