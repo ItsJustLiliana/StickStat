@@ -44,12 +44,12 @@ function weekLabel(date: Date) {
 export default async function Agenda({ searchParams }: { searchParams: Promise<{ team?: string; view?: string }> }) {
   const query = await searchParams;
   const { user, teams, team } = await pageContext(query.team);
-  
+
   if (!team) return <PageShell user={user}><EmptyTeam /></PageShell>;
-  
+
   const membership = user.teamMemberships.find(item => item.teamId === team.id);
   const canManage = user.platformRole === "admin" || Boolean(membership && hasAnyTeamRole(membership.roles, teamManagementRoles));
-  
+
   const [matches, trainings] = await Promise.all([
     db.match.findMany({
       where: { OR: [{ homeTeamId: team.id }, { awayTeamId: team.id }] },
@@ -62,7 +62,7 @@ export default async function Agenda({ searchParams }: { searchParams: Promise<{
       orderBy: [{ date: "asc" }, { startTime: "asc" }],
     }),
   ]);
-  
+
   const items = [
     ...matches.map(match => ({
       id: match.id,
@@ -89,13 +89,13 @@ export default async function Agenda({ searchParams }: { searchParams: Promise<{
       awayTeam: null,
     })),
   ];
-  
+
   const today = dateKey(new Date());
   const showPast = query.view === "past";
   const visibleItems = items
     .filter(item => showPast ? dateKey(item.date) < today : dateKey(item.date) >= today)
     .sort((a, b) => showPast ? b.date.getTime() - a.date.getTime() : a.date.getTime() - b.date.getTime());
-  
+
   return (
     <PageShell user={user}>
       <div className="page-head">
@@ -178,5 +178,4 @@ export default async function Agenda({ searchParams }: { searchParams: Promise<{
       </section>
     </PageShell>
   );
-}
 }
