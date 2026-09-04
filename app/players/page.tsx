@@ -27,7 +27,7 @@ export default async function Players({searchParams}:{searchParams:Promise<{team
   const canAdmin=user.platformRole==="admin"||user.teamMemberships.some(membership=>membership.teamId===team.id&&membership.roles.includes("team_admin"));
   const [memberships,players,invites]=await Promise.all([
     db.teamMembership.findMany({where:{teamId:team.id},include:{user:{include:{player:{include:{matchStats:{where:{match:{status:"finished",OR:[{homeTeamId:team.id},{awayTeamId:team.id}]}}}}}}}},orderBy:{createdAt:"asc"}}),
-    db.player.findMany({where:{teamId:team.id,active:true},include:{matchStats:{where:{match:{status:"finished",OR:[{homeTeamId:team.id},{awayTeamId:team.id}]}}}},orderBy:{shirtNumber:"asc"}}),
+    db.player.findMany({where:{teamId:team.id,active:true},include:{matchStats:{where:{match:{status:"finished",OR:[{homeTeamId:team.id},{awayTeamId:team.id}]}}}},orderBy:[{lastName:"asc"},{namePrefix:"asc"},{firstName:"asc"}]}),
     canAdmin?db.teamInvite.findMany({where:{teamId:team.id,usedAt:null,expiresAt:{gt:new Date()}},include:{createdBy:{select:{name:true}}},orderBy:{createdAt:"desc"}}):Promise.resolve([]),
   ]);
   const linkedPlayerIds=new Set(memberships.map(membership=>membership.user.player?.id).filter(Boolean));

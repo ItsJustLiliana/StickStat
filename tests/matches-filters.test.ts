@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 
 const page = readFileSync("app/matches/page.tsx", "utf8");
 const filters = readFileSync("components/match-filters.tsx", "utf8");
+const teamLabel = readFileSync("components/match-team-label.tsx", "utf8");
 
 describe("wedstrijdfilters", () => {
     it("biedt alle filters in een direct toegepaste popup", () => {
@@ -15,8 +16,9 @@ describe("wedstrijdfilters", () => {
 
     it("filtert op de tegenstander en markeert het eigen team", () => {
         expect(page).toMatch(/match\.homeTeamId\s*===\s*team\.id\s*\?\s*match\.awayTeam\.name\s*:\s*match\.homeTeam\.name/);
-        expect(page).toContain('"own-team"');
-        expect(page).not.toContain("Jouw team");
+        expect(page).toContain("<MatchTeamLabel");
+        expect(teamLabel).toContain('own?"Mijn team":"Tegenstander"');
+        expect(teamLabel).toContain('side==="home"?"thuis":"uit"');
         expect(filters).toContain("closeOutside");
     });
 });

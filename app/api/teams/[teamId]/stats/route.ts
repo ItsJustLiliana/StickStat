@@ -17,6 +17,7 @@ export async function GET(_:Request,{params}:{params:Promise<{teamId:string}>}){
       db.match.findMany({where:matchFilter,orderBy:{date:"asc"}}),
       db.player.findMany({
         where:{teamId},
+        orderBy:[{lastName:"asc"},{namePrefix:"asc"},{firstName:"asc"}],
         include:{
           matchStats:{where:{match:matchFilter}},
           events:{where:{match:matchFilter}},

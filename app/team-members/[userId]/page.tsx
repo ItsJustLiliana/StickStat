@@ -16,7 +16,7 @@ export default async function TeamMemberDetails({params,searchParams}:{params:Pr
   const finishedMatch={status:"finished" as const,OR:[{homeTeamId:team.id},{awayTeamId:team.id}]};
   const [membership,players,adminCount]=await Promise.all([
     db.teamMembership.findUnique({where:{userId_teamId:{userId,teamId:team.id}},include:{user:{include:{player:{include:{matchStats:{where:{match:finishedMatch}},events:{where:{match:finishedMatch}}}}}}}}),
-    canAdmin?db.player.findMany({where:{teamId:team.id,active:true},select:{id:true,displayName:true,userId:true},orderBy:[{lastName:"asc"},{firstName:"asc"}]}):Promise.resolve([]),
+    canAdmin?db.player.findMany({where:{teamId:team.id,active:true},select:{id:true,displayName:true,userId:true},orderBy:[{lastName:"asc"},{namePrefix:"asc"},{firstName:"asc"}]}):Promise.resolve([]),
     canAdmin?db.teamMembership.count({where:{teamId:team.id,roles:{has:"team_admin"}}}):Promise.resolve(0),
   ]);
   if(!membership)notFound();

@@ -80,6 +80,7 @@ class _StickStatWebAppState extends State<StickStatWebApp> {
           },
           onPageFinished: (_) {
             if (mounted) setState(() => _progress = 100);
+            _publishInstalledVersion();
           },
           onWebResourceError: (error) {
             if ((error.isForMainFrame ?? true) && mounted) {
@@ -106,6 +107,22 @@ class _StickStatWebAppState extends State<StickStatWebApp> {
     return false;
   }
 
+  Future<void> _publishInstalledVersion() async {
+    try {
+      final info = await PackageInfo.fromPlatform();
+      final payload = jsonEncode({
+        'version': info.version,
+        'buildNumber': info.buildNumber,
+      });
+      await _controller.runJavaScript('''
+        window.localStorage.setItem('stickstat-installed-app-version', JSON.stringify($payload));
+        window.dispatchEvent(new Event('stickstat-app-version'));
+      ''');
+    } catch (_) {
+      // Versie tonen op de profielpagina mag navigatie nooit blokkeren.
+    }
+  }
+
   Future<void> _checkForUpdate() async {
     try {
       final response = await http.get(Uri.parse('$stickStatUrl/api/app/releases/latest')).timeout(const Duration(seconds: 8));
@@ -113,7 +130,10 @@ class _StickStatWebAppState extends State<StickStatWebApp> {
       final release = jsonDecode(response.body)['data'] as Map<String, dynamic>?;
       if (release == null) return;
       final info = await PackageInfo.fromPlatform();
-      if (!_isNewer(release['version'] as String, info.version) || !mounted) return;
+      final remoteBuild = (release['buildNumber'] as num?)?.toInt() ?? 0;
+      final localBuild = int.tryParse(info.buildNumber) ?? 0;
+      final updateAvailable = remoteBuild > localBuild || _isNewer(release['version'] as String, info.version);
+      if (!updateAvailable || !mounted) return;
       await showDialog<void>(context: context, barrierDismissible: false, builder: (dialogContext) => AlertDialog(title: Text('StickStat ${release['version']} beschikbaar'), content: const Text('Er is een nieuwe versie. De APK wordt veilig gecontroleerd voordat Android de installatie opent.'), actions: [TextButton(onPressed: () => Navigator.pop(dialogContext), child: const Text('Later')), FilledButton(onPressed: () { Navigator.pop(dialogContext); _downloadAndInstall(release); }, child: const Text('Downloaden'))]));
     } catch (_) { /* Updates mogen het starten van de app nooit blokkeren. */ }
   }

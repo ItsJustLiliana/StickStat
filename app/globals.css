@@ -28,7 +28,8 @@ html[data-theme="dark"] {
 
 html {
     background: var(--paper);
-    -webkit-text-size-adjust: 100%
+    -webkit-text-size-adjust: 100%;
+    overscroll-behavior-y: none
 }
 
 body {
@@ -57,7 +58,8 @@ svg {
 }
 
 .app-shell {
-    min-height: 100vh
+    min-height: 100vh;
+    padding-top: 72px
 }
 
 .topbar {
@@ -67,8 +69,10 @@ svg {
     display: flex;
     align-items: center;
     padding: 0 clamp(18px, 4vw, 56px);
-    position: sticky;
+    position: fixed;
     top: 0;
+    left: 0;
+    right: 0;
     z-index: 20;
     box-shadow: 0 8px 30px #092f2522
 }
@@ -135,6 +139,46 @@ svg {
 
 .mobile-nav {
     display: none
+}
+
+.pull-refresh {
+    --pull-distance: 0px;
+    position: fixed;
+    z-index: 19;
+    top: 78px;
+    left: 50%;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 12px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--card);
+    color: var(--muted);
+    box-shadow: 0 10px 30px #092f2530;
+    font-size: 11px;
+    font-weight: 850;
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, calc(-54px + var(--pull-distance)));
+    transition: opacity .12s ease, color .12s ease
+}
+
+.pull-refresh.visible { opacity: 1 }
+.pull-refresh.ready { color: var(--green) }
+.pull-refresh.ready svg { transform: rotate(180deg) }
+.pull-refresh.refreshing svg { animation: pull-refresh-spin .7s linear infinite }
+@keyframes pull-refresh-spin { to { transform: rotate(360deg) } }
+
+.app-version-footer {
+    display: flex;
+    justify-content: center;
+    gap: 8px 18px;
+    flex-wrap: wrap;
+    padding: 24px 12px 4px;
+    color: var(--muted);
+    font-size: 11px;
+    text-align: center
 }
 
 .content {
@@ -302,6 +346,13 @@ h2 {
     z-index: 2
 }
 
+.match-hero {
+    grid-template-columns: 1fr;
+    text-align: center
+}
+
+.match-score-divider { color: white }
+
 .match-score-team {
     display: grid;
     justify-items: center;
@@ -444,6 +495,14 @@ h2 {
 .teams span {
     overflow-wrap: anywhere
 }
+
+.teams .match-team-identity { width: fit-content }
+
+.next-match { padding: 26px 0 }
+.next-match-teams,.last-result,.agenda-match-teams { display:flex;align-items:center;gap:8px;flex-wrap:wrap }
+.next-match-teams { margin:14px 0 }
+.last-result { margin-top:8px }
+.agenda-match-teams { margin-top:5px }
 
 .score {
     font-size: 22px;
@@ -698,6 +757,32 @@ td {
     color: inherit;
     text-decoration: none
 }
+
+.match-team-identity {
+    display: inline-grid;
+    gap: 3px;
+    min-width: 0;
+    padding: 8px 10px;
+    border: 1px solid transparent;
+    border-radius: 11px;
+    line-height: 1.1
+}
+
+.match-team-identity small {
+    font-size: 9px;
+    font-weight: 900;
+    letter-spacing: .07em;
+    text-transform: uppercase
+}
+
+.match-team-identity strong { overflow-wrap: anywhere }
+.match-team-identity.is-own { background: var(--lime);border-color:#a8d84b;color:#193d22 }
+.match-team-identity.is-own small { color:#315207 }
+.match-team-identity.is-opponent { background:#fff0eb;border-color:#f3b29e;color:#8a321b }
+.match-team-identity.is-opponent small { color:#a94b31 }
+
+html[data-theme="dark"] .match-team-identity.is-opponent { background:#3b211b;border-color:#814333;color:#ffd4c7 }
+html[data-theme="dark"] .match-team-identity.is-opponent small { color:#ffad94 }
 
 .own-team {
     display: inline-grid;
@@ -1003,6 +1088,9 @@ td {
     .content {
         padding-bottom: calc(92px + env(safe-area-inset-bottom))
     }
+
+    .app-shell { padding-top: 62px }
+    .pull-refresh { top: 68px }
 
     .hero {
         grid-template-columns: 1fr

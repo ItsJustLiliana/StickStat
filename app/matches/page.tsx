@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { EmptyTeam } from "@/components/empty-team";
 import { MatchFilters } from "@/components/match-filters";
+import { MatchTeamLabel } from "@/components/match-team-label";
 import { PageShell } from "@/components/page-shell";
 import { TeamSelector } from "@/components/team-selector";
 import { db } from "@/lib/db";
@@ -27,7 +28,7 @@ export default async function Matches({ searchParams }: { searchParams: Promise<
     <div className="page-head page-head-with-tools"><div><span className="eyebrow">Programma & resultaten</span><h1>Wedstrijden</h1></div><div className="page-head-tools"><TeamSelector teams={teams} current={team.id} /><MatchFilters key={query.q ?? ""} teamId={team.id} seasons={seasons} /></div></div>
     <section className="card matches-table-card" style={{ overflowX: "auto" }}>
       <table><thead><tr><th>Datum</th><th>Wedstrijd</th><th>Uitslag</th></tr></thead><tbody>
-        {matches.map(match => <tr key={match.id}><td>{match.date.toLocaleDateString("nl-NL")}{match.startTime && <small className="muted"><br />{match.startTime}</small>}</td><td><Link className="match-teams" href={`/matches/${match.id}?team=${team.id}`}><span className={match.homeTeamId === team.id ? "own-team" : "opponent-team"}>{match.homeTeam.shortName}</span><span className="match-versus">–</span><span className={match.awayTeamId === team.id ? "own-team" : "opponent-team"}>{match.awayTeam.shortName}</span></Link></td><td className="score">{match.homeScore == null ? "–" : `${match.homeScore}–${match.awayScore}`}</td></tr>)}
+        {matches.map(match => <tr key={match.id}><td>{match.date.toLocaleDateString("nl-NL")}{match.startTime && <small className="muted"><br />{match.startTime}</small>}</td><td><Link className="match-teams" href={`/matches/${match.id}?team=${team.id}`}><MatchTeamLabel name={match.homeTeam.shortName} own={match.homeTeamId===team.id} side="home"/><span className="match-versus">–</span><MatchTeamLabel name={match.awayTeam.shortName} own={match.awayTeamId===team.id} side="away"/></Link></td><td className="score">{match.homeScore == null ? "–" : `${match.homeScore}–${match.awayScore}`}</td></tr>)}
       </tbody></table>
       {!matches.length && <div className="empty">Geen wedstrijden gevonden.</div>}
     </section>

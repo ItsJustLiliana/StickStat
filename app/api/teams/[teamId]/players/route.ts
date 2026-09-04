@@ -20,7 +20,7 @@ export async function GET(_:Request,{params}:{params:Promise<{teamId:string}>}){
   try{
     const {teamId}=await params;await authorizeTeam(teamId);
     const matchFilter={status:"finished" as const,OR:[{homeTeamId:teamId},{awayTeamId:teamId}]};
-    return ok(await db.player.findMany({where:{teamId},include:{matchStats:{where:{match:matchFilter}},events:{where:{match:matchFilter}}},orderBy:[{active:"desc"},{lastName:"asc"},{firstName:"asc"}]}));
+    return ok(await db.player.findMany({where:{teamId},include:{matchStats:{where:{match:matchFilter}},events:{where:{match:matchFilter}}},orderBy:[{active:"desc"},{lastName:"asc"},{namePrefix:"asc"},{firstName:"asc"}]}));
   }catch(error){return apiError(error)}
 }
 

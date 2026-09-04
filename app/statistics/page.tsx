@@ -17,7 +17,7 @@ export default async function Statistics({searchParams}:{searchParams:Promise<{t
  const matchFilter={status:"finished" as const,OR:[{homeTeamId:team.id},{awayTeamId:team.id}]};
  const [matches,players,matchAttendance,trainingAttendance,preference]=await Promise.all([
   db.match.findMany({where:matchFilter,orderBy:{date:"asc"}}),
-  db.player.findMany({where:{teamId:team.id},include:{matchStats:{where:{match:matchFilter}},events:{where:{match:matchFilter}},matchAttendance:true,trainingAttendance:true},orderBy:{displayName:"asc"}}),
+  db.player.findMany({where:{teamId:team.id},include:{matchStats:{where:{match:matchFilter}},events:{where:{match:matchFilter}},matchAttendance:true,trainingAttendance:true},orderBy:[{lastName:"asc"},{namePrefix:"asc"},{firstName:"asc"}]}),
   db.matchAttendance.groupBy({by:["status"],where:{player:{teamId:team.id}},_count:true}),
   db.trainingAttendance.groupBy({by:["status"],where:{player:{teamId:team.id}},_count:true}),
   db.statisticPreference.findUnique({where:{userId_teamId:{userId:user.id,teamId:team.id}}}),
