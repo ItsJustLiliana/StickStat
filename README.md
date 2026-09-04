@@ -88,7 +88,7 @@ npx prisma validate
 
 Wedstrijden uit de provider en handmatig aangemaakte trainingen staan samen onder **Agenda**. Teambeheer kan wekelijkse trainingsreeksen en de aanwezigheid van iedereen beheren; gekoppelde spelers beheren hun eigen status.
 
-Het platformbeheer publiceert lokaal gebouwde Android-releases. De versieknoppen tonen het exacte lokale buildcommando; daarna uploadt beheer de APK naar de server, berekent SHA-256 en stuurt alle accounts een notificatie. De productieserver draait zelf geen Flutter- of Gradle-build. De Android-app controleert bij starten op updates, verifieert de download en opent daarna Androids installatieprompt. Gebruik voor distributie een vaste, veilig opgeslagen release-sleutel: Android accepteert updates alleen met dezelfde handtekening als de geïnstalleerde app.
+Het platformbeheer publiceert lokaal gebouwde Android-releases. De versieknoppen tonen het exacte lokale buildcommando. Upload daarna `mobile/dist/StickStat.apk` als nieuwe StickStat-versie via `https://liliananuzohra.com/edit-website` en klik in StickStat op **Website-release synchroniseren**. StickStat importeert versie, buildnummer, download-URL en SHA-256 uit de websitefeed en stuurt alle accounts een notificatie. De APK blijft op de website staan; de productieserver draait zelf geen Flutter- of Gradle-build. De Android-app controleert bij starten op updates, verifieert de download en opent daarna Androids installatieprompt. Gebruik voor distributie een vaste, veilig opgeslagen release-sleutel: Android accepteert updates alleen met dezelfde handtekening als de geïnstalleerde app.
 
 ## Documentatie
 
