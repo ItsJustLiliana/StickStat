@@ -22,7 +22,7 @@ describe("mobiele refresh en spelersvolgorde",()=>{
       "app/admin/page.tsx",
     ];
     for (const file of files)
-      expect(readFileSync(file, "utf8"), file).toContain('lastName: "asc"');
+      expect(readFileSync(file, "utf8"), file).toContain('{lastName:"asc"}');
   });
 
   it("houdt een beschikbare app-update zichtbaar in notificaties en kan het installatiescherm heropenen", () => {
