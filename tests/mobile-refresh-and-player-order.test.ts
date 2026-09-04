@@ -1,9 +1,9 @@
-import {readFileSync} from "node:fs";
-import {describe,expect,it} from "vitest";
+import { readFileSync } from "node:fs";
+import { describe, expect, it } from "vitest";
 
-describe("mobiele refresh en spelersvolgorde",()=>{
-  it("ververst met een eigen pull-gesture en houdt navigatie vast",()=>{
-    const refresh=readFileSync("components/pull-to-refresh.tsx","utf8"),shell=readFileSync("components/page-shell.tsx","utf8"),css=readFileSync("app/globals.css","utf8");
+describe("mobiele refresh en spelersvolgorde", () => {
+  it("ververst met een eigen pull-gesture en houdt navigatie vast", () => {
+    const refresh = readFileSync("components/pull-to-refresh.tsx", "utf8"), shell = readFileSync("components/page-shell.tsx", "utf8"), css = readFileSync("app/globals.css", "utf8");
     expect(shell).toContain("<PullToRefresh/>");
     expect(refresh).toContain('window.location.reload()');
     expect(refresh).toContain('event.preventDefault()');

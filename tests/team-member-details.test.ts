@@ -1,17 +1,17 @@
-import {readFileSync} from "node:fs";
-import {describe,expect,it} from "vitest";
+import { readFileSync } from "node:fs";
+import { describe, expect, it } from "vitest";
 
-const list=readFileSync("app/players/page.tsx","utf8");
-const details=readFileSync("app/team-members/[userId]/page.tsx","utf8");
-const playerDetails=readFileSync("app/players/[playerId]/page.tsx","utf8");
-const roster=readFileSync("components/roster-card.tsx","utf8");
+const list = readFileSync("app/players/page.tsx", "utf8");
+const details = readFileSync("app/team-members/[userId]/page.tsx", "utf8");
+const playerDetails = readFileSync("app/players/[playerId]/page.tsx", "utf8");
+const roster = readFileSync("components/roster-card.tsx", "utf8");
 
-describe("teamliddetails",()=>{
-  it("maakt ieder gekoppeld account klikbaar",()=>{
+describe("teamliddetails", () => {
+  it("maakt ieder gekoppeld account klikbaar", () => {
     expect(list).toContain("/team-members/${membership.userId}?team=${team.id}");
   });
 
-  it("toont spelersgegevens alleen bij de spelersrol",()=>{
+  it("toont spelersgegevens alleen bij de spelersrol", () => {
     expect(details).toContain('membership.roles.includes("player")');
     expect(details).toContain("Rugnummer");
     expect(details).toContain("Positie");

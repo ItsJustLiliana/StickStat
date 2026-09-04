@@ -1,33 +1,33 @@
-import {readFileSync} from "node:fs";
-import {describe,expect,it} from "vitest";
+import { readFileSync } from "node:fs";
+import { describe, expect, it } from "vitest";
 
-const form=readFileSync("components/player-management-controls.tsx","utf8");
-const list=readFileSync("app/players/page.tsx","utf8");
-const details=readFileSync("app/players/[playerId]/page.tsx","utf8");
-const playerLinks=readFileSync("app/api/teams/[teamId]/player-links/route.ts","utf8");
-const route=readFileSync("app/api/teams/[teamId]/players/route.ts","utf8");
-const schema=readFileSync("prisma/schema.prisma","utf8");
+const form = readFileSync("components/player-management-controls.tsx", "utf8");
+const list = readFileSync("app/players/page.tsx", "utf8");
+const details = readFileSync("app/players/[playerId]/page.tsx", "utf8");
+const playerLinks = readFileSync("app/api/teams/[teamId]/player-links/route.ts", "utf8");
+const route = readFileSync("app/api/teams/[teamId]/players/route.ts", "utf8");
+const schema = readFileSync("prisma/schema.prisma", "utf8");
 
-describe("speler toevoegen",()=>{
-  it("vraagt één volledige naam en splitst die automatisch",()=>{
+describe("speler toevoegen", () => {
+  it("vraagt één volledige naam en splitst die automatisch", () => {
     expect(form).toContain('name="fullName"');
     expect(form).toContain("splitPlayerName");
     expect(form).toContain('"van","von"');
     expect(form).not.toContain('name="firstName"');
   });
 
-  it("maakt de zichtbare naam op de server",()=>{
+  it("maakt de zichtbare naam op de server", () => {
     expect(route).toContain("[data.firstName,data.namePrefix,data.lastName].filter(Boolean).join");
     expect(schema).toContain("namePrefix String?");
   });
 
-  it("houdt rugnummer en positie optioneel",()=>{
+  it("houdt rugnummer en positie optioneel", () => {
     expect(form).toContain('className="player-detail-fields"');
     expect(form).toContain('placeholder="Rugnummer (optioneel)"');
     expect(form).toContain('placeholder="Positie (optioneel)"');
   });
 
-  it("kan een speler veilig uit de actieve selectie verwijderen",()=>{
+  it("kan een speler veilig uit de actieve selectie verwijderen", () => {
     expect(form).toContain('"DELETE",{playerId}');
     expect(form).not.toContain('name="currentPassword"');
     expect(form).toContain("De speler wordt gearchiveerd");
@@ -44,11 +44,11 @@ describe("speler toevoegen",()=>{
     expect(details).toContain("<PlayerDetailManagement");
   });
 
-  it("opent gekoppelde spelers vanuit de spelerssectie als spelersprofiel",()=>{
+  it("opent gekoppelde spelers vanuit de spelerssectie als spelersprofiel", () => {
     expect(list).toContain('role==="player"&&player?`/players/${player.id}?team=${team.id}`');
   });
 
-  it("ondersteunt trainingsleden en wedstrijdleden met beide als standaard",()=>{
+  it("ondersteunt trainingsleden en wedstrijdleden met beide als standaard", () => {
     expect(form).toContain('name="trainingMember"');
     expect(form).toContain('name="matchMember"');
     expect(form).toContain("trainingMember:training||!match");
@@ -57,7 +57,7 @@ describe("speler toevoegen",()=>{
     expect(route).toContain("matchMember:input.matchMember");
   });
 
-  it("laat een teambeheerder een account van een speler ontkoppelen",()=>{
+  it("laat een teambeheerder een account van een speler ontkoppelen", () => {
     expect(form).toContain('title="Account ontkoppelen"');
     expect(form).toContain('`/api/teams/${teamId}/player-links`,"DELETE",{playerId}');
     expect(playerLinks).toContain("export async function DELETE");
