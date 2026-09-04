@@ -59,6 +59,7 @@ class _StickStatWebAppState extends State<StickStatWebApp> {
   int _progress = 0;
   String? _mainFrameError;
   bool _checkingForUpdate = false;
+  bool _isFirstLoad = true;
 
   @override
   void initState() {
@@ -88,6 +89,11 @@ class _StickStatWebAppState extends State<StickStatWebApp> {
           onPageFinished: (_) {
             if (mounted) setState(() => _progress = 100);
             _publishInstalledVersion();
+            _disableScrollbarAndOverscroll();
+            if (!_isFirstLoad) {
+              _checkForUpdate();
+            }
+            _isFirstLoad = false;
           },
           onWebResourceError: (error) {
             if ((error.isForMainFrame ?? true) && mounted) {
@@ -127,6 +133,23 @@ class _StickStatWebAppState extends State<StickStatWebApp> {
       ''');
     } catch (_) {
       // Versie tonen op de profielpagina mag navigatie nooit blokkeren.
+    }
+  }
+
+  Future<void> _disableScrollbarAndOverscroll() async {
+    try {
+      await _controller.runJavaScript('''
+        const style = document.createElement('style');
+        style.textContent = `
+          ::-webkit-scrollbar { display: none !important; }
+          * { scrollbar-width: none !important; }
+          html { overscroll-behavior: none !important; overflow: hidden auto !important; }
+        `;
+        document.head.appendChild(style);
+        document.documentElement.style.overscrollBehavior = 'none';
+      ''');
+    } catch (_) {
+      // Scrollbar-styling mag niet blokkeren.
     }
   }
 
