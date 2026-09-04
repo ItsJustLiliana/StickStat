@@ -20,7 +20,7 @@ describe("trainings- en wedstrijdleden",()=>{
   });
 
   it("verbergt ongekoppelde accounts voor gewone teamleden", () => {
-    expect(list).toContain("canAdmin && unlinkedAccounts.length > 0");
+    expect(list).toMatch(/canAdmin\s*&&\s*unlinkedAccounts\.length\s*>\s*0/);
   });
 
   it("neemt trainingsleden niet standaard op in wedstrijdinvoer",()=>{

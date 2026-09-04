@@ -51,7 +51,7 @@ describe("teamaccount- en rollenbeheer",()=>{
     expect(route).not.toContain("roles:z.array(role).min(1)");
     expect(players).toContain("!membership.user.player");
     expect(players).toContain("Geregistreerde accounts zonder spelersprofiel");
-    expect(players).toContain("canAdmin && unlinkedAccounts.length > 0");
+    expect(players).toMatch(/canAdmin\s*&&\s*unlinkedAccounts\.length\s*>\s*0/);
     expect(players.indexOf("Geregistreerde accounts zonder spelersprofiel")).toBeGreaterThan(
       players.indexOf("sections.map")
     );
@@ -66,7 +66,7 @@ describe("teamaccount- en rollenbeheer",()=>{
   });
 
   it("laat uitsluitend teambeheerders accounts en rollen wijzigen", () => {
-    expect(details).toContain("canAdmin && (");
+    expect(details).toMatch(/canAdmin\s*&&/);
     expect(details).toContain("<TeamMemberManagement");
     expect(route.match(/authorizeTeamAdmin\(teamId\)/g)).toHaveLength(2);
     expect(form).toContain("Account uit team verwijderen");

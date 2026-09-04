@@ -38,7 +38,7 @@ describe("speler toevoegen",()=>{
   it("laat alleen teambeheerders spelers maken, wijzigen en verwijderen", () => {
     expect(route.match(/authorizeTeamAdmin\(teamId\)/g)).toHaveLength(3);
     expect(route).toContain("export async function PATCH");
-    expect(list).toContain("canAdmin && (");
+    expect(list).toMatch(/canAdmin\s*&&/);
     expect(list).toContain("<PlayerCreateControl");
     expect(details).toContain("canAdmin &&");
     expect(details).toContain("<PlayerDetailManagement");

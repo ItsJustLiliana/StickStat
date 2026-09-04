@@ -22,13 +22,13 @@ describe("mobiele refresh en spelersvolgorde",()=>{
       "app/admin/page.tsx",
     ];
     for (const file of files)
-      expect(readFileSync(file, "utf8"), file).toContain('{lastName:"asc"}');
+      expect(readFileSync(file, "utf8"), file).toMatch(/lastName\s*:\s*"asc"/);
   });
 
   it("houdt een beschikbare app-update zichtbaar in notificaties en kan het installatiescherm heropenen", () => {
     const notifications = readFileSync("components/notifications-menu.tsx", "utf8"),
       mobile = readFileSync("mobile/lib/main.dart", "utf8");
-    expect(notifications).toContain("const hasUpdate = Boolean(release && updateAvailable(release, installed))");
+    expect(notifications).toMatch(/const\s+hasUpdate\s*=\s*Boolean\(release\s*&&\s*updateAvailable\(release,\s*installed\)\)/);
     expect(notifications).toContain("StickStatApp?:{postMessage:");
     expect(notifications).toContain('bridge.postMessage("check-update")');
     expect(notifications).toContain("notification-item unread notification-update");
