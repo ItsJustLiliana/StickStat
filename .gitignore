@@ -48,3 +48,4 @@ niks.md
 # Uploaded files (keep .gitkeep)
 public/uploads/*
 !public/uploads/.gitkeep
+probleem.md
