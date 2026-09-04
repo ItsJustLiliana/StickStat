@@ -21,10 +21,16 @@ describe("teamaccount- en rollenbeheer",()=>{
     expect(form).toContain("checked={selectedRoles.includes(role)}");
   });
 
-  it("toont de rolsecties in de gewenste volgorde",()=>{
-    const order=[players.indexOf('role:"player"'),players.indexOf('role:"coach"'),players.indexOf('role:"trainer"'),players.indexOf('role:"team_admin"'),players.indexOf('role:"viewer"')];
-    expect(order.every(index=>index>=0)).toBe(true);
-    expect(order).toEqual([...order].sort((a,b)=>a-b));
+  it("toont de rolsecties in de gewenste volgorde", () => {
+    const order = [
+      players.indexOf('role:"player"'),
+      players.indexOf('role:"coach"'),
+      players.indexOf('role:"trainer"'),
+      players.indexOf('role:"team_admin"'),
+      players.indexOf('role:"viewer"'),
+    ];
+    expect(order.every((index) => index >= 0)).toBe(true);
+    expect(order).toEqual([...order].sort((a, b) => a - b));
   });
 
   it("toont alle rollen als compacte lijsten en verbergt lege secties",()=>{
