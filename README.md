@@ -92,6 +92,8 @@ Het platformbeheer publiceert lokaal gebouwde Android-releases. De versieknoppen
 
 Plaats het vierkante Android-app-logo als `mobile/assets/branding/app_logo.png` (minimaal 512 × 512, bij voorkeur 1024 × 1024). Het lokale APK-buildscript maakt daar automatisch alle launcher-iconen van.
 
+Vul vóór een APK-build alleen de gewenste versie in bij `mobile/app-version.json`, bijvoorbeeld `{ "version": "1.1.1" }`. Bouw daarna altijd met `.\scripts\build-apk.ps1`. Het script berekent het Android-buildnummer uit de versie en werkt `mobile/pubspec.yaml` automatisch bij. Bij het uploaden leest de website de ingebouwde APK-versie uit en vult hij het versieveld automatisch in.
+
 ## Documentatie
 
 - [Architectuur](docs/ARCHITECTURE.md)

@@ -14,6 +14,47 @@ $ErrorActionPreference = "Stop"
 $repoRoot = Split-Path -Parent $PSScriptRoot
 $mobileRoot = Join-Path $repoRoot "mobile"
 $projectsRoot = Split-Path -Parent $repoRoot
+$pubspecPath = Join-Path $mobileRoot "pubspec.yaml"
+$versionConfigPath = Join-Path $mobileRoot "app-version.json"
+
+if (-not $Version -and $BuildNumber -le 0) {
+    if (-not (Test-Path -LiteralPath $versionConfigPath)) {
+        throw "Versieconfiguratie niet gevonden op $versionConfigPath."
+    }
+    $versionConfig = Get-Content -LiteralPath $versionConfigPath -Raw | ConvertFrom-Json
+    $Version = [string] $versionConfig.version
+    if ($Version -notmatch '^(\d+)\.(\d+)\.(\d+)$') {
+        throw "Ongeldige versie '$Version' in $versionConfigPath. Gebruik bijvoorbeeld 1.2.3."
+    }
+    $major = [int] $Matches[1]
+    $minor = [int] $Matches[2]
+    $patch = [int] $Matches[3]
+    if ($minor -gt 999 -or $patch -gt 999) {
+        throw "Minor- en patchnummers mogen maximaal 999 zijn."
+    }
+    $BuildNumber = $major * 1000000 + $minor * 1000 + $patch
+    if ($BuildNumber -le 0 -or $BuildNumber -gt 2100000000) {
+        throw "Versie $Version levert geen geldig Android-buildnummer op."
+    }
+}
+
+if (($Version -and $BuildNumber -le 0) -or (-not $Version -and $BuildNumber -gt 0)) {
+    throw "Geef -Version en -BuildNumber altijd samen op."
+}
+
+if ($Version -and $BuildNumber -gt 0) {
+    $pubspec = Get-Content -LiteralPath $pubspecPath -Raw
+    if ($pubspec -notmatch '(?m)^version:\s*\d+\.\d+\.\d+\+\d+\s*$') {
+        throw "De huidige appversie kon niet in $pubspecPath worden gevonden."
+    }
+    $updatedPubspec = [regex]::Replace(
+        $pubspec,
+        '(?m)^version:\s*\d+\.\d+\.\d+\+\d+\s*$',
+        "version: $Version+$BuildNumber"
+    )
+    Set-Content -LiteralPath $pubspecPath -Value $updatedPubspec -Encoding UTF8 -NoNewline
+    Write-Host "Appversie vastgelegd: $Version+$BuildNumber" -ForegroundColor Green
+}
 
 function Find-Flutter {
     $candidates = @()
