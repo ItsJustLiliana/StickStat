@@ -1,0 +1,169 @@
+/* User Management Styles */
+.users-management-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 14px;
+}
+
+.user-card {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 12px;
+    padding: 14px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: white;
+}
+
+.user-info {
+    display: grid;
+    gap: 4px;
+}
+
+.user-info strong {
+    font-size: 14px;
+}
+
+.user-info .muted {
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.user-actions {
+    display: flex;
+    gap: 6px;
+}
+
+.temp-password-display {
+    display: grid;
+    gap: 10px;
+    padding: 12px;
+    background: #f2f7f4;
+    border-radius: 10px;
+    margin: 12px 0;
+}
+
+.temp-password-display code {
+    font-family: monospace;
+    font-size: 14px;
+    word-break: break-all;
+    padding: 8px;
+    background: white;
+    border-radius: 6px;
+    border: 1px solid var(--line);
+}
+
+/* Club Management Styles */
+.clubs-management {
+    display: grid;
+    gap: 14px;
+}
+
+.club-section {
+    padding: 14px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: white;
+}
+
+.club-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+}
+
+.club-info {
+    display: grid;
+    gap: 10px;
+}
+
+.club-info h3 {
+    margin: 0;
+    font-size: 16px;
+}
+
+.club-logo-preview {
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
+    background: white;
+    border: 1px solid var(--line);
+    display: grid;
+    place-items: center;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.club-logo-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 4px;
+}
+
+.teams-list {
+    display: grid;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.teams-list .eyebrow {
+    display: block;
+    font-size: 11px;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 750;
+    margin-bottom: 4px;
+}
+
+.team-item {
+    padding: 8px 10px;
+    background: #f2f7f4;
+    border-radius: 8px;
+    font-size: 13px;
+}
+
+/* Dark mode support */
+html[data-theme="dark"] .user-card,
+html[data-theme="dark"] .club-section {
+    background: var(--card);
+    color: var(--ink);
+}
+
+html[data-theme="dark"] .temp-password-display {
+    background: #20372d;
+}
+
+html[data-theme="dark"] .temp-password-display code {
+    background: #192a23;
+    border-color: var(--line);
+    color: var(--ink);
+}
+
+html[data-theme="dark"] .user-info .muted,
+html[data-theme="dark"] .teams-list .eyebrow {
+    color: var(--muted);
+}
+
+html[data-theme="dark"] .team-item {
+    background: #20372d;
+    color: var(--ink);
+}
+
+/* Media queries */
+@media (max-width: 560px) {
+    .user-card {
+        grid-template-columns: 1fr;
+    }
+
+    .club-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .users-management-grid {
+        grid-template-columns: 1fr;
+    }
+}
