@@ -88,7 +88,7 @@ npx prisma validate
 
 Wedstrijden uit de provider en handmatig aangemaakte trainingen staan samen onder **Agenda**. Teambeheer kan wekelijkse trainingsreeksen en de aanwezigheid van iedereen beheren; gekoppelde spelers beheren hun eigen status.
 
-Het platformbeheer bevat een dev-menu voor Android-releases. Zet uitsluitend op de vertrouwde buildmachine `ALLOW_APP_RELEASE_BUILDS=true`. De versieknoppen bouwen en publiceren een APK, berekenen SHA-256 en sturen alle accounts een notificatie. De Android-app controleert bij starten op updates, verifieert de download en opent daarna Androids installatieprompt. Gebruik voor distributie een vaste, veilig opgeslagen release-sleutel: Android accepteert updates alleen met dezelfde handtekening als de geïnstalleerde app.
+Het platformbeheer publiceert lokaal gebouwde Android-releases. De versieknoppen tonen het exacte lokale buildcommando; daarna uploadt beheer de APK naar de server, berekent SHA-256 en stuurt alle accounts een notificatie. De productieserver draait zelf geen Flutter- of Gradle-build. De Android-app controleert bij starten op updates, verifieert de download en opent daarna Androids installatieprompt. Gebruik voor distributie een vaste, veilig opgeslagen release-sleutel: Android accepteert updates alleen met dezelfde handtekening als de geïnstalleerde app.
 
 ## Documentatie
 

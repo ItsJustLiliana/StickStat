@@ -1068,6 +1068,9 @@ td {
     }
 }
 
+.release-version-options{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}.release-version-options label{display:grid;grid-template-columns:auto 1fr;gap:3px 9px;padding:13px;border:1px solid var(--line);border-radius:13px;cursor:pointer}.release-version-options label>span{grid-column:2;color:var(--muted);font-size:12px}.release-instructions{display:grid;gap:7px;padding:14px;margin-bottom:16px;border-radius:13px;background:#eef4f0}.release-instructions code{overflow-wrap:anywhere;color:var(--green);font-weight:800}.release-file{display:grid;gap:8px;margin-bottom:16px;font-weight:800}.release-file input{padding:12px;border:1px dashed var(--line);border-radius:12px;width:100%}
+@media(max-width:700px){.release-version-options{grid-template-columns:1fr}}
+
 @media(max-width:560px) {
     .content {
         padding: 24px 14px calc(88px + env(safe-area-inset-bottom))
