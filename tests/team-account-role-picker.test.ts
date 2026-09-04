@@ -57,8 +57,9 @@ describe("teamaccount- en rollenbeheer",()=>{
     expect(players).toContain("sortByLastName(memberships.filter");
   });
 
-  it("laat uitsluitend teambeheerders accounts en rollen wijzigen",()=>{
-    expect(details).toContain("canAdmin&&<TeamMemberManagement");
+  it("laat uitsluitend teambeheerders accounts en rollen wijzigen", () => {
+    expect(details).toContain("canAdmin && (");
+    expect(details).toContain("<TeamMemberManagement");
     expect(route.match(/authorizeTeamAdmin\(teamId\)/g)).toHaveLength(2);
     expect(form).toContain("Account uit team verwijderen");
   });

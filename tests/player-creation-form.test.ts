@@ -35,11 +35,13 @@ describe("speler toevoegen",()=>{
     expect(route).toContain('filter(role=>role!=="player")');
   });
 
-  it("laat alleen teambeheerders spelers maken, wijzigen en verwijderen",()=>{
+  it("laat alleen teambeheerders spelers maken, wijzigen en verwijderen", () => {
     expect(route.match(/authorizeTeamAdmin\(teamId\)/g)).toHaveLength(3);
     expect(route).toContain("export async function PATCH");
-    expect(list).toContain("canAdmin&&<><PlayerCreateControl");
-    expect(details).toContain("canAdmin&&<PlayerDetailManagement");
+    expect(list).toContain("canAdmin && (");
+    expect(list).toContain("<PlayerCreateControl");
+    expect(details).toContain("canAdmin &&");
+    expect(details).toContain("<PlayerDetailManagement");
   });
 
   it("opent gekoppelde spelers vanuit de spelerssectie als spelersprofiel",()=>{

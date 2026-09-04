@@ -19,17 +19,17 @@ describe("teamliddetails",()=>{
     expect(details).toContain("Dit account heeft geen gekoppeld spelersprofiel");
   });
 
-  it("verbergt ontbrekend rugnummer en ontbrekende positie",()=>{
+  it("verbergt ontbrekend rugnummer en ontbrekende positie", () => {
     expect(playerDetails).not.toContain("Positie onbekend");
-    expect(playerDetails).toContain("playerDetails.length>0");
-    expect(details).toContain("player.shirtNumber!==null&&");
-    expect(details).toContain("player.position&&");
-    expect(roster).toContain("person.shirtNumber!=null&&");
-    expect(roster).toContain("person.subtitle&&");
+    expect(playerDetails).toContain("playerDetails.length > 0");
+    expect(details).toContain("player.shirtNumber !== null &&");
+    expect(details).toContain("player.position &&");
+    expect(roster).toContain("person.shirtNumber != null &&");
+    expect(roster).toContain("person.subtitle &&");
   });
 
-  it("beperkt de detailpagina tot het gekozen teamlidmaatschap",()=>{
-    expect(details).toContain("userId_teamId:{userId,teamId:team.id}");
-    expect(details).toContain("if(!membership)notFound()");
+  it("beperkt de detailpagina tot het gekozen teamlidmaatschap", () => {
+    expect(details).toContain("userId_teamId: { userId, teamId: team.id }");
+    expect(details).toContain("if (!membership) notFound()");
   });
 });

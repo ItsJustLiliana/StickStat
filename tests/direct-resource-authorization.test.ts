@@ -7,8 +7,8 @@ const eventsRoute=readFileSync("app/api/matches/[matchId]/events/route.ts","utf8
 const statsRoute=readFileSync("app/api/matches/[matchId]/player-stats/route.ts","utf8");
 
 describe("directe resource-autorisatie",()=>{
-  it("verbergt spelers uit teams waar de gebruiker geen toegang toe heeft",()=>{
-    expect(playerPage).toContain("teams.some(team=>team.id===player.teamId)");
+  it("verbergt spelers uit teams waar de gebruiker geen toegang toe heeft", () => {
+    expect(playerPage).toContain("teams.some(team => team.id === player.teamId)");
   });
 
   it("verbergt wedstrijddetails buiten de toegankelijke teams",()=>{
