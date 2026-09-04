@@ -24,8 +24,8 @@ describe("teamliddetails",()=>{
     expect(playerDetails).toContain("playerDetails.length > 0");
     expect(details).toContain("player.shirtNumber !== null &&");
     expect(details).toContain("player.position &&");
-    expect(roster).toContain("person.shirtNumber!=null&&");
-    expect(roster).toContain("person.subtitle&&");
+    expect(roster).toContain("person.shirtNumber != null &&");
+    expect(roster).toContain("person.subtitle &&");
   });
 
   it("beperkt de detailpagina tot het gekozen teamlidmaatschap", () => {
