@@ -164,11 +164,27 @@ svg {
     transition: opacity .12s ease, color .12s ease
 }
 
-.pull-refresh.visible { opacity: 1 }
-.pull-refresh.ready { color: var(--green) }
-.pull-refresh.ready svg { transform: rotate(180deg) }
-.pull-refresh.refreshing svg { animation: pull-refresh-spin .7s linear infinite }
-@keyframes pull-refresh-spin { to { transform: rotate(360deg) } }
+.pull-refresh.visible {
+    opacity: 1
+}
+
+.pull-refresh.ready {
+    color: var(--green)
+}
+
+.pull-refresh.ready svg {
+    transform: rotate(180deg)
+}
+
+.pull-refresh.refreshing svg {
+    animation: pull-refresh-spin .7s linear infinite
+}
+
+@keyframes pull-refresh-spin {
+    to {
+        transform: rotate(360deg)
+    }
+}
 
 .app-version-footer {
     display: flex;
@@ -351,7 +367,9 @@ h2 {
     text-align: center
 }
 
-.match-score-divider { color: white }
+.match-score-divider {
+    color: white
+}
 
 .match-score-team {
     display: grid;
@@ -498,13 +516,35 @@ h2 {
     overflow-wrap: anywhere
 }
 
-.teams .match-team-identity { width: auto }
+.teams .match-team-identity {
+    width: auto
+}
 
-.next-match { padding: 26px 0 }
-.next-match-teams,.last-result,.agenda-match-teams { display:flex;align-items:center;gap:8px;flex-wrap:nowrap;min-width:0 }
-.next-match-teams { margin:14px 0 }
-.last-result { margin-top:8px }
-.agenda-match-teams { margin-top:5px }
+.next-match {
+    padding: 26px 0
+}
+
+.next-match-teams,
+.last-result,
+.agenda-match-teams {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: nowrap;
+    min-width: 0
+}
+
+.next-match-teams {
+    margin: 14px 0
+}
+
+.last-result {
+    margin-top: 8px
+}
+
+.agenda-match-teams {
+    margin-top: 5px
+}
 
 .score {
     font-size: 22px;
@@ -769,8 +809,19 @@ td {
     line-height: inherit
 }
 
-.match-team-identity.is-own { color:var(--green);font-weight:950;text-decoration:underline;text-decoration-color:var(--lime);text-decoration-thickness:3px;text-underline-offset:3px }
-.match-team-identity.is-opponent { color:var(--muted);font-weight:700 }
+.match-team-identity.is-own {
+    color: var(--green);
+    font-weight: 950;
+    text-decoration: underline;
+    text-decoration-color: var(--lime);
+    text-decoration-thickness: 3px;
+    text-underline-offset: 3px
+}
+
+.match-team-identity.is-opponent {
+    color: var(--muted);
+    font-weight: 700
+}
 
 .own-team {
     display: inline-grid;
@@ -1077,8 +1128,13 @@ td {
         padding-bottom: calc(92px + env(safe-area-inset-bottom))
     }
 
-    .app-shell { padding-top: 62px }
-    .pull-refresh { top: 68px }
+    .app-shell {
+        padding-top: 62px
+    }
+
+    .pull-refresh {
+        top: 68px
+    }
 
     .hero {
         grid-template-columns: 1fr
@@ -1144,8 +1200,63 @@ td {
     }
 }
 
-.release-version-options{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}.release-version-options label{display:grid;grid-template-columns:auto 1fr;gap:3px 9px;padding:13px;border:1px solid var(--line);border-radius:13px;cursor:pointer}.release-version-options label>span{grid-column:2;color:var(--muted);font-size:12px}.release-instructions{display:grid;gap:7px;padding:14px;margin-bottom:16px;border-radius:13px;background:#eef4f0}.release-instructions code{overflow-wrap:anywhere;color:var(--green);font-weight:800}.release-file{display:grid;gap:8px;margin-bottom:16px;font-weight:800}.release-file input{padding:12px;border:1px dashed var(--line);border-radius:12px;width:100%}
-@media(max-width:700px){.release-version-options{grid-template-columns:1fr}}
+.release-version-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 16px
+}
+
+.release-version-options label {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 3px 9px;
+    padding: 13px;
+    border: 1px solid var(--line);
+    border-radius: 13px;
+    cursor: pointer
+}
+
+.release-version-options label>span {
+    grid-column: 2;
+    color: var(--muted);
+    font-size: 12px
+}
+
+.release-instructions {
+    display: grid;
+    gap: 7px;
+    padding: 14px;
+    margin-bottom: 16px;
+    border-radius: 13px;
+    background: #eef4f0
+}
+
+.release-instructions code {
+    overflow-wrap: anywhere;
+    color: var(--green);
+    font-weight: 800
+}
+
+.release-file {
+    display: grid;
+    gap: 8px;
+    margin-bottom: 16px;
+    font-weight: 800
+}
+
+.release-file input {
+    padding: 12px;
+    border: 1px dashed var(--line);
+    border-radius: 12px;
+    width: 100%
+}
+
+@media(max-width:700px) {
+    .release-version-options {
+        grid-template-columns: 1fr
+    }
+}
 
 @media(max-width:560px) {
     .content {
@@ -1414,9 +1525,293 @@ html[data-theme="dark"] body {
     margin-left: 18px
 }
 
-.attendance-card,.match-stats-view,.training-create,.agenda-card{margin-top:18px}.attendance-list{display:grid;gap:8px}.attendance-row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 0;border-top:1px solid var(--line)}.attendance-row:first-child{border-top:0}.attendance-options{display:flex;gap:6px;flex-wrap:wrap}.attendance-choice{border:1px solid var(--line);border-radius:999px;padding:7px 10px;background:var(--card);color:var(--muted);font-weight:800;cursor:pointer}.attendance-choice.present[aria-pressed="true"]{background:#dff8a5;color:#315207;border-color:#a8d84b}.attendance-choice.unknown[aria-pressed="true"]{background:#e7ece9;color:#4e5f59;border-color:#b9c6c0}.attendance-choice.absent[aria-pressed="true"]{background:#ffe0d7;color:#a63415;border-color:#efaa96}.training-fields{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.training-create label{display:grid;gap:6px;font-size:12px;font-weight:800}.training-create textarea{min-height:80px;resize:vertical}.agenda-list{display:grid}.agenda-row{display:grid;grid-template-columns:85px minmax(0,1fr) auto;gap:16px;align-items:center;padding:14px 0;border-top:1px solid var(--line);color:inherit;text-decoration:none}.agenda-row>time,.agenda-row>span{display:grid;gap:4px}.agenda-row small{color:var(--muted)}.agenda-type{width:max-content;text-transform:uppercase;font-size:9px!important;font-weight:900;letter-spacing:.08em}.agenda-type.training{color:#73520d}.attendance-summary{display:flex!important;gap:5px!important}.attendance-summary i{font-style:normal;min-width:28px;padding:5px;border-radius:8px;text-align:center;font-weight:900}.attendance-summary .present{background:#dff8a5;color:#315207}.attendance-summary .absent{background:#ffe0d7;color:#a63415}.statistics-toolbar{display:flex;align-items:center;justify-content:space-between;margin-top:20px}.statistics-toolbar h2{margin:0}.statistics-toolbar .button{display:flex;align-items:center;gap:7px}.more-statistics{margin:0 0 28px}.more-statistics summary{font-weight:850;cursor:pointer}.more-statistics .metrics{margin-bottom:0}.modal-backdrop{position:fixed;inset:0;z-index:100;background:#061d17a8;display:grid;place-items:center;padding:18px}.statistics-modal{width:min(560px,100%);max-height:90vh;overflow:auto}.metric-order-list{display:grid;margin-bottom:18px}.metric-order-list>div{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px 0;border-top:1px solid var(--line)}.metric-order-list label{display:flex;gap:10px;font-weight:750}.notifications{position:relative}.notification-button{position:relative}.notification-button>i{position:absolute;width:8px;height:8px;border-radius:50%;background:#ff6b3d;right:4px;top:4px;box-shadow:0 0 0 2px #092f25}.notification-popover{position:absolute;right:0;top:44px;width:min(380px,calc(100vw - 24px));max-height:480px;overflow:auto;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:0 22px 60px #061d1740;z-index:60}.notification-popover .card-head{margin-bottom:8px}.link-button{border:0;background:none;cursor:pointer}.notification-item{display:grid;gap:4px;padding:12px;border-top:1px solid var(--line);color:inherit;text-decoration:none}.notification-item span,.notification-item small{color:var(--muted);font-size:12px}.notification-item.unread{background:#eefbd2}.match-entry-list article{grid-template-columns:minmax(180px,1.4fr) repeat(5,minmax(85px,.7fr)) auto minmax(170px,1fr)}
+.attendance-card,
+.match-stats-view,
+.training-create,
+.agenda-card {
+    margin-top: 18px
+}
 
-@media(max-width:700px){.attendance-row{align-items:flex-start;flex-direction:column}.attendance-options{width:100%}.attendance-choice{flex:1;padding:8px 5px;font-size:11px}.training-fields{grid-template-columns:1fr 1fr}.agenda-row{grid-template-columns:62px minmax(0,1fr) auto;gap:9px}.notification-popover{position:fixed;top:66px;right:12px}.statistics-toolbar{align-items:center}.match-entry-list article{grid-template-columns:1fr 1fr}}
+.attendance-list {
+    display: grid;
+    gap: 8px
+}
+
+.attendance-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 12px 0;
+    border-top: 1px solid var(--line)
+}
+
+.attendance-row:first-child {
+    border-top: 0
+}
+
+.attendance-options {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap
+}
+
+.attendance-choice {
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 7px 10px;
+    background: var(--card);
+    color: var(--muted);
+    font-weight: 800;
+    cursor: pointer
+}
+
+.attendance-choice.present[aria-pressed="true"] {
+    background: #dff8a5;
+    color: #315207;
+    border-color: #a8d84b
+}
+
+.attendance-choice.unknown[aria-pressed="true"] {
+    background: #e7ece9;
+    color: #4e5f59;
+    border-color: #b9c6c0
+}
+
+.attendance-choice.absent[aria-pressed="true"] {
+    background: #ffe0d7;
+    color: #a63415;
+    border-color: #efaa96
+}
+
+.training-fields {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px
+}
+
+.training-create label {
+    display: grid;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 800
+}
+
+.training-create textarea {
+    min-height: 80px;
+    resize: vertical
+}
+
+.agenda-list {
+    display: grid
+}
+
+.agenda-row {
+    display: grid;
+    grid-template-columns: 85px minmax(0, 1fr) auto;
+    gap: 16px;
+    align-items: center;
+    padding: 14px 0;
+    border-top: 1px solid var(--line);
+    color: inherit;
+    text-decoration: none
+}
+
+.agenda-row>time,
+.agenda-row>span {
+    display: grid;
+    gap: 4px
+}
+
+.agenda-row small {
+    color: var(--muted)
+}
+
+.agenda-type {
+    width: max-content;
+    text-transform: uppercase;
+    font-size: 9px !important;
+    font-weight: 900;
+    letter-spacing: .08em
+}
+
+.agenda-type.training {
+    color: #73520d
+}
+
+.statistics-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px
+}
+
+.statistics-toolbar h2 {
+    margin: 0
+}
+
+.statistics-toolbar .button {
+    display: flex;
+    align-items: center;
+    gap: 7px
+}
+
+.more-statistics {
+    margin: 0 0 28px
+}
+
+.more-statistics summary {
+    font-weight: 850;
+    cursor: pointer
+}
+
+.more-statistics .metrics {
+    margin-bottom: 0
+}
+
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: #061d17a8;
+    display: grid;
+    place-items: center;
+    padding: 18px
+}
+
+.statistics-modal {
+    width: min(560px, 100%);
+    max-height: 90vh;
+    overflow: auto
+}
+
+.metric-order-list {
+    display: grid;
+    margin-bottom: 18px
+}
+
+.metric-order-list>div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 9px 0;
+    border-top: 1px solid var(--line)
+}
+
+.metric-order-list label {
+    display: flex;
+    gap: 10px;
+    font-weight: 750
+}
+
+.notifications {
+    position: relative
+}
+
+.notification-button {
+    position: relative
+}
+
+.notification-button>i {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #ff6b3d;
+    right: 4px;
+    top: 4px;
+    box-shadow: 0 0 0 2px #092f25
+}
+
+.notification-popover {
+    position: absolute;
+    right: 0;
+    top: 44px;
+    width: min(380px, calc(100vw - 24px));
+    max-height: 480px;
+    overflow: auto;
+    background: var(--card);
+    color: var(--ink);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 16px;
+    box-shadow: 0 22px 60px #061d1740;
+    z-index: 60
+}
+
+.notification-popover .card-head {
+    margin-bottom: 8px
+}
+
+.link-button {
+    border: 0;
+    background: none;
+    cursor: pointer
+}
+
+.notification-item {
+    display: grid;
+    gap: 4px;
+    padding: 12px;
+    border-top: 1px solid var(--line);
+    color: inherit;
+    text-decoration: none
+}
+
+.notification-item span,
+.notification-item small {
+    color: var(--muted);
+    font-size: 12px
+}
+
+.notification-item.unread {
+    background: #eefbd2
+}
+
+.match-entry-list article {
+    grid-template-columns: minmax(180px, 1.4fr) repeat(5, minmax(85px, .7fr)) auto minmax(170px, 1fr)
+}
+
+@media(max-width:700px) {
+    .attendance-row {
+        align-items: flex-start;
+        flex-direction: column
+    }
+
+    .attendance-options {
+        width: 100%
+    }
+
+    .attendance-choice {
+        flex: 1;
+        padding: 8px 5px;
+        font-size: 11px
+    }
+
+    .training-fields {
+        grid-template-columns: 1fr 1fr
+    }
+
+    .agenda-row {
+        grid-template-columns: 62px minmax(0, 1fr) auto;
+        gap: 9px
+    }
+
+    .notification-popover {
+        position: fixed;
+        top: 66px;
+        right: 12px
+    }
+
+    .statistics-toolbar {
+        align-items: center
+    }
+
+    .match-entry-list article {
+        grid-template-columns: 1fr 1fr
+    }
+}
 
 @media(max-width:900px) {
     .account-actions {
@@ -1425,7 +1820,7 @@ html[data-theme="dark"] body {
 }
 
 /* Compact attendance controls: the status stays directly beside each player. */
-.attendance-row > strong {
+.attendance-row>strong {
     min-width: 0;
     overflow-wrap: anywhere
 }
@@ -1447,13 +1842,53 @@ html[data-theme="dark"] body {
     line-height: 1
 }
 
-.attendance-choice.present { background:#effbd7;color:#55731a;border-color:#cfe69d }
-.attendance-choice.unknown { background:#f0f3f1;color:#60706a;border-color:#cad3cf }
-.attendance-choice.absent { background:#fff0eb;color:#b2472a;border-color:#f2b9a8 }
-.attendance-choice[aria-pressed="true"] { box-shadow:0 0 0 2px currentColor inset }
-.attendance-choice:disabled { cursor:default;opacity:.55 }
-.attendance-choice:disabled[aria-pressed="true"] { opacity:1 }
-.agenda-row .agenda-match-teams { display:flex;align-items:center;gap:7px;white-space:nowrap }
+.attendance-choice.present {
+    background: #effbd7;
+    color: #55731a;
+    border-color: #cfe69d
+}
+
+.attendance-choice.unknown {
+    background: #f0f3f1;
+    color: #60706a;
+    border-color: #cad3cf
+}
+
+.attendance-choice.absent {
+    background: #fff0eb;
+    color: #b2472a;
+    border-color: #f2b9a8
+}
+
+.attendance-choice[aria-pressed="true"] {
+    box-shadow: 0 0 0 2px currentColor inset
+}
+
+.attendance-choice:disabled {
+    cursor: default;
+    opacity: .55
+}
+
+.attendance-choice:disabled[aria-pressed="true"] {
+    opacity: 1
+}
+
+.agenda-row .agenda-match-teams {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    white-space: nowrap
+}
+
+.notification-update {
+    width: 100%;
+    border-right: 0;
+    border-bottom: 0;
+    border-left: 0;
+    font: inherit;
+    text-align: left;
+    cursor: pointer
+}
 
 @media(max-width:700px) {
     .attendance-row {
@@ -1461,6 +1896,345 @@ html[data-theme="dark"] body {
         flex-direction: row
     }
 
-    .attendance-options { width:auto }
-    .attendance-choice { flex:0 0 34px;padding:0;font-size:18px }
+    .attendance-options {
+        width: auto
+    }
+
+    .attendance-choice {
+        flex: 0 0 34px;
+        padding: 0;
+        font-size: 18px
+    }
+}
+
+.substitute-toggle {
+    display: flex !important;
+    grid-template-columns: none !important;
+    align-items: center;
+    gap: 11px !important;
+    padding: 12px 14px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--lime) 12%, var(--card))
+}
+
+.substitute-toggle input {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--green)
+}
+
+.substitute-toggle span {
+    display: grid;
+    gap: 2px
+}
+
+.substitute-toggle small {
+    font-weight: 500
+}
+
+.substitute-attendance {
+    margin-top: 14px;
+    border-top: 2px solid var(--line)
+}
+
+.substitute-attendance summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 12px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--lime) 8%, var(--card));
+    color: var(--green);
+    font-weight: 900;
+    cursor: pointer;
+    list-style: none;
+    margin-top: 2px
+}
+
+.substitute-attendance summary::-webkit-details-marker {
+    display: none
+}
+
+.substitute-attendance summary:after {
+    content: "▾";
+    display: inline-block;
+    font-size: 14px;
+    margin-left: auto;
+    transition: transform .15s ease;
+    color: var(--green)
+}
+
+.substitute-attendance[open] summary:after {
+    transform: rotate(180deg)
+}
+
+.substitute-attendance summary small {
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 750
+}
+
+.substitute-attendance .attendance-list {
+    padding: 12px 0 0 10px;
+    margin-top: 12px;
+    border-top: 2px solid var(--line);
+    border-left: 3px solid color-mix(in srgb, var(--lime) 65%, var(--line))
+}
+
+.agenda-tabs {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--paper)
+}
+
+.agenda-tabs a {
+    padding: 9px 13px;
+    border-radius: 9px;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 850
+}
+
+.agenda-tabs a.active {
+    background: var(--card);
+    color: var(--green);
+    box-shadow: 0 3px 10px #123c2b12
+}
+
+.agenda-week-separator {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 20px 0 8px;
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: .06em;
+    text-transform: uppercase
+}
+
+.agenda-week-separator:after {
+    content: "";
+    height: 2.5px;
+    flex: 1;
+    background: color-mix(in srgb, var(--green) 40%, var(--line));
+    border-radius: 2px
+}
+
+.agenda-week-separator.first {
+    margin-top: 2px
+}
+
+.agenda-week-separator+.agenda-row {
+    border-top: 0
+}
+
+.styled-picker-field {
+    position: relative;
+    display: grid;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 800;
+    min-width: 0
+}
+
+.training-fields .input {
+    min-width: 0
+}
+
+.picker-trigger {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    text-align: left;
+    cursor: pointer
+}
+
+.picker-trigger>span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap
+}
+
+.picker-trigger svg {
+    flex: 0 0 auto;
+    color: var(--green)
+}
+
+.picker-popover {
+    position: absolute;
+    top: calc(100% + 7px);
+    left: 0;
+    z-index: 80;
+    width: min(330px, calc(100vw - 48px));
+    padding: 12px;
+    border: 1px solid var(--line);
+    border-radius: 15px;
+    background: var(--card);
+    box-shadow: 0 18px 50px #071f1740;
+    color: var(--ink)
+}
+
+.calendar-head {
+    display: grid;
+    grid-template-columns: 38px 1fr 38px;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 10px;
+    text-align: center
+}
+
+.calendar-head button,
+.calendar-grid button,
+.time-popover button {
+    border: 0;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    font: inherit
+}
+
+.calendar-head button {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    display: grid;
+    place-items: center
+}
+
+.calendar-head button:hover,
+.calendar-grid button:hover,
+.time-popover button:hover {
+    background: color-mix(in srgb, var(--lime) 20%, var(--card))
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 3px
+}
+
+.calendar-grid small {
+    display: grid;
+    place-items: center;
+    height: 28px;
+    color: var(--muted);
+    font-size: 10px;
+    text-transform: uppercase
+}
+
+.calendar-grid i {
+    min-width: 0
+}
+
+.calendar-grid button {
+    aspect-ratio: 1;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 750;
+    transition: all .12s ease
+}
+
+.calendar-grid button.today {
+    box-shadow: 0 0 0 2px var(--green) inset
+}
+
+.calendar-grid button.selected,
+.time-popover button.selected {
+    background: var(--green);
+    color: white;
+    font-weight: 800
+}
+
+.time-popover {
+    display: grid;
+    gap: 14px;
+    width: min(350px, calc(100vw - 48px))
+}
+
+.time-picker-section {
+    display: grid;
+    gap: 8px
+}
+
+.time-picker-section>small {
+    color: var(--muted);
+    font-size: 10px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    font-weight: 700
+}
+
+.time-hours {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 5px
+}
+
+.time-minutes {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px
+}
+
+.time-popover button {
+    min-height: 38px;
+    padding: 8px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 800;
+    transition: all .12s ease
+}
+
+.time-picker-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    padding-top: 3px;
+    border-top: 1px solid var(--line)
+}
+
+html[data-theme="dark"] .input {
+    background: var(--card)
+}
+
+@media(max-width:700px) {
+    .training-fields {
+        grid-template-columns: 1fr 1fr
+    }
+
+    .picker-popover {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        width: min(350px, calc(100vw - 28px));
+        transform: translate(-50%, -50%);
+        max-height: min(480px, calc(100vh - 100px))
+    }
+
+    .time-popover {
+        overflow-y: auto
+    }
+
+    .agenda-tabs {
+        width: 100%
+    }
+
+    .agenda-tabs a {
+        flex: 1;
+        text-align: center
+    }
+
+    .agenda-week-separator {
+        margin-top: 14px
+    }
 }

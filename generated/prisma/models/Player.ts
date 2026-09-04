@@ -48,6 +48,7 @@ export type PlayerMinAggregateOutputType = {
   active: boolean | null
   trainingMember: boolean | null
   matchMember: boolean | null
+  isSubstitute: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -66,6 +67,7 @@ export type PlayerMaxAggregateOutputType = {
   active: boolean | null
   trainingMember: boolean | null
   matchMember: boolean | null
+  isSubstitute: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -84,6 +86,7 @@ export type PlayerCountAggregateOutputType = {
   active: number
   trainingMember: number
   matchMember: number
+  isSubstitute: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -112,6 +115,7 @@ export type PlayerMinAggregateInputType = {
   active?: true
   trainingMember?: true
   matchMember?: true
+  isSubstitute?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -130,6 +134,7 @@ export type PlayerMaxAggregateInputType = {
   active?: true
   trainingMember?: true
   matchMember?: true
+  isSubstitute?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -148,6 +153,7 @@ export type PlayerCountAggregateInputType = {
   active?: true
   trainingMember?: true
   matchMember?: true
+  isSubstitute?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -253,6 +259,7 @@ export type PlayerGroupByOutputType = {
   active: boolean
   trainingMember: boolean
   matchMember: boolean
+  isSubstitute: boolean
   createdAt: Date
   updatedAt: Date
   _count: PlayerCountAggregateOutputType | null
@@ -294,6 +301,7 @@ export type PlayerWhereInput = {
   active?: Prisma.BoolFilter<"Player"> | boolean
   trainingMember?: Prisma.BoolFilter<"Player"> | boolean
   matchMember?: Prisma.BoolFilter<"Player"> | boolean
+  isSubstitute?: Prisma.BoolFilter<"Player"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Player"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Player"> | Date | string
   team?: Prisma.XOR<Prisma.TeamScalarRelationFilter, Prisma.TeamWhereInput>
@@ -319,6 +327,7 @@ export type PlayerOrderByWithRelationInput = {
   active?: Prisma.SortOrder
   trainingMember?: Prisma.SortOrder
   matchMember?: Prisma.SortOrder
+  isSubstitute?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   team?: Prisma.TeamOrderByWithRelationInput
@@ -347,6 +356,7 @@ export type PlayerWhereUniqueInput = Prisma.AtLeast<{
   active?: Prisma.BoolFilter<"Player"> | boolean
   trainingMember?: Prisma.BoolFilter<"Player"> | boolean
   matchMember?: Prisma.BoolFilter<"Player"> | boolean
+  isSubstitute?: Prisma.BoolFilter<"Player"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Player"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Player"> | Date | string
   team?: Prisma.XOR<Prisma.TeamScalarRelationFilter, Prisma.TeamWhereInput>
@@ -372,6 +382,7 @@ export type PlayerOrderByWithAggregationInput = {
   active?: Prisma.SortOrder
   trainingMember?: Prisma.SortOrder
   matchMember?: Prisma.SortOrder
+  isSubstitute?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.PlayerCountOrderByAggregateInput
@@ -398,6 +409,7 @@ export type PlayerScalarWhereWithAggregatesInput = {
   active?: Prisma.BoolWithAggregatesFilter<"Player"> | boolean
   trainingMember?: Prisma.BoolWithAggregatesFilter<"Player"> | boolean
   matchMember?: Prisma.BoolWithAggregatesFilter<"Player"> | boolean
+  isSubstitute?: Prisma.BoolWithAggregatesFilter<"Player"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Player"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Player"> | Date | string
 }
@@ -414,6 +426,7 @@ export type PlayerCreateInput = {
   active?: boolean
   trainingMember?: boolean
   matchMember?: boolean
+  isSubstitute?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   team: Prisma.TeamCreateNestedOneWithoutPlayersInput
@@ -439,6 +452,7 @@ export type PlayerUncheckedCreateInput = {
   active?: boolean
   trainingMember?: boolean
   matchMember?: boolean
+  isSubstitute?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   matchStats?: Prisma.PlayerMatchStatsUncheckedCreateNestedManyWithoutPlayerInput
@@ -460,6 +474,7 @@ export type PlayerUpdateInput = {
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   trainingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSubstitute?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   team?: Prisma.TeamUpdateOneRequiredWithoutPlayersNestedInput
@@ -485,6 +500,7 @@ export type PlayerUncheckedUpdateInput = {
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   trainingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSubstitute?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   matchStats?: Prisma.PlayerMatchStatsUncheckedUpdateManyWithoutPlayerNestedInput
@@ -508,6 +524,7 @@ export type PlayerCreateManyInput = {
   active?: boolean
   trainingMember?: boolean
   matchMember?: boolean
+  isSubstitute?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -524,6 +541,7 @@ export type PlayerUpdateManyMutationInput = {
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   trainingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSubstitute?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -542,6 +560,7 @@ export type PlayerUncheckedUpdateManyInput = {
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   trainingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSubstitute?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -575,6 +594,7 @@ export type PlayerCountOrderByAggregateInput = {
   active?: Prisma.SortOrder
   trainingMember?: Prisma.SortOrder
   matchMember?: Prisma.SortOrder
+  isSubstitute?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -597,6 +617,7 @@ export type PlayerMaxOrderByAggregateInput = {
   active?: Prisma.SortOrder
   trainingMember?: Prisma.SortOrder
   matchMember?: Prisma.SortOrder
+  isSubstitute?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -615,6 +636,7 @@ export type PlayerMinOrderByAggregateInput = {
   active?: Prisma.SortOrder
   trainingMember?: Prisma.SortOrder
   matchMember?: Prisma.SortOrder
+  isSubstitute?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -792,6 +814,7 @@ export type PlayerCreateWithoutUserInput = {
   active?: boolean
   trainingMember?: boolean
   matchMember?: boolean
+  isSubstitute?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   team: Prisma.TeamCreateNestedOneWithoutPlayersInput
@@ -815,6 +838,7 @@ export type PlayerUncheckedCreateWithoutUserInput = {
   active?: boolean
   trainingMember?: boolean
   matchMember?: boolean
+  isSubstitute?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   matchStats?: Prisma.PlayerMatchStatsUncheckedCreateNestedManyWithoutPlayerInput
@@ -852,6 +876,7 @@ export type PlayerUpdateWithoutUserInput = {
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   trainingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSubstitute?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   team?: Prisma.TeamUpdateOneRequiredWithoutPlayersNestedInput
@@ -875,6 +900,7 @@ export type PlayerUncheckedUpdateWithoutUserInput = {
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   trainingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSubstitute?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   matchStats?: Prisma.PlayerMatchStatsUncheckedUpdateManyWithoutPlayerNestedInput
@@ -896,6 +922,7 @@ export type PlayerCreateWithoutTeamInput = {
   active?: boolean
   trainingMember?: boolean
   matchMember?: boolean
+  isSubstitute?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   user?: Prisma.UserCreateNestedOneWithoutPlayerInput
@@ -919,6 +946,7 @@ export type PlayerUncheckedCreateWithoutTeamInput = {
   active?: boolean
   trainingMember?: boolean
   matchMember?: boolean
+  isSubstitute?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   matchStats?: Prisma.PlayerMatchStatsUncheckedCreateNestedManyWithoutPlayerInput
@@ -971,6 +999,7 @@ export type PlayerScalarWhereInput = {
   active?: Prisma.BoolFilter<"Player"> | boolean
   trainingMember?: Prisma.BoolFilter<"Player"> | boolean
   matchMember?: Prisma.BoolFilter<"Player"> | boolean
+  isSubstitute?: Prisma.BoolFilter<"Player"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Player"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Player"> | Date | string
 }
@@ -987,6 +1016,7 @@ export type PlayerCreateWithoutMatchAttendanceInput = {
   active?: boolean
   trainingMember?: boolean
   matchMember?: boolean
+  isSubstitute?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   team: Prisma.TeamCreateNestedOneWithoutPlayersInput
@@ -1011,6 +1041,7 @@ export type PlayerUncheckedCreateWithoutMatchAttendanceInput = {
   active?: boolean
   trainingMember?: boolean
   matchMember?: boolean
+  isSubstitute?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   matchStats?: Prisma.PlayerMatchStatsUncheckedCreateNestedManyWithoutPlayerInput
@@ -1047,6 +1078,7 @@ export type PlayerUpdateWithoutMatchAttendanceInput = {
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   trainingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSubstitute?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   team?: Prisma.TeamUpdateOneRequiredWithoutPlayersNestedInput
@@ -1071,6 +1103,7 @@ export type PlayerUncheckedUpdateWithoutMatchAttendanceInput = {
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   trainingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSubstitute?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   matchStats?: Prisma.PlayerMatchStatsUncheckedUpdateManyWithoutPlayerNestedInput
@@ -1091,6 +1124,7 @@ export type PlayerCreateWithoutTrainingAttendanceInput = {
   active?: boolean
   trainingMember?: boolean
   matchMember?: boolean
+  isSubstitute?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   team: Prisma.TeamCreateNestedOneWithoutPlayersInput
@@ -1115,6 +1149,7 @@ export type PlayerUncheckedCreateWithoutTrainingAttendanceInput = {
   active?: boolean
   trainingMember?: boolean
   matchMember?: boolean
+  isSubstitute?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   matchStats?: Prisma.PlayerMatchStatsUncheckedCreateNestedManyWithoutPlayerInput
@@ -1151,6 +1186,7 @@ export type PlayerUpdateWithoutTrainingAttendanceInput = {
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   trainingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSubstitute?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   team?: Prisma.TeamUpdateOneRequiredWithoutPlayersNestedInput
@@ -1175,6 +1211,7 @@ export type PlayerUncheckedUpdateWithoutTrainingAttendanceInput = {
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   trainingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSubstitute?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   matchStats?: Prisma.PlayerMatchStatsUncheckedUpdateManyWithoutPlayerNestedInput
@@ -1195,6 +1232,7 @@ export type PlayerCreateWithoutMatchStatsInput = {
   active?: boolean
   trainingMember?: boolean
   matchMember?: boolean
+  isSubstitute?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   team: Prisma.TeamCreateNestedOneWithoutPlayersInput
@@ -1219,6 +1257,7 @@ export type PlayerUncheckedCreateWithoutMatchStatsInput = {
   active?: boolean
   trainingMember?: boolean
   matchMember?: boolean
+  isSubstitute?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   events?: Prisma.MatchEventUncheckedCreateNestedManyWithoutPlayerInput
@@ -1255,6 +1294,7 @@ export type PlayerUpdateWithoutMatchStatsInput = {
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   trainingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSubstitute?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   team?: Prisma.TeamUpdateOneRequiredWithoutPlayersNestedInput
@@ -1279,6 +1319,7 @@ export type PlayerUncheckedUpdateWithoutMatchStatsInput = {
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   trainingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSubstitute?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   events?: Prisma.MatchEventUncheckedUpdateManyWithoutPlayerNestedInput
@@ -1299,6 +1340,7 @@ export type PlayerCreateWithoutEventsInput = {
   active?: boolean
   trainingMember?: boolean
   matchMember?: boolean
+  isSubstitute?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   team: Prisma.TeamCreateNestedOneWithoutPlayersInput
@@ -1323,6 +1365,7 @@ export type PlayerUncheckedCreateWithoutEventsInput = {
   active?: boolean
   trainingMember?: boolean
   matchMember?: boolean
+  isSubstitute?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   matchStats?: Prisma.PlayerMatchStatsUncheckedCreateNestedManyWithoutPlayerInput
@@ -1348,6 +1391,7 @@ export type PlayerCreateWithoutRelatedEventsInput = {
   active?: boolean
   trainingMember?: boolean
   matchMember?: boolean
+  isSubstitute?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   team: Prisma.TeamCreateNestedOneWithoutPlayersInput
@@ -1372,6 +1416,7 @@ export type PlayerUncheckedCreateWithoutRelatedEventsInput = {
   active?: boolean
   trainingMember?: boolean
   matchMember?: boolean
+  isSubstitute?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   matchStats?: Prisma.PlayerMatchStatsUncheckedCreateNestedManyWithoutPlayerInput
@@ -1408,6 +1453,7 @@ export type PlayerUpdateWithoutEventsInput = {
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   trainingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSubstitute?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   team?: Prisma.TeamUpdateOneRequiredWithoutPlayersNestedInput
@@ -1432,6 +1478,7 @@ export type PlayerUncheckedUpdateWithoutEventsInput = {
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   trainingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSubstitute?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   matchStats?: Prisma.PlayerMatchStatsUncheckedUpdateManyWithoutPlayerNestedInput
@@ -1463,6 +1510,7 @@ export type PlayerUpdateWithoutRelatedEventsInput = {
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   trainingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSubstitute?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   team?: Prisma.TeamUpdateOneRequiredWithoutPlayersNestedInput
@@ -1487,6 +1535,7 @@ export type PlayerUncheckedUpdateWithoutRelatedEventsInput = {
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   trainingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSubstitute?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   matchStats?: Prisma.PlayerMatchStatsUncheckedUpdateManyWithoutPlayerNestedInput
@@ -1508,6 +1557,7 @@ export type PlayerCreateManyTeamInput = {
   active?: boolean
   trainingMember?: boolean
   matchMember?: boolean
+  isSubstitute?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1524,6 +1574,7 @@ export type PlayerUpdateWithoutTeamInput = {
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   trainingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSubstitute?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneWithoutPlayerNestedInput
@@ -1547,6 +1598,7 @@ export type PlayerUncheckedUpdateWithoutTeamInput = {
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   trainingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSubstitute?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   matchStats?: Prisma.PlayerMatchStatsUncheckedUpdateManyWithoutPlayerNestedInput
@@ -1569,6 +1621,7 @@ export type PlayerUncheckedUpdateManyWithoutTeamInput = {
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   trainingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isSubstitute?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1654,6 +1707,7 @@ export type PlayerSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   active?: boolean
   trainingMember?: boolean
   matchMember?: boolean
+  isSubstitute?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   team?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
@@ -1680,6 +1734,7 @@ export type PlayerSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   active?: boolean
   trainingMember?: boolean
   matchMember?: boolean
+  isSubstitute?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   team?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
@@ -1700,6 +1755,7 @@ export type PlayerSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   active?: boolean
   trainingMember?: boolean
   matchMember?: boolean
+  isSubstitute?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   team?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
@@ -1720,11 +1776,12 @@ export type PlayerSelectScalar = {
   active?: boolean
   trainingMember?: boolean
   matchMember?: boolean
+  isSubstitute?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type PlayerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "teamId" | "userId" | "firstName" | "namePrefix" | "lastName" | "displayName" | "shirtNumber" | "position" | "photoPath" | "active" | "trainingMember" | "matchMember" | "createdAt" | "updatedAt", ExtArgs["result"]["player"]>
+export type PlayerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "teamId" | "userId" | "firstName" | "namePrefix" | "lastName" | "displayName" | "shirtNumber" | "position" | "photoPath" | "active" | "trainingMember" | "matchMember" | "isSubstitute" | "createdAt" | "updatedAt", ExtArgs["result"]["player"]>
 export type PlayerInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   team?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
   user?: boolean | Prisma.Player$userArgs<ExtArgs>
@@ -1769,6 +1826,7 @@ export type $PlayerPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     active: boolean
     trainingMember: boolean
     matchMember: boolean
+    isSubstitute: boolean
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["player"]>
@@ -2214,6 +2272,7 @@ export interface PlayerFieldRefs {
   readonly active: Prisma.FieldRef<"Player", 'Boolean'>
   readonly trainingMember: Prisma.FieldRef<"Player", 'Boolean'>
   readonly matchMember: Prisma.FieldRef<"Player", 'Boolean'>
+  readonly isSubstitute: Prisma.FieldRef<"Player", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"Player", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Player", 'DateTime'>
 }

@@ -1,0 +1,1 @@
+ALTER TABLE "Player" ADD COLUMN "isSubstitute" BOOLEAN NOT NULL DEFAULT false;

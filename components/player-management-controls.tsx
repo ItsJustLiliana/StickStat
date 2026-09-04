@@ -4,7 +4,7 @@ import {Pencil,Plus,Trash2,Unlink,X} from "lucide-react";
 import {useState} from "react";
 import {useRouter} from "next/navigation";
 
-type PlayerInput={firstName:string;namePrefix:string|null;lastName:string;shirtNumber:number|null;position:string|null;trainingMember:boolean;matchMember:boolean};
+type PlayerInput={firstName:string;namePrefix:string|null;lastName:string;shirtNumber:number|null;position:string|null;trainingMember:boolean;matchMember:boolean;isSubstitute:boolean};
 
 async function request(url:string,method:string,data:Record<string,unknown>){
   const response=await fetch(url,{method,headers:{"content-type":"application/json"},body:JSON.stringify(data)}),body=await response.json();
@@ -22,11 +22,11 @@ function splitPlayerName(value:string){
   return {firstName:[parts[0],...middle.slice(0,prefixStart)].join(" "),namePrefix:middle.slice(prefixStart).join(" ")||null,lastName};
 }
 
-function playerPayload(form:FormData){const training=form.has("trainingMember"),match=form.has("matchMember"),name=splitPlayerName(String(form.get("fullName")));return {...name,shirtNumber:form.get("shirtNumber")?Number(form.get("shirtNumber")):null,position:String(form.get("position"))||null,trainingMember:training||!match,matchMember:match||!training}}
+function playerPayload(form:FormData){const training=form.has("trainingMember"),match=form.has("matchMember"),name=splitPlayerName(String(form.get("fullName")));return {...name,shirtNumber:form.get("shirtNumber")?Number(form.get("shirtNumber")):null,position:String(form.get("position"))||null,trainingMember:training||!match,matchMember:match||!training,isSubstitute:form.has("isSubstitute")}}
 
 function PlayerFields({player}:{player?:PlayerInput}){
   const fullName=player?[player.firstName,player.namePrefix,player.lastName].filter(Boolean).join(" "):"";
-  return <><input className="input" name="fullName" aria-label="Volledige naam" placeholder="Voornaam, tussenvoegsel en achternaam" defaultValue={fullName} required/><div className="player-detail-fields"><input className="input" name="shirtNumber" type="number" min="0" max="999" placeholder="Rugnummer (optioneel)" defaultValue={player?.shirtNumber??""}/><input className="input" name="position" placeholder="Positie (optioneel)" defaultValue={player?.position??""}/></div><fieldset><legend>Alleen indien beperkt</legend><div className="role-options"><label><input type="checkbox" name="trainingMember" defaultChecked={Boolean(player?.trainingMember&&!player.matchMember)}/>Trainingslid</label><label><input type="checkbox" name="matchMember" defaultChecked={Boolean(player?.matchMember&&!player.trainingMember)}/>Wedstrijdlid</label></div><small className="muted">Niets aangevinkt betekent trainings- én wedstrijdlid.</small></fieldset></>;
+  return <><input className="input" name="fullName" aria-label="Volledige naam" placeholder="Voornaam, tussenvoegsel en achternaam" defaultValue={fullName} required/><div className="player-detail-fields"><input className="input" name="shirtNumber" type="number" min="0" max="999" placeholder="Rugnummer (optioneel)" defaultValue={player?.shirtNumber??""}/><input className="input" name="position" placeholder="Positie (optioneel)" defaultValue={player?.position??""}/></div><label className="substitute-toggle"><input type="checkbox" name="isSubstitute" defaultChecked={player?.isSubstitute??false}/><span><strong>Invalspeler</strong><small className="muted">Doet af en toe mee en staat apart onder aanwezigheid.</small></span></label><fieldset><legend>Alleen indien beperkt</legend><div className="role-options"><label><input type="checkbox" name="trainingMember" defaultChecked={Boolean(player?.trainingMember&&!player.matchMember)}/>Trainingslid</label><label><input type="checkbox" name="matchMember" defaultChecked={Boolean(player?.matchMember&&!player.trainingMember)}/>Wedstrijdlid</label></div><small className="muted">Niets aangevinkt betekent trainings- én wedstrijdlid.</small></fieldset></>;
 }
 
 export function ManagementDialog({title,onClose,children}:{title:string;onClose:()=>void;children:React.ReactNode}){

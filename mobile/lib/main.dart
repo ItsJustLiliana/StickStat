@@ -58,6 +58,7 @@ class _StickStatWebAppState extends State<StickStatWebApp> {
   late final WebViewController _controller;
   int _progress = 0;
   String? _mainFrameError;
+  bool _checkingForUpdate = false;
 
   @override
   void initState() {
@@ -65,6 +66,12 @@ class _StickStatWebAppState extends State<StickStatWebApp> {
     _controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setBackgroundColor(const Color(0xFFF5F7F4))
+      ..addJavaScriptChannel(
+        'StickStatApp',
+        onMessageReceived: (message) {
+          if (message.message == 'check-update') _checkForUpdate();
+        },
+      )
       ..setNavigationDelegate(
         NavigationDelegate(
           onProgress: (progress) {
@@ -124,6 +131,8 @@ class _StickStatWebAppState extends State<StickStatWebApp> {
   }
 
   Future<void> _checkForUpdate() async {
+    if (_checkingForUpdate) return;
+    _checkingForUpdate = true;
     try {
       final response = await http.get(Uri.parse('$stickStatUrl/api/app/releases/latest')).timeout(const Duration(seconds: 8));
       if (response.statusCode != 200 || !mounted) return;
@@ -136,6 +145,7 @@ class _StickStatWebAppState extends State<StickStatWebApp> {
       if (!updateAvailable || !mounted) return;
       await showDialog<void>(context: context, barrierDismissible: false, builder: (dialogContext) => AlertDialog(title: Text('StickStat ${release['version']} beschikbaar'), content: const Text('Er is een nieuwe versie. De APK wordt veilig gecontroleerd voordat Android de installatie opent.'), actions: [TextButton(onPressed: () => Navigator.pop(dialogContext), child: const Text('Later')), FilledButton(onPressed: () { Navigator.pop(dialogContext); _downloadAndInstall(release); }, child: const Text('Downloaden'))]));
     } catch (_) { /* Updates mogen het starten van de app nooit blokkeren. */ }
+    finally { _checkingForUpdate = false; }
   }
 
   Future<void> _downloadAndInstall(Map<String, dynamic> release) async {

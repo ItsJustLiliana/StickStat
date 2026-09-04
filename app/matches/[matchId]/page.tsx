@@ -29,7 +29,7 @@ export default async function MatchDetail({params,searchParams}:{params:Promise<
       <div className="match-score-team"><ClubLogo name={match.awayTeam.club.name} path={match.awayTeam.club.logoLocalPath??match.awayTeam.club.logoUrl}/><MatchTeamLabel name={match.awayTeam.shortName} own={match.awayTeamId===ownTeam?.id} side="away"/></div>
     </div></section>
     <section className="metrics match-metrics"><div className="metric"><span>Datum</span><strong style={{fontSize:17}}>{match.date.toLocaleDateString("nl-NL",{day:"numeric",month:"long",year:"numeric"})}</strong></div><div className="metric"><span>Tijd</span><strong style={{fontSize:17}}>{match.startTime??"–"}</strong></div><div className="metric"><span>Locatie</span><strong style={{fontSize:17}}>{match.venue??"–"}</strong></div><div className="metric"><span>Competitie</span><strong style={{fontSize:17}}>{match.competition??"–"}</strong></div></section>
-    {ownTeam&&<AttendanceList endpoint={`/api/matches/${match.id}/attendance`} canManage={canManage} people={roster.map(player=>({playerId:player.id,name:player.displayName,status:attendance.get(player.id)??"unknown",editable:canManage||player.userId===user.id}))}/>}
+    {ownTeam&&<AttendanceList endpoint={`/api/matches/${match.id}/attendance`} canManage={canManage} people={roster.map(player=>({playerId:player.id,name:player.displayName,status:attendance.get(player.id)??"unknown",editable:canManage||player.userId===user.id,isSubstitute:player.isSubstitute}))}/>}
     {ownTeam&&<MatchTeamStatsForm matchId={match.id} teamId={ownTeam.id} teamScore={ownScore} initialRows={initialRows} canEdit={canEditStats}/>}
   </PageShell>;
 }
