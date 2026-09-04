@@ -80,6 +80,16 @@ Write-Host "Java: $env:JAVA_HOME"
 Write-Host "Configuratie: $Configuration"
 Write-Host "StickStat URL: $AppUrl"
 
+$appLogo = Join-Path $mobileRoot "assets\branding\app_logo.png"
+$iconSyncScript = Join-Path $PSScriptRoot "sync-app-icons.ps1"
+if (Test-Path -LiteralPath $appLogo) {
+    Write-Host ""
+    Write-Host "==> App-logo verwerken" -ForegroundColor Cyan
+    & $iconSyncScript -Source $appLogo
+} else {
+    Write-Warning "Geen eigen app-logo gevonden op $appLogo; de bestaande launcher-iconen blijven staan."
+}
+
 Push-Location $mobileRoot
 try {
     Invoke-Step "Dependencies ophalen" { & $flutter.Command pub get }

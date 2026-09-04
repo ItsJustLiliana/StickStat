@@ -90,6 +90,8 @@ Wedstrijden uit de provider en handmatig aangemaakte trainingen staan samen onde
 
 Het platformbeheer publiceert lokaal gebouwde Android-releases. De versieknoppen tonen het exacte lokale buildcommando. Upload daarna `mobile/dist/StickStat.apk` als nieuwe StickStat-versie via `https://liliananuzohra.com/edit-website` en klik in StickStat op **Website-release synchroniseren**. StickStat importeert versie, buildnummer, download-URL en SHA-256 uit de websitefeed en stuurt alle accounts een notificatie. De APK blijft op de website staan; de productieserver draait zelf geen Flutter- of Gradle-build. De Android-app controleert bij starten op updates, verifieert de download en opent daarna Androids installatieprompt. Gebruik voor distributie een vaste, veilig opgeslagen release-sleutel: Android accepteert updates alleen met dezelfde handtekening als de geïnstalleerde app.
 
+Plaats het vierkante Android-app-logo als `mobile/assets/branding/app_logo.png` (minimaal 512 × 512, bij voorkeur 1024 × 1024). Het lokale APK-buildscript maakt daar automatisch alle launcher-iconen van.
+
 ## Documentatie
 
 - [Architectuur](docs/ARCHITECTURE.md)
