@@ -19,8 +19,8 @@ describe("trainings- en wedstrijdleden",()=>{
     expect(roster).toContain("roster-membership-hint");
   });
 
-  it("verbergt ongekoppelde accounts voor gewone teamleden",()=>{
-    expect(list).toContain("canAdmin&&unlinkedAccounts.length>0");
+  it("verbergt ongekoppelde accounts voor gewone teamleden", () => {
+    expect(list).toContain("canAdmin && unlinkedAccounts.length > 0");
   });
 
   it("neemt trainingsleden niet standaard op in wedstrijdinvoer",()=>{

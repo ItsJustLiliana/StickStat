@@ -40,13 +40,15 @@ describe("teamaccount- en rollenbeheer",()=>{
     expect(form).toContain("Wijs eerst iemand anders als teambeheerder aan");
   });
 
-  it("houdt accounts zonder spelerskoppeling onderaan en alleen voor beheerders",()=>{
+  it("houdt accounts zonder spelerskoppeling onderaan en alleen voor beheerders", () => {
     expect(route).toContain("roles:z.array(role)");
     expect(route).not.toContain("roles:z.array(role).min(1)");
     expect(players).toContain("!membership.user.player");
     expect(players).toContain("Geregistreerde accounts zonder spelersprofiel");
-    expect(players).toContain("canAdmin&&unlinkedAccounts.length>0");
-    expect(players.indexOf("Geregistreerde accounts zonder spelersprofiel")).toBeGreaterThan(players.indexOf("sections.map"));
+    expect(players).toContain("canAdmin && unlinkedAccounts.length > 0");
+    expect(players.indexOf("Geregistreerde accounts zonder spelersprofiel")).toBeGreaterThan(
+      players.indexOf("sections.map")
+    );
   });
 
   it("sorteert iedere lijst op achternaam",()=>{
