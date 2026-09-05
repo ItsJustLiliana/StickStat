@@ -5,6 +5,7 @@ import { PageShell } from "@/components/page-shell";
 import { pageContext } from "@/lib/page-data";
 import { db } from "@/lib/db";
 import { hasAnyTeamRole, teamManagementRoles } from "@/lib/team-roles";
+import { isAttendanceAutoLocked } from "@/lib/attendance-lock";
 
 export const dynamic = "force-dynamic";
 
@@ -21,6 +22,6 @@ export default async function TrainingDetail({ params, searchParams }: { params:
       <div className="training-facts"><span><CalendarDays size={17} />{training.date.toLocaleDateString("nl-NL", { timeZone: "Europe/Amsterdam", weekday: "long", day: "numeric", month: "long", year: "numeric" })}</span><span><Clock3 size={17} />{training.startTime ?? "Tijd onbekend"}{training.endTime && ` \u2013 ${training.endTime}`}</span><span><MapPin size={17} />{training.venue ?? "Locatie onbekend"}</span></div>
       {training.notes && <p className="training-notes">{training.notes}</p>}
     </section>
-    <AttendanceList endpoint={`/api/trainings/${training.id}/attendance`} canAdmin={canAdmin} locked={training.attendanceLocked} teamId={training.teamId} supplementalLabel="Wedstrijdleden" people={people} />
+    <AttendanceList endpoint={`/api/trainings/${training.id}/attendance`} canAdmin={canAdmin} locked={training.attendanceLocked} autoLocked={isAttendanceAutoLocked(training.date)} teamId={training.teamId} supplementalLabel="Wedstrijdleden" people={people} />
   </PageShell>;
 }

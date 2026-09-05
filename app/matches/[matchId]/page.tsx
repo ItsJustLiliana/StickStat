@@ -10,6 +10,7 @@ import { PageShell } from "@/components/page-shell";
 import { db } from "@/lib/db";
 import { pageContext } from "@/lib/page-data";
 import { hasAnyTeamRole, teamManagementRoles } from "@/lib/team-roles";
+import { isAttendanceAutoLocked } from "@/lib/attendance-lock";
 
 export const dynamic = "force-dynamic";
 // Regression markers for source-string tests: {active:true,matchMember:true} | matchStats:{some:{matchId:match.id}}
@@ -37,7 +38,7 @@ export default async function MatchDetail({ params, searchParams }: { params: Pr
       <div className="training-facts"><span><CalendarDays size={17} />{match.date.toLocaleDateString("nl-NL", { timeZone: "Europe/Amsterdam", weekday: "long", day: "numeric", month: "long", year: "numeric" })}</span><span><Clock3 size={17} />{match.startTime ?? "Tijd onbekend"}</span><span><MapPin size={17} />{match.venue ?? "Locatie onbekend"}</span>{match.competition && <span><Trophy size={17} />{match.competition}</span>}</div>
     </section>
     {ownTeam && <MatchDetailTabs
-      attendance={<AttendanceList endpoint={`/api/matches/${match.id}/attendance`} canAdmin={canAdmin} locked={plan?.attendanceLocked ?? false} teamId={ownTeam.id} supplementalLabel="Trainingsleden" people={roster.map(player => ({ playerId: player.id, name: player.displayName, photoPath: player.user?.photoPath ?? player.photoPath, status: attendance.get(player.id) ?? "unknown", editable: canManage || player.userId === user.id, isSubstitute: player.isSubstitute, isSupplemental: player.trainingMember && !player.matchMember }))} />}
+      attendance={<AttendanceList endpoint={`/api/matches/${match.id}/attendance`} canAdmin={canAdmin} locked={plan?.attendanceLocked ?? false} autoLocked={isAttendanceAutoLocked(match.date)} teamId={ownTeam.id} supplementalLabel="Trainingsleden" people={roster.map(player => ({ playerId: player.id, name: player.displayName, photoPath: player.user?.photoPath ?? player.photoPath, status: attendance.get(player.id) ?? "unknown", editable: canManage || player.userId === user.id, isSubstitute: player.isSubstitute, isSupplemental: player.trainingMember && !player.matchMember }))} />}
       lineup={<MatchLineup key={`${match.id}-${ownTeam.id}-${plan?.formation}-${JSON.stringify(plan?.positions)}`} matchId={match.id} teamId={ownTeam.id} canEdit={canManage} initialFormation={plan?.formation ?? "4-3-3"} initialPositions={plan?.positions} players={roster.map(player => ({ id: player.id, firstName: player.firstName, name: player.displayName, photoPath: player.user?.photoPath ?? player.photoPath, status: attendance.get(player.id) ?? "unknown", eligible: player.active && player.matchMember }))} />}
       performance={<MatchTeamStatsForm matchId={match.id} teamId={ownTeam.id} teamScore={ownScore} initialRows={initialRows} canEdit={canEditStats} />}
     />}

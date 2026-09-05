@@ -10,6 +10,7 @@ import { TrainingCreateForm } from "@/components/training-create-form";
 import { db } from "@/lib/db";
 import { pageContext } from "@/lib/page-data";
 import { hasAnyTeamRole, teamManagementRoles } from "@/lib/team-roles";
+import { isAttendanceAutoLocked } from "@/lib/attendance-lock";
 
 export const dynamic = "force-dynamic";
 
@@ -77,7 +78,7 @@ export default async function Agenda({ searchParams }: { searchParams: Promise<{
       venue: match.venue,
       href: `/matches/${match.id}?team=${team.id}`,
       attendance: match.attendance,
-      locked: match.plans[0]?.attendanceLocked ?? false,
+      locked: (match.plans[0]?.attendanceLocked ?? false) || isAttendanceAutoLocked(match.date),
       homeTeam: match.homeTeam,
       awayTeam: match.awayTeam,
     })),
@@ -90,7 +91,7 @@ export default async function Agenda({ searchParams }: { searchParams: Promise<{
       venue: training.venue,
       href: `/trainings/${training.id}?team=${team.id}`,
       attendance: training.attendance,
-      locked: training.attendanceLocked,
+      locked: training.attendanceLocked || isAttendanceAutoLocked(training.date),
       homeTeam: null,
       awayTeam: null,
     })),

@@ -16,9 +16,10 @@ function avatarInitials(name: string) {
     .toUpperCase();
 }
 
-export function AttendanceList({ endpoint, people: rows, canAdmin, locked, teamId, supplementalLabel }: { endpoint: string; people: Person[]; canAdmin: boolean; locked: boolean; teamId: string; supplementalLabel?: string }) {
+export function AttendanceList({ endpoint, people: rows, canAdmin, locked, autoLocked = false, teamId, supplementalLabel }: { endpoint: string; people: Person[]; canAdmin: boolean; locked: boolean; autoLocked?: boolean; teamId: string; supplementalLabel?: string }) {
   const router = useRouter(), [busy, setBusy] = useState(false), [message, setMessage] = useState("");
   const [refreshing, startTransition] = useTransition();
+  const effectiveLocked = locked || autoLocked;
   // Regression marker for source-string test: rows.filter(person=>person.isSubstitute)
   const supplementalPlayers = rows.filter(person => person.isSupplemental), regularPlayers = rows.filter(person => !person.isSubstitute && !person.isSupplemental), substitutes = rows.filter(person => person.isSubstitute && !person.isSupplemental);
   async function toggle() {
@@ -34,11 +35,11 @@ export function AttendanceList({ endpoint, people: rows, canAdmin, locked, teamI
   function playerRows(players: Person[]) {
     return <div className="attendance-list">{players.map(person => <div className="attendance-row" key={person.playerId}>
       <span className="attendance-person">{person.photoPath ? <Image unoptimized src={person.photoPath} width={48} height={48} className="player-photo image" alt={`Profielfoto van ${person.name}`} /> : <span className="player-photo">{avatarInitials(person.name)}</span>}<strong title={person.name}>{person.name}</strong></span>
-      <AttendanceControls endpoint={endpoint} playerId={person.playerId} name={person.name} status={person.status} disabled={busy || refreshing || !person.editable || (locked && !canAdmin)} locked={locked && !canAdmin} />
+      <AttendanceControls endpoint={endpoint} playerId={person.playerId} name={person.name} status={person.status} disabled={busy || refreshing || !person.editable || (effectiveLocked && !canAdmin)} locked={effectiveLocked && !canAdmin} />
     </div>)}</div>;
   }
   return <section className="card attendance-card">
-    <div className="card-head"><h2>Aanwezigheid</h2>{canAdmin ? <button type="button" role="switch" aria-checked={locked} aria-label="Aanmeldingen vergrendelen" className="attendance-lock" disabled={busy || refreshing} onClick={() => void toggle()}><LockKeyhole size={16} /><span>Vergrendelen</span><span className="switch-track" /></button> : locked && <span className="lock-label"><LockKeyhole size={14} />Vergrendeld</span>}</div>
+    <div className="card-head"><h2>Aanwezigheid</h2>{canAdmin && !autoLocked ? <button type="button" role="switch" aria-checked={locked} aria-label="Aanmeldingen vergrendelen" className="attendance-lock" disabled={busy || refreshing} onClick={() => void toggle()}><LockKeyhole size={16} /><span>Vergrendelen</span><span className="switch-track" /></button> : effectiveLocked && <span className="lock-label"><LockKeyhole size={14} />{autoLocked ? "Automatisch vergrendeld" : "Vergrendeld"}</span>}</div>
     {playerRows(regularPlayers)}
     {substitutes.length > 0 && <details className="substitute-attendance"><summary><span>Invalspelers</span><small>{substitutes.length} optioneel</small></summary>{playerRows(substitutes)}</details>}
     {supplementalPlayers.length > 0 && supplementalLabel && <details className="substitute-attendance supplemental-attendance"><summary><span>{supplementalLabel}</span><small>{supplementalPlayers.length} optioneel</small></summary>{playerRows(supplementalPlayers)}</details>}
