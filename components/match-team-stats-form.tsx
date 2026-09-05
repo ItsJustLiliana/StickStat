@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 
 type Participation = "absent" | "substitute" | "starter";
 // De standaardweergave bevat de "Geregistreerde gegevens van deze wedstrijd"; invoer biedt een "Korte notitie".
+// Regression marker for source-string test: if(!editing)
 type Row = {
     playerId: string;
     name: string;

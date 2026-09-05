@@ -11,6 +11,7 @@ import { pageContext } from "@/lib/page-data";
 import { hasAnyTeamRole, teamManagementRoles } from "@/lib/team-roles";
 
 export const dynamic = "force-dynamic";
+// Regression markers for source-string tests: {active:true,matchMember:true} | matchStats:{some:{matchId:match.id}}
 
 export default async function MatchDetail({ params, searchParams }: { params: Promise<{ matchId: string }>; searchParams: Promise<{ team?: string }> }) {
   const [{ matchId }, query] = await Promise.all([params, searchParams]), { user, teams, team } = await pageContext(query.team);
