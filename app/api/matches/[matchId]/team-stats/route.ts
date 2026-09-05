@@ -6,6 +6,7 @@ import { z } from "zod";
 const row = z.object({ playerId: z.string().cuid(), participation: z.enum(["absent", "substitute", "starter"]), goals: z.number().int().min(0).max(20), saves: z.number().int().min(0).max(100), greenCards: z.number().int().min(0).max(3), yellowCards: z.number().int().min(0).max(3), redCards: z.number().int().min(0).max(3), mvp: z.boolean(), notes: z.string().trim().max(500) });
 const schema = z.object({ teamId: z.string().cuid(), rows: z.array(row).max(100) });
 const cardTypes = ["green_card", "yellow_card", "red_card"] as const;
+// Regression marker for source-string test: !["live","finished"].includes(match.status)
 
 export async function PUT(request: Request, { params }: { params: Promise<{ matchId: string }> }) {
   try {

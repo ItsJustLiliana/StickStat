@@ -4,6 +4,7 @@ import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { LockKeyhole } from "lucide-react";
 import { AttendanceControls, type AttendanceStatus } from "./attendance-controls";
+import { Toast } from "./toast";
 type Person = { playerId: string; name: string; photoPath: string | null; status: AttendanceStatus; editable: boolean; isSubstitute?: boolean };
 
 function avatarInitials(name: string) {
@@ -41,6 +42,6 @@ export function AttendanceList({ endpoint, people: rows, canAdmin, locked, teamI
     {playerRows(regularPlayers)}
     {substitutes.length > 0 && <details className="substitute-attendance"><summary><span>Invalspelers</span><small>{substitutes.length} optioneel</small></summary>{playerRows(substitutes)}</details>}
     {!rows.length && <div className="empty">Geen spelers in deze selectie.</div>}
-    {message && <p className="error" role="alert">{message}</p>}
+    {message && <Toast message={message} onDismiss={() => setMessage("")} />}
   </section>;
 }

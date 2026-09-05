@@ -1047,6 +1047,37 @@ td {
     margin-top: 12px
 }
 
+.toast {
+    position: fixed;
+    z-index: 90;
+    right: 16px;
+    bottom: 18px;
+    width: min(420px, calc(100vw - 32px));
+    padding: 13px 16px;
+    border: 1px solid #f2b9a8;
+    border-radius: 10px;
+    background: #ffebe5;
+    color: #b43b1b;
+    box-shadow: 0 14px 36px #00000026;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.35;
+    touch-action: pan-y;
+    animation: toast-enter .2s ease-out;
+}
+
+@keyframes toast-enter {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 .charts {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -1097,6 +1128,10 @@ td {
         padding: 6px 4px max(6px, env(safe-area-inset-bottom));
         z-index: 30;
         box-shadow: 0 -8px 26px #092f2533
+    }
+
+    .toast {
+        bottom: calc(78px + env(safe-area-inset-bottom));
     }
 
     .mobile-nav a {

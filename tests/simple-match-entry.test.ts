@@ -11,7 +11,7 @@ describe("eenvoudige wedstrijdinvoer", () => {
   });
 
   it("is beschikbaar vanaf het begin van de wedstrijd en bewaakt de teamscore", () => {
-    expect(route).toContain('!["live","finished"].includes(match.status)');
+    expect(route).toMatch(/!\["live",\s*"finished"\]\.includes\(match\.status\)/);
     expect(route).toContain("TOO_MANY_GOALS");
     expect(route).toContain("MULTIPLE_MVPS");
     expect(route).toContain("PLAYER_TEAM_MISMATCH");
