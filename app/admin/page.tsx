@@ -63,8 +63,8 @@ export default async function Admin() {
                         name: u.name,
                         username: u.username,
                         platformRole: u.platformRole,
+                        isLastAdmin: u.platformRole === "admin" && adminCount === 1,
                     }))}
-                    isLastAdmin={(userId: string) => users.find((u) => u.id === userId)?.platformRole === "admin" && adminCount === 1}
                 />
             </section>
             <AccountBindingPanel

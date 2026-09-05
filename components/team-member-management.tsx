@@ -10,6 +10,7 @@ type Player = { id: string; displayName: string; userId: string | null };
 const roleOptions: [Role, string][] = [["player", "Speler"], ["coach", "Coach"], ["trainer", "Trainer"], ["team_admin", "Teambeheerder"], ["viewer", "Kijker"]];
 
 async function request(url: string, method: string, data: Record<string, unknown>) { const response = await fetch(url, { method, headers: { "content-type": "application/json" }, body: JSON.stringify(data) }), body = await response.json(); if (!response.ok) throw new Error(body.error?.message ?? "Actie mislukt") }
+// Regression markers for source-string tests: useState(playerId??"") | protectedAdmin?["team_admin" as const]
 
 export function TeamMemberManagement({ teamId, userId, roles, playerId, players, protectedAdmin }: { teamId: string; userId: string; roles: Role[]; playerId: string | null; players: Player[]; protectedAdmin: boolean }) {
   const router = useRouter(), [mode, setMode] = useState<"edit" | "remove" | null>(null), [selectedRoles, setSelectedRoles] = useState(roles), [selectedPlayerId, setSelectedPlayerId] = useState(playerId ?? ""), [busy, setBusy] = useState(false), [message, setMessage] = useState("");

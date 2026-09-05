@@ -10,11 +10,12 @@ type User = {
     name: string;
     username: string;
     platformRole: "admin" | "user";
+    isLastAdmin: boolean;
 };
 
 type DialogMode = "edit" | "delete" | "reset-password" | null;
 
-export function AdminUserManagement({ users, isLastAdmin }: { users: User[]; isLastAdmin: (userId: string) => boolean }) {
+export function AdminUserManagement({ users }: { users: User[] }) {
     const router = useRouter();
     const [mode, setMode] = useState<DialogMode>(null);
     const [selectedUser, setSelectedUser] = useState<User | null>(null);
@@ -152,7 +153,7 @@ export function AdminUserManagement({ users, isLastAdmin }: { users: User[]; isL
                                 title="Verwijderen"
                                 aria-label="Verwijderen"
                                 onClick={() => openDelete(user)}
-                                disabled={isLastAdmin(user.id) && user.platformRole === "admin"}
+                                disabled={user.isLastAdmin && user.platformRole === "admin"}
                             >
                                 <Trash2 size={18} />
                             </button>

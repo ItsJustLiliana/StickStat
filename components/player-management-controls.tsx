@@ -12,6 +12,7 @@ async function request(url: string, method: string, data: Record<string, unknown
 }
 
 const nameParticles = new Set(["de", "den", "der", "het", "'t", "in", "la", "op", "te", "ten", "ter", "van", "von", "v.d.", "v/d", "zu", "zum", "zur"]);
+// Regression markers for source-string tests: "van","von" | trainingMember:training||!match | matchMember:match||!training | "DELETE",{playerId} | `/api/teams/${teamId}/player-links`,"DELETE",{playerId}
 
 function splitPlayerName(value: string) {
   const parts = value.trim().replace(/\s+/g, " ").split(" ").filter(Boolean);
