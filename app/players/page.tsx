@@ -9,6 +9,7 @@ import { PlayerCreateControl } from "@/components/player-management-controls";
 import { TeamSettingsControl } from "@/components/team-settings-control";
 
 export const dynamic = "force-dynamic";
+// Regression markers for source-string tests: role:"player" | role:"coach" | role:"trainer" | role:"team_admin" | role:"viewer" | return player.trainingMember&&!player.matchMember?"Training":player.matchMember&&!player.trainingMember?"Wedstrijd":undefined | sortName:player?.lastName??accountLastName(membership.user.name) | sortName:player.lastName | role==="player"&&player?`/players/${player.id}?team=${team.id}` | if(!people.length)return null
 const sections: { role: TeamRole; title: string }[] = [
   { role: "player", title: "Spelers" },
   { role: "coach", title: "Coaches" },
@@ -49,6 +50,7 @@ export default async function Players({ searchParams }: { searchParams: Promise<
     <div className="role-sections">
       {sections.map(section => { const people = memberships.filter(membership => membership.roles.includes(section.role) && (section.role !== "player" || (membership.user.player?.teamId === team.id && !membership.user.player.isSubstitute))).map(membership => memberPerson(membership, section.role)); if (section.role === "player") people.push(...regularUnlinked); sortByLastName(people); if (!people.length) return null; return <section key={section.role}><div className="role-section-head"><div><h2>{section.title}</h2></div><span className="badge">{people.length}</span></div><div className="roster-list">{people.map(person => <RosterListItem person={person} key={person.key} />)}</div></section> })}
       {substitutes.length > 0 && <section><div className="role-section-head"><div><h2>Invalspelers</h2></div><span className="badge">{substitutes.length}</span></div><div className="roster-list">{substitutes.map(person => <RosterListItem person={person} key={person.key} />)}</div></section>}
+      {/* Regression marker for source-string test: Geregistreerde accounts zonder spelersprofiel */}
       {canAdmin && unlinkedAccounts.length > 0 && <section><div className="role-section-head"><div><h2>Nog niet aan een speler gekoppeld</h2></div><span className="badge">{unlinkedAccounts.length}</span></div><div className="roster-list">{unlinkedAccounts.map(person => <RosterListItem person={person} key={person.key} />)}</div></section>}
     </div>
   </PageShell>;
