@@ -1987,25 +1987,6 @@ html[data-theme="dark"] body {
         font-size: 18px
     }
 
-    .agenda-entry {
-        position: relative;
-        flex-wrap: wrap;
-    }
-
-    .agenda-entry .agenda-row {
-        flex: 1 0 100%;
-    }
-
-    .agenda-entry .agenda-row>span>small:last-child {
-        padding-right: 126px;
-    }
-
-    .agenda-entry>.attendance-control {
-        position: absolute;
-        right: 18px;
-        bottom: 14px;
-        padding: 0;
-    }
 }
 
 .substitute-toggle {
@@ -3033,17 +3014,23 @@ html[data-theme="dark"] .time-popover button.selected {
     }
 
     .agenda-entry {
+        position: relative;
+        display: flex;
         gap: 6px;
         flex-wrap: wrap;
     }
 
     .agenda-entry .agenda-row {
+        flex: 1 0 100%;
         padding-right: 0;
     }
 
     .agenda-entry>.attendance-control {
-        padding: 0 12px 12px;
-        margin-left: auto;
+        position: absolute;
+        right: 18px;
+        bottom: -14px;
+        margin: 0;
+        padding: 0;
     }
 
     .lineup-card .card-head {
