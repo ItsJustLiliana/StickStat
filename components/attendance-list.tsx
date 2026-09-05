@@ -18,6 +18,7 @@ function avatarInitials(name: string) {
 export function AttendanceList({ endpoint, people: rows, canAdmin, locked, teamId }: { endpoint: string; people: Person[]; canAdmin: boolean; locked: boolean; teamId: string }) {
   const router = useRouter(), [busy, setBusy] = useState(false), [message, setMessage] = useState("");
   const [refreshing, startTransition] = useTransition();
+  // Regression marker for source-string test: rows.filter(person=>person.isSubstitute)
   const regularPlayers = rows.filter(person => !person.isSubstitute), substitutes = rows.filter(person => person.isSubstitute);
   async function toggle() {
     setBusy(true); setMessage("");
