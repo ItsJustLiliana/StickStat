@@ -10,8 +10,8 @@ describe("eenvoudige wedstrijdinvoer",()=>{
     for(const omitted of ["Assists","Minuten","Saves","Tijdlijn"])expect(form).not.toContain(omitted);
   });
 
-  it("is alleen bedoeld voor gespeelde wedstrijden en bewaakt de teamscore",()=>{
-    expect(route).toContain('match.status!=="finished"');
+  it("is beschikbaar vanaf het begin van de wedstrijd en bewaakt de teamscore",()=>{
+    expect(route).toContain('!["live","finished"].includes(match.status)');
     expect(route).toContain("TOO_MANY_GOALS");
     expect(route).toContain("MULTIPLE_MVPS");
     expect(route).toContain("PLAYER_TEAM_MISMATCH");

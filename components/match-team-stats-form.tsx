@@ -126,11 +126,7 @@ export function MatchTeamStatsForm({ matchId, teamId, teamScore, initialRows, ca
                 ) : (
                     <div className="empty stats-empty-state">
                         <p>Nog geen spelersstatistieken ingevoerd.</p>
-                        <small className="muted">
-                            {canEdit
-                                ? "Markeer eerst spelers in Aanwezigheid en vul daarna prestaties in."
-                                : "Bewerken verschijnt met teambeheerrechten en zodra de wedstrijd op eindstand staat."}
-                        </small>
+                        {canEdit && <small className="muted">Markeer eerst spelers in Aanwezigheid en vul daarna prestaties in.</small>}
                     </div>
                 )}
 

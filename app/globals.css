@@ -2532,18 +2532,23 @@ html[data-theme="dark"] .input {
 }
 
 .match-event-header .training-heading {
-    align-items: flex-start;
+    display: block;
+}
+
+.match-event-header .training-heading>div {
+    width: 100%;
 }
 
 .match-event-header .match-scoreboard {
-    justify-content: flex-start;
+    justify-content: center;
     gap: 18px;
     margin-top: 6px;
 }
 
 .match-event-header .match-score-team {
-    justify-items: start;
+    justify-items: center;
     gap: 6px;
+    text-align: center;
 }
 
 .match-event-header .match-score {

@@ -21,7 +21,7 @@ export default async function MatchDetail({ params, searchParams }: { params: Pr
   const accessibleTeamIds = new Set(teams.map(item => item.id)), matchTeamIds = [match.homeTeamId, match.awayTeamId];
   if (!matchTeamIds.some(teamId => accessibleTeamIds.has(teamId))) notFound();
   const ownTeam = team && matchTeamIds.includes(team.id) ? team : teams.find(item => matchTeamIds.includes(item.id)) ?? null, ownScore = ownTeam ? (match.homeTeamId === ownTeam.id ? match.homeScore : match.awayScore) : null, membership = ownTeam ? user.teamMemberships.find(item => item.teamId === ownTeam.id) : null;
-  const canManage = Boolean(ownTeam && (user.platformRole === "admin" || (membership && hasAnyTeamRole(membership.roles, teamManagementRoles)))), canEditStats = canManage && match.status === "finished";
+  const canManage = Boolean(ownTeam && (user.platformRole === "admin" || (membership && hasAnyTeamRole(membership.roles, teamManagementRoles)))), canEditStats = canManage && ["live", "finished"].includes(match.status);
   const canAdmin = user.platformRole === "admin" || Boolean(membership?.roles.includes("team_admin")), plan = match.plans.find(item => item.teamId === ownTeam?.id);
   const plannedPlayerIds = Array.isArray(plan?.positions) ? plan.positions.filter((id): id is string => typeof id === "string") : [];
   const roster = ownTeam ? await db.player.findMany({ where: { teamId: ownTeam.id, OR: [{ active: true, matchMember: true }, { id: { in: plannedPlayerIds } }, { matchStats: { some: { matchId: match.id } } }] }, include: { user: { select: { photoPath: true } } }, orderBy: [{ lastName: "asc" }, { namePrefix: "asc" }, { firstName: "asc" }] }) : [], ownStats = ownTeam ? match.playerStats.filter(stat => stat.player.teamId === ownTeam.id) : [];
@@ -29,7 +29,7 @@ export default async function MatchDetail({ params, searchParams }: { params: Pr
   const initialRows = roster.map(player => { const stat = ownStats.find(item => item.playerId === player.id); return { playerId: player.id, name: player.displayName, participation: stat ? (stat.started ? "starter" as const : "substitute" as const) : "absent" as const, goals: stat?.goals ?? 0, saves: stat?.saves ?? 0, greenCards: cards(player.id, "green_card"), yellowCards: cards(player.id, "yellow_card"), redCards: cards(player.id, "red_card"), mvp: stat?.mvp ?? false, notes: stat?.notes ?? "" } });
   return <PageShell user={user}>
     <section className="training-header match-event-header">
-      <div className="training-heading"><span className="training-header-icon"><Trophy size={28} /></span><div><span className="eyebrow">{ownTeam?.name ?? "Wedstrijd"}</span><div className="match-scoreboard">
+      <div className="training-heading"><div><span className="eyebrow">Wedstrijd</span><div className="match-scoreboard">
         <div className="match-score-team"><ClubLogo name={match.homeTeam.club.name} path={match.homeTeam.club.logoLocalPath ?? match.homeTeam.club.logoUrl} /><MatchTeamLabel name={match.homeTeam.shortName} own={match.homeTeamId === ownTeam?.id} side="home" /></div>
         <div className="rank-number mono match-score">{match.homeScore ?? "–"} <span className="match-score-divider">–</span> {match.awayScore ?? "–"}</div>
         <div className="match-score-team"><ClubLogo name={match.awayTeam.club.name} path={match.awayTeam.club.logoLocalPath ?? match.awayTeam.club.logoUrl} /><MatchTeamLabel name={match.awayTeam.shortName} own={match.awayTeamId === ownTeam?.id} side="away" /></div>

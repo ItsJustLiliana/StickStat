@@ -11,7 +11,7 @@ export async function PUT(request:Request,{params}:{params:Promise<{matchId:stri
   try{
     const {matchId}=await params,input=schema.parse(await request.json()),match=await db.match.findUnique({where:{id:matchId}});
     if(!match)throw new HttpError(404,"NOT_FOUND","Wedstrijd niet gevonden");
-    if(match.status!=="finished")throw new HttpError(409,"MATCH_NOT_FINISHED","Statistieken kunnen pas na de wedstrijd worden ingevuld");
+    if(!["live","finished"].includes(match.status))throw new HttpError(409,"MATCH_NOT_STARTED","Statistieken kunnen pas worden ingevuld zodra de wedstrijd is begonnen");
     if(![match.homeTeamId,match.awayTeamId].includes(input.teamId))throw new HttpError(400,"TEAM_NOT_IN_MATCH","Dit team speelt niet in deze wedstrijd");
     await authorizeTeamManagement(input.teamId);
     const uniquePlayerIds=new Set(input.rows.map(item=>item.playerId));
