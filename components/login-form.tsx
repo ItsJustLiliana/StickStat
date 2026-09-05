@@ -1,11 +1,11 @@
 "use client";
 import Link from "next/link";
-import {useState} from "react";
-import {useRouter} from "next/navigation";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
-export function LoginForm({returnTo="/dashboard"}:{returnTo?:string}){
-  const [error,setError]=useState(""),[loading,setLoading]=useState(false),router=useRouter();
-  async function submit(event:React.FormEvent<HTMLFormElement>){event.preventDefault();setLoading(true);setError("");const form=new FormData(event.currentTarget),response=await fetch("/api/auth/login",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({username:form.get("username"),password:form.get("password")})}),body=await response.json();setLoading(false);if(!response.ok)return setError(body.error?.message??"Inloggen mislukt");router.replace(returnTo);router.refresh()}
-  const registrationPath=returnTo.startsWith("/join/")?returnTo:"/register";
-  return <form className="login-form" onSubmit={submit}><span className="eyebrow">Welkom terug</span><h2 style={{fontSize:36,margin:"9px 0 5px"}}>Log in bij StickStat</h2><p className="muted">Bekijk de wedstrijd, ken de cijfers.</p><label htmlFor="username">Gebruikersnaam</label><input className="input" id="username" name="username" autoComplete="username" required minLength={3}/><label htmlFor="password">Wachtwoord</label><input className="input" id="password" name="password" type="password" autoComplete="current-password" minLength={8} required/>{error&&<div className="error" role="alert">{error}</div>}<button className="button" disabled={loading}>{loading?"Bezig…":"Inloggen"}</button><p className="muted" style={{textAlign:"center",marginTop:18}}>Nog geen account? <Link className="link" href={registrationPath}>Registreer je</Link></p></form>;
+export function LoginForm({ returnTo = "/dashboard" }: { returnTo?: string }) {
+  const [error, setError] = useState(""), [loading, setLoading] = useState(false), router = useRouter();
+  async function submit(event: React.FormEvent<HTMLFormElement>) { event.preventDefault(); setLoading(true); setError(""); const form = new FormData(event.currentTarget), response = await fetch("/api/auth/login", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ username: form.get("username"), password: form.get("password") }) }), body = await response.json(); setLoading(false); if (!response.ok) return setError(body.error?.message ?? "Inloggen mislukt"); router.replace(returnTo) }
+  const registrationPath = returnTo.startsWith("/join/") ? returnTo : "/register";
+  return <form className="login-form" onSubmit={submit}><span className="eyebrow">Welkom terug</span><h2 style={{ fontSize: 36, margin: "9px 0 5px" }}>Log in bij StickStat</h2><p className="muted">Bekijk de wedstrijd, ken de cijfers.</p><label htmlFor="username">Gebruikersnaam</label><input className="input" id="username" name="username" autoComplete="username" required minLength={3} /><label htmlFor="password">Wachtwoord</label><input className="input" id="password" name="password" type="password" autoComplete="current-password" minLength={8} required />{error && <div className="error" role="alert">{error}</div>}<button className="button" disabled={loading}>{loading ? "Bezig…" : "Inloggen"}</button><p className="muted" style={{ textAlign: "center", marginTop: 18 }}>Nog geen account? <Link className="link" href={registrationPath}>Registreer je</Link></p></form>;
 }
