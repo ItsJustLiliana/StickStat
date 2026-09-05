@@ -1,4 +1,3 @@
-import Link from "next/link";
 import {CalendarDays, Clock3, MapPin} from "lucide-react";
 import {notFound} from "next/navigation";
 import {AttendanceList} from "@/components/attendance-list";
@@ -17,7 +16,6 @@ export default async function TrainingDetail({params,searchParams}:{params:Promi
   const players=await db.player.findMany({where:{teamId:training.teamId,active:true,trainingMember:true},include:{user:{select:{photoPath:true}}},orderBy:[{lastName:"asc"},{namePrefix:"asc"},{firstName:"asc"}]}),status=new Map(training.attendance.map(item=>[item.playerId,item.status]));
   const people=players.map(player=>({playerId:player.id,name:player.displayName,photoPath:player.user?.photoPath??player.photoPath,status:status.get(player.id)??"unknown" as const,editable:canManage||player.userId===user.id,isSubstitute:player.isSubstitute}));
   return <PageShell user={user}>
-    <Link className="back-to-agenda" href={`/agenda?team=${training.teamId}`}>Terug naar agenda</Link>
     <section className="training-header">
       <div className="training-heading"><span className="training-header-icon"><CalendarDays size={28}/></span><div><span className="eyebrow">{training.team.name}</span><h1>{training.title}</h1></div></div>
       <div className="training-facts"><span><CalendarDays size={17}/>{training.date.toLocaleDateString("nl-NL",{timeZone:"Europe/Amsterdam",weekday:"long",day:"numeric",month:"long",year:"numeric"})}</span><span><Clock3 size={17}/>{training.startTime??"Tijd onbekend"}{training.endTime&&` \u2013 ${training.endTime}`}</span><span><MapPin size={17}/>{training.venue??"Locatie onbekend"}</span></div>

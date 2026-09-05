@@ -9,12 +9,12 @@ import {PlayerCreateControl} from "@/components/player-management-controls";
 import {TeamSettingsControl} from "@/components/team-settings-control";
 
 export const dynamic="force-dynamic";
-const sections:{role:TeamRole;title:string;description:string}[]=[
-  {role:"player",title:"Spelers",description:"Vaste selectie en prestaties"},
-  {role:"coach",title:"Coaches",description:"Begeleiding en wedstrijdorganisatie"},
-  {role:"trainer",title:"Trainers",description:"Training en sportieve ontwikkeling"},
-  {role:"team_admin",title:"Teambeheerders",description:"Beheer van team, leden en rollen"},
-  {role:"viewer",title:"Kijkers",description:"Teamleden met alleen leestoegang"},
+const sections:{role:TeamRole;title:string}[]=[
+  {role:"player",title:"Spelers"},
+  {role:"coach",title:"Coaches"},
+  {role:"trainer",title:"Trainers"},
+  {role:"team_admin",title:"Teambeheerders"},
+  {role:"viewer",title:"Kijkers"},
 ];
 const nameCollator=new Intl.Collator("nl",{sensitivity:"base"});
 function accountLastName(name:string){return name.trim().split(/\s+/).at(-1)??name}
@@ -47,9 +47,9 @@ export default async function Players({searchParams}:{searchParams:Promise<{team
   return <PageShell user={user}>
     <div className="page-head"><div><span className="eyebrow">Selectie & staf</span><h1>Teamleden</h1></div><div className="member-actions"><TeamSelector teams={teams} current={team.id}/>{canAdmin&&<><PlayerCreateControl teamId={team.id}/><TeamSettingsControl teamId={team.id} club={{id:team.club.id,name:team.club.name,logoPath:team.club.logoLocalPath??team.club.logoUrl}} invites={invites.map(invite=>({id:invite.id,expiresAt:invite.expiresAt.toISOString(),createdBy:invite.createdBy.name}))}/></>}</div></div>
     <div className="role-sections">
-      {sections.map(section=>{const people=memberships.filter(membership=>membership.roles.includes(section.role)&&(section.role!=="player"||(membership.user.player?.teamId===team.id&&!membership.user.player.isSubstitute))).map(membership=>memberPerson(membership,section.role));if(section.role==="player")people.push(...regularUnlinked);sortByLastName(people);if(!people.length)return null;return <section key={section.role}><div className="role-section-head"><div><span className="eyebrow">{section.description}</span><h2>{section.title}</h2></div><span className="badge">{people.length}</span></div><div className="roster-list">{people.map(person=><RosterListItem person={person} key={person.key}/>)}</div></section>})}
-      {substitutes.length>0&&<section><div className="role-section-head"><div><span className="eyebrow">Spelers die af en toe aansluiten</span><h2>Invalspelers</h2></div><span className="badge">{substitutes.length}</span></div><div className="roster-list">{substitutes.map(person=><RosterListItem person={person} key={person.key}/>)}</div></section>}
-      {canAdmin&&unlinkedAccounts.length>0&&<section><div className="role-section-head"><div><span className="eyebrow">Geregistreerde accounts zonder spelersprofiel</span><h2>Nog niet aan een speler gekoppeld</h2></div><span className="badge">{unlinkedAccounts.length}</span></div><div className="roster-list">{unlinkedAccounts.map(person=><RosterListItem person={person} key={person.key}/>)}</div></section>}
+      {sections.map(section=>{const people=memberships.filter(membership=>membership.roles.includes(section.role)&&(section.role!=="player"||(membership.user.player?.teamId===team.id&&!membership.user.player.isSubstitute))).map(membership=>memberPerson(membership,section.role));if(section.role==="player")people.push(...regularUnlinked);sortByLastName(people);if(!people.length)return null;return <section key={section.role}><div className="role-section-head"><div><h2>{section.title}</h2></div><span className="badge">{people.length}</span></div><div className="roster-list">{people.map(person=><RosterListItem person={person} key={person.key}/>)}</div></section>})}
+      {substitutes.length>0&&<section><div className="role-section-head"><div><h2>Invalspelers</h2></div><span className="badge">{substitutes.length}</span></div><div className="roster-list">{substitutes.map(person=><RosterListItem person={person} key={person.key}/>)}</div></section>}
+      {canAdmin&&unlinkedAccounts.length>0&&<section><div className="role-section-head"><div><h2>Nog niet aan een speler gekoppeld</h2></div><span className="badge">{unlinkedAccounts.length}</span></div><div className="roster-list">{unlinkedAccounts.map(person=><RosterListItem person={person} key={person.key}/>)}</div></section>}
     </div>
   </PageShell>;
 }

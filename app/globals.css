@@ -1951,6 +1951,21 @@ html[data-theme="dark"] body {
         padding: 0;
         font-size: 18px
     }
+
+    .agenda-entry {
+        flex-wrap: wrap;
+    }
+
+    .agenda-entry .agenda-row {
+        flex: 1 0 100%;
+    }
+
+    .agenda-entry>.attendance-control {
+        display: flex;
+        width: 100%;
+        justify-content: flex-end;
+        padding: 0 0 12px;
+    }
 }
 
 .substitute-toggle {
@@ -2107,6 +2122,19 @@ html[data-theme="dark"] body {
 
 .match-tab-panel {
     min-width: 0;
+}
+
+html[data-theme="dark"] .agenda-tabs a,
+html[data-theme="dark"] .match-tabs button {
+    color: #b8cbc2;
+}
+
+html[data-theme="dark"] .agenda-tabs a.active,
+html[data-theme="dark"] .match-tabs button.active,
+html[data-theme="dark"] .match-tabs button[aria-selected="true"] {
+    background: var(--green);
+    color: #092f25;
+    box-shadow: 0 4px 12px #0000002e;
 }
 
 .agenda-week-separator {
@@ -2474,7 +2502,8 @@ html[data-theme="dark"] .input {
     padding: 28px;
     border: 1px solid var(--line);
     border-radius: 20px;
-    background: linear-gradient(120deg, var(--card), color-mix(in srgb, var(--card) 88%, #a3ca60));
+    background: var(--card);
+    box-shadow: 0 9px 26px #13382a0b;
 }
 
 .training-heading {
@@ -2493,8 +2522,33 @@ html[data-theme="dark"] .input {
     flex: 0 0 56px;
     height: 56px;
     border-radius: 16px;
-    background: #ddecbb;
-    color: #425d20;
+    background: color-mix(in srgb, var(--green) 14%, var(--card));
+    color: var(--green);
+}
+
+.match-event-header .training-heading {
+    align-items: flex-start;
+}
+
+.match-event-header .match-scoreboard {
+    justify-content: flex-start;
+    gap: 18px;
+    margin-top: 6px;
+}
+
+.match-event-header .match-score-team {
+    justify-items: start;
+    gap: 6px;
+}
+
+.match-event-header .match-score {
+    color: var(--green);
+    font-size: 38px;
+    white-space: nowrap;
+}
+
+.match-event-header .match-score-divider {
+    color: var(--muted);
 }
 
 .training-facts {

@@ -22,7 +22,7 @@ export function MatchLineup({ matchId, teamId, canEdit, players, initialFormatio
   const router = useRouter();
   const [formation, setFormation] = useState<Formation>(Object.hasOwn(formations, initialFormation) ? initialFormation as Formation : "4-3-3");
   const [positions, setPositions] = useState<(string | null)[]>(Array.from({ length: 11 }, (_, i) => Array.isArray(initialPositions) && typeof initialPositions[i] === "string" ? initialPositions[i] : null));
-  const [selected, setSelected] = useState<number | null>(null), [busy, setBusy] = useState(false), [message, setMessage] = useState(""), [dirty, setDirty] = useState(false);
+  const [selected, setSelected] = useState<number | null>(null), [busy, setBusy] = useState(false), [message, setMessage] = useState("");
   const spots = fieldPositions(formation);
 
   useEffect(() => {
@@ -39,35 +39,31 @@ export function MatchLineup({ matchId, teamId, canEdit, players, initialFormatio
     };
   }, [selected]);
 
-  useEffect(() => {
-    if (!canEdit || !dirty || busy) return;
-    void save();
-  }, [canEdit, dirty, busy, formation, positions]);
-
   function statusLabel(player: Player) {
     if (player.status === "present") return "Aanwezig";
     if (player.status === "absent") return "Afwezig";
     return "";
   }
 
-  async function save() {
+  async function save(nextFormation: Formation, nextPositions: (string | null)[]) {
     setBusy(true); setMessage("");
     try {
-      const response = await fetch(`/api/matches/${matchId}/lineup`, { method: "PUT", headers: { "content-type": "application/json" }, body: JSON.stringify({ teamId, formation, positions }) });
+      const response = await fetch(`/api/matches/${matchId}/lineup`, { method: "PUT", headers: { "content-type": "application/json" }, body: JSON.stringify({ teamId, formation: nextFormation, positions: nextPositions }) });
       const body = await response.json();
       if (!response.ok) throw new Error(body.error?.message ?? "Opslaan mislukt");
-      setDirty(false); setMessage("Opstelling opgeslagen."); router.refresh();
+      setMessage("Opstelling opgeslagen."); router.refresh();
     } catch (error) { setMessage(error instanceof Error ? error.message : "Opslaan mislukt"); }
     finally { setBusy(false); }
   }
+
   function assign(playerId: string | null) {
     if (selected === null) return;
-    setPositions(current => current.map((id, index) => index === selected ? playerId : id === playerId ? null : id));
-    setDirty(true); setMessage(""); setSelected(null);
+    const nextPositions = positions.map((id, index) => index === selected ? playerId : id === playerId ? null : id);
+    setPositions(nextPositions); setMessage(""); setSelected(null); void save(formation, nextPositions);
   }
 
   return <section className="card lineup-card">
-    <div className="card-head"><h2>Opstelling</h2>{canEdit ? <label className="formation-picker"><span className="sr-only">Formatie</span><select value={formation} disabled={busy} onChange={event => { setFormation(event.target.value as Formation); setDirty(true); setMessage(""); setSelected(null); }}>{Object.keys(formations).map(value => <option key={value} value={value}>{value}</option>)}</select></label> : <span className="badge">{formation}</span>}</div>
+    <div className="card-head"><h2>Opstelling</h2>{canEdit ? <label className="formation-picker"><span className="sr-only">Formatie</span><select value={formation} disabled={busy} onChange={event => { const nextFormation = event.target.value as Formation; setFormation(nextFormation); setMessage(""); setSelected(null); void save(nextFormation, positions); }}>{Object.keys(formations).map(value => <option key={value} value={value}>{value}</option>)}</select></label> : <span className="badge">{formation}</span>}</div>
     <div className="lineup-layout read-only">
       <div className="hockey-field" aria-label="Hockeyveld met opstelling">
         <svg className="pitch-markings" viewBox="0 0 550 914" preserveAspectRatio="none" aria-hidden="true"><rect x="8" y="8" width="534" height="898" /><path d="M8 457H542 M8 230H542 M8 684H542 M129 8V18 A146 146 0 0 0 421 18V8 M129 906V896 A146 146 0 0 1 421 896V906" /><path d="M244 8V2H306V8 M244 906V912H306V906" /><circle cx="275" cy="457" r="3" /></svg>
