@@ -2671,8 +2671,8 @@ html[data-theme="dark"] .input {
     cursor: pointer;
 }
 
-.lineup-player img {
-    border-radius: 50%;
+.lineup-player .player-photo.image {
+    border-radius: 16px;
     object-fit: cover;
 }
 

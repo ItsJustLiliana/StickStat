@@ -6,6 +6,16 @@ import { useRouter } from "next/navigation";
 import { fieldPositions, formations, type Formation } from "@/lib/lineup";
 
 type Player = { id: string; firstName: string; name: string; photoPath: string | null; status: string; eligible: boolean };
+
+function avatarInitials(name: string) {
+  return name
+    .split(/\s+/)
+    .map(part => part[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
+}
+
 export function MatchLineup({ matchId, teamId, canEdit, players, initialFormation, initialPositions }: {
   matchId: string; teamId: string; canEdit: boolean; players: Player[]; initialFormation: string; initialPositions: unknown;
 }) {
@@ -66,7 +76,7 @@ export function MatchLineup({ matchId, teamId, canEdit, players, initialFormatio
     {canEdit && <div className="lineup-actions"><button type="button" className="button" disabled={busy || !dirty} onClick={() => void save()}>{busy ? "Opslaan…" : "Opstelling opslaan"}</button>{dirty && <small className="muted">Niet-opgeslagen wijzigingen</small>}{message && <p role="status">{message}</p>}</div>}
     {canEdit && selected !== null && <div className="lineup-dialog-backdrop" role="presentation" onMouseDown={event => { if (event.target === event.currentTarget) setSelected(null); }}><section className="card lineup-dialog" role="dialog" aria-modal="true" aria-labelledby="lineup-dialog-title"><div className="card-head"><h3 id="lineup-dialog-title">{spots[selected].label}</h3><button className="icon-button" type="button" aria-label="Sluiten" onClick={() => setSelected(null)}>×</button></div><button className="button secondary" type="button" disabled={busy} onClick={() => assign(null)}>Positie leegmaken</button><div className="lineup-player-list">{players.filter(player => player.eligible).map(player => {
       const label = positions.includes(player.id) ? "Verplaatsen" : statusLabel(player); return <button className="lineup-player" key={player.id} type="button" disabled={busy} onClick={() => assign(player.id)}>
-        {player.photoPath ? <Image unoptimized src={player.photoPath} width={32} height={32} alt="" /> : <span className="attendance-avatar">{player.firstName[0]}</span>}<span>{player.name}{label && <small>{label}</small>}</span>
+        {player.photoPath ? <Image unoptimized src={player.photoPath} width={52} height={52} className="player-photo image" alt={`Profielfoto van ${player.name}`} /> : <span className="player-photo">{avatarInitials(player.name)}</span>}<span>{player.name}{label && <small>{label}</small>}</span>
       </button>;
     })}</div></section></div>}
   </section>;
