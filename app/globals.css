@@ -1535,6 +1535,22 @@ html[data-theme="dark"] body {
     margin-top: 18px
 }
 
+.stats-empty-state {
+    display: grid;
+    gap: 6px;
+    justify-items: start;
+    text-align: left;
+}
+
+.stats-empty-state p {
+    margin: 0;
+}
+
+.stats-empty-state small {
+    font-size: 12px;
+    line-height: 1.4;
+}
+
 .attendance-list {
     display: grid;
     gap: 8px
@@ -1826,6 +1842,21 @@ html[data-theme="dark"] body {
     .match-entry-list article {
         grid-template-columns: 1fr 1fr
     }
+
+    .match-stats-view table th,
+    .match-stats-view table td {
+        font-size: 12px;
+        padding: 8px 7px;
+    }
+
+    .match-stats-view .card-head {
+        gap: 8px;
+    }
+
+    .match-stats-view .member-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
 }
 
 @media(max-width:900px) {
@@ -1950,7 +1981,7 @@ html[data-theme="dark"] body {
 
 .substitute-attendance {
     margin-top: 14px;
-    border-top: 2px solid var(--line)
+    border-top: 0
 }
 
 .substitute-attendance summary {
@@ -2029,6 +2060,53 @@ html[data-theme="dark"] body {
     color: var(--lime);
     box-shadow: 0 4px 12px color-mix(in srgb, var(--green) 20%, #000000);
     font-weight: 900
+}
+
+.match-tabs-wrap {
+    display: grid;
+    gap: 14px;
+    margin-top: 14px;
+}
+
+.match-tabs {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px;
+    border: 1.5px solid var(--line);
+    border-radius: 14px;
+    background: var(--card);
+    box-shadow: 0 2px 8px #0000080a;
+    width: max-content;
+    max-width: 100%;
+}
+
+.match-tabs button {
+    border: 0;
+    background: transparent;
+    color: var(--muted);
+    border-radius: 10px;
+    padding: 11px 15px;
+    font-size: 14px;
+    font-weight: 850;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.match-tabs button:hover {
+    background: color-mix(in srgb, var(--lime) 8%, var(--card));
+}
+
+.match-tabs button.active,
+.match-tabs button[aria-selected="true"] {
+    background: var(--green);
+    color: var(--lime);
+    box-shadow: 0 4px 12px color-mix(in srgb, var(--green) 20%, #000000);
+    font-weight: 900;
+}
+
+.match-tab-panel {
+    min-width: 0;
 }
 
 .agenda-week-separator {
@@ -2254,6 +2332,19 @@ html[data-theme="dark"] .input {
     .agenda-tabs a {
         flex: 1;
         text-align: center
+    }
+
+    .match-tabs {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 6px;
+    }
+
+    .match-tabs button {
+        padding: 10px 9px;
+        font-size: 13px;
+        text-align: center;
     }
 
     .agenda-week-separator {

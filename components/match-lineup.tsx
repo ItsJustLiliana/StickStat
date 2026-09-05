@@ -39,6 +39,11 @@ export function MatchLineup({ matchId, teamId, canEdit, players, initialFormatio
     };
   }, [selected]);
 
+  useEffect(() => {
+    if (!canEdit || !dirty || busy) return;
+    void save();
+  }, [canEdit, dirty, busy, formation, positions]);
+
   function statusLabel(player: Player) {
     if (player.status === "present") return "Aanwezig";
     if (player.status === "absent") return "Afwezig";
@@ -73,7 +78,7 @@ export function MatchLineup({ matchId, teamId, canEdit, players, initialFormatio
         })}
       </div>
     </div>
-    {canEdit && <div className="lineup-actions"><button type="button" className="button" disabled={busy || !dirty} onClick={() => void save()}>{busy ? "Opslaan…" : "Opstelling opslaan"}</button>{dirty && <small className="muted">Niet-opgeslagen wijzigingen</small>}{message && <p role="status">{message}</p>}</div>}
+    {canEdit && <div className="lineup-actions">{busy && <small className="muted">Opstelling wordt opgeslagen…</small>}{message && <p role="status">{message}</p>}</div>}
     {canEdit && selected !== null && <div className="lineup-dialog-backdrop" role="presentation" onMouseDown={event => { if (event.target === event.currentTarget) setSelected(null); }}><section className="card lineup-dialog" role="dialog" aria-modal="true" aria-labelledby="lineup-dialog-title"><div className="card-head"><h3 id="lineup-dialog-title">{spots[selected].label}</h3><button className="icon-button" type="button" aria-label="Sluiten" onClick={() => setSelected(null)}>×</button></div><button className="button secondary" type="button" disabled={busy} onClick={() => assign(null)}>Positie leegmaken</button><div className="lineup-player-list">{players.filter(player => player.eligible).map(player => {
       const label = positions.includes(player.id) ? "Verplaatsen" : statusLabel(player); return <button className="lineup-player" key={player.id} type="button" disabled={busy} onClick={() => assign(player.id)}>
         {player.photoPath ? <Image unoptimized src={player.photoPath} width={52} height={52} className="player-photo image" alt={`Profielfoto van ${player.name}`} /> : <span className="player-photo">{avatarInitials(player.name)}</span>}<span>{player.name}{label && <small>{label}</small>}</span>
