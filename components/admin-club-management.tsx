@@ -14,7 +14,6 @@ type Club = {
 
 export function AdminClubManagement({ clubs }: { clubs: Club[] }) {
     const router = useRouter();
-    const [selectedClubId, setSelectedClubId] = useState<string | null>(null);
     const [busy, setBusy] = useState(false);
     const [message, setMessage] = useState("");
 

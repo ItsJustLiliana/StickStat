@@ -1,3 +1,5 @@
+import {AttendanceControls} from "@/components/attendance-controls";
+import {compareAgendaItems} from "@/lib/agenda-order";
 import { Fragment } from "react";
 import Link from "next/link";
 import { EmptyTeam } from "@/components/empty-team";
@@ -50,10 +52,12 @@ export default async function Agenda({ searchParams }: { searchParams: Promise<{
   const membership = user.teamMemberships.find(item => item.teamId === team.id);
   const canManage = user.platformRole === "admin" || Boolean(membership && hasAnyTeamRole(membership.roles, teamManagementRoles));
 
+  const canAdmin = user.platformRole === "admin" || Boolean(membership?.roles.includes("team_admin"));
+  const ownPlayer = await db.player.findFirst({where: {teamId: team.id, userId: user.id, active: true}});
   const [matches, trainings] = await Promise.all([
     db.match.findMany({
       where: { OR: [{ homeTeamId: team.id }, { awayTeamId: team.id }] },
-      include: { homeTeam: true, awayTeam: true, attendance: { where: { player: { teamId: team.id } } } },
+      include: { homeTeam: true, awayTeam: true, plans: {where: {teamId: team.id}}, attendance: { where: { player: { teamId: team.id } } } },
       orderBy: { date: "asc" },
     }),
     db.training.findMany({
@@ -73,6 +77,7 @@ export default async function Agenda({ searchParams }: { searchParams: Promise<{
       venue: match.venue,
       href: `/matches/${match.id}?team=${team.id}`,
       attendance: match.attendance,
+      locked: match.plans[0]?.attendanceLocked ?? false,
       homeTeam: match.homeTeam,
       awayTeam: match.awayTeam,
     })),
@@ -85,6 +90,7 @@ export default async function Agenda({ searchParams }: { searchParams: Promise<{
       venue: training.venue,
       href: `/trainings/${training.id}?team=${team.id}`,
       attendance: training.attendance,
+      locked: training.attendanceLocked,
       homeTeam: null,
       awayTeam: null,
     })),
@@ -94,7 +100,7 @@ export default async function Agenda({ searchParams }: { searchParams: Promise<{
   const showPast = query.view === "past";
   const visibleItems = items
     .filter(item => showPast ? dateKey(item.date) < today : dateKey(item.date) >= today)
-    .sort((a, b) => showPast ? b.date.getTime() - a.date.getTime() : a.date.getTime() - b.date.getTime());
+    .sort((a, b) => showPast ? compareAgendaItems(b, a) : compareAgendaItems(a, b));
 
   return (
     <PageShell user={user}>
@@ -126,7 +132,7 @@ export default async function Agenda({ searchParams }: { searchParams: Promise<{
                     <span>{weekLabel(item.date)}</span>
                   </div>
                 )}
-                <Link className="agenda-row" href={item.href}>
+                <div className="agenda-entry"><Link className="agenda-row" href={item.href}>
                   <time>
                     <strong>
                       {item.date.toLocaleDateString("nl-NL", { day: "2-digit", month: "short" })}
@@ -157,6 +163,8 @@ export default async function Agenda({ searchParams }: { searchParams: Promise<{
                     <small>{item.venue ?? "Locatie onbekend"}</small>
                   </span>
                 </Link>
+                {ownPlayer && (item.type === "match" ? ownPlayer.matchMember : ownPlayer.trainingMember) && <AttendanceControls endpoint={`/api/${item.type === "match" ? "matches" : "trainings"}/${item.id}/attendance`} playerId={ownPlayer.id} name={ownPlayer.displayName} status={item.attendance.find(row => row.playerId === ownPlayer.id)?.status ?? "unknown"} disabled={item.locked && !canAdmin} locked={item.locked && !canAdmin}/>}
+                </div>
               </Fragment>
             );
           })}

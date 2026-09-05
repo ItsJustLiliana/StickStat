@@ -1,25 +1,35 @@
 "use client";
-
-import {useState} from "react";
+import Image from "next/image";
+import {useState, useTransition} from "react";
 import {useRouter} from "next/navigation";
-
-type Status="present"|"unknown"|"absent";
-type Person={playerId:string;name:string;status:Status;editable:boolean;isSubstitute?:boolean};
-const choices:[Status,string,string][]=[["present","✓","Aanwezig"],["unknown","?","Onbekend"],["absent","×","Afwezig"]];
-
-export function AttendanceList({endpoint,people,canManage}:{endpoint:string;people:Person[];canManage:boolean}){
-  const router=useRouter(),[rows,setRows]=useState(people),[busy,setBusy]=useState<string|null>(null),[message,setMessage]=useState("");
+import {LockKeyhole} from "lucide-react";
+import {AttendanceControls, type AttendanceStatus} from "./attendance-controls";
+type Person = {playerId: string; name: string; photoPath: string | null; status: AttendanceStatus; editable: boolean; isSubstitute?: boolean};
+export function AttendanceList({endpoint, people: rows, canAdmin, locked, teamId}: {endpoint: string; people: Person[]; canAdmin: boolean; locked: boolean; teamId: string}) {
+  const router = useRouter(), [busy, setBusy] = useState(false), [message, setMessage] = useState("");
+  const [refreshing, startTransition] = useTransition();
   const regularPlayers=rows.filter(person=>!person.isSubstitute),substitutes=rows.filter(person=>person.isSubstitute);
-
-  async function change(playerId:string,status:Status){setBusy(playerId);setMessage("");const response=await fetch(endpoint,{method:"PUT",headers:{"content-type":"application/json"},body:JSON.stringify({playerId,status})}),body=await response.json();setBusy(null);if(!response.ok){setMessage(body.error?.message??"Opslaan mislukt");return}setRows(current=>current.map(row=>row.playerId===playerId?{...row,status}:row));router.refresh()}
-
-  function playerRows(players:Person[]){return <div className="attendance-list">{players.map(person=><div className="attendance-row" key={person.playerId}><strong>{person.name}</strong><div className="attendance-options">{choices.map(([status,icon,label])=><button key={status} type="button" title={label} aria-label={`${label}: ${person.name}`} disabled={busy===person.playerId||!person.editable} className={`attendance-choice ${status}`} aria-pressed={person.status===status} onClick={()=>void change(person.playerId,status)}>{icon}</button>)}</div></div>)}</div>}
-
+  async function toggle() {
+    setBusy(true); setMessage("");
+    try {
+      const response = await fetch(`${endpoint}-lock`, {method: "PUT", headers: {"content-type": "application/json"}, body: JSON.stringify({locked: !locked, teamId})});
+      const body = await response.json();
+      if (!response.ok) throw new Error(body.error?.message ?? "Opslaan mislukt");
+      startTransition(() => router.refresh());
+    } catch (error) { setMessage(error instanceof Error ? error.message : "Opslaan mislukt"); }
+    finally { setBusy(false); }
+  }
+  function playerRows(players: Person[]) {
+    return <div className="attendance-list">{players.map(person => <div className="attendance-row" key={person.playerId}>
+      <span className="attendance-person">{person.photoPath ? <Image unoptimized src={person.photoPath} width={32} height={32} alt=""/> : <span className="attendance-avatar">{person.name[0]}</span>}<strong title={person.name}>{person.name}</strong></span>
+      <AttendanceControls endpoint={endpoint} playerId={person.playerId} name={person.name} status={person.status} disabled={busy || refreshing || !person.editable || (locked && !canAdmin)} locked={locked && !canAdmin}/>
+    </div>)}</div>;
+  }
   return <section className="card attendance-card">
-    <div className="card-head"><div><h2>Aanwezigheid</h2><p className="muted">Groen is aanwezig, grijs onbekend en rood afwezig.</p></div>{canManage&&<span className="badge accent">TEAMBEHEER</span>}</div>
+    <div className="card-head"><h2>Aanwezigheid</h2>{canAdmin ? <button type="button" role="switch" aria-checked={locked} aria-label="Aanmeldingen vergrendelen" className="attendance-lock" disabled={busy || refreshing} onClick={() => void toggle()}><LockKeyhole size={16}/><span>Vergrendelen</span><span className="switch-track"/></button> : locked && <span className="lock-label"><LockKeyhole size={14}/>Vergrendeld</span>}</div>
     {playerRows(regularPlayers)}
-    {substitutes.length>0&&<details className="substitute-attendance"><summary><span>Invalspelers</span><small>{substitutes.length} optioneel</small></summary>{playerRows(substitutes)}</details>}
-    {!rows.length&&<div className="empty">Geen spelers in deze selectie.</div>}
-    {message&&<p className="error" role="alert">{message}</p>}
+    {substitutes.length > 0 && <details className="substitute-attendance"><summary><span>Invalspelers</span><small>{substitutes.length} optioneel</small></summary>{playerRows(substitutes)}</details>}
+    {!rows.length && <div className="empty">Geen spelers in deze selectie.</div>}
+    {message && <p className="error" role="alert">{message}</p>}
   </section>;
 }

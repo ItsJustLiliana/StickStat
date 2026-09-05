@@ -146,3 +146,8 @@ export type SyncRun = Prisma.SyncRunModel
  * 
  */
 export type TeamInvite = Prisma.TeamInviteModel
+/**
+ * Model MatchTeamPlan
+ * 
+ */
+export type MatchTeamPlan = Prisma.MatchTeamPlanModel

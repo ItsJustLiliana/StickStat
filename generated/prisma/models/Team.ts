@@ -209,6 +209,7 @@ export type TeamWhereInput = {
   club?: Prisma.XOR<Prisma.ClubScalarRelationFilter, Prisma.ClubWhereInput>
   memberships?: Prisma.TeamMembershipListRelationFilter
   seasons?: Prisma.TeamSeasonListRelationFilter
+  matchPlans?: Prisma.MatchTeamPlanListRelationFilter
   homeMatches?: Prisma.MatchListRelationFilter
   awayMatches?: Prisma.MatchListRelationFilter
   standings?: Prisma.StandingListRelationFilter
@@ -231,6 +232,7 @@ export type TeamOrderByWithRelationInput = {
   club?: Prisma.ClubOrderByWithRelationInput
   memberships?: Prisma.TeamMembershipOrderByRelationAggregateInput
   seasons?: Prisma.TeamSeasonOrderByRelationAggregateInput
+  matchPlans?: Prisma.MatchTeamPlanOrderByRelationAggregateInput
   homeMatches?: Prisma.MatchOrderByRelationAggregateInput
   awayMatches?: Prisma.MatchOrderByRelationAggregateInput
   standings?: Prisma.StandingOrderByRelationAggregateInput
@@ -257,6 +259,7 @@ export type TeamWhereUniqueInput = Prisma.AtLeast<{
   club?: Prisma.XOR<Prisma.ClubScalarRelationFilter, Prisma.ClubWhereInput>
   memberships?: Prisma.TeamMembershipListRelationFilter
   seasons?: Prisma.TeamSeasonListRelationFilter
+  matchPlans?: Prisma.MatchTeamPlanListRelationFilter
   homeMatches?: Prisma.MatchListRelationFilter
   awayMatches?: Prisma.MatchListRelationFilter
   standings?: Prisma.StandingListRelationFilter
@@ -306,6 +309,7 @@ export type TeamCreateInput = {
   club: Prisma.ClubCreateNestedOneWithoutTeamsInput
   memberships?: Prisma.TeamMembershipCreateNestedManyWithoutTeamInput
   seasons?: Prisma.TeamSeasonCreateNestedManyWithoutTeamInput
+  matchPlans?: Prisma.MatchTeamPlanCreateNestedManyWithoutTeamInput
   homeMatches?: Prisma.MatchCreateNestedManyWithoutHomeTeamInput
   awayMatches?: Prisma.MatchCreateNestedManyWithoutAwayTeamInput
   standings?: Prisma.StandingCreateNestedManyWithoutTeamInput
@@ -327,6 +331,7 @@ export type TeamUncheckedCreateInput = {
   updatedAt?: Date | string
   memberships?: Prisma.TeamMembershipUncheckedCreateNestedManyWithoutTeamInput
   seasons?: Prisma.TeamSeasonUncheckedCreateNestedManyWithoutTeamInput
+  matchPlans?: Prisma.MatchTeamPlanUncheckedCreateNestedManyWithoutTeamInput
   homeMatches?: Prisma.MatchUncheckedCreateNestedManyWithoutHomeTeamInput
   awayMatches?: Prisma.MatchUncheckedCreateNestedManyWithoutAwayTeamInput
   standings?: Prisma.StandingUncheckedCreateNestedManyWithoutTeamInput
@@ -348,6 +353,7 @@ export type TeamUpdateInput = {
   club?: Prisma.ClubUpdateOneRequiredWithoutTeamsNestedInput
   memberships?: Prisma.TeamMembershipUpdateManyWithoutTeamNestedInput
   seasons?: Prisma.TeamSeasonUpdateManyWithoutTeamNestedInput
+  matchPlans?: Prisma.MatchTeamPlanUpdateManyWithoutTeamNestedInput
   homeMatches?: Prisma.MatchUpdateManyWithoutHomeTeamNestedInput
   awayMatches?: Prisma.MatchUpdateManyWithoutAwayTeamNestedInput
   standings?: Prisma.StandingUpdateManyWithoutTeamNestedInput
@@ -369,6 +375,7 @@ export type TeamUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.TeamMembershipUncheckedUpdateManyWithoutTeamNestedInput
   seasons?: Prisma.TeamSeasonUncheckedUpdateManyWithoutTeamNestedInput
+  matchPlans?: Prisma.MatchTeamPlanUncheckedUpdateManyWithoutTeamNestedInput
   homeMatches?: Prisma.MatchUncheckedUpdateManyWithoutHomeTeamNestedInput
   awayMatches?: Prisma.MatchUncheckedUpdateManyWithoutAwayTeamNestedInput
   standings?: Prisma.StandingUncheckedUpdateManyWithoutTeamNestedInput
@@ -646,6 +653,20 @@ export type TeamUpdateOneRequiredWithoutInvitesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.TeamUpdateToOneWithWhereWithoutInvitesInput, Prisma.TeamUpdateWithoutInvitesInput>, Prisma.TeamUncheckedUpdateWithoutInvitesInput>
 }
 
+export type TeamCreateNestedOneWithoutMatchPlansInput = {
+  create?: Prisma.XOR<Prisma.TeamCreateWithoutMatchPlansInput, Prisma.TeamUncheckedCreateWithoutMatchPlansInput>
+  connectOrCreate?: Prisma.TeamCreateOrConnectWithoutMatchPlansInput
+  connect?: Prisma.TeamWhereUniqueInput
+}
+
+export type TeamUpdateOneRequiredWithoutMatchPlansNestedInput = {
+  create?: Prisma.XOR<Prisma.TeamCreateWithoutMatchPlansInput, Prisma.TeamUncheckedCreateWithoutMatchPlansInput>
+  connectOrCreate?: Prisma.TeamCreateOrConnectWithoutMatchPlansInput
+  upsert?: Prisma.TeamUpsertWithoutMatchPlansInput
+  connect?: Prisma.TeamWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TeamUpdateToOneWithWhereWithoutMatchPlansInput, Prisma.TeamUpdateWithoutMatchPlansInput>, Prisma.TeamUncheckedUpdateWithoutMatchPlansInput>
+}
+
 export type TeamCreateWithoutClubInput = {
   id?: string
   name: string
@@ -656,6 +677,7 @@ export type TeamCreateWithoutClubInput = {
   updatedAt?: Date | string
   memberships?: Prisma.TeamMembershipCreateNestedManyWithoutTeamInput
   seasons?: Prisma.TeamSeasonCreateNestedManyWithoutTeamInput
+  matchPlans?: Prisma.MatchTeamPlanCreateNestedManyWithoutTeamInput
   homeMatches?: Prisma.MatchCreateNestedManyWithoutHomeTeamInput
   awayMatches?: Prisma.MatchCreateNestedManyWithoutAwayTeamInput
   standings?: Prisma.StandingCreateNestedManyWithoutTeamInput
@@ -676,6 +698,7 @@ export type TeamUncheckedCreateWithoutClubInput = {
   updatedAt?: Date | string
   memberships?: Prisma.TeamMembershipUncheckedCreateNestedManyWithoutTeamInput
   seasons?: Prisma.TeamSeasonUncheckedCreateNestedManyWithoutTeamInput
+  matchPlans?: Prisma.MatchTeamPlanUncheckedCreateNestedManyWithoutTeamInput
   homeMatches?: Prisma.MatchUncheckedCreateNestedManyWithoutHomeTeamInput
   awayMatches?: Prisma.MatchUncheckedCreateNestedManyWithoutAwayTeamInput
   standings?: Prisma.StandingUncheckedCreateNestedManyWithoutTeamInput
@@ -736,6 +759,7 @@ export type TeamCreateWithoutMembershipsInput = {
   updatedAt?: Date | string
   club: Prisma.ClubCreateNestedOneWithoutTeamsInput
   seasons?: Prisma.TeamSeasonCreateNestedManyWithoutTeamInput
+  matchPlans?: Prisma.MatchTeamPlanCreateNestedManyWithoutTeamInput
   homeMatches?: Prisma.MatchCreateNestedManyWithoutHomeTeamInput
   awayMatches?: Prisma.MatchCreateNestedManyWithoutAwayTeamInput
   standings?: Prisma.StandingCreateNestedManyWithoutTeamInput
@@ -756,6 +780,7 @@ export type TeamUncheckedCreateWithoutMembershipsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   seasons?: Prisma.TeamSeasonUncheckedCreateNestedManyWithoutTeamInput
+  matchPlans?: Prisma.MatchTeamPlanUncheckedCreateNestedManyWithoutTeamInput
   homeMatches?: Prisma.MatchUncheckedCreateNestedManyWithoutHomeTeamInput
   awayMatches?: Prisma.MatchUncheckedCreateNestedManyWithoutAwayTeamInput
   standings?: Prisma.StandingUncheckedCreateNestedManyWithoutTeamInput
@@ -792,6 +817,7 @@ export type TeamUpdateWithoutMembershipsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   club?: Prisma.ClubUpdateOneRequiredWithoutTeamsNestedInput
   seasons?: Prisma.TeamSeasonUpdateManyWithoutTeamNestedInput
+  matchPlans?: Prisma.MatchTeamPlanUpdateManyWithoutTeamNestedInput
   homeMatches?: Prisma.MatchUpdateManyWithoutHomeTeamNestedInput
   awayMatches?: Prisma.MatchUpdateManyWithoutAwayTeamNestedInput
   standings?: Prisma.StandingUpdateManyWithoutTeamNestedInput
@@ -812,6 +838,7 @@ export type TeamUncheckedUpdateWithoutMembershipsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   seasons?: Prisma.TeamSeasonUncheckedUpdateManyWithoutTeamNestedInput
+  matchPlans?: Prisma.MatchTeamPlanUncheckedUpdateManyWithoutTeamNestedInput
   homeMatches?: Prisma.MatchUncheckedUpdateManyWithoutHomeTeamNestedInput
   awayMatches?: Prisma.MatchUncheckedUpdateManyWithoutAwayTeamNestedInput
   standings?: Prisma.StandingUncheckedUpdateManyWithoutTeamNestedInput
@@ -832,6 +859,7 @@ export type TeamCreateWithoutSeasonsInput = {
   updatedAt?: Date | string
   club: Prisma.ClubCreateNestedOneWithoutTeamsInput
   memberships?: Prisma.TeamMembershipCreateNestedManyWithoutTeamInput
+  matchPlans?: Prisma.MatchTeamPlanCreateNestedManyWithoutTeamInput
   homeMatches?: Prisma.MatchCreateNestedManyWithoutHomeTeamInput
   awayMatches?: Prisma.MatchCreateNestedManyWithoutAwayTeamInput
   standings?: Prisma.StandingCreateNestedManyWithoutTeamInput
@@ -852,6 +880,7 @@ export type TeamUncheckedCreateWithoutSeasonsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   memberships?: Prisma.TeamMembershipUncheckedCreateNestedManyWithoutTeamInput
+  matchPlans?: Prisma.MatchTeamPlanUncheckedCreateNestedManyWithoutTeamInput
   homeMatches?: Prisma.MatchUncheckedCreateNestedManyWithoutHomeTeamInput
   awayMatches?: Prisma.MatchUncheckedCreateNestedManyWithoutAwayTeamInput
   standings?: Prisma.StandingUncheckedCreateNestedManyWithoutTeamInput
@@ -888,6 +917,7 @@ export type TeamUpdateWithoutSeasonsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   club?: Prisma.ClubUpdateOneRequiredWithoutTeamsNestedInput
   memberships?: Prisma.TeamMembershipUpdateManyWithoutTeamNestedInput
+  matchPlans?: Prisma.MatchTeamPlanUpdateManyWithoutTeamNestedInput
   homeMatches?: Prisma.MatchUpdateManyWithoutHomeTeamNestedInput
   awayMatches?: Prisma.MatchUpdateManyWithoutAwayTeamNestedInput
   standings?: Prisma.StandingUpdateManyWithoutTeamNestedInput
@@ -908,6 +938,7 @@ export type TeamUncheckedUpdateWithoutSeasonsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.TeamMembershipUncheckedUpdateManyWithoutTeamNestedInput
+  matchPlans?: Prisma.MatchTeamPlanUncheckedUpdateManyWithoutTeamNestedInput
   homeMatches?: Prisma.MatchUncheckedUpdateManyWithoutHomeTeamNestedInput
   awayMatches?: Prisma.MatchUncheckedUpdateManyWithoutAwayTeamNestedInput
   standings?: Prisma.StandingUncheckedUpdateManyWithoutTeamNestedInput
@@ -929,6 +960,7 @@ export type TeamCreateWithoutHomeMatchesInput = {
   club: Prisma.ClubCreateNestedOneWithoutTeamsInput
   memberships?: Prisma.TeamMembershipCreateNestedManyWithoutTeamInput
   seasons?: Prisma.TeamSeasonCreateNestedManyWithoutTeamInput
+  matchPlans?: Prisma.MatchTeamPlanCreateNestedManyWithoutTeamInput
   awayMatches?: Prisma.MatchCreateNestedManyWithoutAwayTeamInput
   standings?: Prisma.StandingCreateNestedManyWithoutTeamInput
   players?: Prisma.PlayerCreateNestedManyWithoutTeamInput
@@ -949,6 +981,7 @@ export type TeamUncheckedCreateWithoutHomeMatchesInput = {
   updatedAt?: Date | string
   memberships?: Prisma.TeamMembershipUncheckedCreateNestedManyWithoutTeamInput
   seasons?: Prisma.TeamSeasonUncheckedCreateNestedManyWithoutTeamInput
+  matchPlans?: Prisma.MatchTeamPlanUncheckedCreateNestedManyWithoutTeamInput
   awayMatches?: Prisma.MatchUncheckedCreateNestedManyWithoutAwayTeamInput
   standings?: Prisma.StandingUncheckedCreateNestedManyWithoutTeamInput
   players?: Prisma.PlayerUncheckedCreateNestedManyWithoutTeamInput
@@ -974,6 +1007,7 @@ export type TeamCreateWithoutAwayMatchesInput = {
   club: Prisma.ClubCreateNestedOneWithoutTeamsInput
   memberships?: Prisma.TeamMembershipCreateNestedManyWithoutTeamInput
   seasons?: Prisma.TeamSeasonCreateNestedManyWithoutTeamInput
+  matchPlans?: Prisma.MatchTeamPlanCreateNestedManyWithoutTeamInput
   homeMatches?: Prisma.MatchCreateNestedManyWithoutHomeTeamInput
   standings?: Prisma.StandingCreateNestedManyWithoutTeamInput
   players?: Prisma.PlayerCreateNestedManyWithoutTeamInput
@@ -994,6 +1028,7 @@ export type TeamUncheckedCreateWithoutAwayMatchesInput = {
   updatedAt?: Date | string
   memberships?: Prisma.TeamMembershipUncheckedCreateNestedManyWithoutTeamInput
   seasons?: Prisma.TeamSeasonUncheckedCreateNestedManyWithoutTeamInput
+  matchPlans?: Prisma.MatchTeamPlanUncheckedCreateNestedManyWithoutTeamInput
   homeMatches?: Prisma.MatchUncheckedCreateNestedManyWithoutHomeTeamInput
   standings?: Prisma.StandingUncheckedCreateNestedManyWithoutTeamInput
   players?: Prisma.PlayerUncheckedCreateNestedManyWithoutTeamInput
@@ -1030,6 +1065,7 @@ export type TeamUpdateWithoutHomeMatchesInput = {
   club?: Prisma.ClubUpdateOneRequiredWithoutTeamsNestedInput
   memberships?: Prisma.TeamMembershipUpdateManyWithoutTeamNestedInput
   seasons?: Prisma.TeamSeasonUpdateManyWithoutTeamNestedInput
+  matchPlans?: Prisma.MatchTeamPlanUpdateManyWithoutTeamNestedInput
   awayMatches?: Prisma.MatchUpdateManyWithoutAwayTeamNestedInput
   standings?: Prisma.StandingUpdateManyWithoutTeamNestedInput
   players?: Prisma.PlayerUpdateManyWithoutTeamNestedInput
@@ -1050,6 +1086,7 @@ export type TeamUncheckedUpdateWithoutHomeMatchesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.TeamMembershipUncheckedUpdateManyWithoutTeamNestedInput
   seasons?: Prisma.TeamSeasonUncheckedUpdateManyWithoutTeamNestedInput
+  matchPlans?: Prisma.MatchTeamPlanUncheckedUpdateManyWithoutTeamNestedInput
   awayMatches?: Prisma.MatchUncheckedUpdateManyWithoutAwayTeamNestedInput
   standings?: Prisma.StandingUncheckedUpdateManyWithoutTeamNestedInput
   players?: Prisma.PlayerUncheckedUpdateManyWithoutTeamNestedInput
@@ -1081,6 +1118,7 @@ export type TeamUpdateWithoutAwayMatchesInput = {
   club?: Prisma.ClubUpdateOneRequiredWithoutTeamsNestedInput
   memberships?: Prisma.TeamMembershipUpdateManyWithoutTeamNestedInput
   seasons?: Prisma.TeamSeasonUpdateManyWithoutTeamNestedInput
+  matchPlans?: Prisma.MatchTeamPlanUpdateManyWithoutTeamNestedInput
   homeMatches?: Prisma.MatchUpdateManyWithoutHomeTeamNestedInput
   standings?: Prisma.StandingUpdateManyWithoutTeamNestedInput
   players?: Prisma.PlayerUpdateManyWithoutTeamNestedInput
@@ -1101,6 +1139,7 @@ export type TeamUncheckedUpdateWithoutAwayMatchesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.TeamMembershipUncheckedUpdateManyWithoutTeamNestedInput
   seasons?: Prisma.TeamSeasonUncheckedUpdateManyWithoutTeamNestedInput
+  matchPlans?: Prisma.MatchTeamPlanUncheckedUpdateManyWithoutTeamNestedInput
   homeMatches?: Prisma.MatchUncheckedUpdateManyWithoutHomeTeamNestedInput
   standings?: Prisma.StandingUncheckedUpdateManyWithoutTeamNestedInput
   players?: Prisma.PlayerUncheckedUpdateManyWithoutTeamNestedInput
@@ -1121,6 +1160,7 @@ export type TeamCreateWithoutStandingsInput = {
   club: Prisma.ClubCreateNestedOneWithoutTeamsInput
   memberships?: Prisma.TeamMembershipCreateNestedManyWithoutTeamInput
   seasons?: Prisma.TeamSeasonCreateNestedManyWithoutTeamInput
+  matchPlans?: Prisma.MatchTeamPlanCreateNestedManyWithoutTeamInput
   homeMatches?: Prisma.MatchCreateNestedManyWithoutHomeTeamInput
   awayMatches?: Prisma.MatchCreateNestedManyWithoutAwayTeamInput
   players?: Prisma.PlayerCreateNestedManyWithoutTeamInput
@@ -1141,6 +1181,7 @@ export type TeamUncheckedCreateWithoutStandingsInput = {
   updatedAt?: Date | string
   memberships?: Prisma.TeamMembershipUncheckedCreateNestedManyWithoutTeamInput
   seasons?: Prisma.TeamSeasonUncheckedCreateNestedManyWithoutTeamInput
+  matchPlans?: Prisma.MatchTeamPlanUncheckedCreateNestedManyWithoutTeamInput
   homeMatches?: Prisma.MatchUncheckedCreateNestedManyWithoutHomeTeamInput
   awayMatches?: Prisma.MatchUncheckedCreateNestedManyWithoutAwayTeamInput
   players?: Prisma.PlayerUncheckedCreateNestedManyWithoutTeamInput
@@ -1177,6 +1218,7 @@ export type TeamUpdateWithoutStandingsInput = {
   club?: Prisma.ClubUpdateOneRequiredWithoutTeamsNestedInput
   memberships?: Prisma.TeamMembershipUpdateManyWithoutTeamNestedInput
   seasons?: Prisma.TeamSeasonUpdateManyWithoutTeamNestedInput
+  matchPlans?: Prisma.MatchTeamPlanUpdateManyWithoutTeamNestedInput
   homeMatches?: Prisma.MatchUpdateManyWithoutHomeTeamNestedInput
   awayMatches?: Prisma.MatchUpdateManyWithoutAwayTeamNestedInput
   players?: Prisma.PlayerUpdateManyWithoutTeamNestedInput
@@ -1197,6 +1239,7 @@ export type TeamUncheckedUpdateWithoutStandingsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.TeamMembershipUncheckedUpdateManyWithoutTeamNestedInput
   seasons?: Prisma.TeamSeasonUncheckedUpdateManyWithoutTeamNestedInput
+  matchPlans?: Prisma.MatchTeamPlanUncheckedUpdateManyWithoutTeamNestedInput
   homeMatches?: Prisma.MatchUncheckedUpdateManyWithoutHomeTeamNestedInput
   awayMatches?: Prisma.MatchUncheckedUpdateManyWithoutAwayTeamNestedInput
   players?: Prisma.PlayerUncheckedUpdateManyWithoutTeamNestedInput
@@ -1217,6 +1260,7 @@ export type TeamCreateWithoutPlayersInput = {
   club: Prisma.ClubCreateNestedOneWithoutTeamsInput
   memberships?: Prisma.TeamMembershipCreateNestedManyWithoutTeamInput
   seasons?: Prisma.TeamSeasonCreateNestedManyWithoutTeamInput
+  matchPlans?: Prisma.MatchTeamPlanCreateNestedManyWithoutTeamInput
   homeMatches?: Prisma.MatchCreateNestedManyWithoutHomeTeamInput
   awayMatches?: Prisma.MatchCreateNestedManyWithoutAwayTeamInput
   standings?: Prisma.StandingCreateNestedManyWithoutTeamInput
@@ -1237,6 +1281,7 @@ export type TeamUncheckedCreateWithoutPlayersInput = {
   updatedAt?: Date | string
   memberships?: Prisma.TeamMembershipUncheckedCreateNestedManyWithoutTeamInput
   seasons?: Prisma.TeamSeasonUncheckedCreateNestedManyWithoutTeamInput
+  matchPlans?: Prisma.MatchTeamPlanUncheckedCreateNestedManyWithoutTeamInput
   homeMatches?: Prisma.MatchUncheckedCreateNestedManyWithoutHomeTeamInput
   awayMatches?: Prisma.MatchUncheckedCreateNestedManyWithoutAwayTeamInput
   standings?: Prisma.StandingUncheckedCreateNestedManyWithoutTeamInput
@@ -1273,6 +1318,7 @@ export type TeamUpdateWithoutPlayersInput = {
   club?: Prisma.ClubUpdateOneRequiredWithoutTeamsNestedInput
   memberships?: Prisma.TeamMembershipUpdateManyWithoutTeamNestedInput
   seasons?: Prisma.TeamSeasonUpdateManyWithoutTeamNestedInput
+  matchPlans?: Prisma.MatchTeamPlanUpdateManyWithoutTeamNestedInput
   homeMatches?: Prisma.MatchUpdateManyWithoutHomeTeamNestedInput
   awayMatches?: Prisma.MatchUpdateManyWithoutAwayTeamNestedInput
   standings?: Prisma.StandingUpdateManyWithoutTeamNestedInput
@@ -1293,6 +1339,7 @@ export type TeamUncheckedUpdateWithoutPlayersInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.TeamMembershipUncheckedUpdateManyWithoutTeamNestedInput
   seasons?: Prisma.TeamSeasonUncheckedUpdateManyWithoutTeamNestedInput
+  matchPlans?: Prisma.MatchTeamPlanUncheckedUpdateManyWithoutTeamNestedInput
   homeMatches?: Prisma.MatchUncheckedUpdateManyWithoutHomeTeamNestedInput
   awayMatches?: Prisma.MatchUncheckedUpdateManyWithoutAwayTeamNestedInput
   standings?: Prisma.StandingUncheckedUpdateManyWithoutTeamNestedInput
@@ -1313,6 +1360,7 @@ export type TeamCreateWithoutTrainingsInput = {
   club: Prisma.ClubCreateNestedOneWithoutTeamsInput
   memberships?: Prisma.TeamMembershipCreateNestedManyWithoutTeamInput
   seasons?: Prisma.TeamSeasonCreateNestedManyWithoutTeamInput
+  matchPlans?: Prisma.MatchTeamPlanCreateNestedManyWithoutTeamInput
   homeMatches?: Prisma.MatchCreateNestedManyWithoutHomeTeamInput
   awayMatches?: Prisma.MatchCreateNestedManyWithoutAwayTeamInput
   standings?: Prisma.StandingCreateNestedManyWithoutTeamInput
@@ -1333,6 +1381,7 @@ export type TeamUncheckedCreateWithoutTrainingsInput = {
   updatedAt?: Date | string
   memberships?: Prisma.TeamMembershipUncheckedCreateNestedManyWithoutTeamInput
   seasons?: Prisma.TeamSeasonUncheckedCreateNestedManyWithoutTeamInput
+  matchPlans?: Prisma.MatchTeamPlanUncheckedCreateNestedManyWithoutTeamInput
   homeMatches?: Prisma.MatchUncheckedCreateNestedManyWithoutHomeTeamInput
   awayMatches?: Prisma.MatchUncheckedCreateNestedManyWithoutAwayTeamInput
   standings?: Prisma.StandingUncheckedCreateNestedManyWithoutTeamInput
@@ -1369,6 +1418,7 @@ export type TeamUpdateWithoutTrainingsInput = {
   club?: Prisma.ClubUpdateOneRequiredWithoutTeamsNestedInput
   memberships?: Prisma.TeamMembershipUpdateManyWithoutTeamNestedInput
   seasons?: Prisma.TeamSeasonUpdateManyWithoutTeamNestedInput
+  matchPlans?: Prisma.MatchTeamPlanUpdateManyWithoutTeamNestedInput
   homeMatches?: Prisma.MatchUpdateManyWithoutHomeTeamNestedInput
   awayMatches?: Prisma.MatchUpdateManyWithoutAwayTeamNestedInput
   standings?: Prisma.StandingUpdateManyWithoutTeamNestedInput
@@ -1389,6 +1439,7 @@ export type TeamUncheckedUpdateWithoutTrainingsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.TeamMembershipUncheckedUpdateManyWithoutTeamNestedInput
   seasons?: Prisma.TeamSeasonUncheckedUpdateManyWithoutTeamNestedInput
+  matchPlans?: Prisma.MatchTeamPlanUncheckedUpdateManyWithoutTeamNestedInput
   homeMatches?: Prisma.MatchUncheckedUpdateManyWithoutHomeTeamNestedInput
   awayMatches?: Prisma.MatchUncheckedUpdateManyWithoutAwayTeamNestedInput
   standings?: Prisma.StandingUncheckedUpdateManyWithoutTeamNestedInput
@@ -1409,6 +1460,7 @@ export type TeamCreateWithoutStatisticPreferencesInput = {
   club: Prisma.ClubCreateNestedOneWithoutTeamsInput
   memberships?: Prisma.TeamMembershipCreateNestedManyWithoutTeamInput
   seasons?: Prisma.TeamSeasonCreateNestedManyWithoutTeamInput
+  matchPlans?: Prisma.MatchTeamPlanCreateNestedManyWithoutTeamInput
   homeMatches?: Prisma.MatchCreateNestedManyWithoutHomeTeamInput
   awayMatches?: Prisma.MatchCreateNestedManyWithoutAwayTeamInput
   standings?: Prisma.StandingCreateNestedManyWithoutTeamInput
@@ -1429,6 +1481,7 @@ export type TeamUncheckedCreateWithoutStatisticPreferencesInput = {
   updatedAt?: Date | string
   memberships?: Prisma.TeamMembershipUncheckedCreateNestedManyWithoutTeamInput
   seasons?: Prisma.TeamSeasonUncheckedCreateNestedManyWithoutTeamInput
+  matchPlans?: Prisma.MatchTeamPlanUncheckedCreateNestedManyWithoutTeamInput
   homeMatches?: Prisma.MatchUncheckedCreateNestedManyWithoutHomeTeamInput
   awayMatches?: Prisma.MatchUncheckedCreateNestedManyWithoutAwayTeamInput
   standings?: Prisma.StandingUncheckedCreateNestedManyWithoutTeamInput
@@ -1465,6 +1518,7 @@ export type TeamUpdateWithoutStatisticPreferencesInput = {
   club?: Prisma.ClubUpdateOneRequiredWithoutTeamsNestedInput
   memberships?: Prisma.TeamMembershipUpdateManyWithoutTeamNestedInput
   seasons?: Prisma.TeamSeasonUpdateManyWithoutTeamNestedInput
+  matchPlans?: Prisma.MatchTeamPlanUpdateManyWithoutTeamNestedInput
   homeMatches?: Prisma.MatchUpdateManyWithoutHomeTeamNestedInput
   awayMatches?: Prisma.MatchUpdateManyWithoutAwayTeamNestedInput
   standings?: Prisma.StandingUpdateManyWithoutTeamNestedInput
@@ -1485,6 +1539,7 @@ export type TeamUncheckedUpdateWithoutStatisticPreferencesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.TeamMembershipUncheckedUpdateManyWithoutTeamNestedInput
   seasons?: Prisma.TeamSeasonUncheckedUpdateManyWithoutTeamNestedInput
+  matchPlans?: Prisma.MatchTeamPlanUncheckedUpdateManyWithoutTeamNestedInput
   homeMatches?: Prisma.MatchUncheckedUpdateManyWithoutHomeTeamNestedInput
   awayMatches?: Prisma.MatchUncheckedUpdateManyWithoutAwayTeamNestedInput
   standings?: Prisma.StandingUncheckedUpdateManyWithoutTeamNestedInput
@@ -1505,6 +1560,7 @@ export type TeamCreateWithoutSyncRunsInput = {
   club: Prisma.ClubCreateNestedOneWithoutTeamsInput
   memberships?: Prisma.TeamMembershipCreateNestedManyWithoutTeamInput
   seasons?: Prisma.TeamSeasonCreateNestedManyWithoutTeamInput
+  matchPlans?: Prisma.MatchTeamPlanCreateNestedManyWithoutTeamInput
   homeMatches?: Prisma.MatchCreateNestedManyWithoutHomeTeamInput
   awayMatches?: Prisma.MatchCreateNestedManyWithoutAwayTeamInput
   standings?: Prisma.StandingCreateNestedManyWithoutTeamInput
@@ -1525,6 +1581,7 @@ export type TeamUncheckedCreateWithoutSyncRunsInput = {
   updatedAt?: Date | string
   memberships?: Prisma.TeamMembershipUncheckedCreateNestedManyWithoutTeamInput
   seasons?: Prisma.TeamSeasonUncheckedCreateNestedManyWithoutTeamInput
+  matchPlans?: Prisma.MatchTeamPlanUncheckedCreateNestedManyWithoutTeamInput
   homeMatches?: Prisma.MatchUncheckedCreateNestedManyWithoutHomeTeamInput
   awayMatches?: Prisma.MatchUncheckedCreateNestedManyWithoutAwayTeamInput
   standings?: Prisma.StandingUncheckedCreateNestedManyWithoutTeamInput
@@ -1561,6 +1618,7 @@ export type TeamUpdateWithoutSyncRunsInput = {
   club?: Prisma.ClubUpdateOneRequiredWithoutTeamsNestedInput
   memberships?: Prisma.TeamMembershipUpdateManyWithoutTeamNestedInput
   seasons?: Prisma.TeamSeasonUpdateManyWithoutTeamNestedInput
+  matchPlans?: Prisma.MatchTeamPlanUpdateManyWithoutTeamNestedInput
   homeMatches?: Prisma.MatchUpdateManyWithoutHomeTeamNestedInput
   awayMatches?: Prisma.MatchUpdateManyWithoutAwayTeamNestedInput
   standings?: Prisma.StandingUpdateManyWithoutTeamNestedInput
@@ -1581,6 +1639,7 @@ export type TeamUncheckedUpdateWithoutSyncRunsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.TeamMembershipUncheckedUpdateManyWithoutTeamNestedInput
   seasons?: Prisma.TeamSeasonUncheckedUpdateManyWithoutTeamNestedInput
+  matchPlans?: Prisma.MatchTeamPlanUncheckedUpdateManyWithoutTeamNestedInput
   homeMatches?: Prisma.MatchUncheckedUpdateManyWithoutHomeTeamNestedInput
   awayMatches?: Prisma.MatchUncheckedUpdateManyWithoutAwayTeamNestedInput
   standings?: Prisma.StandingUncheckedUpdateManyWithoutTeamNestedInput
@@ -1601,6 +1660,7 @@ export type TeamCreateWithoutInvitesInput = {
   club: Prisma.ClubCreateNestedOneWithoutTeamsInput
   memberships?: Prisma.TeamMembershipCreateNestedManyWithoutTeamInput
   seasons?: Prisma.TeamSeasonCreateNestedManyWithoutTeamInput
+  matchPlans?: Prisma.MatchTeamPlanCreateNestedManyWithoutTeamInput
   homeMatches?: Prisma.MatchCreateNestedManyWithoutHomeTeamInput
   awayMatches?: Prisma.MatchCreateNestedManyWithoutAwayTeamInput
   standings?: Prisma.StandingCreateNestedManyWithoutTeamInput
@@ -1621,6 +1681,7 @@ export type TeamUncheckedCreateWithoutInvitesInput = {
   updatedAt?: Date | string
   memberships?: Prisma.TeamMembershipUncheckedCreateNestedManyWithoutTeamInput
   seasons?: Prisma.TeamSeasonUncheckedCreateNestedManyWithoutTeamInput
+  matchPlans?: Prisma.MatchTeamPlanUncheckedCreateNestedManyWithoutTeamInput
   homeMatches?: Prisma.MatchUncheckedCreateNestedManyWithoutHomeTeamInput
   awayMatches?: Prisma.MatchUncheckedCreateNestedManyWithoutAwayTeamInput
   standings?: Prisma.StandingUncheckedCreateNestedManyWithoutTeamInput
@@ -1657,6 +1718,7 @@ export type TeamUpdateWithoutInvitesInput = {
   club?: Prisma.ClubUpdateOneRequiredWithoutTeamsNestedInput
   memberships?: Prisma.TeamMembershipUpdateManyWithoutTeamNestedInput
   seasons?: Prisma.TeamSeasonUpdateManyWithoutTeamNestedInput
+  matchPlans?: Prisma.MatchTeamPlanUpdateManyWithoutTeamNestedInput
   homeMatches?: Prisma.MatchUpdateManyWithoutHomeTeamNestedInput
   awayMatches?: Prisma.MatchUpdateManyWithoutAwayTeamNestedInput
   standings?: Prisma.StandingUpdateManyWithoutTeamNestedInput
@@ -1677,11 +1739,112 @@ export type TeamUncheckedUpdateWithoutInvitesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.TeamMembershipUncheckedUpdateManyWithoutTeamNestedInput
   seasons?: Prisma.TeamSeasonUncheckedUpdateManyWithoutTeamNestedInput
+  matchPlans?: Prisma.MatchTeamPlanUncheckedUpdateManyWithoutTeamNestedInput
   homeMatches?: Prisma.MatchUncheckedUpdateManyWithoutHomeTeamNestedInput
   awayMatches?: Prisma.MatchUncheckedUpdateManyWithoutAwayTeamNestedInput
   standings?: Prisma.StandingUncheckedUpdateManyWithoutTeamNestedInput
   players?: Prisma.PlayerUncheckedUpdateManyWithoutTeamNestedInput
   syncRuns?: Prisma.SyncRunUncheckedUpdateManyWithoutTeamNestedInput
+  trainings?: Prisma.TrainingUncheckedUpdateManyWithoutTeamNestedInput
+  statisticPreferences?: Prisma.StatisticPreferenceUncheckedUpdateManyWithoutTeamNestedInput
+}
+
+export type TeamCreateWithoutMatchPlansInput = {
+  id?: string
+  name: string
+  shortName: string
+  externalProvider?: string | null
+  externalIdentifier?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  club: Prisma.ClubCreateNestedOneWithoutTeamsInput
+  memberships?: Prisma.TeamMembershipCreateNestedManyWithoutTeamInput
+  seasons?: Prisma.TeamSeasonCreateNestedManyWithoutTeamInput
+  homeMatches?: Prisma.MatchCreateNestedManyWithoutHomeTeamInput
+  awayMatches?: Prisma.MatchCreateNestedManyWithoutAwayTeamInput
+  standings?: Prisma.StandingCreateNestedManyWithoutTeamInput
+  players?: Prisma.PlayerCreateNestedManyWithoutTeamInput
+  syncRuns?: Prisma.SyncRunCreateNestedManyWithoutTeamInput
+  invites?: Prisma.TeamInviteCreateNestedManyWithoutTeamInput
+  trainings?: Prisma.TrainingCreateNestedManyWithoutTeamInput
+  statisticPreferences?: Prisma.StatisticPreferenceCreateNestedManyWithoutTeamInput
+}
+
+export type TeamUncheckedCreateWithoutMatchPlansInput = {
+  id?: string
+  clubId: string
+  name: string
+  shortName: string
+  externalProvider?: string | null
+  externalIdentifier?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  memberships?: Prisma.TeamMembershipUncheckedCreateNestedManyWithoutTeamInput
+  seasons?: Prisma.TeamSeasonUncheckedCreateNestedManyWithoutTeamInput
+  homeMatches?: Prisma.MatchUncheckedCreateNestedManyWithoutHomeTeamInput
+  awayMatches?: Prisma.MatchUncheckedCreateNestedManyWithoutAwayTeamInput
+  standings?: Prisma.StandingUncheckedCreateNestedManyWithoutTeamInput
+  players?: Prisma.PlayerUncheckedCreateNestedManyWithoutTeamInput
+  syncRuns?: Prisma.SyncRunUncheckedCreateNestedManyWithoutTeamInput
+  invites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutTeamInput
+  trainings?: Prisma.TrainingUncheckedCreateNestedManyWithoutTeamInput
+  statisticPreferences?: Prisma.StatisticPreferenceUncheckedCreateNestedManyWithoutTeamInput
+}
+
+export type TeamCreateOrConnectWithoutMatchPlansInput = {
+  where: Prisma.TeamWhereUniqueInput
+  create: Prisma.XOR<Prisma.TeamCreateWithoutMatchPlansInput, Prisma.TeamUncheckedCreateWithoutMatchPlansInput>
+}
+
+export type TeamUpsertWithoutMatchPlansInput = {
+  update: Prisma.XOR<Prisma.TeamUpdateWithoutMatchPlansInput, Prisma.TeamUncheckedUpdateWithoutMatchPlansInput>
+  create: Prisma.XOR<Prisma.TeamCreateWithoutMatchPlansInput, Prisma.TeamUncheckedCreateWithoutMatchPlansInput>
+  where?: Prisma.TeamWhereInput
+}
+
+export type TeamUpdateToOneWithWhereWithoutMatchPlansInput = {
+  where?: Prisma.TeamWhereInput
+  data: Prisma.XOR<Prisma.TeamUpdateWithoutMatchPlansInput, Prisma.TeamUncheckedUpdateWithoutMatchPlansInput>
+}
+
+export type TeamUpdateWithoutMatchPlansInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  shortName?: Prisma.StringFieldUpdateOperationsInput | string
+  externalProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  club?: Prisma.ClubUpdateOneRequiredWithoutTeamsNestedInput
+  memberships?: Prisma.TeamMembershipUpdateManyWithoutTeamNestedInput
+  seasons?: Prisma.TeamSeasonUpdateManyWithoutTeamNestedInput
+  homeMatches?: Prisma.MatchUpdateManyWithoutHomeTeamNestedInput
+  awayMatches?: Prisma.MatchUpdateManyWithoutAwayTeamNestedInput
+  standings?: Prisma.StandingUpdateManyWithoutTeamNestedInput
+  players?: Prisma.PlayerUpdateManyWithoutTeamNestedInput
+  syncRuns?: Prisma.SyncRunUpdateManyWithoutTeamNestedInput
+  invites?: Prisma.TeamInviteUpdateManyWithoutTeamNestedInput
+  trainings?: Prisma.TrainingUpdateManyWithoutTeamNestedInput
+  statisticPreferences?: Prisma.StatisticPreferenceUpdateManyWithoutTeamNestedInput
+}
+
+export type TeamUncheckedUpdateWithoutMatchPlansInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clubId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  shortName?: Prisma.StringFieldUpdateOperationsInput | string
+  externalProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalIdentifier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberships?: Prisma.TeamMembershipUncheckedUpdateManyWithoutTeamNestedInput
+  seasons?: Prisma.TeamSeasonUncheckedUpdateManyWithoutTeamNestedInput
+  homeMatches?: Prisma.MatchUncheckedUpdateManyWithoutHomeTeamNestedInput
+  awayMatches?: Prisma.MatchUncheckedUpdateManyWithoutAwayTeamNestedInput
+  standings?: Prisma.StandingUncheckedUpdateManyWithoutTeamNestedInput
+  players?: Prisma.PlayerUncheckedUpdateManyWithoutTeamNestedInput
+  syncRuns?: Prisma.SyncRunUncheckedUpdateManyWithoutTeamNestedInput
+  invites?: Prisma.TeamInviteUncheckedUpdateManyWithoutTeamNestedInput
   trainings?: Prisma.TrainingUncheckedUpdateManyWithoutTeamNestedInput
   statisticPreferences?: Prisma.StatisticPreferenceUncheckedUpdateManyWithoutTeamNestedInput
 }
@@ -1706,6 +1869,7 @@ export type TeamUpdateWithoutClubInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.TeamMembershipUpdateManyWithoutTeamNestedInput
   seasons?: Prisma.TeamSeasonUpdateManyWithoutTeamNestedInput
+  matchPlans?: Prisma.MatchTeamPlanUpdateManyWithoutTeamNestedInput
   homeMatches?: Prisma.MatchUpdateManyWithoutHomeTeamNestedInput
   awayMatches?: Prisma.MatchUpdateManyWithoutAwayTeamNestedInput
   standings?: Prisma.StandingUpdateManyWithoutTeamNestedInput
@@ -1726,6 +1890,7 @@ export type TeamUncheckedUpdateWithoutClubInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.TeamMembershipUncheckedUpdateManyWithoutTeamNestedInput
   seasons?: Prisma.TeamSeasonUncheckedUpdateManyWithoutTeamNestedInput
+  matchPlans?: Prisma.MatchTeamPlanUncheckedUpdateManyWithoutTeamNestedInput
   homeMatches?: Prisma.MatchUncheckedUpdateManyWithoutHomeTeamNestedInput
   awayMatches?: Prisma.MatchUncheckedUpdateManyWithoutAwayTeamNestedInput
   standings?: Prisma.StandingUncheckedUpdateManyWithoutTeamNestedInput
@@ -1754,6 +1919,7 @@ export type TeamUncheckedUpdateManyWithoutClubInput = {
 export type TeamCountOutputType = {
   memberships: number
   seasons: number
+  matchPlans: number
   homeMatches: number
   awayMatches: number
   standings: number
@@ -1767,6 +1933,7 @@ export type TeamCountOutputType = {
 export type TeamCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   memberships?: boolean | TeamCountOutputTypeCountMembershipsArgs
   seasons?: boolean | TeamCountOutputTypeCountSeasonsArgs
+  matchPlans?: boolean | TeamCountOutputTypeCountMatchPlansArgs
   homeMatches?: boolean | TeamCountOutputTypeCountHomeMatchesArgs
   awayMatches?: boolean | TeamCountOutputTypeCountAwayMatchesArgs
   standings?: boolean | TeamCountOutputTypeCountStandingsArgs
@@ -1799,6 +1966,13 @@ export type TeamCountOutputTypeCountMembershipsArgs<ExtArgs extends runtime.Type
  */
 export type TeamCountOutputTypeCountSeasonsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.TeamSeasonWhereInput
+}
+
+/**
+ * TeamCountOutputType without action
+ */
+export type TeamCountOutputTypeCountMatchPlansArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MatchTeamPlanWhereInput
 }
 
 /**
@@ -1870,6 +2044,7 @@ export type TeamSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   club?: boolean | Prisma.ClubDefaultArgs<ExtArgs>
   memberships?: boolean | Prisma.Team$membershipsArgs<ExtArgs>
   seasons?: boolean | Prisma.Team$seasonsArgs<ExtArgs>
+  matchPlans?: boolean | Prisma.Team$matchPlansArgs<ExtArgs>
   homeMatches?: boolean | Prisma.Team$homeMatchesArgs<ExtArgs>
   awayMatches?: boolean | Prisma.Team$awayMatchesArgs<ExtArgs>
   standings?: boolean | Prisma.Team$standingsArgs<ExtArgs>
@@ -1921,6 +2096,7 @@ export type TeamInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   club?: boolean | Prisma.ClubDefaultArgs<ExtArgs>
   memberships?: boolean | Prisma.Team$membershipsArgs<ExtArgs>
   seasons?: boolean | Prisma.Team$seasonsArgs<ExtArgs>
+  matchPlans?: boolean | Prisma.Team$matchPlansArgs<ExtArgs>
   homeMatches?: boolean | Prisma.Team$homeMatchesArgs<ExtArgs>
   awayMatches?: boolean | Prisma.Team$awayMatchesArgs<ExtArgs>
   standings?: boolean | Prisma.Team$standingsArgs<ExtArgs>
@@ -1944,6 +2120,7 @@ export type $TeamPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     club: Prisma.$ClubPayload<ExtArgs>
     memberships: Prisma.$TeamMembershipPayload<ExtArgs>[]
     seasons: Prisma.$TeamSeasonPayload<ExtArgs>[]
+    matchPlans: Prisma.$MatchTeamPlanPayload<ExtArgs>[]
     homeMatches: Prisma.$MatchPayload<ExtArgs>[]
     awayMatches: Prisma.$MatchPayload<ExtArgs>[]
     standings: Prisma.$StandingPayload<ExtArgs>[]
@@ -2359,6 +2536,7 @@ export interface Prisma__TeamClient<T, Null = never, ExtArgs extends runtime.Typ
   club<T extends Prisma.ClubDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ClubDefaultArgs<ExtArgs>>): Prisma.Prisma__ClubClient<runtime.Types.Result.GetResult<Prisma.$ClubPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   memberships<T extends Prisma.Team$membershipsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Team$membershipsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TeamMembershipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   seasons<T extends Prisma.Team$seasonsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Team$seasonsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TeamSeasonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  matchPlans<T extends Prisma.Team$matchPlansArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Team$matchPlansArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MatchTeamPlanPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   homeMatches<T extends Prisma.Team$homeMatchesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Team$homeMatchesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MatchPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   awayMatches<T extends Prisma.Team$awayMatchesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Team$awayMatchesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MatchPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   standings<T extends Prisma.Team$standingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Team$standingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StandingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -2850,6 +3028,30 @@ export type Team$seasonsArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
   take?: number
   skip?: number
   distinct?: Prisma.TeamSeasonScalarFieldEnum | Prisma.TeamSeasonScalarFieldEnum[]
+}
+
+/**
+ * Team.matchPlans
+ */
+export type Team$matchPlansArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MatchTeamPlan
+   */
+  select?: Prisma.MatchTeamPlanSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MatchTeamPlan
+   */
+  omit?: Prisma.MatchTeamPlanOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MatchTeamPlanInclude<ExtArgs> | null
+  where?: Prisma.MatchTeamPlanWhereInput
+  orderBy?: Prisma.MatchTeamPlanOrderByWithRelationInput | Prisma.MatchTeamPlanOrderByWithRelationInput[]
+  cursor?: Prisma.MatchTeamPlanWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MatchTeamPlanScalarFieldEnum | Prisma.MatchTeamPlanScalarFieldEnum[]
 }
 
 /**

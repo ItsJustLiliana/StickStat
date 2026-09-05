@@ -34,6 +34,7 @@ export type TrainingMinAggregateOutputType = {
   venue: string | null
   notes: string | null
   createdById: string | null
+  attendanceLocked: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -48,6 +49,7 @@ export type TrainingMaxAggregateOutputType = {
   venue: string | null
   notes: string | null
   createdById: string | null
+  attendanceLocked: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -62,6 +64,7 @@ export type TrainingCountAggregateOutputType = {
   venue: number
   notes: number
   createdById: number
+  attendanceLocked: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -78,6 +81,7 @@ export type TrainingMinAggregateInputType = {
   venue?: true
   notes?: true
   createdById?: true
+  attendanceLocked?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -92,6 +96,7 @@ export type TrainingMaxAggregateInputType = {
   venue?: true
   notes?: true
   createdById?: true
+  attendanceLocked?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -106,6 +111,7 @@ export type TrainingCountAggregateInputType = {
   venue?: true
   notes?: true
   createdById?: true
+  attendanceLocked?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -193,6 +199,7 @@ export type TrainingGroupByOutputType = {
   venue: string | null
   notes: string | null
   createdById: string
+  attendanceLocked: boolean
   createdAt: Date
   updatedAt: Date
   _count: TrainingCountAggregateOutputType | null
@@ -228,6 +235,7 @@ export type TrainingWhereInput = {
   venue?: Prisma.StringNullableFilter<"Training"> | string | null
   notes?: Prisma.StringNullableFilter<"Training"> | string | null
   createdById?: Prisma.StringFilter<"Training"> | string
+  attendanceLocked?: Prisma.BoolFilter<"Training"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Training"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Training"> | Date | string
   team?: Prisma.XOR<Prisma.TeamScalarRelationFilter, Prisma.TeamWhereInput>
@@ -245,6 +253,7 @@ export type TrainingOrderByWithRelationInput = {
   venue?: Prisma.SortOrderInput | Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   createdById?: Prisma.SortOrder
+  attendanceLocked?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   team?: Prisma.TeamOrderByWithRelationInput
@@ -265,6 +274,7 @@ export type TrainingWhereUniqueInput = Prisma.AtLeast<{
   venue?: Prisma.StringNullableFilter<"Training"> | string | null
   notes?: Prisma.StringNullableFilter<"Training"> | string | null
   createdById?: Prisma.StringFilter<"Training"> | string
+  attendanceLocked?: Prisma.BoolFilter<"Training"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Training"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Training"> | Date | string
   team?: Prisma.XOR<Prisma.TeamScalarRelationFilter, Prisma.TeamWhereInput>
@@ -282,6 +292,7 @@ export type TrainingOrderByWithAggregationInput = {
   venue?: Prisma.SortOrderInput | Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   createdById?: Prisma.SortOrder
+  attendanceLocked?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.TrainingCountOrderByAggregateInput
@@ -302,6 +313,7 @@ export type TrainingScalarWhereWithAggregatesInput = {
   venue?: Prisma.StringNullableWithAggregatesFilter<"Training"> | string | null
   notes?: Prisma.StringNullableWithAggregatesFilter<"Training"> | string | null
   createdById?: Prisma.StringWithAggregatesFilter<"Training"> | string
+  attendanceLocked?: Prisma.BoolWithAggregatesFilter<"Training"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Training"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Training"> | Date | string
 }
@@ -314,6 +326,7 @@ export type TrainingCreateInput = {
   endTime?: string | null
   venue?: string | null
   notes?: string | null
+  attendanceLocked?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   team: Prisma.TeamCreateNestedOneWithoutTrainingsInput
@@ -331,6 +344,7 @@ export type TrainingUncheckedCreateInput = {
   venue?: string | null
   notes?: string | null
   createdById: string
+  attendanceLocked?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   attendance?: Prisma.TrainingAttendanceUncheckedCreateNestedManyWithoutTrainingInput
@@ -344,6 +358,7 @@ export type TrainingUpdateInput = {
   endTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   venue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  attendanceLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   team?: Prisma.TeamUpdateOneRequiredWithoutTrainingsNestedInput
@@ -361,6 +376,7 @@ export type TrainingUncheckedUpdateInput = {
   venue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
+  attendanceLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attendance?: Prisma.TrainingAttendanceUncheckedUpdateManyWithoutTrainingNestedInput
@@ -376,6 +392,7 @@ export type TrainingCreateManyInput = {
   venue?: string | null
   notes?: string | null
   createdById: string
+  attendanceLocked?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -388,6 +405,7 @@ export type TrainingUpdateManyMutationInput = {
   endTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   venue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  attendanceLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -402,6 +420,7 @@ export type TrainingUncheckedUpdateManyInput = {
   venue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
+  attendanceLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -426,6 +445,7 @@ export type TrainingCountOrderByAggregateInput = {
   venue?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
+  attendanceLocked?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -440,6 +460,7 @@ export type TrainingMaxOrderByAggregateInput = {
   venue?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
+  attendanceLocked?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -454,6 +475,7 @@ export type TrainingMinOrderByAggregateInput = {
   venue?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
+  attendanceLocked?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -569,6 +591,7 @@ export type TrainingCreateWithoutCreatedByInput = {
   endTime?: string | null
   venue?: string | null
   notes?: string | null
+  attendanceLocked?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   team: Prisma.TeamCreateNestedOneWithoutTrainingsInput
@@ -584,6 +607,7 @@ export type TrainingUncheckedCreateWithoutCreatedByInput = {
   endTime?: string | null
   venue?: string | null
   notes?: string | null
+  attendanceLocked?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   attendance?: Prisma.TrainingAttendanceUncheckedCreateNestedManyWithoutTrainingInput
@@ -628,6 +652,7 @@ export type TrainingScalarWhereInput = {
   venue?: Prisma.StringNullableFilter<"Training"> | string | null
   notes?: Prisma.StringNullableFilter<"Training"> | string | null
   createdById?: Prisma.StringFilter<"Training"> | string
+  attendanceLocked?: Prisma.BoolFilter<"Training"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Training"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Training"> | Date | string
 }
@@ -640,6 +665,7 @@ export type TrainingCreateWithoutTeamInput = {
   endTime?: string | null
   venue?: string | null
   notes?: string | null
+  attendanceLocked?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   createdBy: Prisma.UserCreateNestedOneWithoutCreatedTrainingsInput
@@ -655,6 +681,7 @@ export type TrainingUncheckedCreateWithoutTeamInput = {
   venue?: string | null
   notes?: string | null
   createdById: string
+  attendanceLocked?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   attendance?: Prisma.TrainingAttendanceUncheckedCreateNestedManyWithoutTrainingInput
@@ -694,6 +721,7 @@ export type TrainingCreateWithoutAttendanceInput = {
   endTime?: string | null
   venue?: string | null
   notes?: string | null
+  attendanceLocked?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   team: Prisma.TeamCreateNestedOneWithoutTrainingsInput
@@ -710,6 +738,7 @@ export type TrainingUncheckedCreateWithoutAttendanceInput = {
   venue?: string | null
   notes?: string | null
   createdById: string
+  attendanceLocked?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -738,6 +767,7 @@ export type TrainingUpdateWithoutAttendanceInput = {
   endTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   venue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  attendanceLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   team?: Prisma.TeamUpdateOneRequiredWithoutTrainingsNestedInput
@@ -754,6 +784,7 @@ export type TrainingUncheckedUpdateWithoutAttendanceInput = {
   venue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
+  attendanceLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -767,6 +798,7 @@ export type TrainingCreateManyCreatedByInput = {
   endTime?: string | null
   venue?: string | null
   notes?: string | null
+  attendanceLocked?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -779,6 +811,7 @@ export type TrainingUpdateWithoutCreatedByInput = {
   endTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   venue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  attendanceLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   team?: Prisma.TeamUpdateOneRequiredWithoutTrainingsNestedInput
@@ -794,6 +827,7 @@ export type TrainingUncheckedUpdateWithoutCreatedByInput = {
   endTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   venue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  attendanceLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attendance?: Prisma.TrainingAttendanceUncheckedUpdateManyWithoutTrainingNestedInput
@@ -808,6 +842,7 @@ export type TrainingUncheckedUpdateManyWithoutCreatedByInput = {
   endTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   venue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  attendanceLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -821,6 +856,7 @@ export type TrainingCreateManyTeamInput = {
   venue?: string | null
   notes?: string | null
   createdById: string
+  attendanceLocked?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -833,6 +869,7 @@ export type TrainingUpdateWithoutTeamInput = {
   endTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   venue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  attendanceLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedTrainingsNestedInput
@@ -848,6 +885,7 @@ export type TrainingUncheckedUpdateWithoutTeamInput = {
   venue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
+  attendanceLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attendance?: Prisma.TrainingAttendanceUncheckedUpdateManyWithoutTrainingNestedInput
@@ -862,6 +900,7 @@ export type TrainingUncheckedUpdateManyWithoutTeamInput = {
   venue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
+  attendanceLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -907,6 +946,7 @@ export type TrainingSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   venue?: boolean
   notes?: boolean
   createdById?: boolean
+  attendanceLocked?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   team?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
@@ -925,6 +965,7 @@ export type TrainingSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   venue?: boolean
   notes?: boolean
   createdById?: boolean
+  attendanceLocked?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   team?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
@@ -941,6 +982,7 @@ export type TrainingSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   venue?: boolean
   notes?: boolean
   createdById?: boolean
+  attendanceLocked?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   team?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
@@ -957,11 +999,12 @@ export type TrainingSelectScalar = {
   venue?: boolean
   notes?: boolean
   createdById?: boolean
+  attendanceLocked?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type TrainingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "teamId" | "title" | "date" | "startTime" | "endTime" | "venue" | "notes" | "createdById" | "createdAt" | "updatedAt", ExtArgs["result"]["training"]>
+export type TrainingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "teamId" | "title" | "date" | "startTime" | "endTime" | "venue" | "notes" | "createdById" | "attendanceLocked" | "createdAt" | "updatedAt", ExtArgs["result"]["training"]>
 export type TrainingInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   team?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -994,6 +1037,7 @@ export type $TrainingPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     venue: string | null
     notes: string | null
     createdById: string
+    attendanceLocked: boolean
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["training"]>
@@ -1431,6 +1475,7 @@ export interface TrainingFieldRefs {
   readonly venue: Prisma.FieldRef<"Training", 'String'>
   readonly notes: Prisma.FieldRef<"Training", 'String'>
   readonly createdById: Prisma.FieldRef<"Training", 'String'>
+  readonly attendanceLocked: Prisma.FieldRef<"Training", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"Training", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Training", 'DateTime'>
 }

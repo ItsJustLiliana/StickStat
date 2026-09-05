@@ -8,9 +8,14 @@ const storageKey="stickstat-theme";
 const themeEvent="stickstat-theme-change";
 
 function subscribe(callback:()=>void){
+  function syncStorage(event:StorageEvent){
+    if(event.key!==storageKey&&event.key!==null)return;
+    document.documentElement.dataset.theme=event.newValue==="dark"?"dark":"light";
+    callback();
+  }
   window.addEventListener(themeEvent,callback);
-  window.addEventListener("storage",callback);
-  return ()=>{window.removeEventListener(themeEvent,callback);window.removeEventListener("storage",callback)};
+  window.addEventListener("storage",syncStorage);
+  return ()=>{window.removeEventListener(themeEvent,callback);window.removeEventListener("storage",syncStorage)};
 }
 
 function getTheme():Theme{return document.documentElement.dataset.theme==="dark"?"dark":"light"}
@@ -22,7 +27,7 @@ export function ThemeToggle(){
   function toggle(){
     const next=theme==="dark"?"light":"dark";
     document.documentElement.dataset.theme=next;
-    localStorage.setItem(storageKey,next);
+    try{localStorage.setItem(storageKey,next);}catch{/* Switching still works when browser storage is unavailable. */}
     window.dispatchEvent(new Event(themeEvent));
   }
 

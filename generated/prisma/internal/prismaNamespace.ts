@@ -417,7 +417,8 @@ export const ModelName = {
   PlayerMatchStats: 'PlayerMatchStats',
   MatchEvent: 'MatchEvent',
   SyncRun: 'SyncRun',
-  TeamInvite: 'TeamInvite'
+  TeamInvite: 'TeamInvite',
+  MatchTeamPlan: 'MatchTeamPlan'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -433,7 +434,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "session" | "club" | "clubMembership" | "team" | "teamMembership" | "season" | "teamSeason" | "match" | "standing" | "player" | "matchAttendance" | "training" | "trainingAttendance" | "statisticPreference" | "notification" | "appRelease" | "playerMatchStats" | "matchEvent" | "syncRun" | "teamInvite"
+    modelProps: "user" | "session" | "club" | "clubMembership" | "team" | "teamMembership" | "season" | "teamSeason" | "match" | "standing" | "player" | "matchAttendance" | "training" | "trainingAttendance" | "statisticPreference" | "notification" | "appRelease" | "playerMatchStats" | "matchEvent" | "syncRun" | "teamInvite" | "matchTeamPlan"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1991,6 +1992,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    MatchTeamPlan: {
+      payload: Prisma.$MatchTeamPlanPayload<ExtArgs>
+      fields: Prisma.MatchTeamPlanFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.MatchTeamPlanFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MatchTeamPlanPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.MatchTeamPlanFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MatchTeamPlanPayload>
+        }
+        findFirst: {
+          args: Prisma.MatchTeamPlanFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MatchTeamPlanPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.MatchTeamPlanFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MatchTeamPlanPayload>
+        }
+        findMany: {
+          args: Prisma.MatchTeamPlanFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MatchTeamPlanPayload>[]
+        }
+        create: {
+          args: Prisma.MatchTeamPlanCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MatchTeamPlanPayload>
+        }
+        createMany: {
+          args: Prisma.MatchTeamPlanCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.MatchTeamPlanCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MatchTeamPlanPayload>[]
+        }
+        delete: {
+          args: Prisma.MatchTeamPlanDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MatchTeamPlanPayload>
+        }
+        update: {
+          args: Prisma.MatchTeamPlanUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MatchTeamPlanPayload>
+        }
+        deleteMany: {
+          args: Prisma.MatchTeamPlanDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.MatchTeamPlanUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.MatchTeamPlanUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MatchTeamPlanPayload>[]
+        }
+        upsert: {
+          args: Prisma.MatchTeamPlanUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MatchTeamPlanPayload>
+        }
+        aggregate: {
+          args: Prisma.MatchTeamPlanAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMatchTeamPlan>
+        }
+        groupBy: {
+          args: Prisma.MatchTeamPlanGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MatchTeamPlanGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.MatchTeamPlanCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MatchTeamPlanCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -2212,6 +2287,7 @@ export const TrainingScalarFieldEnum = {
   venue: 'venue',
   notes: 'notes',
   createdById: 'createdById',
+  attendanceLocked: 'attendanceLocked',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -2328,12 +2404,31 @@ export const TeamInviteScalarFieldEnum = {
 export type TeamInviteScalarFieldEnum = (typeof TeamInviteScalarFieldEnum)[keyof typeof TeamInviteScalarFieldEnum]
 
 
+export const MatchTeamPlanScalarFieldEnum = {
+  id: 'id',
+  matchId: 'matchId',
+  teamId: 'teamId',
+  attendanceLocked: 'attendanceLocked',
+  formation: 'formation',
+  positions: 'positions'
+} as const
+
+export type MatchTeamPlanScalarFieldEnum = (typeof MatchTeamPlanScalarFieldEnum)[keyof typeof MatchTeamPlanScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const QueryMode = {
@@ -2350,6 +2445,15 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
 
 
@@ -2516,6 +2620,20 @@ export type EnumSyncStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$Prism
  * Reference to a field of type 'SyncStatus[]'
  */
 export type ListEnumSyncStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SyncStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Json'
+ */
+export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+/**
+ * Reference to a field of type 'QueryMode'
+ */
+export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
     
 
 
@@ -2704,6 +2822,7 @@ export type GlobalOmitConfig = {
   matchEvent?: Prisma.MatchEventOmit
   syncRun?: Prisma.SyncRunOmit
   teamInvite?: Prisma.TeamInviteOmit
+  matchTeamPlan?: Prisma.MatchTeamPlanOmit
 }
 
 /* Types for Logging */

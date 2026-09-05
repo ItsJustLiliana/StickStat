@@ -71,7 +71,8 @@ export const ModelName = {
   PlayerMatchStats: 'PlayerMatchStats',
   MatchEvent: 'MatchEvent',
   SyncRun: 'SyncRun',
-  TeamInvite: 'TeamInvite'
+  TeamInvite: 'TeamInvite',
+  MatchTeamPlan: 'MatchTeamPlan'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -272,6 +273,7 @@ export const TrainingScalarFieldEnum = {
   venue: 'venue',
   notes: 'notes',
   createdById: 'createdById',
+  attendanceLocked: 'attendanceLocked',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -388,12 +390,31 @@ export const TeamInviteScalarFieldEnum = {
 export type TeamInviteScalarFieldEnum = (typeof TeamInviteScalarFieldEnum)[keyof typeof TeamInviteScalarFieldEnum]
 
 
+export const MatchTeamPlanScalarFieldEnum = {
+  id: 'id',
+  matchId: 'matchId',
+  teamId: 'teamId',
+  attendanceLocked: 'attendanceLocked',
+  formation: 'formation',
+  positions: 'positions'
+} as const
+
+export type MatchTeamPlanScalarFieldEnum = (typeof MatchTeamPlanScalarFieldEnum)[keyof typeof MatchTeamPlanScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const QueryMode = {
@@ -410,4 +431,13 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 

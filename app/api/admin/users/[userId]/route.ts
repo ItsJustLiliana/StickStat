@@ -10,10 +10,6 @@ const patchSchema = z.object({
     platformRole: z.enum(["admin", "user"]).optional(),
 }).refine(obj => Object.keys(obj).length > 0, "At least one field must be provided");
 
-const passwordSchema = z.object({
-    password: z.string().min(12).max(128)
-});
-
 export async function PATCH(
     request: Request,
     { params }: { params: Promise<{ userId: string }> }

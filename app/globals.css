@@ -9,6 +9,7 @@
     --lime: #c9f45b;
     --green: #0c5c42;
     --orange: #ff7043;
+    color-scheme: light;
 }
 
 html[data-theme="dark"] {
@@ -2258,4 +2259,95 @@ html[data-theme="dark"] .input {
     .agenda-week-separator {
         margin-top: 14px
     }
+}
+/* Agenda, attendance and match preparation. */
+.attendance-row { display:flex; align-items:center; flex-wrap:nowrap; gap:12px; }
+.attendance-person { display:flex; align-items:center; gap:10px; min-width:0; flex:1; }
+.attendance-person strong { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.attendance-person img,.attendance-avatar { border-radius:50%; width:32px; height:32px; flex:0 0 32px; object-fit:cover; }
+.attendance-avatar { display:grid; place-items:center; background:var(--card); font-weight:700; }
+.attendance-control { flex:0 0 auto; }
+.attendance-control .error { max-width:220px; font-size:12px; }
+.is-locked .attendance-choice,
+.is-locked .attendance-choice[aria-pressed="true"] { background:#e5e7e6; color:#737b77; border-color:#c8cdca; opacity:.6; }
+.is-locked .attendance-choice[aria-pressed="true"] { opacity:1; }
+.attendance-lock,.lock-label { display:inline-flex; align-items:center; gap:8px; font:inherit; font-size:12px; }
+.attendance-lock { border:0; background:transparent; color:inherit; cursor:pointer; padding:6px 0; }
+.switch-track { width:34px; height:20px; padding:3px; border-radius:20px; background:#b4bdb7; transition:background .15s; }
+.switch-track:after { content:""; display:block; width:14px; height:14px; border-radius:50%; background:white; transition:transform .15s; }
+.attendance-lock[aria-checked="true"] .switch-track { background:#55731a; }
+.attendance-lock[aria-checked="true"] .switch-track:after { transform:translateX(14px); }
+.agenda-entry { display:flex; align-items:center; gap:12px; border-top:1px solid var(--line); }
+.agenda-entry .agenda-row { flex:1; min-width:0; border:0; }
+.agenda-entry>.attendance-control { padding-right:18px; }
+.back-to-agenda { display:inline-block; margin-bottom:18px; color:var(--muted); font-size:13px; }
+.training-header { padding:28px; border:1px solid var(--line); border-radius:20px; background:linear-gradient(120deg,var(--card),color-mix(in srgb,var(--card) 88%,#a3ca60)); }
+.training-heading { display:flex; align-items:center; gap:16px; }
+.training-heading h1 { margin:4px 0 0; }
+.training-header-icon { display:grid; place-items:center; flex:0 0 56px; height:56px; border-radius:16px; background:#ddecbb; color:#425d20; }
+.training-facts { display:flex; flex-wrap:wrap; gap:14px 26px; margin-top:24px; font-size:14px; }
+.training-facts>span { display:flex; align-items:center; gap:8px; }
+.training-facts svg { flex-shrink:0; color:var(--muted); }
+.training-notes { border-top:1px solid var(--line); padding-top:18px; margin:20px 0 0; white-space:pre-wrap; }
+.photo-preview-button { border:0; background:none; padding:0; line-height:0; border-radius:50%; cursor:zoom-in; }
+.photo-lightbox { width:100vw; height:100dvh; max-width:none; max-height:none; border:0; padding:30px; background:transparent; color:white; }
+.photo-lightbox[open] { display:grid; place-items:center; }
+.photo-lightbox::backdrop { background:rgba(5,12,9,.85); }
+.photo-lightbox-content { position:relative; width:min(80vw,800px); }
+.photo-lightbox-content img { display:block; width:100%; height:auto; max-width:100%; max-height:80dvh; object-fit:contain; border-radius:16px; }
+.photo-close { position:absolute; right:10px; top:10px; width:38px; height:38px; border:0; border-radius:50%; background:#18251b; color:white; font-size:26px; cursor:pointer; }
+.lineup-card { margin-top:18px; }
+.lineup-layout { display:grid; grid-template-columns:minmax(0,1.3fr) minmax(200px,1fr); gap:24px; align-items:start; }
+.lineup-layout.read-only { grid-template-columns:minmax(0,1fr); }
+.formation-picker select { width:auto; }
+.hockey-field { position:relative; width:100%; max-width:480px; aspect-ratio:550/914; border-radius:12px; overflow:hidden; background:repeating-linear-gradient(0deg,#236349 0%,#236349 12.5%,#296e51 12.5%,#296e51 25%); flex-shrink:0; }
+.pitch-markings { position:absolute; inset:0; width:100%; height:100%; fill:none; stroke:#ffffff85; stroke-width:2; }
+.lineup-position { position:absolute; transform:translate(-50%,-50%); display:flex; flex-direction:column; align-items:center; gap:4px; width:19%; padding:0; border:0; background:none; color:white; cursor:pointer; }
+.lineup-position:disabled { opacity:1; cursor:default; }
+.lineup-avatar { display:grid; place-items:center; width:48px; height:48px; border-radius:50%; background:#f4f6ef; color:#24402a; font-weight:800; font-size:20px; border:2px solid white; box-shadow:0 3px 10px #0004; }
+.lineup-avatar img { width:100%; height:100%; border-radius:50%; object-fit:cover; }
+.lineup-avatar.goalkeeper { background:#ffcd76; }
+.lineup-position.selected .lineup-avatar { outline:3px solid #d2ed6a; outline-offset:3px; }
+.lineup-name { max-width:100%; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; padding:2px 5px; border-radius:4px; background:#123223d9; font-size:12px; }
+.lineup-selection { display:flex; flex-direction:column; gap:14px; min-width:0; flex:1; }
+.lineup-selection h3 { margin:0; font-size:16px; }
+.lineup-player-list { display:grid; gap:6px; max-height:430px; overflow-y:auto; }
+.lineup-player { display:flex; align-items:center; gap:10px; background:var(--card); border:1px solid var(--line); border-radius:10px; padding:9px; text-align:left; color:inherit; cursor:pointer; }
+.lineup-player img { border-radius:50%; object-fit:cover; }
+.lineup-player small { display:block; color:var(--muted); font-size:11px; }
+/* Keep status controls and secondary surfaces legible in the dark palette. */
+html[data-theme="dark"] .attendance-choice.present { background:#213d26; color:#c7ed9c; border-color:#527940; }
+html[data-theme="dark"] .attendance-choice.present[aria-pressed="true"] { background:#31532c; color:#dcf7ba; border-color:#8ab965; }
+html[data-theme="dark"] .attendance-choice.unknown { background:#25352e; color:#b8c9c0; border-color:#52685c; }
+html[data-theme="dark"] .attendance-choice.unknown[aria-pressed="true"] { background:#384b40; color:#e0eae4; border-color:#82998b; }
+html[data-theme="dark"] .attendance-choice.absent { background:#432821; color:#ffc1ad; border-color:#825448; }
+html[data-theme="dark"] .attendance-choice.absent[aria-pressed="true"] { background:#60372d; color:#ffdbcf; border-color:#c18873; }
+html[data-theme="dark"] .is-locked .attendance-choice,
+html[data-theme="dark"] .is-locked .attendance-choice[aria-pressed="true"] { background:#303835; color:#c4ccc8; border-color:#6b7770; }
+html[data-theme="dark"] .switch-track { background:#52685c; }
+html[data-theme="dark"] .attendance-lock[aria-checked="true"] .switch-track { background:#527b2d; }
+html[data-theme="dark"] .training-header-icon { background:#2b4225; color:#d2edaa; }
+html[data-theme="dark"] .agenda-type.training { background:#3b3120; color:#ead29e; border-color:#76603a; }
+html[data-theme="dark"] .matches-table-card tbody tr:hover,
+html[data-theme="dark"] .standings-table .points strong,
+html[data-theme="dark"] .release-instructions { background:#20372d; }
+html[data-theme="dark"] .notification-item.unread { background:#263d23; }
+html[data-theme="dark"] .agenda-tabs a.active { background:#126a4d; color:#e0f6b9; }
+html[data-theme="dark"] .calendar-grid button.selected,
+html[data-theme="dark"] .time-popover button.selected { background:#126a4d; color:#ffffff; }
+.link-button { color:var(--green); }
+@media(max-width:700px) {
+ .attendance-row { gap:8px; }
+ .attendance-person { gap:8px; font-size:13px; }
+ .attendance-card .card-head { gap:8px; flex-wrap:wrap; }
+ .training-header { padding:20px; }
+ .training-facts { flex-direction:column; gap:12px; }
+ .agenda-entry { gap:6px; flex-wrap:wrap; }
+ .agenda-entry .agenda-row { padding-right:0; }
+ .agenda-entry>.attendance-control { padding:0 12px 12px; margin-left:auto; }
+ .lineup-layout { grid-template-columns:minmax(0,1fr); }
+ .hockey-field { max-width:100%; }
+ .lineup-selection { width:100%; }
+ .lineup-avatar { width:38px; height:38px; font-size:16px; }
+ .lineup-name { font-size:10px; }
 }
