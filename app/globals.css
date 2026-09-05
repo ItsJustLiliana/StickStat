@@ -2577,7 +2577,7 @@ html[data-theme="dark"] .input {
 .match-event-header .match-scoreboard {
     justify-content: center;
     gap: 18px;
-    margin-top: 6px;
+    margin-top: 0;
 }
 
 .match-event-header .match-score-team {
@@ -3115,4 +3115,16 @@ html[data-theme="dark"] .time-popover button.selected {
     .lineup-name {
         font-size: 10px;
     }
+}
+
+.match-event-header .training-facts {
+    margin-top: 20px;
+}
+
+.match-event-header + .match-tabs-wrap {
+    margin-top: 22px;
+}
+
+.supplemental-attendance {
+    margin-top: 10px;
 }
