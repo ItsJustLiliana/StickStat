@@ -1953,6 +1953,7 @@ html[data-theme="dark"] body {
     }
 
     .agenda-entry {
+        position: relative;
         flex-wrap: wrap;
     }
 
@@ -1960,11 +1961,15 @@ html[data-theme="dark"] body {
         flex: 1 0 100%;
     }
 
+    .agenda-entry .agenda-row>span>small:last-child {
+        padding-right: 126px;
+    }
+
     .agenda-entry>.attendance-control {
-        display: flex;
-        width: 100%;
-        justify-content: flex-end;
-        padding: 0 0 12px;
+        position: absolute;
+        right: 18px;
+        bottom: 14px;
+        padding: 0;
     }
 }
 
@@ -2939,7 +2944,9 @@ html[data-theme="dark"] .notification-item.unread {
     background: #263d23;
 }
 
-html[data-theme="dark"] .agenda-tabs a.active {
+html[data-theme="dark"] .agenda-tabs a.active,
+html[data-theme="dark"] .match-tabs button.active,
+html[data-theme="dark"] .match-tabs button[aria-selected="true"] {
     background: #126a4d;
     color: #e0f6b9;
 }
