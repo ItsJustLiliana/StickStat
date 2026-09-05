@@ -3033,6 +3033,15 @@ html[data-theme="dark"] .time-popover button.selected {
         padding: 0;
     }
 
+    .agenda-entry .agenda-row>span>small:last-child {
+        display: -webkit-box;
+        padding-right: 136px;
+        overflow: hidden;
+        line-height: 1.25;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+    }
+
     .lineup-card .card-head {
         align-items: flex-start;
         flex-wrap: wrap;
