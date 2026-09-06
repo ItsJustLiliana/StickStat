@@ -13,6 +13,7 @@ export const lineupSchema = z.object({
   teamId: z.string().cuid(),
   formation: z.enum(["4-3-3", "3-4-3", "3-3-4", "4-4-2", "4-2-3-1"]),
   positions: z.array(z.string().cuid().nullable()).length(11),
+  substitutes: z.object({ defense: z.array(z.string().cuid()).max(3), midfield: z.array(z.string().cuid()).max(3), attack: z.array(z.string().cuid()).max(3) }).default({ defense: [], midfield: [], attack: [] }),
 }).refine(input => { const ids = input.positions.filter(Boolean); return new Set(ids).size === ids.length; }, { message: "Een speler kan maar op één positie staan", path: ["positions"] });
 
 type LineRole = "defense" | "midfield" | "holding-midfield" | "attacking-midfield" | "attack";

@@ -403,5 +403,6 @@ model MatchTeamPlan {
   attendanceLocked Boolean @default(false)
   formation String @default("4-3-3")
   positions Json @default("[]")
+  substitutes Json @default("{}")
   @@unique([matchId, teamId])
 }
