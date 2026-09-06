@@ -10,8 +10,8 @@ describe("eenvoudige wedstrijdinvoer", () => {
     for (const omitted of ["Assists", "Minuten", "Saves", "Tijdlijn"]) expect(form).not.toContain(omitted);
   });
 
-  it("is beschikbaar vanaf het begin van de wedstrijd en bewaakt de teamscore", () => {
-    expect(route).toMatch(/!\["live",\s*"finished"\]\.includes\(match\.status\)/);
+  it("is vooraf invulbaar voor teambeheerders en bewaakt de teamscore", () => {
+    expect(route).not.toContain("MATCH_NOT_STARTED");
     expect(route).toContain("TOO_MANY_GOALS");
     expect(route).toContain("MULTIPLE_MVPS");
     expect(route).toContain("PLAYER_TEAM_MISMATCH");

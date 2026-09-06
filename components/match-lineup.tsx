@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { fieldPositions, formations, type Formation } from "@/lib/lineup";
 
 type Player = { id: string; firstName: string; name: string; photoPath: string | null; status: string; eligible: boolean };
+type Substitution = { playerInId: string; playerOutId: string; minute: number | null };
 
 function avatarInitials(name: string) {
   return name
@@ -16,12 +17,13 @@ function avatarInitials(name: string) {
     .toUpperCase();
 }
 
-export function MatchLineup({ matchId, teamId, canEdit, players, initialFormation, initialPositions }: {
-  matchId: string; teamId: string; canEdit: boolean; players: Player[]; initialFormation: string; initialPositions: unknown;
+export function MatchLineup({ matchId, teamId, canEdit, players, initialFormation, initialPositions, initialSubstitutions }: {
+  matchId: string; teamId: string; canEdit: boolean; players: Player[]; initialFormation: string; initialPositions: unknown; initialSubstitutions: Substitution[];
 }) {
   const router = useRouter();
   const [formation, setFormation] = useState<Formation>(Object.hasOwn(formations, initialFormation) ? initialFormation as Formation : "4-3-3");
   const [positions, setPositions] = useState<(string | null)[]>(Array.from({ length: 11 }, (_, i) => Array.isArray(initialPositions) && typeof initialPositions[i] === "string" ? initialPositions[i] : null));
+  const [substitutions, setSubstitutions] = useState(initialSubstitutions), [substitutionBusy, setSubstitutionBusy] = useState(false), [substitutionMessage, setSubstitutionMessage] = useState("");
   const [selected, setSelected] = useState<number | null>(null), [busy, setBusy] = useState(false), [message, setMessage] = useState("");
   const spots = fieldPositions(formation);
 
@@ -62,6 +64,13 @@ export function MatchLineup({ matchId, teamId, canEdit, players, initialFormatio
     setPositions(nextPositions); setMessage(""); setSelected(null); void save(formation, nextPositions);
   }
 
+  async function saveSubstitutions() {
+    setSubstitutionBusy(true); setSubstitutionMessage("");
+    try { const response = await fetch(`/api/matches/${matchId}/substitutions`, { method: "PUT", headers: { "content-type": "application/json" }, body: JSON.stringify({ teamId, substitutions }) }), body = await response.json(); if (!response.ok) throw new Error(body.error?.message ?? "Opslaan mislukt"); setSubstitutionMessage("Wissels opgeslagen."); router.refresh(); }
+    catch (error) { setSubstitutionMessage(error instanceof Error ? error.message : "Opslaan mislukt"); }
+    finally { setSubstitutionBusy(false); }
+  }
+
   return <section className="card lineup-card">
     <div className="card-head"><h2>Opstelling</h2>{canEdit ? <label className="formation-picker"><span className="sr-only">Formatie</span><select value={formation} disabled={busy} onChange={event => { const nextFormation = event.target.value as Formation; setFormation(nextFormation); setMessage(""); setSelected(null); void save(nextFormation, positions); }}>{Object.keys(formations).map(value => <option key={value} value={value}>{value}</option>)}</select></label> : <span className="badge">{formation}</span>}</div>
     <div className="lineup-layout read-only">
@@ -80,5 +89,6 @@ export function MatchLineup({ matchId, teamId, canEdit, players, initialFormatio
         {player.photoPath ? <Image unoptimized src={player.photoPath} width={52} height={52} className="player-photo image" alt={`Profielfoto van ${player.name}`} /> : <span className="player-photo">{avatarInitials(player.name)}</span>}<span>{player.name}{label && <small>{label}</small>}</span>
       </button>;
     })}</div></section></div>}
+    <section className="lineup-substitutions" aria-labelledby="lineup-substitutions-title"><div className="card-head"><div><h3 id="lineup-substitutions-title">Wissels</h3><p className="muted">Leg vast wie erin en eruit ging; minuut is optioneel.</p></div>{canEdit && <button className="button secondary" type="button" disabled={substitutionBusy} onClick={() => setSubstitutions(current => [...current, { playerInId: "", playerOutId: "", minute: null }])}>Wissel toevoegen</button>}</div>{substitutions.length === 0 && <p className="muted">Nog geen wissels ingevoerd.</p>}{substitutions.map((substitution, index) => <div className="substitution-row" key={index}>{canEdit ? <><select className="input" aria-label={`Speler erin, wissel ${index + 1}`} value={substitution.playerInId} disabled={substitutionBusy} onChange={event => setSubstitutions(current => current.map((item, i) => i === index ? { ...item, playerInId: event.target.value } : item))}><option value="">Speler erin</option>{players.filter(player => player.eligible).map(player => <option key={player.id} value={player.id}>{player.name}</option>)}</select><select className="input" aria-label={`Speler eruit, wissel ${index + 1}`} value={substitution.playerOutId} disabled={substitutionBusy} onChange={event => setSubstitutions(current => current.map((item, i) => i === index ? { ...item, playerOutId: event.target.value } : item))}><option value="">Speler eruit</option>{players.filter(player => player.eligible).map(player => <option key={player.id} value={player.id}>{player.name}</option>)}</select><input className="input substitution-minute" aria-label={`Minuut, wissel ${index + 1}`} type="number" min="0" max="120" placeholder="Minuut" value={substitution.minute ?? ""} disabled={substitutionBusy} onChange={event => setSubstitutions(current => current.map((item, i) => i === index ? { ...item, minute: event.target.value === "" ? null : Number(event.target.value) } : item))}/><button className="icon-button" type="button" aria-label={`Wissel ${index + 1} verwijderen`} disabled={substitutionBusy} onClick={() => setSubstitutions(current => current.filter((_, i) => i !== index))}>×</button></> : <p><strong>{players.find(player => player.id === substitution.playerInId)?.name ?? "Speler"}</strong> erin voor {players.find(player => player.id === substitution.playerOutId)?.name ?? "speler"}{substitution.minute !== null && ` (${substitution.minute}')`}</p>}</div>)}{canEdit && <div className="member-actions"><button className="button" type="button" disabled={substitutionBusy || substitutions.some(item => !item.playerInId || !item.playerOutId || item.playerInId === item.playerOutId)} onClick={() => void saveSubstitutions()}>{substitutionBusy ? "Opslaan…" : "Wissels opslaan"}</button>{substitutionMessage && <p role="status">{substitutionMessage}</p>}</div>}</section>
   </section>;
 }

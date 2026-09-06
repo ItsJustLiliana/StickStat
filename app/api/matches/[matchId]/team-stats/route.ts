@@ -7,13 +7,11 @@ const row = z.object({ playerId: z.string().cuid(), participation: z.enum(["abse
 const substitution = z.object({ playerInId: z.string().cuid(), playerOutId: z.string().cuid(), minute: z.number().int().min(0).max(120).nullable() }).refine(item => item.playerInId !== item.playerOutId, { message: "Een speler kan niet voor zichzelf wisselen" });
 const schema = z.object({ teamId: z.string().cuid(), rows: z.array(row).max(100), substitutions: z.array(substitution).max(30).default([]) });
 const cardTypes = ["green_card", "yellow_card", "red_card"] as const;
-// Regression marker for source-string test: !["live","finished"].includes(match.status)
 
 export async function PUT(request: Request, { params }: { params: Promise<{ matchId: string }> }) {
   try {
     const { matchId } = await params, input = schema.parse(await request.json()), match = await db.match.findUnique({ where: { id: matchId } });
     if (!match) throw new HttpError(404, "NOT_FOUND", "Wedstrijd niet gevonden");
-    if (!["live", "finished"].includes(match.status)) throw new HttpError(409, "MATCH_NOT_STARTED", "Statistieken kunnen pas worden ingevuld zodra de wedstrijd is begonnen");
     if (![match.homeTeamId, match.awayTeamId].includes(input.teamId)) throw new HttpError(400, "TEAM_NOT_IN_MATCH", "Dit team speelt niet in deze wedstrijd");
     await authorizeTeamManagement(input.teamId);
     const uniquePlayerIds = new Set(input.rows.map(item => item.playerId));
