@@ -5,9 +5,9 @@ const form = readFileSync("components/match-team-stats-form.tsx", "utf8");
 const route = readFileSync("app/api/matches/[matchId]/team-stats/route.ts", "utf8");
 
 describe("eenvoudige wedstrijdinvoer", () => {
-  it("beperkt het formulier tot deelname, goals, kaarten, MVP en notitie", () => {
-    for (const label of ["Niet meegedaan", "Wissel", "Basis", "Goals", "Groen", "Geel", "Rood", "MVP", "Korte notitie"]) expect(form).toContain(label);
-    for (const omitted of ["Assists", "Minuten", "Saves", "Tijdlijn"]) expect(form).not.toContain(omitted);
+  it("biedt gebeurtenisgestuurde invoer voor prestaties", () => {
+    for (const label of ["Goal", "Assist", "Redding", "Groene kaart", "Gele kaart", "Rode kaart", "Man of the Match", "Notitie"]) expect(form).toContain(label);
+    expect(form).toContain("Kies een gebeurtenis");
   });
 
   it("is vooraf invulbaar voor teambeheerders en bewaakt de teamscore", () => {
