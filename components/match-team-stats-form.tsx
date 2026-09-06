@@ -51,7 +51,7 @@ export function MatchTeamStatsForm({ matchId, teamId, teamScore, initialRows, te
     const [busy, setBusy] = useState(false);
     const [message, setMessage] = useState("");
     const autoSave = useRef(false);
-    const [action, setAction] = useState<"goals" | "saves" | "greenCards" | "yellowCards" | "redCards" | "mvp" | "notes" | null>(null);
+    const [action, setAction] = useState<"goals" | "saves" | "greenCards" | "yellowCards" | "redCards" | "mvp" | "notes" | "clear" | null>(null);
     const [playerId, setPlayerId] = useState(""), [assistId, setAssistId] = useState(""), [note, setNote] = useState("");
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -63,13 +63,14 @@ export function MatchTeamStatsForm({ matchId, teamId, teamScore, initialRows, te
         const index = rows.findIndex(row => row.playerId === playerId);
         if (index < 0 || !action) return;
         autoSave.current = true;
-        if (action === "mvp") setRows(current => current.map(row => ({ ...row, mvp: row.playerId === playerId, participation: row.playerId === playerId && row.participation === "absent" ? "substitute" : row.participation })));
+        if (action === "clear") setRows(current => current.map(row => row.playerId === playerId ? { ...row, participation: "absent", goals: 0, assists: 0, saves: 0, greenCards: 0, yellowCards: 0, redCards: 0, mvp: false, notes: "" } : row));
+        else if (action === "mvp") setRows(current => current.map(row => ({ ...row, mvp: row.playerId === playerId, participation: row.playerId === playerId && row.participation === "absent" ? "substitute" : row.participation })));
         else setRows(current => current.map((row, rowIndex) => {
             if (rowIndex === index) return { ...row, participation: row.participation === "absent" ? "substitute" : row.participation, ...(action === "notes" ? { notes: note.trim() ? [row.notes, note.trim()].filter(Boolean).join(" · ") : row.notes } : { [action]: row[action] + 1 }) };
             if (action === "goals" && row.playerId === assistId) return { ...row, participation: row.participation === "absent" ? "substitute" : row.participation, assists: row.assists + 1 };
             return row;
         }));
-        if (action !== "notes" && note.trim()) setRows(current => current.map(row => row.playerId === playerId ? { ...row, notes: [row.notes, note.trim()].filter(Boolean).join(" · ") } : row));
+        if (action !== "notes" && action !== "clear" && note.trim()) setRows(current => current.map(row => row.playerId === playerId ? { ...row, notes: [row.notes, note.trim()].filter(Boolean).join(" · ") } : row));
         setAction(null); setPlayerId(""); setAssistId(""); setNote("");
     }
 
@@ -94,7 +95,7 @@ export function MatchTeamStatsForm({ matchId, teamId, teamScore, initialRows, te
             return;
         }
 
-        setMessage(body.data.unassignedGoals ? `${body.data.unassignedGoals} goal(s) zijn nog niet toegewezen.` : "Wedstrijdstatistieken opgeslagen.");
+        setMessage(body.data.unassignedGoals ? `${body.data.unassignedGoals} goal(s) zijn nog niet toegewezen.` : "");
         if (closeAfterSave) setEditing(false);
         router.refresh();
     }
@@ -144,14 +145,14 @@ export function MatchTeamStatsForm({ matchId, teamId, teamScore, initialRows, te
                             <tbody>
                                 {playedRows.map(row => (
                                     <tr key={row.playerId}>
-                                        <td><strong>{row.name}</strong>{row.mvp && mvpPhotoPath && <MatchPhoto src={mvpPhotoPath} alt={`Man of the Match: ${row.name}`} className="match-mvp-photo" />}</td>
-                                        <td>{row.participation === "starter" ? "Basis" : "Wissel"}</td>
-                                        <td>{row.goals}</td>
-                                        <td>{row.assists || "â€“"}</td>
-                                        <td>{row.saves || "–"}</td>
-                                        <td><CardDots row={row} /></td>
-                                        <td>{row.mvp ? "★" : "–"}</td>
-                                        <td>{row.notes || "–"}</td>
+                                        <td data-label="Speler"><strong>{row.name}</strong>{row.mvp && mvpPhotoPath && <MatchPhoto src={mvpPhotoPath} alt={`Man of the Match: ${row.name}`} className="match-mvp-photo" />}</td>
+                                        <td data-label="Rol">{row.participation === "starter" ? "Basis" : "Wissel"}</td>
+                                        <td data-label="Goals">{row.goals}</td>
+                                        <td data-label="Assists">{row.assists || "–"}</td>
+                                        <td data-label="Reddingen">{row.saves || "–"}</td>
+                                        <td data-label="Kaarten"><CardDots row={row} /></td>
+                                        <td data-label="Man of the Match">{row.mvp ? "★" : "–"}</td>
+                                        <td data-label="Notitie">{row.notes || "–"}</td>
                                     </tr>
                                 ))}
                             </tbody>
@@ -191,8 +192,8 @@ export function MatchTeamStatsForm({ matchId, teamId, teamScore, initialRows, te
                 </button>
             </div>
 
-            <div className="performance-actions"><p className="muted">Kies een gebeurtenis en daarna de betrokken speler(s).</p>{[["goals", "Goal"], ["saves", "Redding"], ["greenCards", "Groene kaart"], ["yellowCards", "Gele kaart"], ["redCards", "Rode kaart"], ["mvp", "Man of the Match"], ["notes", "Notitie"]].map(([kind, label]) => <button className="button secondary" type="button" key={kind} onClick={() => setAction(kind as typeof action)}>{label}</button>)}</div>
-            {action && <div className="lineup-dialog-backdrop" role="presentation" onMouseDown={event => { if (event.target === event.currentTarget) setAction(null); }}><section className="card lineup-dialog" role="dialog" aria-modal="true" aria-labelledby="performance-action-title"><div className="card-head"><h3 id="performance-action-title">{({ goals: "Goal", saves: "Redding", greenCards: "Groene kaart", yellowCards: "Gele kaart", redCards: "Rode kaart", mvp: "Man of the Match", notes: "Notitie" } as const)[action]}</h3><button className="icon-button" type="button" aria-label="Sluiten" onClick={() => setAction(null)}><X size={18}/></button></div><label>Speler<select className="input" value={playerId} onChange={event => setPlayerId(event.target.value)}><option value="">Kies speler</option>{rows.map(row => <option key={row.playerId} value={row.playerId}>{row.name}</option>)}</select></label>{action === "goals" && <label>Assist (optioneel)<select className="input" value={assistId} onChange={event => setAssistId(event.target.value)}><option value="">Geen assist</option>{rows.filter(row => row.playerId !== playerId).map(row => <option key={row.playerId} value={row.playerId}>{row.name}</option>)}</select></label>}<label>Notitie (optioneel)<textarea className="input" value={note} maxLength={500} onChange={event => setNote(event.target.value)} /></label><button className="button" type="button" disabled={!playerId || (action === "notes" && !note.trim())} onClick={addAction}>Toevoegen</button></section></div>}
+            <div className="performance-actions"><p className="muted">Kies een gebeurtenis en daarna de betrokken speler(s).</p>{[["goals", "Goal"], ["saves", "Redding"], ["greenCards", "Groene kaart"], ["yellowCards", "Gele kaart"], ["redCards", "Rode kaart"], ["mvp", "Man of the Match"], ["notes", "Notitie"], ["clear", "Spelerprestaties wissen"]].map(([kind, label]) => <button className="button secondary" type="button" key={kind} disabled={busy} onClick={() => setAction(kind as typeof action)}>{label}</button>)}</div>
+            {action && <div className="lineup-dialog-backdrop" role="presentation" onMouseDown={event => { if (event.target === event.currentTarget) setAction(null); }}><section className="card lineup-dialog" role="dialog" aria-modal="true" aria-labelledby="performance-action-title"><div className="card-head"><h3 id="performance-action-title">{({ goals: "Goal", saves: "Redding", greenCards: "Groene kaart", yellowCards: "Gele kaart", redCards: "Rode kaart", mvp: "Man of the Match", notes: "Notitie", clear: "Spelerprestaties wissen" } as const)[action]}</h3><button className="icon-button" type="button" aria-label="Sluiten" onClick={() => setAction(null)}><X size={18}/></button></div><label>Speler<select className="input" value={playerId} onChange={event => setPlayerId(event.target.value)}><option value="">Kies speler</option>{rows.map(row => <option key={row.playerId} value={row.playerId}>{row.name}</option>)}</select></label>{action === "goals" && <label>Assist (optioneel)<select className="input" value={assistId} onChange={event => setAssistId(event.target.value)}><option value="">Geen assist</option>{rows.filter(row => row.playerId !== playerId).map(row => <option key={row.playerId} value={row.playerId}>{row.name}</option>)}</select></label>}{action !== "clear" && <label>Notitie (optioneel)<textarea className="input" value={note} maxLength={500} onChange={event => setNote(event.target.value)} /></label>}<button className="button" type="button" disabled={!playerId || (action === "notes" && !note.trim())} onClick={addAction}>{action === "clear" ? "Wissen" : "Toevoegen"}</button></section></div>}
 
             <div className="member-actions">
                 {teamScore !== null && totalGoals !== teamScore && (

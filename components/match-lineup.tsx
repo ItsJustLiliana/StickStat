@@ -64,7 +64,7 @@ export function MatchLineup({ matchId, teamId, canEdit, players, initialFormatio
 
   async function saveBench(nextBench: Bench) {
     setSubstitutionBusy(true); setSubstitutionMessage("");
-    try { const response = await fetch(`/api/matches/${matchId}/lineup`, { method: "PUT", headers: { "content-type": "application/json" }, body: JSON.stringify({ teamId, formation, positions, substitutes: nextBench }) }), body = await response.json(); if (!response.ok) throw new Error(body.error?.message ?? "Opslaan mislukt"); setSubstitutionMessage("Wisselbank opgeslagen."); }
+    try { const response = await fetch(`/api/matches/${matchId}/lineup`, { method: "PUT", headers: { "content-type": "application/json" }, body: JSON.stringify({ teamId, formation, positions, substitutes: nextBench }) }), body = await response.json(); if (!response.ok) throw new Error(body.error?.message ?? "Opslaan mislukt"); }
     catch (error) { setSubstitutionMessage(error instanceof Error ? error.message : "Opslaan mislukt"); }
     finally { setSubstitutionBusy(false); }
   }

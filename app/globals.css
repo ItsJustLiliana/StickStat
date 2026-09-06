@@ -2066,6 +2066,14 @@ html[data-theme="dark"] body {
     border-left: 3px solid color-mix(in srgb, var(--lime) 65%, var(--line))
 }
 
+/* Compact, app-wide accordion styling for optional attendance groups. */
+.substitute-attendance summary { padding: 15px 16px; border-radius: 14px; background: var(--card) }
+.substitute-attendance summary:after { content: none }
+.substitute-attendance summary small { margin-left: auto }
+.attendance-chevron { flex: 0 0 auto; color: var(--green); transition: transform .18s ease }
+.substitute-attendance[open] .attendance-chevron { transform: rotate(180deg) }
+.substitute-attendance .attendance-list { padding: 8px 0 0; margin-top: 8px; border-top: 1px solid var(--line); border-left: 0 }
+
 .agenda-tabs {
     display: inline-flex;
     align-items: center;

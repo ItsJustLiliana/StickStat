@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { LockKeyhole } from "lucide-react";
+import { ChevronDown, LockKeyhole } from "lucide-react";
 import { AttendanceControls, type AttendanceStatus } from "./attendance-controls";
 import { Toast } from "./toast";
 type Person = { playerId: string; name: string; photoPath: string | null; status: AttendanceStatus; editable: boolean; isSubstitute?: boolean; isSupplemental?: boolean };
@@ -41,8 +41,8 @@ export function AttendanceList({ endpoint, people: rows, canAdmin, locked, autoL
   return <section className="card attendance-card">
     <div className="card-head"><h2>Aanwezigheid</h2>{canAdmin && !autoLocked ? <button type="button" role="switch" aria-checked={locked} aria-label="Aanmeldingen vergrendelen" className="attendance-lock" disabled={busy || refreshing} onClick={() => void toggle()}><LockKeyhole size={16} /><span>Vergrendelen</span><span className="switch-track" /></button> : effectiveLocked && <span className="lock-label"><LockKeyhole size={14} />{autoLocked ? "Automatisch vergrendeld" : "Vergrendeld"}</span>}</div>
     {playerRows(regularPlayers)}
-    {substitutes.length > 0 && <details className="substitute-attendance"><summary><span>Invalspelers</span><small>{substitutes.length} optioneel</small></summary>{playerRows(substitutes)}</details>}
-    {supplementalPlayers.length > 0 && supplementalLabel && <details className="substitute-attendance supplemental-attendance"><summary><span>{supplementalLabel}</span><small>{supplementalPlayers.length} optioneel</small></summary>{playerRows(supplementalPlayers)}</details>}
+    {substitutes.length > 0 && <details className="substitute-attendance"><summary><span>Invalspelers</span><small>{substitutes.length} optioneel</small><ChevronDown className="attendance-chevron" size={18}/></summary>{playerRows(substitutes)}</details>}
+    {supplementalPlayers.length > 0 && supplementalLabel && <details className="substitute-attendance supplemental-attendance"><summary><span>{supplementalLabel}</span><small>{supplementalPlayers.length} optioneel</small><ChevronDown className="attendance-chevron" size={18}/></summary>{playerRows(supplementalPlayers)}</details>}
     {!rows.length && <div className="empty">Geen spelers in deze selectie.</div>}
     {message && <Toast message={message} onDismiss={() => setMessage("")} />}
   </section>;
