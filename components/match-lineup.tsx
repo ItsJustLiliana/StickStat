@@ -7,6 +7,7 @@ import { fieldPositions, formations, type Formation } from "@/lib/lineup";
 
 type Player = { id: string; firstName: string; name: string; photoPath: string | null; status: string; eligible: boolean };
 type Substitution = { playerInId: string; playerOutId: string; minute: number | null; line?: "Verdediging" | "Middenveld" | "Aanval" };
+type Bench = { defense: string[]; midfield: string[]; attack: string[] };
 
 function avatarInitials(name: string) {
   return name
@@ -17,13 +18,14 @@ function avatarInitials(name: string) {
     .toUpperCase();
 }
 
-export function MatchLineup({ matchId, teamId, canEdit, players, initialFormation, initialPositions, initialSubstitutions }: {
-  matchId: string; teamId: string; canEdit: boolean; players: Player[]; initialFormation: string; initialPositions: unknown; initialSubstitutions: Substitution[];
+export function MatchLineup({ matchId, teamId, canEdit, players, initialFormation, initialPositions, initialSubstitutions, initialBench }: {
+  matchId: string; teamId: string; canEdit: boolean; players: Player[]; initialFormation: string; initialPositions: unknown; initialSubstitutions: Substitution[]; initialBench: unknown;
 }) {
   const router = useRouter();
   const [formation, setFormation] = useState<Formation>(Object.hasOwn(formations, initialFormation) ? initialFormation as Formation : "4-3-3");
   const [positions, setPositions] = useState<(string | null)[]>(Array.from({ length: 11 }, (_, i) => Array.isArray(initialPositions) && typeof initialPositions[i] === "string" ? initialPositions[i] : null));
   const [substitutions, setSubstitutions] = useState(initialSubstitutions), [substitutionBusy, setSubstitutionBusy] = useState(false), [substitutionMessage, setSubstitutionMessage] = useState("");
+  const [bench, setBench] = useState<Bench>({ defense: Array.isArray((initialBench as Bench)?.defense) ? (initialBench as Bench).defense : [], midfield: Array.isArray((initialBench as Bench)?.midfield) ? (initialBench as Bench).midfield : [], attack: Array.isArray((initialBench as Bench)?.attack) ? (initialBench as Bench).attack : [] });
   const substitutionsDirty = useRef(false);
   const [selected, setSelected] = useState<number | null>(null), [busy, setBusy] = useState(false), [message, setMessage] = useState("");
   const spots = fieldPositions(formation);
@@ -52,13 +54,22 @@ export function MatchLineup({ matchId, teamId, canEdit, players, initialFormatio
   async function save(nextFormation: Formation, nextPositions: (string | null)[]) {
     setBusy(true); setMessage("");
     try {
-      const response = await fetch(`/api/matches/${matchId}/lineup`, { method: "PUT", headers: { "content-type": "application/json" }, body: JSON.stringify({ teamId, formation: nextFormation, positions: nextPositions }) });
+      const response = await fetch(`/api/matches/${matchId}/lineup`, { method: "PUT", headers: { "content-type": "application/json" }, body: JSON.stringify({ teamId, formation: nextFormation, positions: nextPositions, substitutes: bench }) });
       const body = await response.json();
       if (!response.ok) throw new Error(body.error?.message ?? "Opslaan mislukt");
       setMessage("Opstelling opgeslagen."); router.refresh();
     } catch (error) { setMessage(error instanceof Error ? error.message : "Opslaan mislukt"); }
     finally { setBusy(false); }
   }
+
+  async function saveBench(nextBench: Bench) {
+    setSubstitutionBusy(true); setSubstitutionMessage("");
+    try { const response = await fetch(`/api/matches/${matchId}/lineup`, { method: "PUT", headers: { "content-type": "application/json" }, body: JSON.stringify({ teamId, formation, positions, substitutes: nextBench }) }), body = await response.json(); if (!response.ok) throw new Error(body.error?.message ?? "Opslaan mislukt"); setSubstitutionMessage("Wisselbank opgeslagen."); router.refresh(); }
+    catch (error) { setSubstitutionMessage(error instanceof Error ? error.message : "Opslaan mislukt"); }
+    finally { setSubstitutionBusy(false); }
+  }
+
+  function updateBench(line: keyof Bench, index: number, playerId: string | null) { const nextBench = { ...bench, [line]: playerId === null ? bench[line].filter((_, i) => i !== index) : bench[line].map((id, i) => i === index ? playerId : id) }; setBench(nextBench); void saveBench(nextBench); }
 
   function assign(playerId: string | null) {
     if (selected === null) return;
@@ -100,5 +111,6 @@ export function MatchLineup({ matchId, teamId, canEdit, players, initialFormatio
       </button>;
     })}</div></section></div>}
     <section className="lineup-substitutions" aria-labelledby="lineup-substitutions-title"><div className="card-head"><div><h3 id="lineup-substitutions-title">Wissels per linie</h3><p className="muted">Kies de linie, daarna wie erin en eruit ging.</p></div>{canEdit && <div className="lineup-line-buttons">{(["Verdediging", "Middenveld", "Aanval"] as const).map(line => <button className="button secondary" type="button" key={line} disabled={substitutionBusy} onClick={() => { substitutionsDirty.current = true; setSubstitutions(current => [...current, { playerInId: "", playerOutId: "", minute: null, line }]); }}>{line}</button>)}</div>}</div>{substitutions.length === 0 && <p className="muted">Nog geen wissels ingevoerd.</p>}{substitutions.map((substitution, index) => <div className="substitution-row" key={index}>{canEdit ? <><strong>{substitution.line ?? "Wissel"}</strong><select className="input" aria-label={`Speler erin, wissel ${index + 1}`} value={substitution.playerInId} disabled={substitutionBusy} onChange={event => { substitutionsDirty.current = true; setSubstitutions(current => current.map((item, i) => i === index ? { ...item, playerInId: event.target.value } : item)); }}><option value="">Speler erin</option>{players.filter(player => player.eligible).map(player => <option key={player.id} value={player.id}>{player.name}</option>)}</select><select className="input" aria-label={`Speler eruit, wissel ${index + 1}`} value={substitution.playerOutId} disabled={substitutionBusy} onChange={event => { substitutionsDirty.current = true; setSubstitutions(current => current.map((item, i) => i === index ? { ...item, playerOutId: event.target.value } : item)); }}><option value="">Speler eruit</option>{players.filter(player => player.eligible && (!substitution.line || lineFor(player.id) === substitution.line)).map(player => <option key={player.id} value={player.id}>{player.name}</option>)}</select><input className="input substitution-minute" aria-label={`Minuut, wissel ${index + 1}`} type="number" min="0" max="120" placeholder="Minuut" value={substitution.minute ?? ""} disabled={substitutionBusy} onChange={event => { substitutionsDirty.current = true; setSubstitutions(current => current.map((item, i) => i === index ? { ...item, minute: event.target.value === "" ? null : Number(event.target.value) } : item)); }}/><button className="icon-button" type="button" aria-label={`Wissel ${index + 1} verwijderen`} disabled={substitutionBusy} onClick={() => { substitutionsDirty.current = true; setSubstitutions(current => current.filter((_, i) => i !== index)); }}>×</button></> : <p><strong>{players.find(player => player.id === substitution.playerInId)?.name ?? "Speler"}</strong> erin voor {players.find(player => player.id === substitution.playerOutId)?.name ?? "speler"}{substitution.minute !== null && ` (${substitution.minute}')`}</p>}</div>)}{substitutionBusy && <p className="muted" role="status">Wissel wordt opgeslagen…</p>}{substitutionMessage && <p role="status">{substitutionMessage}</p>}</section>
+    <details className="bench-dropdown"><summary>Wissels</summary><div className="bench-content">{([ ["defense", "Verdediging"], ["midfield", "Middenveld"], ["attack", "Aanval"] ] as const).map(([line, label]) => <section className="bench-line" key={line}><div className="bench-line-head"><h3>{label}</h3>{canEdit && bench[line].length < 3 && <button className="icon-button" type="button" aria-label={`${label}: speler toevoegen`} disabled={substitutionBusy} onClick={() => setBench(current => ({ ...current, [line]: [...current[line], ""] }))}>+</button>}</div>{bench[line].map((playerId, index) => <div className="bench-player" key={`${line}-${index}`}><select className="input" aria-label={`${label}: bankspeler ${index + 1}`} value={playerId} disabled={!canEdit || substitutionBusy} onChange={event => updateBench(line, index, event.target.value || null)}><option value="">Kies speler</option>{players.filter(player => player.eligible && !positions.includes(player.id) && (!Object.values(bench).flat().includes(player.id) || player.id === playerId)).map(player => <option key={player.id} value={player.id}>{player.name}</option>)}</select>{canEdit && <button className="icon-button" type="button" aria-label={`${label}: speler verwijderen`} disabled={substitutionBusy} onClick={() => updateBench(line, index, null)}>×</button>}</div>)}</section>)}{substitutionBusy && <p className="muted" role="status">Wisselbank wordt opgeslagen…</p>}{substitutionMessage && <p role="status">{substitutionMessage}</p>}</div></details>
   </section>;
 }
