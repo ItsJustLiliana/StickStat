@@ -69,6 +69,7 @@ export function MatchTeamStatsForm({ matchId, teamId, teamScore, initialRows, te
             if (action === "goals" && row.playerId === assistId) return { ...row, participation: row.participation === "absent" ? "substitute" : row.participation, assists: row.assists + 1 };
             return row;
         }));
+        if (action !== "notes" && note.trim()) setRows(current => current.map(row => row.playerId === playerId ? { ...row, notes: [row.notes, note.trim()].filter(Boolean).join(" · ") } : row));
         setAction(null); setPlayerId(""); setAssistId(""); setNote("");
     }
 
@@ -175,7 +176,7 @@ export function MatchTeamStatsForm({ matchId, teamId, teamScore, initialRows, te
             <div className="card-head">
                 <div>
                     <h2>Wedstrijdstatistieken aanpassen</h2>
-                    <p className="muted">Deelname, goals, keeperreddingen, kaarten en MVP.</p>
+                    <p className="muted">Kies een actie, speler en eventueel een notitie.</p>
                 </div>
                 <button
                     className="icon-button"
@@ -191,13 +192,10 @@ export function MatchTeamStatsForm({ matchId, teamId, teamScore, initialRows, te
             </div>
 
             <div className="performance-actions"><p className="muted">Kies een gebeurtenis en daarna de betrokken speler(s).</p>{[["goals", "Goal"], ["saves", "Redding"], ["greenCards", "Groene kaart"], ["yellowCards", "Gele kaart"], ["redCards", "Rode kaart"], ["mvp", "Man of the Match"], ["notes", "Notitie"]].map(([kind, label]) => <button className="button secondary" type="button" key={kind} onClick={() => setAction(kind as typeof action)}>{label}</button>)}</div>
-            {action && <div className="lineup-dialog-backdrop" role="presentation" onMouseDown={event => { if (event.target === event.currentTarget) setAction(null); }}><section className="card lineup-dialog" role="dialog" aria-modal="true" aria-labelledby="performance-action-title"><div className="card-head"><h3 id="performance-action-title">{({ goals: "Goal", saves: "Redding", greenCards: "Groene kaart", yellowCards: "Gele kaart", redCards: "Rode kaart", mvp: "Man of the Match", notes: "Notitie" } as const)[action]}</h3><button className="icon-button" type="button" aria-label="Sluiten" onClick={() => setAction(null)}><X size={18}/></button></div><label>Speler<select className="input" value={playerId} onChange={event => setPlayerId(event.target.value)}><option value="">Kies speler</option>{rows.map(row => <option key={row.playerId} value={row.playerId}>{row.name}</option>)}</select></label>{action === "goals" && <label>Assist (optioneel)<select className="input" value={assistId} onChange={event => setAssistId(event.target.value)}><option value="">Geen assist</option>{rows.filter(row => row.playerId !== playerId).map(row => <option key={row.playerId} value={row.playerId}>{row.name}</option>)}</select></label>}{action === "notes" && <label>Notitie<textarea className="input" value={note} maxLength={500} onChange={event => setNote(event.target.value)} /></label>}<button className="button" type="button" disabled={!playerId || (action === "notes" && !note.trim())} onClick={addAction}>Toevoegen</button></section></div>}
+            {action && <div className="lineup-dialog-backdrop" role="presentation" onMouseDown={event => { if (event.target === event.currentTarget) setAction(null); }}><section className="card lineup-dialog" role="dialog" aria-modal="true" aria-labelledby="performance-action-title"><div className="card-head"><h3 id="performance-action-title">{({ goals: "Goal", saves: "Redding", greenCards: "Groene kaart", yellowCards: "Gele kaart", redCards: "Rode kaart", mvp: "Man of the Match", notes: "Notitie" } as const)[action]}</h3><button className="icon-button" type="button" aria-label="Sluiten" onClick={() => setAction(null)}><X size={18}/></button></div><label>Speler<select className="input" value={playerId} onChange={event => setPlayerId(event.target.value)}><option value="">Kies speler</option>{rows.map(row => <option key={row.playerId} value={row.playerId}>{row.name}</option>)}</select></label>{action === "goals" && <label>Assist (optioneel)<select className="input" value={assistId} onChange={event => setAssistId(event.target.value)}><option value="">Geen assist</option>{rows.filter(row => row.playerId !== playerId).map(row => <option key={row.playerId} value={row.playerId}>{row.name}</option>)}</select></label>}<label>Notitie (optioneel)<textarea className="input" value={note} maxLength={500} onChange={event => setNote(event.target.value)} /></label><button className="button" type="button" disabled={!playerId || (action === "notes" && !note.trim())} onClick={addAction}>Toevoegen</button></section></div>}
 
             <div className="member-actions">
                 <button className="button" disabled={busy} onClick={() => setEditing(false)}>Klaar</button>
-                <button className="button secondary" type="button" disabled={busy} onClick={() => { setRows(initialRows); setEditing(false); }}>
-                    Annuleren
-                </button>
                 {teamScore !== null && totalGoals !== teamScore && (
                     <p className="error" role="alert">
                         Totaal goals van spelers ({totalGoals}) moet gelijk zijn aan de teamscore ({teamScore}).

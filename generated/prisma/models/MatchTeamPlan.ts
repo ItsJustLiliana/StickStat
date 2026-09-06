@@ -47,6 +47,7 @@ export type MatchTeamPlanCountAggregateOutputType = {
   attendanceLocked: number
   formation: number
   positions: number
+  substitutes: number
   _all: number
 }
 
@@ -74,6 +75,7 @@ export type MatchTeamPlanCountAggregateInputType = {
   attendanceLocked?: true
   formation?: true
   positions?: true
+  substitutes?: true
   _all?: true
 }
 
@@ -156,6 +158,7 @@ export type MatchTeamPlanGroupByOutputType = {
   attendanceLocked: boolean
   formation: string
   positions: runtime.JsonValue
+  substitutes: runtime.JsonValue
   _count: MatchTeamPlanCountAggregateOutputType | null
   _min: MatchTeamPlanMinAggregateOutputType | null
   _max: MatchTeamPlanMaxAggregateOutputType | null
@@ -186,6 +189,7 @@ export type MatchTeamPlanWhereInput = {
   attendanceLocked?: Prisma.BoolFilter<"MatchTeamPlan"> | boolean
   formation?: Prisma.StringFilter<"MatchTeamPlan"> | string
   positions?: Prisma.JsonFilter<"MatchTeamPlan">
+  substitutes?: Prisma.JsonFilter<"MatchTeamPlan">
   match?: Prisma.XOR<Prisma.MatchScalarRelationFilter, Prisma.MatchWhereInput>
   team?: Prisma.XOR<Prisma.TeamScalarRelationFilter, Prisma.TeamWhereInput>
 }
@@ -197,6 +201,7 @@ export type MatchTeamPlanOrderByWithRelationInput = {
   attendanceLocked?: Prisma.SortOrder
   formation?: Prisma.SortOrder
   positions?: Prisma.SortOrder
+  substitutes?: Prisma.SortOrder
   match?: Prisma.MatchOrderByWithRelationInput
   team?: Prisma.TeamOrderByWithRelationInput
 }
@@ -212,6 +217,7 @@ export type MatchTeamPlanWhereUniqueInput = Prisma.AtLeast<{
   attendanceLocked?: Prisma.BoolFilter<"MatchTeamPlan"> | boolean
   formation?: Prisma.StringFilter<"MatchTeamPlan"> | string
   positions?: Prisma.JsonFilter<"MatchTeamPlan">
+  substitutes?: Prisma.JsonFilter<"MatchTeamPlan">
   match?: Prisma.XOR<Prisma.MatchScalarRelationFilter, Prisma.MatchWhereInput>
   team?: Prisma.XOR<Prisma.TeamScalarRelationFilter, Prisma.TeamWhereInput>
 }, "id" | "matchId_teamId">
@@ -223,6 +229,7 @@ export type MatchTeamPlanOrderByWithAggregationInput = {
   attendanceLocked?: Prisma.SortOrder
   formation?: Prisma.SortOrder
   positions?: Prisma.SortOrder
+  substitutes?: Prisma.SortOrder
   _count?: Prisma.MatchTeamPlanCountOrderByAggregateInput
   _max?: Prisma.MatchTeamPlanMaxOrderByAggregateInput
   _min?: Prisma.MatchTeamPlanMinOrderByAggregateInput
@@ -238,6 +245,7 @@ export type MatchTeamPlanScalarWhereWithAggregatesInput = {
   attendanceLocked?: Prisma.BoolWithAggregatesFilter<"MatchTeamPlan"> | boolean
   formation?: Prisma.StringWithAggregatesFilter<"MatchTeamPlan"> | string
   positions?: Prisma.JsonWithAggregatesFilter<"MatchTeamPlan">
+  substitutes?: Prisma.JsonWithAggregatesFilter<"MatchTeamPlan">
 }
 
 export type MatchTeamPlanCreateInput = {
@@ -245,6 +253,7 @@ export type MatchTeamPlanCreateInput = {
   attendanceLocked?: boolean
   formation?: string
   positions?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  substitutes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   match: Prisma.MatchCreateNestedOneWithoutPlansInput
   team: Prisma.TeamCreateNestedOneWithoutMatchPlansInput
 }
@@ -256,6 +265,7 @@ export type MatchTeamPlanUncheckedCreateInput = {
   attendanceLocked?: boolean
   formation?: string
   positions?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  substitutes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 export type MatchTeamPlanUpdateInput = {
@@ -263,6 +273,7 @@ export type MatchTeamPlanUpdateInput = {
   attendanceLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   formation?: Prisma.StringFieldUpdateOperationsInput | string
   positions?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  substitutes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   match?: Prisma.MatchUpdateOneRequiredWithoutPlansNestedInput
   team?: Prisma.TeamUpdateOneRequiredWithoutMatchPlansNestedInput
 }
@@ -274,6 +285,7 @@ export type MatchTeamPlanUncheckedUpdateInput = {
   attendanceLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   formation?: Prisma.StringFieldUpdateOperationsInput | string
   positions?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  substitutes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 export type MatchTeamPlanCreateManyInput = {
@@ -283,6 +295,7 @@ export type MatchTeamPlanCreateManyInput = {
   attendanceLocked?: boolean
   formation?: string
   positions?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  substitutes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 export type MatchTeamPlanUpdateManyMutationInput = {
@@ -290,6 +303,7 @@ export type MatchTeamPlanUpdateManyMutationInput = {
   attendanceLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   formation?: Prisma.StringFieldUpdateOperationsInput | string
   positions?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  substitutes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 export type MatchTeamPlanUncheckedUpdateManyInput = {
@@ -299,6 +313,7 @@ export type MatchTeamPlanUncheckedUpdateManyInput = {
   attendanceLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   formation?: Prisma.StringFieldUpdateOperationsInput | string
   positions?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  substitutes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 export type MatchTeamPlanListRelationFilter = {
@@ -323,6 +338,7 @@ export type MatchTeamPlanCountOrderByAggregateInput = {
   attendanceLocked?: Prisma.SortOrder
   formation?: Prisma.SortOrder
   positions?: Prisma.SortOrder
+  substitutes?: Prisma.SortOrder
 }
 
 export type MatchTeamPlanMaxOrderByAggregateInput = {
@@ -430,6 +446,7 @@ export type MatchTeamPlanCreateWithoutTeamInput = {
   attendanceLocked?: boolean
   formation?: string
   positions?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  substitutes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   match: Prisma.MatchCreateNestedOneWithoutPlansInput
 }
 
@@ -439,6 +456,7 @@ export type MatchTeamPlanUncheckedCreateWithoutTeamInput = {
   attendanceLocked?: boolean
   formation?: string
   positions?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  substitutes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 export type MatchTeamPlanCreateOrConnectWithoutTeamInput = {
@@ -477,6 +495,7 @@ export type MatchTeamPlanScalarWhereInput = {
   attendanceLocked?: Prisma.BoolFilter<"MatchTeamPlan"> | boolean
   formation?: Prisma.StringFilter<"MatchTeamPlan"> | string
   positions?: Prisma.JsonFilter<"MatchTeamPlan">
+  substitutes?: Prisma.JsonFilter<"MatchTeamPlan">
 }
 
 export type MatchTeamPlanCreateWithoutMatchInput = {
@@ -484,6 +503,7 @@ export type MatchTeamPlanCreateWithoutMatchInput = {
   attendanceLocked?: boolean
   formation?: string
   positions?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  substitutes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   team: Prisma.TeamCreateNestedOneWithoutMatchPlansInput
 }
 
@@ -493,6 +513,7 @@ export type MatchTeamPlanUncheckedCreateWithoutMatchInput = {
   attendanceLocked?: boolean
   formation?: string
   positions?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  substitutes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 export type MatchTeamPlanCreateOrConnectWithoutMatchInput = {
@@ -527,6 +548,7 @@ export type MatchTeamPlanCreateManyTeamInput = {
   attendanceLocked?: boolean
   formation?: string
   positions?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  substitutes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 export type MatchTeamPlanUpdateWithoutTeamInput = {
@@ -534,6 +556,7 @@ export type MatchTeamPlanUpdateWithoutTeamInput = {
   attendanceLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   formation?: Prisma.StringFieldUpdateOperationsInput | string
   positions?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  substitutes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   match?: Prisma.MatchUpdateOneRequiredWithoutPlansNestedInput
 }
 
@@ -543,6 +566,7 @@ export type MatchTeamPlanUncheckedUpdateWithoutTeamInput = {
   attendanceLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   formation?: Prisma.StringFieldUpdateOperationsInput | string
   positions?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  substitutes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 export type MatchTeamPlanUncheckedUpdateManyWithoutTeamInput = {
@@ -551,6 +575,7 @@ export type MatchTeamPlanUncheckedUpdateManyWithoutTeamInput = {
   attendanceLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   formation?: Prisma.StringFieldUpdateOperationsInput | string
   positions?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  substitutes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 export type MatchTeamPlanCreateManyMatchInput = {
@@ -559,6 +584,7 @@ export type MatchTeamPlanCreateManyMatchInput = {
   attendanceLocked?: boolean
   formation?: string
   positions?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  substitutes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 export type MatchTeamPlanUpdateWithoutMatchInput = {
@@ -566,6 +592,7 @@ export type MatchTeamPlanUpdateWithoutMatchInput = {
   attendanceLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   formation?: Prisma.StringFieldUpdateOperationsInput | string
   positions?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  substitutes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   team?: Prisma.TeamUpdateOneRequiredWithoutMatchPlansNestedInput
 }
 
@@ -575,6 +602,7 @@ export type MatchTeamPlanUncheckedUpdateWithoutMatchInput = {
   attendanceLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   formation?: Prisma.StringFieldUpdateOperationsInput | string
   positions?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  substitutes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 export type MatchTeamPlanUncheckedUpdateManyWithoutMatchInput = {
@@ -583,6 +611,7 @@ export type MatchTeamPlanUncheckedUpdateManyWithoutMatchInput = {
   attendanceLocked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   formation?: Prisma.StringFieldUpdateOperationsInput | string
   positions?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  substitutes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 
@@ -594,6 +623,7 @@ export type MatchTeamPlanSelect<ExtArgs extends runtime.Types.Extensions.Interna
   attendanceLocked?: boolean
   formation?: boolean
   positions?: boolean
+  substitutes?: boolean
   match?: boolean | Prisma.MatchDefaultArgs<ExtArgs>
   team?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["matchTeamPlan"]>
@@ -605,6 +635,7 @@ export type MatchTeamPlanSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   attendanceLocked?: boolean
   formation?: boolean
   positions?: boolean
+  substitutes?: boolean
   match?: boolean | Prisma.MatchDefaultArgs<ExtArgs>
   team?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["matchTeamPlan"]>
@@ -616,6 +647,7 @@ export type MatchTeamPlanSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   attendanceLocked?: boolean
   formation?: boolean
   positions?: boolean
+  substitutes?: boolean
   match?: boolean | Prisma.MatchDefaultArgs<ExtArgs>
   team?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["matchTeamPlan"]>
@@ -627,9 +659,10 @@ export type MatchTeamPlanSelectScalar = {
   attendanceLocked?: boolean
   formation?: boolean
   positions?: boolean
+  substitutes?: boolean
 }
 
-export type MatchTeamPlanOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "matchId" | "teamId" | "attendanceLocked" | "formation" | "positions", ExtArgs["result"]["matchTeamPlan"]>
+export type MatchTeamPlanOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "matchId" | "teamId" | "attendanceLocked" | "formation" | "positions" | "substitutes", ExtArgs["result"]["matchTeamPlan"]>
 export type MatchTeamPlanInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   match?: boolean | Prisma.MatchDefaultArgs<ExtArgs>
   team?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
@@ -656,6 +689,7 @@ export type $MatchTeamPlanPayload<ExtArgs extends runtime.Types.Extensions.Inter
     attendanceLocked: boolean
     formation: string
     positions: runtime.JsonValue
+    substitutes: runtime.JsonValue
   }, ExtArgs["result"]["matchTeamPlan"]>
   composites: {}
 }
@@ -1087,6 +1121,7 @@ export interface MatchTeamPlanFieldRefs {
   readonly attendanceLocked: Prisma.FieldRef<"MatchTeamPlan", 'Boolean'>
   readonly formation: Prisma.FieldRef<"MatchTeamPlan", 'String'>
   readonly positions: Prisma.FieldRef<"MatchTeamPlan", 'Json'>
+  readonly substitutes: Prisma.FieldRef<"MatchTeamPlan", 'Json'>
 }
     
 

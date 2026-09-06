@@ -18,7 +18,7 @@ describe("opstelling API", () => {
     expect((await run()).status).toBe(200);
     expect(mocks.authorize).toHaveBeenCalledWith(teamId);
     expect(mocks.count).toHaveBeenCalledWith({where: {id: {in: [playerId]}, teamId, active: true, matchMember: true}});
-    expect(mocks.save.mock.calls[0][0].update).toEqual({formation: input.formation, positions: input.positions});
+    expect(mocks.save.mock.calls[0][0].update).toEqual({formation: input.formation, positions: input.positions, substitutes: {defense: [], midfield: [], attack: []}});
   });
   it("weigert gebruikers zonder beheerrechten", async () => {
     mocks.authorize.mockRejectedValue(new HttpError(403, "FORBIDDEN", "Geen toegang"));

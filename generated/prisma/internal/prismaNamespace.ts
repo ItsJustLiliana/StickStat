@@ -2412,7 +2412,8 @@ export const MatchTeamPlanScalarFieldEnum = {
   teamId: 'teamId',
   attendanceLocked: 'attendanceLocked',
   formation: 'formation',
-  positions: 'positions'
+  positions: 'positions',
+  substitutes: 'substitutes'
 } as const
 
 export type MatchTeamPlanScalarFieldEnum = (typeof MatchTeamPlanScalarFieldEnum)[keyof typeof MatchTeamPlanScalarFieldEnum]
