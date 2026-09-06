@@ -2216,6 +2216,8 @@ export const MatchScalarFieldEnum = {
   homeScore: 'homeScore',
   awayScore: 'awayScore',
   lastSyncedAt: 'lastSyncedAt',
+  teamPhotoPath: 'teamPhotoPath',
+  mvpPhotoPath: 'mvpPhotoPath',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

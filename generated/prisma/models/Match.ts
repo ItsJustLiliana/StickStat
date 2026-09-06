@@ -51,6 +51,8 @@ export type MatchMinAggregateOutputType = {
   homeScore: number | null
   awayScore: number | null
   lastSyncedAt: Date | null
+  teamPhotoPath: string | null
+  mvpPhotoPath: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -70,6 +72,8 @@ export type MatchMaxAggregateOutputType = {
   homeScore: number | null
   awayScore: number | null
   lastSyncedAt: Date | null
+  teamPhotoPath: string | null
+  mvpPhotoPath: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -89,6 +93,8 @@ export type MatchCountAggregateOutputType = {
   homeScore: number
   awayScore: number
   lastSyncedAt: number
+  teamPhotoPath: number
+  mvpPhotoPath: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -120,6 +126,8 @@ export type MatchMinAggregateInputType = {
   homeScore?: true
   awayScore?: true
   lastSyncedAt?: true
+  teamPhotoPath?: true
+  mvpPhotoPath?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -139,6 +147,8 @@ export type MatchMaxAggregateInputType = {
   homeScore?: true
   awayScore?: true
   lastSyncedAt?: true
+  teamPhotoPath?: true
+  mvpPhotoPath?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -158,6 +168,8 @@ export type MatchCountAggregateInputType = {
   homeScore?: true
   awayScore?: true
   lastSyncedAt?: true
+  teamPhotoPath?: true
+  mvpPhotoPath?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -264,6 +276,8 @@ export type MatchGroupByOutputType = {
   homeScore: number | null
   awayScore: number | null
   lastSyncedAt: Date | null
+  teamPhotoPath: string | null
+  mvpPhotoPath: string | null
   createdAt: Date
   updatedAt: Date
   _count: MatchCountAggregateOutputType | null
@@ -306,6 +320,8 @@ export type MatchWhereInput = {
   homeScore?: Prisma.IntNullableFilter<"Match"> | number | null
   awayScore?: Prisma.IntNullableFilter<"Match"> | number | null
   lastSyncedAt?: Prisma.DateTimeNullableFilter<"Match"> | Date | string | null
+  teamPhotoPath?: Prisma.StringNullableFilter<"Match"> | string | null
+  mvpPhotoPath?: Prisma.StringNullableFilter<"Match"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Match"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Match"> | Date | string
   season?: Prisma.XOR<Prisma.SeasonScalarRelationFilter, Prisma.SeasonWhereInput>
@@ -332,6 +348,8 @@ export type MatchOrderByWithRelationInput = {
   homeScore?: Prisma.SortOrderInput | Prisma.SortOrder
   awayScore?: Prisma.SortOrderInput | Prisma.SortOrder
   lastSyncedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  teamPhotoPath?: Prisma.SortOrderInput | Prisma.SortOrder
+  mvpPhotoPath?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   season?: Prisma.SeasonOrderByWithRelationInput
@@ -363,6 +381,8 @@ export type MatchWhereUniqueInput = Prisma.AtLeast<{
   homeScore?: Prisma.IntNullableFilter<"Match"> | number | null
   awayScore?: Prisma.IntNullableFilter<"Match"> | number | null
   lastSyncedAt?: Prisma.DateTimeNullableFilter<"Match"> | Date | string | null
+  teamPhotoPath?: Prisma.StringNullableFilter<"Match"> | string | null
+  mvpPhotoPath?: Prisma.StringNullableFilter<"Match"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Match"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Match"> | Date | string
   season?: Prisma.XOR<Prisma.SeasonScalarRelationFilter, Prisma.SeasonWhereInput>
@@ -389,6 +409,8 @@ export type MatchOrderByWithAggregationInput = {
   homeScore?: Prisma.SortOrderInput | Prisma.SortOrder
   awayScore?: Prisma.SortOrderInput | Prisma.SortOrder
   lastSyncedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  teamPhotoPath?: Prisma.SortOrderInput | Prisma.SortOrder
+  mvpPhotoPath?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.MatchCountOrderByAggregateInput
@@ -416,6 +438,8 @@ export type MatchScalarWhereWithAggregatesInput = {
   homeScore?: Prisma.IntNullableWithAggregatesFilter<"Match"> | number | null
   awayScore?: Prisma.IntNullableWithAggregatesFilter<"Match"> | number | null
   lastSyncedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Match"> | Date | string | null
+  teamPhotoPath?: Prisma.StringNullableWithAggregatesFilter<"Match"> | string | null
+  mvpPhotoPath?: Prisma.StringNullableWithAggregatesFilter<"Match"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Match"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Match"> | Date | string
 }
@@ -432,6 +456,8 @@ export type MatchCreateInput = {
   homeScore?: number | null
   awayScore?: number | null
   lastSyncedAt?: Date | string | null
+  teamPhotoPath?: string | null
+  mvpPhotoPath?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   season: Prisma.SeasonCreateNestedOneWithoutMatchesInput
@@ -458,6 +484,8 @@ export type MatchUncheckedCreateInput = {
   homeScore?: number | null
   awayScore?: number | null
   lastSyncedAt?: Date | string | null
+  teamPhotoPath?: string | null
+  mvpPhotoPath?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   playerStats?: Prisma.PlayerMatchStatsUncheckedCreateNestedManyWithoutMatchInput
@@ -478,6 +506,8 @@ export type MatchUpdateInput = {
   homeScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   awayScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  teamPhotoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mvpPhotoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   season?: Prisma.SeasonUpdateOneRequiredWithoutMatchesNestedInput
@@ -504,6 +534,8 @@ export type MatchUncheckedUpdateInput = {
   homeScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   awayScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  teamPhotoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mvpPhotoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   playerStats?: Prisma.PlayerMatchStatsUncheckedUpdateManyWithoutMatchNestedInput
@@ -527,6 +559,8 @@ export type MatchCreateManyInput = {
   homeScore?: number | null
   awayScore?: number | null
   lastSyncedAt?: Date | string | null
+  teamPhotoPath?: string | null
+  mvpPhotoPath?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -543,6 +577,8 @@ export type MatchUpdateManyMutationInput = {
   homeScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   awayScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  teamPhotoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mvpPhotoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -562,6 +598,8 @@ export type MatchUncheckedUpdateManyInput = {
   homeScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   awayScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  teamPhotoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mvpPhotoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -603,6 +641,8 @@ export type MatchCountOrderByAggregateInput = {
   homeScore?: Prisma.SortOrder
   awayScore?: Prisma.SortOrder
   lastSyncedAt?: Prisma.SortOrder
+  teamPhotoPath?: Prisma.SortOrder
+  mvpPhotoPath?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -627,6 +667,8 @@ export type MatchMaxOrderByAggregateInput = {
   homeScore?: Prisma.SortOrder
   awayScore?: Prisma.SortOrder
   lastSyncedAt?: Prisma.SortOrder
+  teamPhotoPath?: Prisma.SortOrder
+  mvpPhotoPath?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -646,6 +688,8 @@ export type MatchMinOrderByAggregateInput = {
   homeScore?: Prisma.SortOrder
   awayScore?: Prisma.SortOrder
   lastSyncedAt?: Prisma.SortOrder
+  teamPhotoPath?: Prisma.SortOrder
+  mvpPhotoPath?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -870,6 +914,8 @@ export type MatchCreateWithoutHomeTeamInput = {
   homeScore?: number | null
   awayScore?: number | null
   lastSyncedAt?: Date | string | null
+  teamPhotoPath?: string | null
+  mvpPhotoPath?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   season: Prisma.SeasonCreateNestedOneWithoutMatchesInput
@@ -894,6 +940,8 @@ export type MatchUncheckedCreateWithoutHomeTeamInput = {
   homeScore?: number | null
   awayScore?: number | null
   lastSyncedAt?: Date | string | null
+  teamPhotoPath?: string | null
+  mvpPhotoPath?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   playerStats?: Prisma.PlayerMatchStatsUncheckedCreateNestedManyWithoutMatchInput
@@ -924,6 +972,8 @@ export type MatchCreateWithoutAwayTeamInput = {
   homeScore?: number | null
   awayScore?: number | null
   lastSyncedAt?: Date | string | null
+  teamPhotoPath?: string | null
+  mvpPhotoPath?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   season: Prisma.SeasonCreateNestedOneWithoutMatchesInput
@@ -948,6 +998,8 @@ export type MatchUncheckedCreateWithoutAwayTeamInput = {
   homeScore?: number | null
   awayScore?: number | null
   lastSyncedAt?: Date | string | null
+  teamPhotoPath?: string | null
+  mvpPhotoPath?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   playerStats?: Prisma.PlayerMatchStatsUncheckedCreateNestedManyWithoutMatchInput
@@ -1000,6 +1052,8 @@ export type MatchScalarWhereInput = {
   homeScore?: Prisma.IntNullableFilter<"Match"> | number | null
   awayScore?: Prisma.IntNullableFilter<"Match"> | number | null
   lastSyncedAt?: Prisma.DateTimeNullableFilter<"Match"> | Date | string | null
+  teamPhotoPath?: Prisma.StringNullableFilter<"Match"> | string | null
+  mvpPhotoPath?: Prisma.StringNullableFilter<"Match"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Match"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Match"> | Date | string
 }
@@ -1032,6 +1086,8 @@ export type MatchCreateWithoutSeasonInput = {
   homeScore?: number | null
   awayScore?: number | null
   lastSyncedAt?: Date | string | null
+  teamPhotoPath?: string | null
+  mvpPhotoPath?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   homeTeam: Prisma.TeamCreateNestedOneWithoutHomeMatchesInput
@@ -1056,6 +1112,8 @@ export type MatchUncheckedCreateWithoutSeasonInput = {
   homeScore?: number | null
   awayScore?: number | null
   lastSyncedAt?: Date | string | null
+  teamPhotoPath?: string | null
+  mvpPhotoPath?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   playerStats?: Prisma.PlayerMatchStatsUncheckedCreateNestedManyWithoutMatchInput
@@ -1102,6 +1160,8 @@ export type MatchCreateWithoutAttendanceInput = {
   homeScore?: number | null
   awayScore?: number | null
   lastSyncedAt?: Date | string | null
+  teamPhotoPath?: string | null
+  mvpPhotoPath?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   season: Prisma.SeasonCreateNestedOneWithoutMatchesInput
@@ -1127,6 +1187,8 @@ export type MatchUncheckedCreateWithoutAttendanceInput = {
   homeScore?: number | null
   awayScore?: number | null
   lastSyncedAt?: Date | string | null
+  teamPhotoPath?: string | null
+  mvpPhotoPath?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   playerStats?: Prisma.PlayerMatchStatsUncheckedCreateNestedManyWithoutMatchInput
@@ -1162,6 +1224,8 @@ export type MatchUpdateWithoutAttendanceInput = {
   homeScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   awayScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  teamPhotoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mvpPhotoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   season?: Prisma.SeasonUpdateOneRequiredWithoutMatchesNestedInput
@@ -1187,6 +1251,8 @@ export type MatchUncheckedUpdateWithoutAttendanceInput = {
   homeScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   awayScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  teamPhotoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mvpPhotoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   playerStats?: Prisma.PlayerMatchStatsUncheckedUpdateManyWithoutMatchNestedInput
@@ -1206,6 +1272,8 @@ export type MatchCreateWithoutPlayerStatsInput = {
   homeScore?: number | null
   awayScore?: number | null
   lastSyncedAt?: Date | string | null
+  teamPhotoPath?: string | null
+  mvpPhotoPath?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   season: Prisma.SeasonCreateNestedOneWithoutMatchesInput
@@ -1231,6 +1299,8 @@ export type MatchUncheckedCreateWithoutPlayerStatsInput = {
   homeScore?: number | null
   awayScore?: number | null
   lastSyncedAt?: Date | string | null
+  teamPhotoPath?: string | null
+  mvpPhotoPath?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   events?: Prisma.MatchEventUncheckedCreateNestedManyWithoutMatchInput
@@ -1266,6 +1336,8 @@ export type MatchUpdateWithoutPlayerStatsInput = {
   homeScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   awayScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  teamPhotoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mvpPhotoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   season?: Prisma.SeasonUpdateOneRequiredWithoutMatchesNestedInput
@@ -1291,6 +1363,8 @@ export type MatchUncheckedUpdateWithoutPlayerStatsInput = {
   homeScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   awayScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  teamPhotoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mvpPhotoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   events?: Prisma.MatchEventUncheckedUpdateManyWithoutMatchNestedInput
@@ -1310,6 +1384,8 @@ export type MatchCreateWithoutEventsInput = {
   homeScore?: number | null
   awayScore?: number | null
   lastSyncedAt?: Date | string | null
+  teamPhotoPath?: string | null
+  mvpPhotoPath?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   season: Prisma.SeasonCreateNestedOneWithoutMatchesInput
@@ -1335,6 +1411,8 @@ export type MatchUncheckedCreateWithoutEventsInput = {
   homeScore?: number | null
   awayScore?: number | null
   lastSyncedAt?: Date | string | null
+  teamPhotoPath?: string | null
+  mvpPhotoPath?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   playerStats?: Prisma.PlayerMatchStatsUncheckedCreateNestedManyWithoutMatchInput
@@ -1370,6 +1448,8 @@ export type MatchUpdateWithoutEventsInput = {
   homeScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   awayScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  teamPhotoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mvpPhotoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   season?: Prisma.SeasonUpdateOneRequiredWithoutMatchesNestedInput
@@ -1395,6 +1475,8 @@ export type MatchUncheckedUpdateWithoutEventsInput = {
   homeScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   awayScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  teamPhotoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mvpPhotoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   playerStats?: Prisma.PlayerMatchStatsUncheckedUpdateManyWithoutMatchNestedInput
@@ -1414,6 +1496,8 @@ export type MatchCreateWithoutPlansInput = {
   homeScore?: number | null
   awayScore?: number | null
   lastSyncedAt?: Date | string | null
+  teamPhotoPath?: string | null
+  mvpPhotoPath?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   season: Prisma.SeasonCreateNestedOneWithoutMatchesInput
@@ -1439,6 +1523,8 @@ export type MatchUncheckedCreateWithoutPlansInput = {
   homeScore?: number | null
   awayScore?: number | null
   lastSyncedAt?: Date | string | null
+  teamPhotoPath?: string | null
+  mvpPhotoPath?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   playerStats?: Prisma.PlayerMatchStatsUncheckedCreateNestedManyWithoutMatchInput
@@ -1474,6 +1560,8 @@ export type MatchUpdateWithoutPlansInput = {
   homeScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   awayScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  teamPhotoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mvpPhotoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   season?: Prisma.SeasonUpdateOneRequiredWithoutMatchesNestedInput
@@ -1499,6 +1587,8 @@ export type MatchUncheckedUpdateWithoutPlansInput = {
   homeScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   awayScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  teamPhotoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mvpPhotoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   playerStats?: Prisma.PlayerMatchStatsUncheckedUpdateManyWithoutMatchNestedInput
@@ -1520,6 +1610,8 @@ export type MatchCreateManyHomeTeamInput = {
   homeScore?: number | null
   awayScore?: number | null
   lastSyncedAt?: Date | string | null
+  teamPhotoPath?: string | null
+  mvpPhotoPath?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1538,6 +1630,8 @@ export type MatchCreateManyAwayTeamInput = {
   homeScore?: number | null
   awayScore?: number | null
   lastSyncedAt?: Date | string | null
+  teamPhotoPath?: string | null
+  mvpPhotoPath?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1554,6 +1648,8 @@ export type MatchUpdateWithoutHomeTeamInput = {
   homeScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   awayScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  teamPhotoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mvpPhotoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   season?: Prisma.SeasonUpdateOneRequiredWithoutMatchesNestedInput
@@ -1578,6 +1674,8 @@ export type MatchUncheckedUpdateWithoutHomeTeamInput = {
   homeScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   awayScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  teamPhotoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mvpPhotoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   playerStats?: Prisma.PlayerMatchStatsUncheckedUpdateManyWithoutMatchNestedInput
@@ -1600,6 +1698,8 @@ export type MatchUncheckedUpdateManyWithoutHomeTeamInput = {
   homeScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   awayScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  teamPhotoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mvpPhotoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1616,6 +1716,8 @@ export type MatchUpdateWithoutAwayTeamInput = {
   homeScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   awayScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  teamPhotoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mvpPhotoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   season?: Prisma.SeasonUpdateOneRequiredWithoutMatchesNestedInput
@@ -1640,6 +1742,8 @@ export type MatchUncheckedUpdateWithoutAwayTeamInput = {
   homeScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   awayScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  teamPhotoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mvpPhotoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   playerStats?: Prisma.PlayerMatchStatsUncheckedUpdateManyWithoutMatchNestedInput
@@ -1662,6 +1766,8 @@ export type MatchUncheckedUpdateManyWithoutAwayTeamInput = {
   homeScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   awayScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  teamPhotoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mvpPhotoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1680,6 +1786,8 @@ export type MatchCreateManySeasonInput = {
   homeScore?: number | null
   awayScore?: number | null
   lastSyncedAt?: Date | string | null
+  teamPhotoPath?: string | null
+  mvpPhotoPath?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1696,6 +1804,8 @@ export type MatchUpdateWithoutSeasonInput = {
   homeScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   awayScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  teamPhotoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mvpPhotoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   homeTeam?: Prisma.TeamUpdateOneRequiredWithoutHomeMatchesNestedInput
@@ -1720,6 +1830,8 @@ export type MatchUncheckedUpdateWithoutSeasonInput = {
   homeScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   awayScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  teamPhotoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mvpPhotoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   playerStats?: Prisma.PlayerMatchStatsUncheckedUpdateManyWithoutMatchNestedInput
@@ -1742,6 +1854,8 @@ export type MatchUncheckedUpdateManyWithoutSeasonInput = {
   homeScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   awayScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  teamPhotoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mvpPhotoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1819,6 +1933,8 @@ export type MatchSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   homeScore?: boolean
   awayScore?: boolean
   lastSyncedAt?: boolean
+  teamPhotoPath?: boolean
+  mvpPhotoPath?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   season?: boolean | Prisma.SeasonDefaultArgs<ExtArgs>
@@ -1846,6 +1962,8 @@ export type MatchSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   homeScore?: boolean
   awayScore?: boolean
   lastSyncedAt?: boolean
+  teamPhotoPath?: boolean
+  mvpPhotoPath?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   season?: boolean | Prisma.SeasonDefaultArgs<ExtArgs>
@@ -1868,6 +1986,8 @@ export type MatchSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   homeScore?: boolean
   awayScore?: boolean
   lastSyncedAt?: boolean
+  teamPhotoPath?: boolean
+  mvpPhotoPath?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   season?: boolean | Prisma.SeasonDefaultArgs<ExtArgs>
@@ -1890,11 +2010,13 @@ export type MatchSelectScalar = {
   homeScore?: boolean
   awayScore?: boolean
   lastSyncedAt?: boolean
+  teamPhotoPath?: boolean
+  mvpPhotoPath?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type MatchOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "externalProvider" | "externalId" | "seasonId" | "competition" | "homeTeamId" | "awayTeamId" | "date" | "startTime" | "venue" | "status" | "homeScore" | "awayScore" | "lastSyncedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["match"]>
+export type MatchOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "externalProvider" | "externalId" | "seasonId" | "competition" | "homeTeamId" | "awayTeamId" | "date" | "startTime" | "venue" | "status" | "homeScore" | "awayScore" | "lastSyncedAt" | "teamPhotoPath" | "mvpPhotoPath" | "createdAt" | "updatedAt", ExtArgs["result"]["match"]>
 export type MatchInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   season?: boolean | Prisma.SeasonDefaultArgs<ExtArgs>
   homeTeam?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
@@ -1942,6 +2064,8 @@ export type $MatchPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     homeScore: number | null
     awayScore: number | null
     lastSyncedAt: Date | null
+    teamPhotoPath: string | null
+    mvpPhotoPath: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["match"]>
@@ -2388,6 +2512,8 @@ export interface MatchFieldRefs {
   readonly homeScore: Prisma.FieldRef<"Match", 'Int'>
   readonly awayScore: Prisma.FieldRef<"Match", 'Int'>
   readonly lastSyncedAt: Prisma.FieldRef<"Match", 'DateTime'>
+  readonly teamPhotoPath: Prisma.FieldRef<"Match", 'String'>
+  readonly mvpPhotoPath: Prisma.FieldRef<"Match", 'String'>
   readonly createdAt: Prisma.FieldRef<"Match", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Match", 'DateTime'>
 }

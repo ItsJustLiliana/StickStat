@@ -5,6 +5,7 @@ import { AttendanceList } from "@/components/attendance-list";
 import { ClubLogo } from "@/components/logo";
 import { MatchTeamLabel } from "@/components/match-team-label";
 import { MatchTeamStatsForm } from "@/components/match-team-stats-form";
+import { MatchPhoto } from "@/components/match-photo";
 import { MatchDetailTabs } from "@/components/match-detail-tabs";
 import { PageShell } from "@/components/page-shell";
 import { db } from "@/lib/db";
@@ -28,10 +29,13 @@ export default async function MatchDetail({ params, searchParams }: { params: Pr
   const roster = ownTeam ? await db.player.findMany({ where: { teamId: ownTeam.id, OR: [{ active: true, matchMember: true }, { active: true, trainingMember: true, matchMember: false }, { id: { in: plannedPlayerIds } }, { matchStats: { some: { matchId: match.id } } }, { matchAttendance: { some: { matchId: match.id } } }] }, include: { user: { select: { photoPath: true } } }, orderBy: [{ lastName: "asc" }, { namePrefix: "asc" }, { firstName: "asc" }] }) : [], ownStats = ownTeam ? match.playerStats.filter(stat => stat.player.teamId === ownTeam.id) : [];
   const cards = (playerId: string, type: "green_card" | "yellow_card" | "red_card") => match.events.filter(event => event.playerId === playerId && event.type === type).length, attendance = new Map(match.attendance.map(item => [item.playerId, item.status]));
   const initialRows = roster.map(player => { const stat = ownStats.find(item => item.playerId === player.id); return { playerId: player.id, name: player.displayName, participation: stat ? (stat.started ? "starter" as const : "substitute" as const) : "absent" as const, goals: stat?.goals ?? 0, saves: stat?.saves ?? 0, greenCards: cards(player.id, "green_card"), yellowCards: cards(player.id, "yellow_card"), redCards: cards(player.id, "red_card"), mvp: stat?.mvp ?? false, notes: stat?.notes ?? "" } });
+  const rosterIds = new Set(roster.map(player => player.id));
+  const initialSubstitutions = match.events.filter(event => event.type === "substitution" && event.playerId && event.relatedPlayerId && rosterIds.has(event.playerId) && rosterIds.has(event.relatedPlayerId)).map(event => ({ playerInId: event.playerId!, playerOutId: event.relatedPlayerId!, minute: event.minute }));
   return <PageShell user={user}>
     <section className="training-header match-event-header">
       <div className="training-heading"><div><div className="match-scoreboard">
         <div className="match-score-team"><ClubLogo name={match.homeTeam.club.name} path={match.homeTeam.club.logoLocalPath ?? match.homeTeam.club.logoUrl} /><MatchTeamLabel name={match.homeTeam.shortName} own={match.homeTeamId === ownTeam?.id} side="home" /></div>
+        {match.teamPhotoPath && <MatchPhoto src={match.teamPhotoPath} alt="Teamfoto van de wedstrijd" className="match-team-photo" />}
         <div className="rank-number mono match-score">{match.homeScore ?? "–"} <span className="match-score-divider">–</span> {match.awayScore ?? "–"}</div>
         <div className="match-score-team"><ClubLogo name={match.awayTeam.club.name} path={match.awayTeam.club.logoLocalPath ?? match.awayTeam.club.logoUrl} /><MatchTeamLabel name={match.awayTeam.shortName} own={match.awayTeamId === ownTeam?.id} side="away" /></div>
       </div></div></div>
@@ -40,7 +44,7 @@ export default async function MatchDetail({ params, searchParams }: { params: Pr
     {ownTeam && <MatchDetailTabs
       attendance={<AttendanceList endpoint={`/api/matches/${match.id}/attendance`} canAdmin={canAdmin} locked={plan?.attendanceLocked ?? false} autoLocked={isAttendanceAutoLocked(match.date)} teamId={ownTeam.id} supplementalLabel="Trainingsleden" people={roster.map(player => ({ playerId: player.id, name: player.displayName, photoPath: player.user?.photoPath ?? player.photoPath, status: attendance.get(player.id) ?? "unknown", editable: canManage || player.userId === user.id, isSubstitute: player.isSubstitute, isSupplemental: player.trainingMember && !player.matchMember }))} />}
       lineup={<MatchLineup key={`${match.id}-${ownTeam.id}-${plan?.formation}-${JSON.stringify(plan?.positions)}`} matchId={match.id} teamId={ownTeam.id} canEdit={canManage} initialFormation={plan?.formation ?? "4-3-3"} initialPositions={plan?.positions} players={roster.map(player => ({ id: player.id, firstName: player.firstName, name: player.displayName, photoPath: player.user?.photoPath ?? player.photoPath, status: attendance.get(player.id) ?? "unknown", eligible: player.active && player.matchMember }))} />}
-      performance={<MatchTeamStatsForm matchId={match.id} teamId={ownTeam.id} teamScore={ownScore} initialRows={initialRows} canEdit={canEditStats} />}
+      performance={<MatchTeamStatsForm matchId={match.id} teamId={ownTeam.id} teamScore={ownScore} initialRows={initialRows} initialSubstitutions={initialSubstitutions} teamPhotoPath={match.teamPhotoPath} mvpPhotoPath={match.mvpPhotoPath} canEdit={canEditStats} canManagePhotos={canManage} />}
     />}
   </PageShell>;
 }

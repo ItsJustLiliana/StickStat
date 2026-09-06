@@ -193,6 +193,8 @@ model Match {
   homeScore Int?
   awayScore Int?
   lastSyncedAt DateTime?
+  teamPhotoPath String?
+  mvpPhotoPath String?
   playerStats PlayerMatchStats[]
   events MatchEvent[]
   plans MatchTeamPlan[]

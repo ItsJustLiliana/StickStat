@@ -3,6 +3,8 @@
 import { Pencil, X } from "lucide-react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { MatchPhoto } from "@/components/match-photo";
+import { MatchPhotoManager } from "@/components/match-photo-manager";
 
 type Participation = "absent" | "substitute" | "starter";
 // De standaardweergave bevat de "Geregistreerde gegevens van deze wedstrijd"; invoer biedt een "Korte notitie".
@@ -19,6 +21,7 @@ type Row = {
     mvp: boolean;
     notes: string;
 };
+type Substitution = { playerInId: string; playerOutId: string; minute: number | null };
 
 function Stepper({ value, onChange, label, max = 20 }: { value: number; onChange: (value: number) => void; label: string; max?: number }) {
     return (
@@ -40,9 +43,10 @@ function CardDots({ row }: { row: Row }) {
     );
 }
 
-export function MatchTeamStatsForm({ matchId, teamId, teamScore, initialRows, canEdit }: { matchId: string; teamId: string; teamScore: number | null; initialRows: Row[]; canEdit: boolean }) {
+export function MatchTeamStatsForm({ matchId, teamId, teamScore, initialRows, initialSubstitutions, teamPhotoPath, mvpPhotoPath, canEdit, canManagePhotos }: { matchId: string; teamId: string; teamScore: number | null; initialRows: Row[]; initialSubstitutions: Substitution[]; teamPhotoPath: string | null; mvpPhotoPath: string | null; canEdit: boolean; canManagePhotos: boolean }) {
     const router = useRouter();
     const [rows, setRows] = useState(initialRows);
+    const [substitutions, setSubstitutions] = useState(initialSubstitutions);
     const [editing, setEditing] = useState(false);
     const [busy, setBusy] = useState(false);
     const [message, setMessage] = useState("");
@@ -52,6 +56,7 @@ export function MatchTeamStatsForm({ matchId, teamId, teamScore, initialRows, ca
     };
 
     const playedRows = rows.filter(row => row.participation !== "absent");
+    const mvpName = playedRows.find(row => row.mvp)?.name ?? null;
     const totalGoals = playedRows.reduce((sum, row) => sum + row.goals, 0);
 
     async function save() {
@@ -61,7 +66,7 @@ export function MatchTeamStatsForm({ matchId, teamId, teamScore, initialRows, ca
         const response = await fetch(`/api/matches/${matchId}/team-stats`, {
             method: "PUT",
             headers: { "content-type": "application/json" },
-            body: JSON.stringify({ teamId, rows }),
+            body: JSON.stringify({ teamId, rows, substitutions }),
         });
         const body = await response.json();
 
@@ -104,14 +109,14 @@ export function MatchTeamStatsForm({ matchId, teamId, teamScore, initialRows, ca
                                     <th>Goals</th>
                                     <th>Reddingen</th>
                                     <th>Kaarten</th>
-                                    <th>MVP</th>
+                                    <th>Man of the Match</th>
                                     <th>Notitie</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {playedRows.map(row => (
                                     <tr key={row.playerId}>
-                                        <td><strong>{row.name}</strong></td>
+                                        <td><strong>{row.name}</strong>{row.mvp && mvpPhotoPath && <MatchPhoto src={mvpPhotoPath} alt={`Man of the Match: ${row.name}`} className="match-mvp-photo" />}</td>
                                         <td>{row.participation === "starter" ? "Basis" : "Wissel"}</td>
                                         <td>{row.goals}</td>
                                         <td>{row.saves || "–"}</td>
@@ -130,6 +135,10 @@ export function MatchTeamStatsForm({ matchId, teamId, teamScore, initialRows, ca
                     </div>
                 )}
 
+                {substitutions.length > 0 && <div className="match-substitutions"><h3>Wissels</h3><ul>{substitutions.map((substitution, index) => <li key={`${substitution.playerInId}-${substitution.playerOutId}-${index}`}><strong>{rows.find(row => row.playerId === substitution.playerInId)?.name ?? "Speler"}</strong> erin voor {rows.find(row => row.playerId === substitution.playerOutId)?.name ?? "speler"}{substitution.minute !== null && ` (${substitution.minute}')`}</li>)}</ul></div>}
+
+                <MatchPhotoManager matchId={matchId} teamId={teamId} teamPhotoPath={teamPhotoPath} mvpPhotoPath={mvpPhotoPath} mvpName={mvpName} canEdit={canManagePhotos} />
+
                 {message && <p className="muted">{message}</p>}
             </section>
         );
@@ -147,7 +156,7 @@ export function MatchTeamStatsForm({ matchId, teamId, teamScore, initialRows, ca
                     type="button"
                     aria-label="Annuleren"
                     onClick={() => {
-                        setRows(initialRows);
+                        setRows(initialRows); setSubstitutions(initialSubstitutions);
                         setEditing(false);
                     }}
                 >
@@ -196,7 +205,7 @@ export function MatchTeamStatsForm({ matchId, teamId, teamScore, initialRows, ca
                                 disabled={row.participation === "absent"}
                                 onChange={() => setRows(current => current.map((item, i) => ({ ...item, mvp: i === index })))}
                             />
-                            MVP
+                            Man of the Match
                         </label>
 
                         <input
@@ -210,11 +219,21 @@ export function MatchTeamStatsForm({ matchId, teamId, teamScore, initialRows, ca
                 ))}
             </div>
 
+            <section className="match-substitution-entry" aria-labelledby="substitution-title">
+                <div className="card-head"><div><h3 id="substitution-title">Wissels</h3><p className="muted">Leg vast wie erin en eruit ging; minuut is optioneel.</p></div><button className="button secondary" type="button" onClick={() => setSubstitutions(current => [...current, { playerInId: "", playerOutId: "", minute: null }])}>Wissel toevoegen</button></div>
+                {substitutions.map((substitution, index) => <div className="substitution-row" key={index}>
+                    <select className="input" aria-label={`Speler erin, wissel ${index + 1}`} value={substitution.playerInId} onChange={event => setSubstitutions(current => current.map((item, i) => i === index ? { ...item, playerInId: event.target.value } : item))}><option value="">Speler erin</option>{rows.filter(row => row.participation !== "absent").map(row => <option value={row.playerId} key={row.playerId}>{row.name}</option>)}</select>
+                    <select className="input" aria-label={`Speler eruit, wissel ${index + 1}`} value={substitution.playerOutId} onChange={event => setSubstitutions(current => current.map((item, i) => i === index ? { ...item, playerOutId: event.target.value } : item))}><option value="">Speler eruit</option>{rows.filter(row => row.participation !== "absent").map(row => <option value={row.playerId} key={row.playerId}>{row.name}</option>)}</select>
+                    <input className="input substitution-minute" aria-label={`Minuut, wissel ${index + 1}`} type="number" min="0" max="120" placeholder="Minuut" value={substitution.minute ?? ""} onChange={event => setSubstitutions(current => current.map((item, i) => i === index ? { ...item, minute: event.target.value === "" ? null : Number(event.target.value) } : item))} />
+                    <button className="icon-button" type="button" aria-label={`Wissel ${index + 1} verwijderen`} onClick={() => setSubstitutions(current => current.filter((_, i) => i !== index))}><X size={18} /></button>
+                </div>)}
+            </section>
+
             <div className="member-actions">
-                <button className="button" disabled={busy || Boolean(teamScore !== null && totalGoals !== teamScore)} onClick={() => void save()}>
+                <button className="button" disabled={busy || Boolean(teamScore !== null && totalGoals !== teamScore) || substitutions.some(item => !item.playerInId || !item.playerOutId || item.playerInId === item.playerOutId)} onClick={() => void save()}>
                     {busy ? "Opslaan…" : "Opslaan"}
                 </button>
-                <button className="button secondary" type="button" disabled={busy} onClick={() => { setRows(initialRows); setEditing(false); }}>
+                <button className="button secondary" type="button" disabled={busy} onClick={() => { setRows(initialRows); setSubstitutions(initialSubstitutions); setEditing(false); }}>
                     Annuleren
                 </button>
                 {teamScore !== null && totalGoals !== teamScore && (
