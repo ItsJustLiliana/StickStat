@@ -11,7 +11,7 @@
 - Vervangbare `HockeyDataProvider`; initiële implementatie voor Hockeystanden.nl.
 - Uurlijkse sync met PostgreSQL advisory locking, handmatige sync en sync-logboek.
 - Platform-, club- en teamrollen; alle rechten worden server-side afgedwongen.
-- Arch Linux deployment via een eigen `systemd --user` service, volledig los van Flummi.
+- Arch Linux deployment via eigen `systemd --user`-services, inclusief een optionele Cloudflare Tunnel die los van Flummi draait.
 
 ## Stack en architectuur
 
@@ -43,7 +43,8 @@ Open `http://localhost:3000` (of voeg `PORT=4000` toe aan het dev-command). De s
 | `AUTH_SECRET` | Gereserveerd voor cryptografische uitbreidingen; minimaal 32 random bytes |
 | `PORT` | Webpoort, productie standaard `4000` |
 | `HOSTNAME` | Bindadres, productie `0.0.0.0` |
-| `APP_URL` | Canonieke app-URL |
+| `APP_URL` | Canonieke publieke app-URL, `https://stickstat.liliananuzohra.com` in productie |
+| `SESSION_COOKIE_SECURE` | `true` voor de HTTPS Cloudflare-route; alleen lokaal tijdelijk `false` |
 | `SYNC_INTERVAL_MINUTES` | Syncfrequentie, standaard `60` |
 | `SEED_ADMIN_EMAIL` | Eerste platformbeheerder |
 | `SEED_ADMIN_PASSWORD` | Alleen bij seeden; kies minimaal 12 tekens en verwijder daarna desgewenst uit `.env` |
@@ -83,6 +84,7 @@ npx prisma validate
 - Geen data: controleer Beheer → synchronisatie en `journalctl --user -u stickstat.service -f`.
 - Geen toegang: controleer de club- en teammembership; UI-verbergen alleen verleent nooit rechten.
 - Poort bezet: controleer `ss -ltnp`; gebruik niet poort 3789 en wijzig zo nodig alleen StickStat `PORT`.
+- Publieke app onbereikbaar: controleer `systemctl --user status stickstat-cloudflared.service` en de publieke hostname in Cloudflare Zero Trust.
 
 ## Agenda en Android-updates
 

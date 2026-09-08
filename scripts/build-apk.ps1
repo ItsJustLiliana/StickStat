@@ -3,7 +3,7 @@ param(
     [ValidateSet("release", "debug")]
     [string]$Configuration = "release",
     [ValidatePattern("^https?://")]
-    [string]$AppUrl = "http://archlinux.tail50bfa9.ts.net:4000",
+    [string]$AppUrl = "https://stickstat.liliananuzohra.com",
     [ValidatePattern("^\d+\.\d+\.\d+$")]
     [string]$Version,
     [int]$BuildNumber,

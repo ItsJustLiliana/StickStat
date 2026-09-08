@@ -58,7 +58,7 @@ service_changed=false
 if grep -Eq '^(app/|components/|generated/|lib/|providers/|public/|services/|prisma/|instrumentation\.ts$|proxy\.ts$|next\.config\.ts$|package(-lock)?\.json$|postcss\.config\.mjs$|tsconfig\.json$)' <<<"${changed_files}"; then
   app_changed=true
 fi
-if grep -Eq '^(deploy/(stickstat\.service|stickstat-backup\.service|stickstat-backup\.timer|backup\.sh)$)' <<<"${changed_files}"; then
+if grep -Eq '^(deploy/(stickstat\.service|stickstat-backup\.service|stickstat-backup\.timer|stickstat-cloudflared\.service|backup\.sh)$)' <<<"${changed_files}"; then
   service_changed=true
 fi
 if [[ "${force_full_deploy}" == "true" ]]; then
@@ -99,6 +99,10 @@ for unit in stickstat.service stickstat-backup.service stickstat-backup.timer; d
     service_changed=true
   fi
 done
+if [[ -f "${service_dir}/stickstat-cloudflared.service" ]] && { [[ "${service_changed}" == "true" ]] || ! cmp -s "${project_dir}/deploy/stickstat-cloudflared.service" "${service_dir}/stickstat-cloudflared.service"; }; then
+  cp "${project_dir}/deploy/stickstat-cloudflared.service" "${service_dir}/stickstat-cloudflared.service"
+  service_changed=true
+fi
 if [[ "${service_changed}" == "true" ]]; then
   systemctl --user daemon-reload
 fi
@@ -112,6 +116,9 @@ else
 fi
 if [[ "${service_changed}" == "true" ]]; then
   systemctl --user restart stickstat-backup.timer
+  if systemctl --user is-enabled --quiet stickstat-cloudflared.service 2>/dev/null; then
+    systemctl --user restart stickstat-cloudflared.service
+  fi
 fi
 
 mkdir -p "${state_dir}"

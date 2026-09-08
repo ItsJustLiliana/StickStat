@@ -67,7 +67,8 @@ DATABASE_URL="postgresql://stickstat:URL_ENCODED_PASSWORD@127.0.0.1:5432/stickst
 AUTH_SECRET="DE_GEGENEREERDE_SECRET"
 PORT=4000
 HOSTNAME=0.0.0.0
-APP_URL="http://TAILSCALE_IP:4000"
+APP_URL="https://stickstat.liliananuzohra.com"
+SESSION_COOKIE_SECURE=true
 SYNC_INTERVAL_MINUTES=60
 SEED_ADMIN_EMAIL="jouw-email@example.nl"
 SEED_ADMIN_PASSWORD="een-tijdelijk-sterk-seed-wachtwoord"
@@ -115,7 +116,52 @@ sudo loginctl enable-linger "$USER"
 
 PostgreSQL is een systeemservice; de StickStat user-service wacht op `network-online.target`, herstart na crashes en blijft via lingering na logout actief. Een user-service kan niet betrouwbaar hard afhangen van een system-service; Prisma herstelt databaseverbindingen bij nieuwe requests en systemd blijft StickStat bij een startcrash herstarten.
 
-## 5. Bediening en Tailscale
+## 5. Cloudflare Tunnel en publieke hostname
+
+Een Cloudflare Tunnel is hier de juiste aanpak: de server opent alleen een uitgaande,
+versleutelde verbinding naar Cloudflare. Poort 4000 hoeft dus niet op de router of
+firewall publiek open en StickStat kan naast Flummi blijven draaien.
+
+Maak in **Cloudflare Zero Trust → Networks → Tunnels** een nieuw **Cloudflared**
+tunnel aan, bijvoorbeeld `stickstat`. Voeg daarna bij **Public Hostnames** toe:
+
+| Veld | Waarde |
+| --- | --- |
+| Subdomain | `stickstat` |
+| Domain | `liliananuzohra.com` |
+| Type | `HTTP` |
+| URL | `localhost:4000` |
+
+Kopieer de tunnel-token (niet de token van Flummi) en voer op de Arch-server uit:
+
+```bash
+cd /projects/StickStat
+chmod +x deploy/install-stickstat-cloudflared-user-service.sh
+deploy/install-stickstat-cloudflared-user-service.sh
+```
+
+De installer vraagt de token verborgen op en bewaart hem als `0600` in
+`~/.config/stickstat-cloudflared/tunnel.token`. Hij installeert bewust
+`stickstat-cloudflared.service` in plaats van `cloudflared.service`, zodat de
+bestaande Flummi-tunnel niet wordt aangepast. Zet vóór deze stap in `.env`:
+
+```env
+APP_URL="https://stickstat.liliananuzohra.com"
+SESSION_COOKIE_SECURE=true
+```
+
+Herstart daarna StickStat zodat de cookie-instelling actief wordt:
+
+```bash
+systemctl --user restart stickstat.service
+systemctl --user status stickstat-cloudflared.service
+curl -I https://stickstat.liliananuzohra.com
+```
+
+De Android-build gebruikt nu standaard dezelfde HTTPS-URL. Bestaande APK's die
+nog naar Tailscale wijzen, moeten opnieuw worden gebouwd en geïnstalleerd.
+
+## 6. Bediening en Tailscale
 
 ```bash
 systemctl --user restart stickstat.service
@@ -127,7 +173,7 @@ ss -ltnp | grep 4000
 
 Open vanaf een bestaand Tailscale-apparaat `http://TAILSCALE_IP:4000`. Installeer of wijzig Tailscale niet. Publiceer poort 4000 niet via de router/firewall naar internet.
 
-## 6. Update
+## 7. Update
 
 ```bash
 chmod +x /projects/StickStat/scripts/update.sh
@@ -136,7 +182,7 @@ chmod +x /projects/StickStat/scripts/update.sh
 
 Het script stopt bij elke fout en herstart pas nadat dependencies, migraties, checks en productiebuild slagen. Het bestaande proces blijft tijdens de build draaien; pas de afsluitende restart wisselt naar de nieuwe `.next` build.
 
-## 7. Reboottest
+## 8. Reboottest
 
 ```bash
 systemctl --user is-enabled stickstat.service

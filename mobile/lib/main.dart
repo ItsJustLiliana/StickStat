@@ -11,7 +11,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 const stickStatUrl = String.fromEnvironment(
   'STICKSTAT_URL',
-  defaultValue: 'http://archlinux.tail50bfa9.ts.net:4000',
+  defaultValue: 'https://stickstat.liliananuzohra.com',
 );
 
 void main() {
@@ -279,8 +279,7 @@ class ConnectionErrorPanel extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
                 const Text(
-                  'Controleer of Tailscale op deze telefoon verbonden is en '
-                  'of de StickStat-server draait.',
+                  'Controleer je internetverbinding en of de StickStat-server draait.',
                   textAlign: TextAlign.center,
                   style: TextStyle(color: Color(0xFF64756F), height: 1.45),
                 ),

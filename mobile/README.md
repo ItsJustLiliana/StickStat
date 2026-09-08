@@ -45,8 +45,7 @@ Voor een snelle debugbuild of om tests bewust over te slaan:
 ```
 
 De app opent standaard de complete StickStat-webapp op
-`http://archlinux.tail50bfa9.ts.net:4000`. Zorg dat Tailscale op de telefoon
-verbonden is voordat je de app opent. Voor een andere server bouw je met:
+`https://stickstat.liliananuzohra.com`. Voor een andere server bouw je met:
 
 ```powershell
 .\build-apk.cmd -AppUrl http://192.168.1.20:4000
@@ -56,7 +55,6 @@ De huidige releasebuild gebruikt nog de lokale debug-signingconfiguratie. Hij is
 geschikt om zelf te installeren en testen, maar nog niet voor publicatie in de
 Play Store.
 
-Cleartext HTTP staat voorlopig aan voor toegang tot de Tailscale-server. Schakel
-dit uit zodra de backend via HTTPS bereikbaar is. De app toont dezelfde mobiele
+De app staat uitsluitend HTTPS-verkeer toe. De app toont dezelfde mobiele
 webinterface en gebruikt daardoor dezelfde login, sessie en gegevens als de
 browserapp.

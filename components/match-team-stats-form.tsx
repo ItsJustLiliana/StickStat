@@ -147,12 +147,12 @@ export function MatchTeamStatsForm({ matchId, teamId, teamScore, initialRows, te
                                     <tr key={row.playerId}>
                                         <td data-label="Speler"><strong>{row.name}</strong>{row.mvp && mvpPhotoPath && <MatchPhoto src={mvpPhotoPath} alt={`Man of the Match: ${row.name}`} className="match-mvp-photo" />}</td>
                                         <td data-label="Rol">{row.participation === "starter" ? "Basis" : "Wissel"}</td>
-                                        <td data-label="Goals">{row.goals}</td>
-                                        <td data-label="Assists">{row.assists || "–"}</td>
-                                        <td data-label="Reddingen">{row.saves || "–"}</td>
-                                        <td data-label="Kaarten"><CardDots row={row} /></td>
-                                        <td data-label="Man of the Match">{row.mvp ? "★" : "–"}</td>
-                                        <td data-label="Notitie">{row.notes || "–"}</td>
+                                        <td data-label="Goals" data-empty={row.goals === 0 || undefined}>{row.goals}</td>
+                                        <td data-label="Assists" data-empty={row.assists === 0 || undefined}>{row.assists || "–"}</td>
+                                        <td data-label="Reddingen" data-empty={row.saves === 0 || undefined}>{row.saves || "–"}</td>
+                                        <td data-label="Kaarten" data-empty={row.greenCards + row.yellowCards + row.redCards === 0 || undefined}><CardDots row={row} /></td>
+                                        <td data-label="Man of the Match" data-empty={!row.mvp || undefined}>{row.mvp ? "★" : "–"}</td>
+                                        <td data-label="Notitie" data-empty={!row.notes || undefined}>{row.notes || "–"}</td>
                                     </tr>
                                 ))}
                             </tbody>
