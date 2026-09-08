@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type MatchTab = "attendance" | "tasks" | "lineup" | "performance";
 
@@ -20,7 +20,18 @@ const tabLabels: Record<MatchTab, string> = {
 
 export function MatchDetailTabs({ attendance, tasks, lineup, performance }: Props) {
     const [active, setActive] = useState<MatchTab>("attendance");
-    const panelId = `match-tab-panel-${active}`;
+    const [mounted, setMounted] = useState<MatchTab[]>(["attendance"]);
+    const panels: Record<MatchTab, React.ReactNode> = { attendance, tasks, lineup, performance };
+
+    useEffect(() => {
+        const timer = window.setTimeout(() => setMounted(["attendance", "tasks", "lineup", "performance"]), 250);
+        return () => window.clearTimeout(timer);
+    }, []);
+
+    function select(tab: MatchTab) {
+        setActive(tab);
+        setMounted(current => current.includes(tab) ? current : [...current, tab]);
+    }
 
     return (
         <section className="match-tabs-wrap">
@@ -31,17 +42,15 @@ export function MatchDetailTabs({ attendance, tasks, lineup, performance }: Prop
                         type="button"
                         role="tab"
                         aria-selected={active === tab}
-                        aria-controls={panelId}
+                        aria-controls={`match-tab-panel-${tab}`}
                         className={active === tab ? "active" : ""}
-                        onClick={() => setActive(tab)}
+                        onClick={() => select(tab)}
                     >
                         {tabLabels[tab]}
                     </button>
                 ))}
             </div>
-            <div id={panelId} role="tabpanel" className="match-tab-panel">
-                {active === "attendance" ? attendance : active === "tasks" ? tasks : active === "lineup" ? lineup : performance}
-            </div>
+            {(Object.keys(tabLabels) as MatchTab[]).map(tab => mounted.includes(tab) && <div key={tab} id={`match-tab-panel-${tab}`} role="tabpanel" className="match-tab-panel" hidden={active !== tab}>{panels[tab]}</div>)}
         </section>
     );
 }
