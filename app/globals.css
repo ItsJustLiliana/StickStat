@@ -3067,13 +3067,13 @@ html[data-theme="dark"] .time-popover button.selected {
     }
 
     .agenda-entry:has(>.attendance-control) {
-        padding-bottom: 54px;
+        padding-bottom: 8px;
     }
 
     .agenda-entry>.attendance-control {
         position: absolute;
-        right: 10px;
-        bottom: 8px;
+        right: 0;
+        bottom: 2px;
         margin: 0;
         padding: 0;
         z-index: 1;

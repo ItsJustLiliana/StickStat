@@ -1,13 +1,20 @@
 "use client";
 
 import {Check, Clock3, Pencil, X} from "lucide-react";
-import {useState, useTransition} from "react";
+import {useEffect, useRef, useState, useTransition} from "react";
 import {useRouter} from "next/navigation";
 
 export function MatchCollectionTime({matchId, teamId, canEdit, initialTime}: {matchId: string; teamId: string; canEdit: boolean; initialTime: string | null}) {
   const router = useRouter();
   const [editing, setEditing] = useState(false), [time, setTime] = useState(initialTime ?? ""), [message, setMessage] = useState("");
   const [pending, startTransition] = useTransition();
+  const timeInput = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    if (!editing) return;
+    const input = timeInput.current;
+    input?.focus();
+    try { input?.showPicker?.(); } catch { /* Browsers zonder showPicker openen bij focus het eigen tijdveld. */ }
+  }, [editing]);
   function close() { setTime(initialTime ?? ""); setMessage(""); setEditing(false); }
   function save() {
     setMessage("");
@@ -20,6 +27,6 @@ export function MatchCollectionTime({matchId, teamId, canEdit, initialTime}: {ma
       } catch (error) { setMessage(error instanceof Error ? error.message : "Opslaan mislukt"); }
     });
   }
-  if (editing) return <span className="collection-time-editor"><Clock3 size={17}/><input aria-label="Verzameltijd op de club" type="time" value={time} disabled={pending} onChange={event => setTime(event.target.value)} /><button type="button" className="icon-button" aria-label="Verzameltijd opslaan" disabled={pending} onClick={save}><Check size={15}/></button><button type="button" className="icon-button" aria-label="Annuleren" disabled={pending} onClick={close}><X size={15}/></button>{message && <small role="alert">{message}</small>}</span>;
+  if (editing) return <span className="collection-time-editor"><Clock3 size={17}/><input ref={timeInput} aria-label="Verzameltijd op de club" type="time" value={time} disabled={pending} onChange={event => setTime(event.target.value)} /><button type="button" className="icon-button" aria-label="Verzameltijd opslaan" disabled={pending} onClick={save}><Check size={15}/></button><button type="button" className="icon-button" aria-label="Annuleren" disabled={pending} onClick={close}><X size={15}/></button>{message && <small role="alert">{message}</small>}</span>;
   return <span className="collection-time"><Clock3 size={17}/>{initialTime ? <span>{initialTime}</span> : <em>Verzameltijd ontbreekt</em>}{canEdit && <button type="button" className="icon-button" aria-label="Verzameltijd bewerken" title="Verzameltijd bewerken" onClick={() => setEditing(true)}><Pencil size={15}/></button>}</span>;
 }
