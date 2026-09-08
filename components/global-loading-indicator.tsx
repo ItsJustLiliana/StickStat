@@ -15,5 +15,5 @@ export function GlobalLoadingIndicator() {
     };
     return () => { if (originalFetch.current) window.fetch = originalFetch.current; };
   }, []);
-  return pending > 0 ? <div className="global-loading" role="status" aria-live="polite" aria-label="Laden"><LoaderCircle size={26} /></div> : null;
+  return pending > 0 ? <div className="global-loading" role="status" aria-live="polite" aria-label="Laden"><div><LoaderCircle size={30} /><span>Laden…</span></div></div> : null;
 }

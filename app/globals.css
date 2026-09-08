@@ -1999,12 +1999,13 @@ html[data-theme="dark"] body {
 .performance-event-actions { display: flex; gap: 7px; flex: 0 0 auto; }
 .performance-event-actions .danger { color: var(--danger); }
 
-.global-loading { position: fixed; z-index: 1000; right: max(18px, env(safe-area-inset-right)); bottom: max(82px, calc(env(safe-area-inset-bottom) + 72px)); display: grid; place-items: center; width: 48px; height: 48px; border: 1px solid var(--line); border-radius: 50%; background: var(--card); color: var(--green); box-shadow: 0 8px 24px #0004; pointer-events: none; }
-.global-loading svg, .page-loading svg { animation: stickstat-spin .8s linear infinite; }
-.page-loading { min-height: 50vh; display: grid; place-content: center; justify-items: center; gap: 10px; color: var(--muted); font-weight: 750; }
+.global-loading { position: fixed; z-index: 19; inset: 72px 0 0; display: grid; place-items: center; background: color-mix(in srgb, var(--paper) 82%, transparent); color: var(--green); pointer-events: none; backdrop-filter: blur(2px); }
+.global-loading > div { display: grid; place-items: center; gap: 9px; padding: 18px 22px; border: 1px solid var(--line); border-radius: 16px; background: var(--card); box-shadow: 0 12px 32px #0003; font-size: 13px; font-weight: 850; }
+.global-loading svg { animation: stickstat-spin .8s linear infinite; }
 @keyframes stickstat-spin { to { transform: rotate(360deg); } }
 
 @media (max-width: 700px) {
+    .global-loading { bottom: calc(66px + env(safe-area-inset-bottom)); }
     .button { min-height: 44px; display: inline-flex; align-items: center; justify-content: center; }
     .input, select.input { min-height: 44px; }
     .match-tabs button { min-height: 44px; display: grid; place-items: center; }
