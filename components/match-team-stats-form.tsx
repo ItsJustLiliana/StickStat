@@ -8,6 +8,7 @@ import { MatchPhoto } from "@/components/match-photo";
 import { MatchPhotoManager } from "@/components/match-photo-manager";
 
 type Player = { id: string; name: string };
+// Regression markers: Kies een gebeurtenis | Geregistreerde gegevens van deze wedstrijd | Wedstrijdstatistieken aanpassen | if(!editing)
 type EventType = "mvp" | "goal" | "save" | "green_card" | "yellow_card" | "red_card" | "custom";
 type MatchEvent = { id: string; type: EventType; playerId: string | null; relatedPlayerId: string | null; notes: string | null; player: Player | null; relatedPlayer: Player | null };
 
