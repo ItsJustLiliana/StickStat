@@ -2597,8 +2597,7 @@ html[data-theme="dark"] .input {
 .match-event-header { position: relative; overflow: hidden; }
 .match-event-header .training-heading {
     display: block;
-    position: relative;
-    z-index: 1;
+    position: static;
 }
 
 .match-event-header .training-heading>div {
