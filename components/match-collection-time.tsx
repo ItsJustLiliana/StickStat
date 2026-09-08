@@ -1,6 +1,6 @@
 "use client";
 
-import {Check, Pencil, X} from "lucide-react";
+import {Check, Clock3, Pencil, X} from "lucide-react";
 import {useState, useTransition} from "react";
 import {useRouter} from "next/navigation";
 
@@ -20,6 +20,6 @@ export function MatchCollectionTime({matchId, teamId, canEdit, initialTime}: {ma
       } catch (error) { setMessage(error instanceof Error ? error.message : "Opslaan mislukt"); }
     });
   }
-  if (editing) return <span className="collection-time-editor"><span>Verzamelen</span><input aria-label="Verzameltijd op de club" type="time" value={time} disabled={pending} onChange={event => setTime(event.target.value)} /><button type="button" className="icon-button" aria-label="Verzameltijd opslaan" disabled={pending} onClick={save}><Check size={15}/></button><button type="button" className="icon-button" aria-label="Annuleren" disabled={pending} onClick={close}><X size={15}/></button>{message && <small role="alert">{message}</small>}</span>;
-  return <span className="collection-time"><span>Verzamelen club: {initialTime ?? "nog niet bekend"}</span>{canEdit && <button type="button" className="icon-button" aria-label="Verzameltijd bewerken" title="Verzameltijd bewerken" onClick={() => setEditing(true)}><Pencil size={15}/></button>}</span>;
+  if (editing) return <span className="collection-time-editor"><Clock3 size={17}/><input aria-label="Verzameltijd op de club" type="time" value={time} disabled={pending} onChange={event => setTime(event.target.value)} /><button type="button" className="icon-button" aria-label="Verzameltijd opslaan" disabled={pending} onClick={save}><Check size={15}/></button><button type="button" className="icon-button" aria-label="Annuleren" disabled={pending} onClick={close}><X size={15}/></button>{message && <small role="alert">{message}</small>}</span>;
+  return <span className="collection-time"><Clock3 size={17}/>{initialTime ? <span>{initialTime}</span> : <em>Verzameltijd ontbreekt</em>}{canEdit && <button type="button" className="icon-button" aria-label="Verzameltijd bewerken" title="Verzameltijd bewerken" onClick={() => setEditing(true)}><Pencil size={15}/></button>}</span>;
 }

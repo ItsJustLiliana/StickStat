@@ -3063,13 +3063,17 @@ html[data-theme="dark"] .time-popover button.selected {
     }
 
     .agenda-entry .agenda-row>span {
-        padding-right: 142px;
+        padding-right: 0;
+    }
+
+    .agenda-entry:has(>.attendance-control) {
+        padding-bottom: 54px;
     }
 
     .agenda-entry>.attendance-control {
         position: absolute;
-        right: 18px;
-        bottom: 10px;
+        right: 10px;
+        bottom: 8px;
         margin: 0;
         padding: 0;
         z-index: 1;
@@ -3154,6 +3158,10 @@ html[data-theme="dark"] .time-popover button.selected {
         font-size: 10px;
     }
 }
+
+.attendance-head-meta { display: grid; justify-items: end; gap: 4px; }
+.attendance-summary { display: inline-flex; justify-content: flex-end; gap: 6px; color: var(--muted); font-size: 11px; font-weight: 800; }
+.attendance-summary span { color: var(--green); }
 
 .match-event-header .training-facts {
     margin-top: 20px;

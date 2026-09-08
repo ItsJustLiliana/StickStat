@@ -1,5 +1,5 @@
 import { MatchLineup } from "@/components/match-lineup";
-import { CalendarDays, Clock3, MapPin, Trophy } from "lucide-react";
+import { CalendarDays, MapPin } from "lucide-react";
 import { notFound } from "next/navigation";
 import { AttendanceList } from "@/components/attendance-list";
 import { ClubLogo } from "@/components/logo";
@@ -42,7 +42,7 @@ export default async function MatchDetail({ params, searchParams }: { params: Pr
         <div className="rank-number mono match-score">{match.homeScore ?? "–"} <span className="match-score-divider">–</span> {match.awayScore ?? "–"}</div>
         <div className="match-score-team"><ClubLogo name={match.awayTeam.club.name} path={match.awayTeam.club.logoLocalPath ?? match.awayTeam.club.logoUrl} /><MatchTeamLabel name={match.awayTeam.shortName} own={match.awayTeamId === ownTeam?.id} side="away" /></div>
       </div></div></div>
-      <div className="training-facts"><span><CalendarDays size={17} />{match.date.toLocaleDateString("nl-NL", { timeZone: "Europe/Amsterdam", weekday: "long", day: "numeric", month: "long", year: "numeric" })}</span><span><Clock3 size={17} />{match.startTime ?? "Tijd onbekend"}</span>{ownTeam && <MatchCollectionTime matchId={match.id} teamId={ownTeam.id} canEdit={canAdmin} initialTime={plan?.collectionTime ?? null} />}<span><MapPin size={17} />{match.venue ?? "Locatie onbekend"}</span>{match.competition && <span><Trophy size={17} />{match.competition}</span>}</div>
+      <div className="training-facts"><span><CalendarDays size={17} />{match.date.toLocaleDateString("nl-NL", { timeZone: "Europe/Amsterdam", weekday: "long", day: "numeric", month: "long", year: "numeric" })}{match.startTime && ` – ${match.startTime}`}</span>{ownTeam && <MatchCollectionTime matchId={match.id} teamId={ownTeam.id} canEdit={canAdmin} initialTime={plan?.collectionTime ?? null} />}<span><MapPin size={17} />{match.venue ?? "Locatie onbekend"}</span></div>
     </section>
     {ownTeam && <MatchDetailTabs
       attendance={<AttendanceList endpoint={`/api/matches/${match.id}/attendance`} canAdmin={canAdmin} locked={plan?.attendanceLocked ?? false} autoLocked={isAttendanceAutoLocked(match.date)} teamId={ownTeam.id} supplementalLabel="Trainingsleden" people={roster.map(player => ({ playerId: player.id, name: player.displayName, photoPath: player.user?.photoPath ?? player.photoPath, status: attendance.get(player.id) ?? "unknown", editable: canManage || player.userId === user.id, isSubstitute: player.isSubstitute, isSupplemental: player.trainingMember && !player.matchMember }))} />}

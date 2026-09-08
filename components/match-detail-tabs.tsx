@@ -12,7 +12,7 @@ type Props = {
 };
 
 const tabLabels: Record<MatchTab, string> = {
-    attendance: "Aanwezigheid",
+    attendance: "Aanwezig",
     tasks: "Taken",
     lineup: "Opstelling",
     performance: "Prestaties",
