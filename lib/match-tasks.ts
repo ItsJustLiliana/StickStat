@@ -4,7 +4,7 @@ export const matchTaskTypes = ["balls", "driving", "bottles"] as const;
 export type MatchTaskType = typeof matchTaskTypes[number];
 
 export const matchTaskLabels: Record<MatchTaskType, string> = {
-  balls: "Ballen regelen & opruimen",
+  balls: "Ballen",
   driving: "Rijden",
   bottles: "Bidons",
 };

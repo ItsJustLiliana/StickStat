@@ -2153,6 +2153,12 @@ html[data-theme="dark"] body {
     min-width: 0;
 }
 
+.match-tab-panel > .attendance-card,
+.match-tab-panel > .lineup-card,
+.match-tab-panel > .match-stats-view {
+    margin-top: 0;
+}
+
 .match-tasks-card { display: grid; gap: 18px; }
 .match-tasks-card .card-head { margin-bottom: 0; }
 .match-tasks-card h2, .match-task-section h3 { margin: 0; }
@@ -2166,6 +2172,14 @@ html[data-theme="dark"] body {
 .match-task-section li .icon-button { width: 28px; height: 28px; }
 .match-task-dialog { display: grid; gap: 14px; }
 .match-task-dialog label { display: grid; gap: 6px; font-weight: 800; }
+.match-task-submit { width: 100%; }
+
+.collection-time,
+.collection-time-editor { display: inline-flex; align-items: center; gap: 7px; }
+.collection-time .icon-button,
+.collection-time-editor .icon-button { width: 28px; height: 28px; }
+.collection-time-editor input { width: 98px; min-height: 30px; padding: 4px 6px; }
+.collection-time-editor small { flex-basis: 100%; color: var(--orange); }
 
 html[data-theme="dark"] .agenda-tabs a,
 html[data-theme="dark"] .match-tabs button {
@@ -2409,13 +2423,13 @@ html[data-theme="dark"] .input {
     .match-tabs {
         width: 100%;
         display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 6px;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 4px;
     }
 
     .match-tabs button {
-        padding: 10px 9px;
-        font-size: 13px;
+        padding: 10px 2px;
+        font-size: 12px;
         text-align: center;
     }
 
@@ -3048,6 +3062,10 @@ html[data-theme="dark"] .time-popover button.selected {
         padding-right: 0;
     }
 
+    .agenda-entry .agenda-row>span {
+        padding-right: 142px;
+    }
+
     .agenda-entry>.attendance-control {
         position: absolute;
         right: 18px;
@@ -3059,7 +3077,7 @@ html[data-theme="dark"] .time-popover button.selected {
 
     .agenda-entry .agenda-row>span>small:last-child {
         display: -webkit-box;
-        padding-right: 136px;
+        padding-right: 0;
         overflow: hidden;
         line-height: 1.25;
         -webkit-box-orient: vertical;

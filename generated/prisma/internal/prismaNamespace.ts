@@ -2498,6 +2498,7 @@ export const MatchTeamPlanScalarFieldEnum = {
   matchId: 'matchId',
   teamId: 'teamId',
   attendanceLocked: 'attendanceLocked',
+  collectionTime: 'collectionTime',
   formation: 'formation',
   positions: 'positions',
   substitutes: 'substitutes'
