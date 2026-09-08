@@ -48,6 +48,7 @@ export type MatchStatus = (typeof MatchStatus)[keyof typeof MatchStatus]
 
 
 export const MatchEventType = {
+  mvp: 'mvp',
   goal: 'goal',
   assist: 'assist',
   green_card: 'green_card',

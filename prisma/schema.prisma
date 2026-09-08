@@ -34,6 +34,7 @@ enum MatchStatus {
 }
 
 enum MatchEventType {
+  mvp
   goal
   assist
   green_card

@@ -44,7 +44,8 @@ export function parseHockeyStandenMatches(html:string):ExternalMatch[]{
     if(!home?.name||!away?.name||Number.isNaN(date.getTime()))return[];
     const id=String(x["@id"]??`${date.toISOString()}:${home.name}:${away.name}`).split("#event-").at(-1)!;
     const eventStatus=String(x.eventStatus??""),score=x.result as {homeScore?:number;awayScore?:number}|undefined,descriptionScore=String(x.description??"").match(/(?:eindstand|final score)\s+.*?\s(\d+)\s*[-â€“–]\s*(\d+)/i);
-    const homeScore=home.score??score?.homeScore??(descriptionScore?Number(descriptionScore[1]):undefined),awayScore=away.score??score?.awayScore??(descriptionScore?Number(descriptionScore[2]):undefined);
+    const fallbackDescriptionScore=String(x.description??"").replace(/\u00e2\u20ac\u201c/g,"–").match(/(?:eindstand|final score)\s+.*?\s(\d+)\s*[-–]\s*(\d+)/i),resolvedDescriptionScore=descriptionScore??fallbackDescriptionScore;
+    const homeScore=home.score??score?.homeScore??(resolvedDescriptionScore?Number(resolvedDescriptionScore[1]):undefined),awayScore=away.score??score?.awayScore??(resolvedDescriptionScore?Number(resolvedDescriptionScore[2]):undefined);
     const location=x.location as {name?:string}|undefined,league=x.superEvent as {name?:string}|undefined;
     return[{externalId:id,date,startTime:date.toLocaleTimeString("nl-NL",{hour:"2-digit",minute:"2-digit",hour12:false,timeZone:"Europe/Amsterdam"}),homeTeam:home.name,awayTeam:away.name,homeScore,awayScore,status:eventStatus.includes("Cancelled")?"cancelled":homeScore!=null?"finished":eventStatus.includes("Scheduled")?"scheduled":"unknown",venue:location?.name,competition:league?.name} satisfies ExternalMatch]
   });
