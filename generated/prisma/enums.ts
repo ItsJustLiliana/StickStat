@@ -87,3 +87,12 @@ export const NotificationType = {
 } as const
 
 export type NotificationType = (typeof NotificationType)[keyof typeof NotificationType]
+
+
+export const MatchTaskType = {
+  balls: 'balls',
+  driving: 'driving',
+  bottles: 'bottles'
+} as const
+
+export type MatchTaskType = (typeof MatchTaskType)[keyof typeof MatchTaskType]

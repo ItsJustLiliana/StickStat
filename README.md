@@ -38,7 +38,7 @@ Open `http://localhost:3000` (of voeg `PORT=4000` toe aan het dev-command). De s
 ## Environment
 
 | Variabele | Doel |
-|---|---|
+| --- | --- |
 | `DATABASE_URL` | Lokale PostgreSQL-connectiestring |
 | `AUTH_SECRET` | Gereserveerd voor cryptografische uitbreidingen; minimaal 32 random bytes |
 | `PORT` | Webpoort, productie standaard `4000` |

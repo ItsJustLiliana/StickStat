@@ -102,6 +102,11 @@ export type Player = Prisma.PlayerModel
  */
 export type MatchAttendance = Prisma.MatchAttendanceModel
 /**
+ * Model MatchTask
+ * 
+ */
+export type MatchTask = Prisma.MatchTaskModel
+/**
  * Model Training
  * 
  */

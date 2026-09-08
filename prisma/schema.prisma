@@ -63,6 +63,12 @@ enum NotificationType {
   general
 }
 
+enum MatchTaskType {
+  balls
+  driving
+  bottles
+}
+
 model User {
   id String @id @default(cuid())
   name String
@@ -80,6 +86,7 @@ model User {
   notifications Notification[]
   statisticPreferences StatisticPreference[]
   publishedReleases AppRelease[] @relation("ReleasePublisher")
+  assignedMatchTasks MatchTask[] @relation("MatchTaskAssignee")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -199,6 +206,7 @@ model Match {
   events MatchEvent[]
   plans MatchTeamPlan[]
   attendance MatchAttendance[]
+  tasks MatchTask[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   @@unique([externalProvider, externalId])
@@ -265,6 +273,19 @@ model MatchAttendance {
   updatedAt DateTime @updatedAt
   @@unique([matchId, playerId])
   @@index([playerId, status])
+}
+
+model MatchTask {
+  id String @id @default(cuid())
+  matchId String
+  match Match @relation(fields: [matchId], references: [id], onDelete: Cascade)
+  teamId String
+  taskType MatchTaskType
+  userId String
+  user User @relation("MatchTaskAssignee", fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  @@unique([matchId, taskType, userId])
+  @@index([matchId, teamId, taskType])
 }
 
 model Training {

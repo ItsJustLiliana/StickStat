@@ -409,6 +409,7 @@ export const ModelName = {
   Standing: 'Standing',
   Player: 'Player',
   MatchAttendance: 'MatchAttendance',
+  MatchTask: 'MatchTask',
   Training: 'Training',
   TrainingAttendance: 'TrainingAttendance',
   StatisticPreference: 'StatisticPreference',
@@ -434,7 +435,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "session" | "club" | "clubMembership" | "team" | "teamMembership" | "season" | "teamSeason" | "match" | "standing" | "player" | "matchAttendance" | "training" | "trainingAttendance" | "statisticPreference" | "notification" | "appRelease" | "playerMatchStats" | "matchEvent" | "syncRun" | "teamInvite" | "matchTeamPlan"
+    modelProps: "user" | "session" | "club" | "clubMembership" | "team" | "teamMembership" | "season" | "teamSeason" | "match" | "standing" | "player" | "matchAttendance" | "matchTask" | "training" | "trainingAttendance" | "statisticPreference" | "notification" | "appRelease" | "playerMatchStats" | "matchEvent" | "syncRun" | "teamInvite" | "matchTeamPlan"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1323,6 +1324,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.MatchAttendanceCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.MatchAttendanceCountAggregateOutputType> | number
+        }
+      }
+    }
+    MatchTask: {
+      payload: Prisma.$MatchTaskPayload<ExtArgs>
+      fields: Prisma.MatchTaskFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.MatchTaskFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MatchTaskPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.MatchTaskFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MatchTaskPayload>
+        }
+        findFirst: {
+          args: Prisma.MatchTaskFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MatchTaskPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.MatchTaskFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MatchTaskPayload>
+        }
+        findMany: {
+          args: Prisma.MatchTaskFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MatchTaskPayload>[]
+        }
+        create: {
+          args: Prisma.MatchTaskCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MatchTaskPayload>
+        }
+        createMany: {
+          args: Prisma.MatchTaskCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.MatchTaskCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MatchTaskPayload>[]
+        }
+        delete: {
+          args: Prisma.MatchTaskDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MatchTaskPayload>
+        }
+        update: {
+          args: Prisma.MatchTaskUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MatchTaskPayload>
+        }
+        deleteMany: {
+          args: Prisma.MatchTaskDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.MatchTaskUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.MatchTaskUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MatchTaskPayload>[]
+        }
+        upsert: {
+          args: Prisma.MatchTaskUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MatchTaskPayload>
+        }
+        aggregate: {
+          args: Prisma.MatchTaskAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMatchTask>
+        }
+        groupBy: {
+          args: Prisma.MatchTaskGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MatchTaskGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.MatchTaskCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MatchTaskCountAggregateOutputType> | number
         }
       }
     }
@@ -2279,6 +2354,18 @@ export const MatchAttendanceScalarFieldEnum = {
 export type MatchAttendanceScalarFieldEnum = (typeof MatchAttendanceScalarFieldEnum)[keyof typeof MatchAttendanceScalarFieldEnum]
 
 
+export const MatchTaskScalarFieldEnum = {
+  id: 'id',
+  matchId: 'matchId',
+  teamId: 'teamId',
+  taskType: 'taskType',
+  userId: 'userId',
+  createdAt: 'createdAt'
+} as const
+
+export type MatchTaskScalarFieldEnum = (typeof MatchTaskScalarFieldEnum)[keyof typeof MatchTaskScalarFieldEnum]
+
+
 export const TrainingScalarFieldEnum = {
   id: 'id',
   teamId: 'teamId',
@@ -2585,6 +2672,20 @@ export type ListEnumAttendanceStatusFieldRefInput<$PrismaModel> = FieldRefInputT
 
 
 /**
+ * Reference to a field of type 'MatchTaskType'
+ */
+export type EnumMatchTaskTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MatchTaskType'>
+    
+
+
+/**
+ * Reference to a field of type 'MatchTaskType[]'
+ */
+export type ListEnumMatchTaskTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MatchTaskType[]'>
+    
+
+
+/**
  * Reference to a field of type 'NotificationType'
  */
 export type EnumNotificationTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NotificationType'>
@@ -2816,6 +2917,7 @@ export type GlobalOmitConfig = {
   standing?: Prisma.StandingOmit
   player?: Prisma.PlayerOmit
   matchAttendance?: Prisma.MatchAttendanceOmit
+  matchTask?: Prisma.MatchTaskOmit
   training?: Prisma.TrainingOmit
   trainingAttendance?: Prisma.TrainingAttendanceOmit
   statisticPreference?: Prisma.StatisticPreferenceOmit

@@ -270,6 +270,23 @@ export type EnumAttendanceStatusWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumAttendanceStatusFilter<$PrismaModel>
 }
 
+export type EnumMatchTaskTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.MatchTaskType | Prisma.EnumMatchTaskTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.MatchTaskType[] | Prisma.ListEnumMatchTaskTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.MatchTaskType[] | Prisma.ListEnumMatchTaskTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumMatchTaskTypeFilter<$PrismaModel> | $Enums.MatchTaskType
+}
+
+export type EnumMatchTaskTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.MatchTaskType | Prisma.EnumMatchTaskTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.MatchTaskType[] | Prisma.ListEnumMatchTaskTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.MatchTaskType[] | Prisma.ListEnumMatchTaskTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumMatchTaskTypeWithAggregatesFilter<$PrismaModel> | $Enums.MatchTaskType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumMatchTaskTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumMatchTaskTypeFilter<$PrismaModel>
+}
+
 export type EnumNotificationTypeFilter<$PrismaModel = never> = {
   equals?: $Enums.NotificationType | Prisma.EnumNotificationTypeFieldRefInput<$PrismaModel>
   in?: $Enums.NotificationType[] | Prisma.ListEnumNotificationTypeFieldRefInput<$PrismaModel>
@@ -639,6 +656,23 @@ export type NestedEnumAttendanceStatusWithAggregatesFilter<$PrismaModel = never>
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumAttendanceStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumAttendanceStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumMatchTaskTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.MatchTaskType | Prisma.EnumMatchTaskTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.MatchTaskType[] | Prisma.ListEnumMatchTaskTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.MatchTaskType[] | Prisma.ListEnumMatchTaskTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumMatchTaskTypeFilter<$PrismaModel> | $Enums.MatchTaskType
+}
+
+export type NestedEnumMatchTaskTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.MatchTaskType | Prisma.EnumMatchTaskTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.MatchTaskType[] | Prisma.ListEnumMatchTaskTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.MatchTaskType[] | Prisma.ListEnumMatchTaskTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumMatchTaskTypeWithAggregatesFilter<$PrismaModel> | $Enums.MatchTaskType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumMatchTaskTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumMatchTaskTypeFilter<$PrismaModel>
 }
 
 export type NestedEnumNotificationTypeFilter<$PrismaModel = never> = {

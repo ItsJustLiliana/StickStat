@@ -216,6 +216,7 @@ export type UserWhereInput = {
   notifications?: Prisma.NotificationListRelationFilter
   statisticPreferences?: Prisma.StatisticPreferenceListRelationFilter
   publishedReleases?: Prisma.AppReleaseListRelationFilter
+  assignedMatchTasks?: Prisma.MatchTaskListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -237,6 +238,7 @@ export type UserOrderByWithRelationInput = {
   notifications?: Prisma.NotificationOrderByRelationAggregateInput
   statisticPreferences?: Prisma.StatisticPreferenceOrderByRelationAggregateInput
   publishedReleases?: Prisma.AppReleaseOrderByRelationAggregateInput
+  assignedMatchTasks?: Prisma.MatchTaskOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -261,6 +263,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   notifications?: Prisma.NotificationListRelationFilter
   statisticPreferences?: Prisma.StatisticPreferenceListRelationFilter
   publishedReleases?: Prisma.AppReleaseListRelationFilter
+  assignedMatchTasks?: Prisma.MatchTaskListRelationFilter
 }, "id" | "username">
 
 export type UserOrderByWithAggregationInput = {
@@ -310,6 +313,7 @@ export type UserCreateInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   statisticPreferences?: Prisma.StatisticPreferenceCreateNestedManyWithoutUserInput
   publishedReleases?: Prisma.AppReleaseCreateNestedManyWithoutPublishedByInput
+  assignedMatchTasks?: Prisma.MatchTaskCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -331,6 +335,7 @@ export type UserUncheckedCreateInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   statisticPreferences?: Prisma.StatisticPreferenceUncheckedCreateNestedManyWithoutUserInput
   publishedReleases?: Prisma.AppReleaseUncheckedCreateNestedManyWithoutPublishedByInput
+  assignedMatchTasks?: Prisma.MatchTaskUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -352,6 +357,7 @@ export type UserUpdateInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   statisticPreferences?: Prisma.StatisticPreferenceUpdateManyWithoutUserNestedInput
   publishedReleases?: Prisma.AppReleaseUpdateManyWithoutPublishedByNestedInput
+  assignedMatchTasks?: Prisma.MatchTaskUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -373,6 +379,7 @@ export type UserUncheckedUpdateInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   statisticPreferences?: Prisma.StatisticPreferenceUncheckedUpdateManyWithoutUserNestedInput
   publishedReleases?: Prisma.AppReleaseUncheckedUpdateManyWithoutPublishedByNestedInput
+  assignedMatchTasks?: Prisma.MatchTaskUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -525,6 +532,20 @@ export type UserUpdateOneWithoutPlayerNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutPlayerInput, Prisma.UserUpdateWithoutPlayerInput>, Prisma.UserUncheckedUpdateWithoutPlayerInput>
 }
 
+export type UserCreateNestedOneWithoutAssignedMatchTasksInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAssignedMatchTasksInput, Prisma.UserUncheckedCreateWithoutAssignedMatchTasksInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAssignedMatchTasksInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutAssignedMatchTasksNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAssignedMatchTasksInput, Prisma.UserUncheckedCreateWithoutAssignedMatchTasksInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAssignedMatchTasksInput
+  upsert?: Prisma.UserUpsertWithoutAssignedMatchTasksInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAssignedMatchTasksInput, Prisma.UserUpdateWithoutAssignedMatchTasksInput>, Prisma.UserUncheckedUpdateWithoutAssignedMatchTasksInput>
+}
+
 export type UserCreateNestedOneWithoutCreatedTrainingsInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutCreatedTrainingsInput, Prisma.UserUncheckedCreateWithoutCreatedTrainingsInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutCreatedTrainingsInput
@@ -629,6 +650,7 @@ export type UserCreateWithoutSessionsInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   statisticPreferences?: Prisma.StatisticPreferenceCreateNestedManyWithoutUserInput
   publishedReleases?: Prisma.AppReleaseCreateNestedManyWithoutPublishedByInput
+  assignedMatchTasks?: Prisma.MatchTaskCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSessionsInput = {
@@ -649,6 +671,7 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   statisticPreferences?: Prisma.StatisticPreferenceUncheckedCreateNestedManyWithoutUserInput
   publishedReleases?: Prisma.AppReleaseUncheckedCreateNestedManyWithoutPublishedByInput
+  assignedMatchTasks?: Prisma.MatchTaskUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSessionsInput = {
@@ -685,6 +708,7 @@ export type UserUpdateWithoutSessionsInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   statisticPreferences?: Prisma.StatisticPreferenceUpdateManyWithoutUserNestedInput
   publishedReleases?: Prisma.AppReleaseUpdateManyWithoutPublishedByNestedInput
+  assignedMatchTasks?: Prisma.MatchTaskUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -705,6 +729,7 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   statisticPreferences?: Prisma.StatisticPreferenceUncheckedUpdateManyWithoutUserNestedInput
   publishedReleases?: Prisma.AppReleaseUncheckedUpdateManyWithoutPublishedByNestedInput
+  assignedMatchTasks?: Prisma.MatchTaskUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutClubMembershipsInput = {
@@ -725,6 +750,7 @@ export type UserCreateWithoutClubMembershipsInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   statisticPreferences?: Prisma.StatisticPreferenceCreateNestedManyWithoutUserInput
   publishedReleases?: Prisma.AppReleaseCreateNestedManyWithoutPublishedByInput
+  assignedMatchTasks?: Prisma.MatchTaskCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutClubMembershipsInput = {
@@ -745,6 +771,7 @@ export type UserUncheckedCreateWithoutClubMembershipsInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   statisticPreferences?: Prisma.StatisticPreferenceUncheckedCreateNestedManyWithoutUserInput
   publishedReleases?: Prisma.AppReleaseUncheckedCreateNestedManyWithoutPublishedByInput
+  assignedMatchTasks?: Prisma.MatchTaskUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutClubMembershipsInput = {
@@ -781,6 +808,7 @@ export type UserUpdateWithoutClubMembershipsInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   statisticPreferences?: Prisma.StatisticPreferenceUpdateManyWithoutUserNestedInput
   publishedReleases?: Prisma.AppReleaseUpdateManyWithoutPublishedByNestedInput
+  assignedMatchTasks?: Prisma.MatchTaskUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutClubMembershipsInput = {
@@ -801,6 +829,7 @@ export type UserUncheckedUpdateWithoutClubMembershipsInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   statisticPreferences?: Prisma.StatisticPreferenceUncheckedUpdateManyWithoutUserNestedInput
   publishedReleases?: Prisma.AppReleaseUncheckedUpdateManyWithoutPublishedByNestedInput
+  assignedMatchTasks?: Prisma.MatchTaskUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutTeamMembershipsInput = {
@@ -821,6 +850,7 @@ export type UserCreateWithoutTeamMembershipsInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   statisticPreferences?: Prisma.StatisticPreferenceCreateNestedManyWithoutUserInput
   publishedReleases?: Prisma.AppReleaseCreateNestedManyWithoutPublishedByInput
+  assignedMatchTasks?: Prisma.MatchTaskCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutTeamMembershipsInput = {
@@ -841,6 +871,7 @@ export type UserUncheckedCreateWithoutTeamMembershipsInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   statisticPreferences?: Prisma.StatisticPreferenceUncheckedCreateNestedManyWithoutUserInput
   publishedReleases?: Prisma.AppReleaseUncheckedCreateNestedManyWithoutPublishedByInput
+  assignedMatchTasks?: Prisma.MatchTaskUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutTeamMembershipsInput = {
@@ -877,6 +908,7 @@ export type UserUpdateWithoutTeamMembershipsInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   statisticPreferences?: Prisma.StatisticPreferenceUpdateManyWithoutUserNestedInput
   publishedReleases?: Prisma.AppReleaseUpdateManyWithoutPublishedByNestedInput
+  assignedMatchTasks?: Prisma.MatchTaskUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTeamMembershipsInput = {
@@ -897,6 +929,7 @@ export type UserUncheckedUpdateWithoutTeamMembershipsInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   statisticPreferences?: Prisma.StatisticPreferenceUncheckedUpdateManyWithoutUserNestedInput
   publishedReleases?: Prisma.AppReleaseUncheckedUpdateManyWithoutPublishedByNestedInput
+  assignedMatchTasks?: Prisma.MatchTaskUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutPlayerInput = {
@@ -917,6 +950,7 @@ export type UserCreateWithoutPlayerInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   statisticPreferences?: Prisma.StatisticPreferenceCreateNestedManyWithoutUserInput
   publishedReleases?: Prisma.AppReleaseCreateNestedManyWithoutPublishedByInput
+  assignedMatchTasks?: Prisma.MatchTaskCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutPlayerInput = {
@@ -937,6 +971,7 @@ export type UserUncheckedCreateWithoutPlayerInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   statisticPreferences?: Prisma.StatisticPreferenceUncheckedCreateNestedManyWithoutUserInput
   publishedReleases?: Prisma.AppReleaseUncheckedCreateNestedManyWithoutPublishedByInput
+  assignedMatchTasks?: Prisma.MatchTaskUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutPlayerInput = {
@@ -973,6 +1008,7 @@ export type UserUpdateWithoutPlayerInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   statisticPreferences?: Prisma.StatisticPreferenceUpdateManyWithoutUserNestedInput
   publishedReleases?: Prisma.AppReleaseUpdateManyWithoutPublishedByNestedInput
+  assignedMatchTasks?: Prisma.MatchTaskUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPlayerInput = {
@@ -987,6 +1023,107 @@ export type UserUncheckedUpdateWithoutPlayerInput = {
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   clubMemberships?: Prisma.ClubMembershipUncheckedUpdateManyWithoutUserNestedInput
   teamMemberships?: Prisma.TeamMembershipUncheckedUpdateManyWithoutUserNestedInput
+  createdTeamInvites?: Prisma.TeamInviteUncheckedUpdateManyWithoutCreatedByNestedInput
+  usedTeamInvites?: Prisma.TeamInviteUncheckedUpdateManyWithoutUsedByNestedInput
+  createdTrainings?: Prisma.TrainingUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  statisticPreferences?: Prisma.StatisticPreferenceUncheckedUpdateManyWithoutUserNestedInput
+  publishedReleases?: Prisma.AppReleaseUncheckedUpdateManyWithoutPublishedByNestedInput
+  assignedMatchTasks?: Prisma.MatchTaskUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutAssignedMatchTasksInput = {
+  id?: string
+  name: string
+  username: string
+  passwordHash: string
+  photoPath?: string | null
+  platformRole?: $Enums.PlatformRole
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  clubMemberships?: Prisma.ClubMembershipCreateNestedManyWithoutUserInput
+  teamMemberships?: Prisma.TeamMembershipCreateNestedManyWithoutUserInput
+  player?: Prisma.PlayerCreateNestedOneWithoutUserInput
+  createdTeamInvites?: Prisma.TeamInviteCreateNestedManyWithoutCreatedByInput
+  usedTeamInvites?: Prisma.TeamInviteCreateNestedManyWithoutUsedByInput
+  createdTrainings?: Prisma.TrainingCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  statisticPreferences?: Prisma.StatisticPreferenceCreateNestedManyWithoutUserInput
+  publishedReleases?: Prisma.AppReleaseCreateNestedManyWithoutPublishedByInput
+}
+
+export type UserUncheckedCreateWithoutAssignedMatchTasksInput = {
+  id?: string
+  name: string
+  username: string
+  passwordHash: string
+  photoPath?: string | null
+  platformRole?: $Enums.PlatformRole
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  clubMemberships?: Prisma.ClubMembershipUncheckedCreateNestedManyWithoutUserInput
+  teamMemberships?: Prisma.TeamMembershipUncheckedCreateNestedManyWithoutUserInput
+  player?: Prisma.PlayerUncheckedCreateNestedOneWithoutUserInput
+  createdTeamInvites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutCreatedByInput
+  usedTeamInvites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutUsedByInput
+  createdTrainings?: Prisma.TrainingUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  statisticPreferences?: Prisma.StatisticPreferenceUncheckedCreateNestedManyWithoutUserInput
+  publishedReleases?: Prisma.AppReleaseUncheckedCreateNestedManyWithoutPublishedByInput
+}
+
+export type UserCreateOrConnectWithoutAssignedMatchTasksInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutAssignedMatchTasksInput, Prisma.UserUncheckedCreateWithoutAssignedMatchTasksInput>
+}
+
+export type UserUpsertWithoutAssignedMatchTasksInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutAssignedMatchTasksInput, Prisma.UserUncheckedUpdateWithoutAssignedMatchTasksInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutAssignedMatchTasksInput, Prisma.UserUncheckedCreateWithoutAssignedMatchTasksInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutAssignedMatchTasksInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutAssignedMatchTasksInput, Prisma.UserUncheckedUpdateWithoutAssignedMatchTasksInput>
+}
+
+export type UserUpdateWithoutAssignedMatchTasksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  platformRole?: Prisma.EnumPlatformRoleFieldUpdateOperationsInput | $Enums.PlatformRole
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  clubMemberships?: Prisma.ClubMembershipUpdateManyWithoutUserNestedInput
+  teamMemberships?: Prisma.TeamMembershipUpdateManyWithoutUserNestedInput
+  player?: Prisma.PlayerUpdateOneWithoutUserNestedInput
+  createdTeamInvites?: Prisma.TeamInviteUpdateManyWithoutCreatedByNestedInput
+  usedTeamInvites?: Prisma.TeamInviteUpdateManyWithoutUsedByNestedInput
+  createdTrainings?: Prisma.TrainingUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  statisticPreferences?: Prisma.StatisticPreferenceUpdateManyWithoutUserNestedInput
+  publishedReleases?: Prisma.AppReleaseUpdateManyWithoutPublishedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutAssignedMatchTasksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  platformRole?: Prisma.EnumPlatformRoleFieldUpdateOperationsInput | $Enums.PlatformRole
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  clubMemberships?: Prisma.ClubMembershipUncheckedUpdateManyWithoutUserNestedInput
+  teamMemberships?: Prisma.TeamMembershipUncheckedUpdateManyWithoutUserNestedInput
+  player?: Prisma.PlayerUncheckedUpdateOneWithoutUserNestedInput
   createdTeamInvites?: Prisma.TeamInviteUncheckedUpdateManyWithoutCreatedByNestedInput
   usedTeamInvites?: Prisma.TeamInviteUncheckedUpdateManyWithoutUsedByNestedInput
   createdTrainings?: Prisma.TrainingUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -1013,6 +1150,7 @@ export type UserCreateWithoutCreatedTrainingsInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   statisticPreferences?: Prisma.StatisticPreferenceCreateNestedManyWithoutUserInput
   publishedReleases?: Prisma.AppReleaseCreateNestedManyWithoutPublishedByInput
+  assignedMatchTasks?: Prisma.MatchTaskCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCreatedTrainingsInput = {
@@ -1033,6 +1171,7 @@ export type UserUncheckedCreateWithoutCreatedTrainingsInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   statisticPreferences?: Prisma.StatisticPreferenceUncheckedCreateNestedManyWithoutUserInput
   publishedReleases?: Prisma.AppReleaseUncheckedCreateNestedManyWithoutPublishedByInput
+  assignedMatchTasks?: Prisma.MatchTaskUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCreatedTrainingsInput = {
@@ -1069,6 +1208,7 @@ export type UserUpdateWithoutCreatedTrainingsInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   statisticPreferences?: Prisma.StatisticPreferenceUpdateManyWithoutUserNestedInput
   publishedReleases?: Prisma.AppReleaseUpdateManyWithoutPublishedByNestedInput
+  assignedMatchTasks?: Prisma.MatchTaskUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedTrainingsInput = {
@@ -1089,6 +1229,7 @@ export type UserUncheckedUpdateWithoutCreatedTrainingsInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   statisticPreferences?: Prisma.StatisticPreferenceUncheckedUpdateManyWithoutUserNestedInput
   publishedReleases?: Prisma.AppReleaseUncheckedUpdateManyWithoutPublishedByNestedInput
+  assignedMatchTasks?: Prisma.MatchTaskUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutStatisticPreferencesInput = {
@@ -1109,6 +1250,7 @@ export type UserCreateWithoutStatisticPreferencesInput = {
   createdTrainings?: Prisma.TrainingCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   publishedReleases?: Prisma.AppReleaseCreateNestedManyWithoutPublishedByInput
+  assignedMatchTasks?: Prisma.MatchTaskCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutStatisticPreferencesInput = {
@@ -1129,6 +1271,7 @@ export type UserUncheckedCreateWithoutStatisticPreferencesInput = {
   createdTrainings?: Prisma.TrainingUncheckedCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   publishedReleases?: Prisma.AppReleaseUncheckedCreateNestedManyWithoutPublishedByInput
+  assignedMatchTasks?: Prisma.MatchTaskUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutStatisticPreferencesInput = {
@@ -1165,6 +1308,7 @@ export type UserUpdateWithoutStatisticPreferencesInput = {
   createdTrainings?: Prisma.TrainingUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   publishedReleases?: Prisma.AppReleaseUpdateManyWithoutPublishedByNestedInput
+  assignedMatchTasks?: Prisma.MatchTaskUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutStatisticPreferencesInput = {
@@ -1185,6 +1329,7 @@ export type UserUncheckedUpdateWithoutStatisticPreferencesInput = {
   createdTrainings?: Prisma.TrainingUncheckedUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   publishedReleases?: Prisma.AppReleaseUncheckedUpdateManyWithoutPublishedByNestedInput
+  assignedMatchTasks?: Prisma.MatchTaskUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutNotificationsInput = {
@@ -1205,6 +1350,7 @@ export type UserCreateWithoutNotificationsInput = {
   createdTrainings?: Prisma.TrainingCreateNestedManyWithoutCreatedByInput
   statisticPreferences?: Prisma.StatisticPreferenceCreateNestedManyWithoutUserInput
   publishedReleases?: Prisma.AppReleaseCreateNestedManyWithoutPublishedByInput
+  assignedMatchTasks?: Prisma.MatchTaskCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutNotificationsInput = {
@@ -1225,6 +1371,7 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   createdTrainings?: Prisma.TrainingUncheckedCreateNestedManyWithoutCreatedByInput
   statisticPreferences?: Prisma.StatisticPreferenceUncheckedCreateNestedManyWithoutUserInput
   publishedReleases?: Prisma.AppReleaseUncheckedCreateNestedManyWithoutPublishedByInput
+  assignedMatchTasks?: Prisma.MatchTaskUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutNotificationsInput = {
@@ -1261,6 +1408,7 @@ export type UserUpdateWithoutNotificationsInput = {
   createdTrainings?: Prisma.TrainingUpdateManyWithoutCreatedByNestedInput
   statisticPreferences?: Prisma.StatisticPreferenceUpdateManyWithoutUserNestedInput
   publishedReleases?: Prisma.AppReleaseUpdateManyWithoutPublishedByNestedInput
+  assignedMatchTasks?: Prisma.MatchTaskUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutNotificationsInput = {
@@ -1281,6 +1429,7 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   createdTrainings?: Prisma.TrainingUncheckedUpdateManyWithoutCreatedByNestedInput
   statisticPreferences?: Prisma.StatisticPreferenceUncheckedUpdateManyWithoutUserNestedInput
   publishedReleases?: Prisma.AppReleaseUncheckedUpdateManyWithoutPublishedByNestedInput
+  assignedMatchTasks?: Prisma.MatchTaskUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutPublishedReleasesInput = {
@@ -1301,6 +1450,7 @@ export type UserCreateWithoutPublishedReleasesInput = {
   createdTrainings?: Prisma.TrainingCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   statisticPreferences?: Prisma.StatisticPreferenceCreateNestedManyWithoutUserInput
+  assignedMatchTasks?: Prisma.MatchTaskCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutPublishedReleasesInput = {
@@ -1321,6 +1471,7 @@ export type UserUncheckedCreateWithoutPublishedReleasesInput = {
   createdTrainings?: Prisma.TrainingUncheckedCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   statisticPreferences?: Prisma.StatisticPreferenceUncheckedCreateNestedManyWithoutUserInput
+  assignedMatchTasks?: Prisma.MatchTaskUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutPublishedReleasesInput = {
@@ -1357,6 +1508,7 @@ export type UserUpdateWithoutPublishedReleasesInput = {
   createdTrainings?: Prisma.TrainingUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   statisticPreferences?: Prisma.StatisticPreferenceUpdateManyWithoutUserNestedInput
+  assignedMatchTasks?: Prisma.MatchTaskUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPublishedReleasesInput = {
@@ -1377,6 +1529,7 @@ export type UserUncheckedUpdateWithoutPublishedReleasesInput = {
   createdTrainings?: Prisma.TrainingUncheckedUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   statisticPreferences?: Prisma.StatisticPreferenceUncheckedUpdateManyWithoutUserNestedInput
+  assignedMatchTasks?: Prisma.MatchTaskUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCreatedTeamInvitesInput = {
@@ -1397,6 +1550,7 @@ export type UserCreateWithoutCreatedTeamInvitesInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   statisticPreferences?: Prisma.StatisticPreferenceCreateNestedManyWithoutUserInput
   publishedReleases?: Prisma.AppReleaseCreateNestedManyWithoutPublishedByInput
+  assignedMatchTasks?: Prisma.MatchTaskCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCreatedTeamInvitesInput = {
@@ -1417,6 +1571,7 @@ export type UserUncheckedCreateWithoutCreatedTeamInvitesInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   statisticPreferences?: Prisma.StatisticPreferenceUncheckedCreateNestedManyWithoutUserInput
   publishedReleases?: Prisma.AppReleaseUncheckedCreateNestedManyWithoutPublishedByInput
+  assignedMatchTasks?: Prisma.MatchTaskUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCreatedTeamInvitesInput = {
@@ -1442,6 +1597,7 @@ export type UserCreateWithoutUsedTeamInvitesInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   statisticPreferences?: Prisma.StatisticPreferenceCreateNestedManyWithoutUserInput
   publishedReleases?: Prisma.AppReleaseCreateNestedManyWithoutPublishedByInput
+  assignedMatchTasks?: Prisma.MatchTaskCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutUsedTeamInvitesInput = {
@@ -1462,6 +1618,7 @@ export type UserUncheckedCreateWithoutUsedTeamInvitesInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   statisticPreferences?: Prisma.StatisticPreferenceUncheckedCreateNestedManyWithoutUserInput
   publishedReleases?: Prisma.AppReleaseUncheckedCreateNestedManyWithoutPublishedByInput
+  assignedMatchTasks?: Prisma.MatchTaskUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutUsedTeamInvitesInput = {
@@ -1498,6 +1655,7 @@ export type UserUpdateWithoutCreatedTeamInvitesInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   statisticPreferences?: Prisma.StatisticPreferenceUpdateManyWithoutUserNestedInput
   publishedReleases?: Prisma.AppReleaseUpdateManyWithoutPublishedByNestedInput
+  assignedMatchTasks?: Prisma.MatchTaskUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedTeamInvitesInput = {
@@ -1518,6 +1676,7 @@ export type UserUncheckedUpdateWithoutCreatedTeamInvitesInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   statisticPreferences?: Prisma.StatisticPreferenceUncheckedUpdateManyWithoutUserNestedInput
   publishedReleases?: Prisma.AppReleaseUncheckedUpdateManyWithoutPublishedByNestedInput
+  assignedMatchTasks?: Prisma.MatchTaskUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutUsedTeamInvitesInput = {
@@ -1549,6 +1708,7 @@ export type UserUpdateWithoutUsedTeamInvitesInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   statisticPreferences?: Prisma.StatisticPreferenceUpdateManyWithoutUserNestedInput
   publishedReleases?: Prisma.AppReleaseUpdateManyWithoutPublishedByNestedInput
+  assignedMatchTasks?: Prisma.MatchTaskUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUsedTeamInvitesInput = {
@@ -1569,6 +1729,7 @@ export type UserUncheckedUpdateWithoutUsedTeamInvitesInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   statisticPreferences?: Prisma.StatisticPreferenceUncheckedUpdateManyWithoutUserNestedInput
   publishedReleases?: Prisma.AppReleaseUncheckedUpdateManyWithoutPublishedByNestedInput
+  assignedMatchTasks?: Prisma.MatchTaskUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -1586,6 +1747,7 @@ export type UserCountOutputType = {
   notifications: number
   statisticPreferences: number
   publishedReleases: number
+  assignedMatchTasks: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1598,6 +1760,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   notifications?: boolean | UserCountOutputTypeCountNotificationsArgs
   statisticPreferences?: boolean | UserCountOutputTypeCountStatisticPreferencesArgs
   publishedReleases?: boolean | UserCountOutputTypeCountPublishedReleasesArgs
+  assignedMatchTasks?: boolean | UserCountOutputTypeCountAssignedMatchTasksArgs
 }
 
 /**
@@ -1673,6 +1836,13 @@ export type UserCountOutputTypeCountPublishedReleasesArgs<ExtArgs extends runtim
   where?: Prisma.AppReleaseWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountAssignedMatchTasksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MatchTaskWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1693,6 +1863,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
   statisticPreferences?: boolean | Prisma.User$statisticPreferencesArgs<ExtArgs>
   publishedReleases?: boolean | Prisma.User$publishedReleasesArgs<ExtArgs>
+  assignedMatchTasks?: boolean | Prisma.User$assignedMatchTasksArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1741,6 +1912,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
   statisticPreferences?: boolean | Prisma.User$statisticPreferencesArgs<ExtArgs>
   publishedReleases?: boolean | Prisma.User$publishedReleasesArgs<ExtArgs>
+  assignedMatchTasks?: boolean | Prisma.User$assignedMatchTasksArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1759,6 +1931,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     notifications: Prisma.$NotificationPayload<ExtArgs>[]
     statisticPreferences: Prisma.$StatisticPreferencePayload<ExtArgs>[]
     publishedReleases: Prisma.$AppReleasePayload<ExtArgs>[]
+    assignedMatchTasks: Prisma.$MatchTaskPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2173,6 +2346,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   notifications<T extends Prisma.User$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   statisticPreferences<T extends Prisma.User$statisticPreferencesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$statisticPreferencesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StatisticPreferencePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   publishedReleases<T extends Prisma.User$publishedReleasesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$publishedReleasesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AppReleasePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  assignedMatchTasks<T extends Prisma.User$assignedMatchTasksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$assignedMatchTasksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MatchTaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2835,6 +3009,30 @@ export type User$publishedReleasesArgs<ExtArgs extends runtime.Types.Extensions.
   take?: number
   skip?: number
   distinct?: Prisma.AppReleaseScalarFieldEnum | Prisma.AppReleaseScalarFieldEnum[]
+}
+
+/**
+ * User.assignedMatchTasks
+ */
+export type User$assignedMatchTasksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MatchTask
+   */
+  select?: Prisma.MatchTaskSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MatchTask
+   */
+  omit?: Prisma.MatchTaskOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MatchTaskInclude<ExtArgs> | null
+  where?: Prisma.MatchTaskWhereInput
+  orderBy?: Prisma.MatchTaskOrderByWithRelationInput | Prisma.MatchTaskOrderByWithRelationInput[]
+  cursor?: Prisma.MatchTaskWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MatchTaskScalarFieldEnum | Prisma.MatchTaskScalarFieldEnum[]
 }
 
 /**

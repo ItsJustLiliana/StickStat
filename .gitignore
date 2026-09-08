@@ -47,6 +47,9 @@ CLAUDE.md
 # Development
 niks.md
 
+# Local-only operational and project documentation
+docs/
+
 # Uploaded files (keep .gitkeep)
 public/uploads/*
 !public/uploads/.gitkeep
