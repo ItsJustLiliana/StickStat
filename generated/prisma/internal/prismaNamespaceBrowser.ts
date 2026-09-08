@@ -271,6 +271,7 @@ export const MatchTaskScalarFieldEnum = {
   matchId: 'matchId',
   teamId: 'teamId',
   taskType: 'taskType',
+  playerId: 'playerId',
   userId: 'userId',
   createdAt: 'createdAt'
 } as const

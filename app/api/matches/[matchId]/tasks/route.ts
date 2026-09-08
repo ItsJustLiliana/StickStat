@@ -13,9 +13,9 @@ export async function POST(request: Request, {params}: {params: Promise<{matchId
     const [{matchId}, input] = await Promise.all([params, request.json().then(value => createMatchTaskSchema.parse(value))]);
     await authorizeTeamAdmin(input.teamId);
     await verifyMatchTeam(matchId, input.teamId);
-    const member = await db.teamMembership.findUnique({where: {userId_teamId: {userId: input.userId, teamId: input.teamId}}, select: {id: true}});
-    if (!member) throw new HttpError(400, "INVALID_TEAM_MEMBER", "Kies een lid van dit team");
-    return ok(await db.matchTask.create({data: {matchId, ...input}, include: {user: {select: {id: true, name: true}}}}));
+    const player = await db.player.findFirst({where: {id: input.playerId, teamId: input.teamId}, select: {id: true}});
+    if (!player) throw new HttpError(400, "INVALID_TEAM_MEMBER", "Kies een speler van dit team");
+    return ok(await db.matchTask.create({data: {matchId, ...input}, include: {player: {select: {id: true, displayName: true}}}}));
   } catch (error) { return apiError(error); }
 }
 

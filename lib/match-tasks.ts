@@ -12,7 +12,7 @@ export const matchTaskLabels: Record<MatchTaskType, string> = {
 export const createMatchTaskSchema = z.object({
   teamId: z.string().cuid(),
   taskType: z.enum(matchTaskTypes),
-  userId: z.string().cuid(),
+  playerId: z.string().cuid(),
 });
 
 export const deleteMatchTaskSchema = z.object({

@@ -2625,7 +2625,7 @@ html[data-theme="dark"] .input {
 
 .match-photo-button { position: relative; display: block; overflow: hidden; padding: 0; border: 0; background: transparent; cursor: zoom-in; }
 .match-photo-button > img { display: block; width: 100%; height: 100%; object-fit: cover; }
-.match-photo-button.match-team-photo { position: absolute; left: 50%; top: 50%; z-index: 0; width: 162px; height: 102px; transform: translate(-50%, -50%); border-radius: 15px; }
+.match-photo-button.match-team-photo { position: absolute; left: 50%; top: 50%; z-index: 0; width: calc(100% - 24px); height: 132px; transform: translate(-50%, -50%); border-radius: 15px; }
 .match-photo-button.match-team-photo::before { content: ""; position: absolute; inset: 0; z-index: 1; background: rgba(8, 20, 15, .56); pointer-events: none; }
 .match-photo-button.match-team-photo::after { content: "⌕"; position: absolute; right: 7px; bottom: 7px; z-index: 2; display: grid; place-items: center; width: 30px; height: 30px; border: 1px solid #ffffffa8; border-radius: 9px; background: #07150ed1; color: white; font-size: 21px; font-weight: 700; line-height: 1; }
 
@@ -3180,6 +3180,8 @@ html[data-theme="dark"] .time-popover button.selected {
         font-size: 10px;
     }
 }
+
+.match-event-header .match-score-team { position: relative; z-index: 1; }
 
 .attendance-head-meta { display: grid; justify-items: end; gap: 4px; }
 .attendance-summary { display: inline-flex; justify-content: flex-end; gap: 6px; color: var(--muted); font-size: 11px; font-weight: 800; }

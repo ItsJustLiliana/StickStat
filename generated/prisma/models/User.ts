@@ -538,10 +538,12 @@ export type UserCreateNestedOneWithoutAssignedMatchTasksInput = {
   connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserUpdateOneRequiredWithoutAssignedMatchTasksNestedInput = {
+export type UserUpdateOneWithoutAssignedMatchTasksNestedInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutAssignedMatchTasksInput, Prisma.UserUncheckedCreateWithoutAssignedMatchTasksInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutAssignedMatchTasksInput
   upsert?: Prisma.UserUpsertWithoutAssignedMatchTasksInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
   connect?: Prisma.UserWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAssignedMatchTasksInput, Prisma.UserUpdateWithoutAssignedMatchTasksInput>, Prisma.UserUncheckedUpdateWithoutAssignedMatchTasksInput>
 }

@@ -29,6 +29,7 @@ export type MatchTaskMinAggregateOutputType = {
   matchId: string | null
   teamId: string | null
   taskType: $Enums.MatchTaskType | null
+  playerId: string | null
   userId: string | null
   createdAt: Date | null
 }
@@ -38,6 +39,7 @@ export type MatchTaskMaxAggregateOutputType = {
   matchId: string | null
   teamId: string | null
   taskType: $Enums.MatchTaskType | null
+  playerId: string | null
   userId: string | null
   createdAt: Date | null
 }
@@ -47,6 +49,7 @@ export type MatchTaskCountAggregateOutputType = {
   matchId: number
   teamId: number
   taskType: number
+  playerId: number
   userId: number
   createdAt: number
   _all: number
@@ -58,6 +61,7 @@ export type MatchTaskMinAggregateInputType = {
   matchId?: true
   teamId?: true
   taskType?: true
+  playerId?: true
   userId?: true
   createdAt?: true
 }
@@ -67,6 +71,7 @@ export type MatchTaskMaxAggregateInputType = {
   matchId?: true
   teamId?: true
   taskType?: true
+  playerId?: true
   userId?: true
   createdAt?: true
 }
@@ -76,6 +81,7 @@ export type MatchTaskCountAggregateInputType = {
   matchId?: true
   teamId?: true
   taskType?: true
+  playerId?: true
   userId?: true
   createdAt?: true
   _all?: true
@@ -158,7 +164,8 @@ export type MatchTaskGroupByOutputType = {
   matchId: string
   teamId: string
   taskType: $Enums.MatchTaskType
-  userId: string
+  playerId: string | null
+  userId: string | null
   createdAt: Date
   _count: MatchTaskCountAggregateOutputType | null
   _min: MatchTaskMinAggregateOutputType | null
@@ -188,10 +195,12 @@ export type MatchTaskWhereInput = {
   matchId?: Prisma.StringFilter<"MatchTask"> | string
   teamId?: Prisma.StringFilter<"MatchTask"> | string
   taskType?: Prisma.EnumMatchTaskTypeFilter<"MatchTask"> | $Enums.MatchTaskType
-  userId?: Prisma.StringFilter<"MatchTask"> | string
+  playerId?: Prisma.StringNullableFilter<"MatchTask"> | string | null
+  userId?: Prisma.StringNullableFilter<"MatchTask"> | string | null
   createdAt?: Prisma.DateTimeFilter<"MatchTask"> | Date | string
   match?: Prisma.XOR<Prisma.MatchScalarRelationFilter, Prisma.MatchWhereInput>
-  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  player?: Prisma.XOR<Prisma.PlayerNullableScalarRelationFilter, Prisma.PlayerWhereInput> | null
+  user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }
 
 export type MatchTaskOrderByWithRelationInput = {
@@ -199,33 +208,38 @@ export type MatchTaskOrderByWithRelationInput = {
   matchId?: Prisma.SortOrder
   teamId?: Prisma.SortOrder
   taskType?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
+  playerId?: Prisma.SortOrderInput | Prisma.SortOrder
+  userId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   match?: Prisma.MatchOrderByWithRelationInput
+  player?: Prisma.PlayerOrderByWithRelationInput
   user?: Prisma.UserOrderByWithRelationInput
 }
 
 export type MatchTaskWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  matchId_taskType_userId?: Prisma.MatchTaskMatchIdTaskTypeUserIdCompoundUniqueInput
+  matchId_taskType_playerId?: Prisma.MatchTaskMatchIdTaskTypePlayerIdCompoundUniqueInput
   AND?: Prisma.MatchTaskWhereInput | Prisma.MatchTaskWhereInput[]
   OR?: Prisma.MatchTaskWhereInput[]
   NOT?: Prisma.MatchTaskWhereInput | Prisma.MatchTaskWhereInput[]
   matchId?: Prisma.StringFilter<"MatchTask"> | string
   teamId?: Prisma.StringFilter<"MatchTask"> | string
   taskType?: Prisma.EnumMatchTaskTypeFilter<"MatchTask"> | $Enums.MatchTaskType
-  userId?: Prisma.StringFilter<"MatchTask"> | string
+  playerId?: Prisma.StringNullableFilter<"MatchTask"> | string | null
+  userId?: Prisma.StringNullableFilter<"MatchTask"> | string | null
   createdAt?: Prisma.DateTimeFilter<"MatchTask"> | Date | string
   match?: Prisma.XOR<Prisma.MatchScalarRelationFilter, Prisma.MatchWhereInput>
-  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-}, "id" | "matchId_taskType_userId">
+  player?: Prisma.XOR<Prisma.PlayerNullableScalarRelationFilter, Prisma.PlayerWhereInput> | null
+  user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+}, "id" | "matchId_taskType_playerId">
 
 export type MatchTaskOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   matchId?: Prisma.SortOrder
   teamId?: Prisma.SortOrder
   taskType?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
+  playerId?: Prisma.SortOrderInput | Prisma.SortOrder
+  userId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.MatchTaskCountOrderByAggregateInput
   _max?: Prisma.MatchTaskMaxOrderByAggregateInput
@@ -240,7 +254,8 @@ export type MatchTaskScalarWhereWithAggregatesInput = {
   matchId?: Prisma.StringWithAggregatesFilter<"MatchTask"> | string
   teamId?: Prisma.StringWithAggregatesFilter<"MatchTask"> | string
   taskType?: Prisma.EnumMatchTaskTypeWithAggregatesFilter<"MatchTask"> | $Enums.MatchTaskType
-  userId?: Prisma.StringWithAggregatesFilter<"MatchTask"> | string
+  playerId?: Prisma.StringNullableWithAggregatesFilter<"MatchTask"> | string | null
+  userId?: Prisma.StringNullableWithAggregatesFilter<"MatchTask"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"MatchTask"> | Date | string
 }
 
@@ -250,7 +265,8 @@ export type MatchTaskCreateInput = {
   taskType: $Enums.MatchTaskType
   createdAt?: Date | string
   match: Prisma.MatchCreateNestedOneWithoutTasksInput
-  user: Prisma.UserCreateNestedOneWithoutAssignedMatchTasksInput
+  player?: Prisma.PlayerCreateNestedOneWithoutMatchTasksInput
+  user?: Prisma.UserCreateNestedOneWithoutAssignedMatchTasksInput
 }
 
 export type MatchTaskUncheckedCreateInput = {
@@ -258,7 +274,8 @@ export type MatchTaskUncheckedCreateInput = {
   matchId: string
   teamId: string
   taskType: $Enums.MatchTaskType
-  userId: string
+  playerId?: string | null
+  userId?: string | null
   createdAt?: Date | string
 }
 
@@ -268,7 +285,8 @@ export type MatchTaskUpdateInput = {
   taskType?: Prisma.EnumMatchTaskTypeFieldUpdateOperationsInput | $Enums.MatchTaskType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   match?: Prisma.MatchUpdateOneRequiredWithoutTasksNestedInput
-  user?: Prisma.UserUpdateOneRequiredWithoutAssignedMatchTasksNestedInput
+  player?: Prisma.PlayerUpdateOneWithoutMatchTasksNestedInput
+  user?: Prisma.UserUpdateOneWithoutAssignedMatchTasksNestedInput
 }
 
 export type MatchTaskUncheckedUpdateInput = {
@@ -276,7 +294,8 @@ export type MatchTaskUncheckedUpdateInput = {
   matchId?: Prisma.StringFieldUpdateOperationsInput | string
   teamId?: Prisma.StringFieldUpdateOperationsInput | string
   taskType?: Prisma.EnumMatchTaskTypeFieldUpdateOperationsInput | $Enums.MatchTaskType
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  playerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -285,7 +304,8 @@ export type MatchTaskCreateManyInput = {
   matchId: string
   teamId: string
   taskType: $Enums.MatchTaskType
-  userId: string
+  playerId?: string | null
+  userId?: string | null
   createdAt?: Date | string
 }
 
@@ -301,7 +321,8 @@ export type MatchTaskUncheckedUpdateManyInput = {
   matchId?: Prisma.StringFieldUpdateOperationsInput | string
   teamId?: Prisma.StringFieldUpdateOperationsInput | string
   taskType?: Prisma.EnumMatchTaskTypeFieldUpdateOperationsInput | $Enums.MatchTaskType
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  playerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -315,10 +336,10 @@ export type MatchTaskOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type MatchTaskMatchIdTaskTypeUserIdCompoundUniqueInput = {
+export type MatchTaskMatchIdTaskTypePlayerIdCompoundUniqueInput = {
   matchId: string
   taskType: $Enums.MatchTaskType
-  userId: string
+  playerId: string
 }
 
 export type MatchTaskCountOrderByAggregateInput = {
@@ -326,6 +347,7 @@ export type MatchTaskCountOrderByAggregateInput = {
   matchId?: Prisma.SortOrder
   teamId?: Prisma.SortOrder
   taskType?: Prisma.SortOrder
+  playerId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
@@ -335,6 +357,7 @@ export type MatchTaskMaxOrderByAggregateInput = {
   matchId?: Prisma.SortOrder
   teamId?: Prisma.SortOrder
   taskType?: Prisma.SortOrder
+  playerId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
@@ -344,6 +367,7 @@ export type MatchTaskMinOrderByAggregateInput = {
   matchId?: Prisma.SortOrder
   teamId?: Prisma.SortOrder
   taskType?: Prisma.SortOrder
+  playerId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
@@ -432,6 +456,48 @@ export type MatchTaskUncheckedUpdateManyWithoutMatchNestedInput = {
   deleteMany?: Prisma.MatchTaskScalarWhereInput | Prisma.MatchTaskScalarWhereInput[]
 }
 
+export type MatchTaskCreateNestedManyWithoutPlayerInput = {
+  create?: Prisma.XOR<Prisma.MatchTaskCreateWithoutPlayerInput, Prisma.MatchTaskUncheckedCreateWithoutPlayerInput> | Prisma.MatchTaskCreateWithoutPlayerInput[] | Prisma.MatchTaskUncheckedCreateWithoutPlayerInput[]
+  connectOrCreate?: Prisma.MatchTaskCreateOrConnectWithoutPlayerInput | Prisma.MatchTaskCreateOrConnectWithoutPlayerInput[]
+  createMany?: Prisma.MatchTaskCreateManyPlayerInputEnvelope
+  connect?: Prisma.MatchTaskWhereUniqueInput | Prisma.MatchTaskWhereUniqueInput[]
+}
+
+export type MatchTaskUncheckedCreateNestedManyWithoutPlayerInput = {
+  create?: Prisma.XOR<Prisma.MatchTaskCreateWithoutPlayerInput, Prisma.MatchTaskUncheckedCreateWithoutPlayerInput> | Prisma.MatchTaskCreateWithoutPlayerInput[] | Prisma.MatchTaskUncheckedCreateWithoutPlayerInput[]
+  connectOrCreate?: Prisma.MatchTaskCreateOrConnectWithoutPlayerInput | Prisma.MatchTaskCreateOrConnectWithoutPlayerInput[]
+  createMany?: Prisma.MatchTaskCreateManyPlayerInputEnvelope
+  connect?: Prisma.MatchTaskWhereUniqueInput | Prisma.MatchTaskWhereUniqueInput[]
+}
+
+export type MatchTaskUpdateManyWithoutPlayerNestedInput = {
+  create?: Prisma.XOR<Prisma.MatchTaskCreateWithoutPlayerInput, Prisma.MatchTaskUncheckedCreateWithoutPlayerInput> | Prisma.MatchTaskCreateWithoutPlayerInput[] | Prisma.MatchTaskUncheckedCreateWithoutPlayerInput[]
+  connectOrCreate?: Prisma.MatchTaskCreateOrConnectWithoutPlayerInput | Prisma.MatchTaskCreateOrConnectWithoutPlayerInput[]
+  upsert?: Prisma.MatchTaskUpsertWithWhereUniqueWithoutPlayerInput | Prisma.MatchTaskUpsertWithWhereUniqueWithoutPlayerInput[]
+  createMany?: Prisma.MatchTaskCreateManyPlayerInputEnvelope
+  set?: Prisma.MatchTaskWhereUniqueInput | Prisma.MatchTaskWhereUniqueInput[]
+  disconnect?: Prisma.MatchTaskWhereUniqueInput | Prisma.MatchTaskWhereUniqueInput[]
+  delete?: Prisma.MatchTaskWhereUniqueInput | Prisma.MatchTaskWhereUniqueInput[]
+  connect?: Prisma.MatchTaskWhereUniqueInput | Prisma.MatchTaskWhereUniqueInput[]
+  update?: Prisma.MatchTaskUpdateWithWhereUniqueWithoutPlayerInput | Prisma.MatchTaskUpdateWithWhereUniqueWithoutPlayerInput[]
+  updateMany?: Prisma.MatchTaskUpdateManyWithWhereWithoutPlayerInput | Prisma.MatchTaskUpdateManyWithWhereWithoutPlayerInput[]
+  deleteMany?: Prisma.MatchTaskScalarWhereInput | Prisma.MatchTaskScalarWhereInput[]
+}
+
+export type MatchTaskUncheckedUpdateManyWithoutPlayerNestedInput = {
+  create?: Prisma.XOR<Prisma.MatchTaskCreateWithoutPlayerInput, Prisma.MatchTaskUncheckedCreateWithoutPlayerInput> | Prisma.MatchTaskCreateWithoutPlayerInput[] | Prisma.MatchTaskUncheckedCreateWithoutPlayerInput[]
+  connectOrCreate?: Prisma.MatchTaskCreateOrConnectWithoutPlayerInput | Prisma.MatchTaskCreateOrConnectWithoutPlayerInput[]
+  upsert?: Prisma.MatchTaskUpsertWithWhereUniqueWithoutPlayerInput | Prisma.MatchTaskUpsertWithWhereUniqueWithoutPlayerInput[]
+  createMany?: Prisma.MatchTaskCreateManyPlayerInputEnvelope
+  set?: Prisma.MatchTaskWhereUniqueInput | Prisma.MatchTaskWhereUniqueInput[]
+  disconnect?: Prisma.MatchTaskWhereUniqueInput | Prisma.MatchTaskWhereUniqueInput[]
+  delete?: Prisma.MatchTaskWhereUniqueInput | Prisma.MatchTaskWhereUniqueInput[]
+  connect?: Prisma.MatchTaskWhereUniqueInput | Prisma.MatchTaskWhereUniqueInput[]
+  update?: Prisma.MatchTaskUpdateWithWhereUniqueWithoutPlayerInput | Prisma.MatchTaskUpdateWithWhereUniqueWithoutPlayerInput[]
+  updateMany?: Prisma.MatchTaskUpdateManyWithWhereWithoutPlayerInput | Prisma.MatchTaskUpdateManyWithWhereWithoutPlayerInput[]
+  deleteMany?: Prisma.MatchTaskScalarWhereInput | Prisma.MatchTaskScalarWhereInput[]
+}
+
 export type EnumMatchTaskTypeFieldUpdateOperationsInput = {
   set?: $Enums.MatchTaskType
 }
@@ -442,6 +508,7 @@ export type MatchTaskCreateWithoutUserInput = {
   taskType: $Enums.MatchTaskType
   createdAt?: Date | string
   match: Prisma.MatchCreateNestedOneWithoutTasksInput
+  player?: Prisma.PlayerCreateNestedOneWithoutMatchTasksInput
 }
 
 export type MatchTaskUncheckedCreateWithoutUserInput = {
@@ -449,6 +516,7 @@ export type MatchTaskUncheckedCreateWithoutUserInput = {
   matchId: string
   teamId: string
   taskType: $Enums.MatchTaskType
+  playerId?: string | null
   createdAt?: Date | string
 }
 
@@ -486,7 +554,8 @@ export type MatchTaskScalarWhereInput = {
   matchId?: Prisma.StringFilter<"MatchTask"> | string
   teamId?: Prisma.StringFilter<"MatchTask"> | string
   taskType?: Prisma.EnumMatchTaskTypeFilter<"MatchTask"> | $Enums.MatchTaskType
-  userId?: Prisma.StringFilter<"MatchTask"> | string
+  playerId?: Prisma.StringNullableFilter<"MatchTask"> | string | null
+  userId?: Prisma.StringNullableFilter<"MatchTask"> | string | null
   createdAt?: Prisma.DateTimeFilter<"MatchTask"> | Date | string
 }
 
@@ -495,14 +564,16 @@ export type MatchTaskCreateWithoutMatchInput = {
   teamId: string
   taskType: $Enums.MatchTaskType
   createdAt?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutAssignedMatchTasksInput
+  player?: Prisma.PlayerCreateNestedOneWithoutMatchTasksInput
+  user?: Prisma.UserCreateNestedOneWithoutAssignedMatchTasksInput
 }
 
 export type MatchTaskUncheckedCreateWithoutMatchInput = {
   id?: string
   teamId: string
   taskType: $Enums.MatchTaskType
-  userId: string
+  playerId?: string | null
+  userId?: string | null
   createdAt?: Date | string
 }
 
@@ -532,11 +603,56 @@ export type MatchTaskUpdateManyWithWhereWithoutMatchInput = {
   data: Prisma.XOR<Prisma.MatchTaskUpdateManyMutationInput, Prisma.MatchTaskUncheckedUpdateManyWithoutMatchInput>
 }
 
+export type MatchTaskCreateWithoutPlayerInput = {
+  id?: string
+  teamId: string
+  taskType: $Enums.MatchTaskType
+  createdAt?: Date | string
+  match: Prisma.MatchCreateNestedOneWithoutTasksInput
+  user?: Prisma.UserCreateNestedOneWithoutAssignedMatchTasksInput
+}
+
+export type MatchTaskUncheckedCreateWithoutPlayerInput = {
+  id?: string
+  matchId: string
+  teamId: string
+  taskType: $Enums.MatchTaskType
+  userId?: string | null
+  createdAt?: Date | string
+}
+
+export type MatchTaskCreateOrConnectWithoutPlayerInput = {
+  where: Prisma.MatchTaskWhereUniqueInput
+  create: Prisma.XOR<Prisma.MatchTaskCreateWithoutPlayerInput, Prisma.MatchTaskUncheckedCreateWithoutPlayerInput>
+}
+
+export type MatchTaskCreateManyPlayerInputEnvelope = {
+  data: Prisma.MatchTaskCreateManyPlayerInput | Prisma.MatchTaskCreateManyPlayerInput[]
+  skipDuplicates?: boolean
+}
+
+export type MatchTaskUpsertWithWhereUniqueWithoutPlayerInput = {
+  where: Prisma.MatchTaskWhereUniqueInput
+  update: Prisma.XOR<Prisma.MatchTaskUpdateWithoutPlayerInput, Prisma.MatchTaskUncheckedUpdateWithoutPlayerInput>
+  create: Prisma.XOR<Prisma.MatchTaskCreateWithoutPlayerInput, Prisma.MatchTaskUncheckedCreateWithoutPlayerInput>
+}
+
+export type MatchTaskUpdateWithWhereUniqueWithoutPlayerInput = {
+  where: Prisma.MatchTaskWhereUniqueInput
+  data: Prisma.XOR<Prisma.MatchTaskUpdateWithoutPlayerInput, Prisma.MatchTaskUncheckedUpdateWithoutPlayerInput>
+}
+
+export type MatchTaskUpdateManyWithWhereWithoutPlayerInput = {
+  where: Prisma.MatchTaskScalarWhereInput
+  data: Prisma.XOR<Prisma.MatchTaskUpdateManyMutationInput, Prisma.MatchTaskUncheckedUpdateManyWithoutPlayerInput>
+}
+
 export type MatchTaskCreateManyUserInput = {
   id?: string
   matchId: string
   teamId: string
   taskType: $Enums.MatchTaskType
+  playerId?: string | null
   createdAt?: Date | string
 }
 
@@ -546,6 +662,7 @@ export type MatchTaskUpdateWithoutUserInput = {
   taskType?: Prisma.EnumMatchTaskTypeFieldUpdateOperationsInput | $Enums.MatchTaskType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   match?: Prisma.MatchUpdateOneRequiredWithoutTasksNestedInput
+  player?: Prisma.PlayerUpdateOneWithoutMatchTasksNestedInput
 }
 
 export type MatchTaskUncheckedUpdateWithoutUserInput = {
@@ -553,6 +670,7 @@ export type MatchTaskUncheckedUpdateWithoutUserInput = {
   matchId?: Prisma.StringFieldUpdateOperationsInput | string
   teamId?: Prisma.StringFieldUpdateOperationsInput | string
   taskType?: Prisma.EnumMatchTaskTypeFieldUpdateOperationsInput | $Enums.MatchTaskType
+  playerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -561,6 +679,7 @@ export type MatchTaskUncheckedUpdateManyWithoutUserInput = {
   matchId?: Prisma.StringFieldUpdateOperationsInput | string
   teamId?: Prisma.StringFieldUpdateOperationsInput | string
   taskType?: Prisma.EnumMatchTaskTypeFieldUpdateOperationsInput | $Enums.MatchTaskType
+  playerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -568,7 +687,8 @@ export type MatchTaskCreateManyMatchInput = {
   id?: string
   teamId: string
   taskType: $Enums.MatchTaskType
-  userId: string
+  playerId?: string | null
+  userId?: string | null
   createdAt?: Date | string
 }
 
@@ -577,14 +697,16 @@ export type MatchTaskUpdateWithoutMatchInput = {
   teamId?: Prisma.StringFieldUpdateOperationsInput | string
   taskType?: Prisma.EnumMatchTaskTypeFieldUpdateOperationsInput | $Enums.MatchTaskType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutAssignedMatchTasksNestedInput
+  player?: Prisma.PlayerUpdateOneWithoutMatchTasksNestedInput
+  user?: Prisma.UserUpdateOneWithoutAssignedMatchTasksNestedInput
 }
 
 export type MatchTaskUncheckedUpdateWithoutMatchInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   teamId?: Prisma.StringFieldUpdateOperationsInput | string
   taskType?: Prisma.EnumMatchTaskTypeFieldUpdateOperationsInput | $Enums.MatchTaskType
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  playerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -592,7 +714,44 @@ export type MatchTaskUncheckedUpdateManyWithoutMatchInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   teamId?: Prisma.StringFieldUpdateOperationsInput | string
   taskType?: Prisma.EnumMatchTaskTypeFieldUpdateOperationsInput | $Enums.MatchTaskType
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  playerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type MatchTaskCreateManyPlayerInput = {
+  id?: string
+  matchId: string
+  teamId: string
+  taskType: $Enums.MatchTaskType
+  userId?: string | null
+  createdAt?: Date | string
+}
+
+export type MatchTaskUpdateWithoutPlayerInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  teamId?: Prisma.StringFieldUpdateOperationsInput | string
+  taskType?: Prisma.EnumMatchTaskTypeFieldUpdateOperationsInput | $Enums.MatchTaskType
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  match?: Prisma.MatchUpdateOneRequiredWithoutTasksNestedInput
+  user?: Prisma.UserUpdateOneWithoutAssignedMatchTasksNestedInput
+}
+
+export type MatchTaskUncheckedUpdateWithoutPlayerInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  matchId?: Prisma.StringFieldUpdateOperationsInput | string
+  teamId?: Prisma.StringFieldUpdateOperationsInput | string
+  taskType?: Prisma.EnumMatchTaskTypeFieldUpdateOperationsInput | $Enums.MatchTaskType
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type MatchTaskUncheckedUpdateManyWithoutPlayerInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  matchId?: Prisma.StringFieldUpdateOperationsInput | string
+  teamId?: Prisma.StringFieldUpdateOperationsInput | string
+  taskType?: Prisma.EnumMatchTaskTypeFieldUpdateOperationsInput | $Enums.MatchTaskType
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -603,10 +762,12 @@ export type MatchTaskSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   matchId?: boolean
   teamId?: boolean
   taskType?: boolean
+  playerId?: boolean
   userId?: boolean
   createdAt?: boolean
   match?: boolean | Prisma.MatchDefaultArgs<ExtArgs>
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  player?: boolean | Prisma.MatchTask$playerArgs<ExtArgs>
+  user?: boolean | Prisma.MatchTask$userArgs<ExtArgs>
 }, ExtArgs["result"]["matchTask"]>
 
 export type MatchTaskSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -614,10 +775,12 @@ export type MatchTaskSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   matchId?: boolean
   teamId?: boolean
   taskType?: boolean
+  playerId?: boolean
   userId?: boolean
   createdAt?: boolean
   match?: boolean | Prisma.MatchDefaultArgs<ExtArgs>
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  player?: boolean | Prisma.MatchTask$playerArgs<ExtArgs>
+  user?: boolean | Prisma.MatchTask$userArgs<ExtArgs>
 }, ExtArgs["result"]["matchTask"]>
 
 export type MatchTaskSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -625,10 +788,12 @@ export type MatchTaskSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   matchId?: boolean
   teamId?: boolean
   taskType?: boolean
+  playerId?: boolean
   userId?: boolean
   createdAt?: boolean
   match?: boolean | Prisma.MatchDefaultArgs<ExtArgs>
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  player?: boolean | Prisma.MatchTask$playerArgs<ExtArgs>
+  user?: boolean | Prisma.MatchTask$userArgs<ExtArgs>
 }, ExtArgs["result"]["matchTask"]>
 
 export type MatchTaskSelectScalar = {
@@ -636,36 +801,42 @@ export type MatchTaskSelectScalar = {
   matchId?: boolean
   teamId?: boolean
   taskType?: boolean
+  playerId?: boolean
   userId?: boolean
   createdAt?: boolean
 }
 
-export type MatchTaskOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "matchId" | "teamId" | "taskType" | "userId" | "createdAt", ExtArgs["result"]["matchTask"]>
+export type MatchTaskOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "matchId" | "teamId" | "taskType" | "playerId" | "userId" | "createdAt", ExtArgs["result"]["matchTask"]>
 export type MatchTaskInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   match?: boolean | Prisma.MatchDefaultArgs<ExtArgs>
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  player?: boolean | Prisma.MatchTask$playerArgs<ExtArgs>
+  user?: boolean | Prisma.MatchTask$userArgs<ExtArgs>
 }
 export type MatchTaskIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   match?: boolean | Prisma.MatchDefaultArgs<ExtArgs>
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  player?: boolean | Prisma.MatchTask$playerArgs<ExtArgs>
+  user?: boolean | Prisma.MatchTask$userArgs<ExtArgs>
 }
 export type MatchTaskIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   match?: boolean | Prisma.MatchDefaultArgs<ExtArgs>
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  player?: boolean | Prisma.MatchTask$playerArgs<ExtArgs>
+  user?: boolean | Prisma.MatchTask$userArgs<ExtArgs>
 }
 
 export type $MatchTaskPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "MatchTask"
   objects: {
     match: Prisma.$MatchPayload<ExtArgs>
-    user: Prisma.$UserPayload<ExtArgs>
+    player: Prisma.$PlayerPayload<ExtArgs> | null
+    user: Prisma.$UserPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     matchId: string
     teamId: string
     taskType: $Enums.MatchTaskType
-    userId: string
+    playerId: string | null
+    userId: string | null
     createdAt: Date
   }, ExtArgs["result"]["matchTask"]>
   composites: {}
@@ -1062,7 +1233,8 @@ readonly fields: MatchTaskFieldRefs;
 export interface Prisma__MatchTaskClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   match<T extends Prisma.MatchDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MatchDefaultArgs<ExtArgs>>): Prisma.Prisma__MatchClient<runtime.Types.Result.GetResult<Prisma.$MatchPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  player<T extends Prisma.MatchTask$playerArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MatchTask$playerArgs<ExtArgs>>): Prisma.Prisma__PlayerClient<runtime.Types.Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  user<T extends Prisma.MatchTask$userArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MatchTask$userArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1096,6 +1268,7 @@ export interface MatchTaskFieldRefs {
   readonly matchId: Prisma.FieldRef<"MatchTask", 'String'>
   readonly teamId: Prisma.FieldRef<"MatchTask", 'String'>
   readonly taskType: Prisma.FieldRef<"MatchTask", 'MatchTaskType'>
+  readonly playerId: Prisma.FieldRef<"MatchTask", 'String'>
   readonly userId: Prisma.FieldRef<"MatchTask", 'String'>
   readonly createdAt: Prisma.FieldRef<"MatchTask", 'DateTime'>
 }
@@ -1496,6 +1669,44 @@ export type MatchTaskDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Int
    * Limit how many MatchTasks to delete.
    */
   limit?: number
+}
+
+/**
+ * MatchTask.player
+ */
+export type MatchTask$playerArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Player
+   */
+  select?: Prisma.PlayerSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Player
+   */
+  omit?: Prisma.PlayerOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PlayerInclude<ExtArgs> | null
+  where?: Prisma.PlayerWhereInput
+}
+
+/**
+ * MatchTask.user
+ */
+export type MatchTask$userArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
 }
 
 /**
