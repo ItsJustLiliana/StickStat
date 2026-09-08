@@ -1999,6 +1999,20 @@ html[data-theme="dark"] body {
 .performance-event-actions { display: flex; gap: 7px; flex: 0 0 auto; }
 .performance-event-actions .danger { color: var(--danger); }
 
+.global-loading { position: fixed; z-index: 1000; right: max(18px, env(safe-area-inset-right)); bottom: max(82px, calc(env(safe-area-inset-bottom) + 72px)); display: grid; place-items: center; width: 48px; height: 48px; border: 1px solid var(--line); border-radius: 50%; background: var(--card); color: var(--green); box-shadow: 0 8px 24px #0004; pointer-events: none; }
+.global-loading svg, .page-loading svg { animation: stickstat-spin .8s linear infinite; }
+.page-loading { min-height: 50vh; display: grid; place-content: center; justify-items: center; gap: 10px; color: var(--muted); font-weight: 750; }
+@keyframes stickstat-spin { to { transform: rotate(360deg); } }
+
+@media (max-width: 700px) {
+    .button { min-height: 44px; display: inline-flex; align-items: center; justify-content: center; }
+    .input, select.input { min-height: 44px; }
+    .match-tabs button { min-height: 44px; display: grid; place-items: center; }
+    .attendance-choice { width: 40px; height: 40px; flex: 0 0 40px; }
+    .icon-button { min-width: 40px; min-height: 40px; display: inline-grid; place-items: center; }
+    .match-task-section li .icon-button, .collection-time .icon-button, .collection-time-editor .icon-button { min-width: 32px; min-height: 32px; }
+}
+
 .substitute-toggle {
     display: flex !important;
     grid-template-columns: none !important;

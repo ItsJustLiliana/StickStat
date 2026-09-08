@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:async';
 import 'dart:io';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,8 @@ import 'package:open_filex/open_filex.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:webview_flutter_android/webview_flutter_android.dart';
+import 'package:image_picker/image_picker.dart';
 
 const stickStatUrl = String.fromEnvironment(
   'STICKSTAT_URL',
@@ -56,6 +59,7 @@ class StickStatWebApp extends StatefulWidget {
 
 class _StickStatWebAppState extends State<StickStatWebApp> {
   late final WebViewController _controller;
+  final ImagePicker _imagePicker = ImagePicker();
   int _progress = 0;
   String? _mainFrameError;
   bool _checkingForUpdate = false;
@@ -110,7 +114,15 @@ class _StickStatWebAppState extends State<StickStatWebApp> {
         ),
       )
       ..loadRequest(Uri.parse(stickStatUrl));
+    if (Platform.isAndroid && _controller.platform is AndroidWebViewController) {
+      unawaited((_controller.platform as AndroidWebViewController).setOnShowFileSelector(_selectImageFile));
+    }
     WidgetsBinding.instance.addPostFrameCallback((_) => _checkForUpdate());
+  }
+
+  Future<List<String>> _selectImageFile(FileSelectorParams _) async {
+    final image = await _imagePicker.pickImage(source: ImageSource.gallery, imageQuality: 100);
+    return image == null ? const <String>[] : <String>[image.path];
   }
 
   static List<int> _versionParts(String value) => value.split('.').map((part) => int.tryParse(part) ?? 0).toList();

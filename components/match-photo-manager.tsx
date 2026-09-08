@@ -2,11 +2,12 @@
 import {ImagePlus,Trash2} from "lucide-react";
 import {useRouter} from "next/navigation";
 import {useState} from "react";
+import {resizePhotoTo1080p} from "@/lib/browser-image";
 
 type Kind="team"|"mvp";
 export function MatchPhotoManager({matchId,teamId,teamPhotoPath,mvpPhotoPath,mvpName,canEdit}:{matchId:string;teamId:string;teamPhotoPath:string|null;mvpPhotoPath:string|null;mvpName:string|null;canEdit:boolean}){
   const router=useRouter(),[busy,setBusy]=useState<Kind|null>(null),[message,setMessage]=useState("");
-  async function upload(kind:Kind,file:File|undefined){if(!file)return;if(!["image/jpeg","image/png","image/webp"].includes(file.type)||file.size>4_000_000){setMessage("Kies een JPG, PNG of WebP tot 4 MB.");return}setBusy(kind);setMessage("");try{const form=new FormData();form.set("teamId",teamId);form.set(`${kind}Photo`,file);const response=await fetch(`/api/matches/${matchId}/photos`,{method:"POST",body:form}),body=await response.json();if(!response.ok)throw new Error(body.error?.message??"Uploaden mislukt");setMessage("Foto opgeslagen.");router.refresh()}catch(error){setMessage(error instanceof Error?error.message:"Uploaden mislukt")}finally{setBusy(null)}}
+  async function upload(kind:Kind,file:File|undefined){if(!file)return;if(!["image/jpeg","image/png","image/webp"].includes(file.type)){setMessage("Kies een JPG, PNG of WebP-afbeelding.");return}setBusy(kind);setMessage("");try{const optimized=await resizePhotoTo1080p(file);if(optimized.size>4_000_000)throw new Error("De foto is na verkleinen nog groter dan 4 MB.");const form=new FormData();form.set("teamId",teamId);form.set(`${kind}Photo`,optimized);const response=await fetch(`/api/matches/${matchId}/photos`,{method:"POST",body:form}),body=await response.json();if(!response.ok)throw new Error(body.error?.message??"Uploaden mislukt");setMessage("Foto opgeslagen.");router.refresh()}catch(error){setMessage(error instanceof Error?error.message:"Uploaden mislukt")}finally{setBusy(null)}}
   async function remove(kind:Kind){setBusy(kind);setMessage("");try{const response=await fetch(`/api/matches/${matchId}/photos`,{method:"DELETE",headers:{"content-type":"application/json"},body:JSON.stringify({teamId,kind})}),body=await response.json();if(!response.ok)throw new Error(body.error?.message??"Verwijderen mislukt");setMessage("Foto verwijderd.");router.refresh()}catch(error){setMessage(error instanceof Error?error.message:"Verwijderen mislukt")}finally{setBusy(null)}}
   if(!canEdit)return null;
   const controls=[{kind:"team" as const,label:"Teamfoto",current:teamPhotoPath},...(mvpName?[{kind:"mvp" as const,label:`Foto Man of the Match: ${mvpName}`,current:mvpPhotoPath}]:[])];
