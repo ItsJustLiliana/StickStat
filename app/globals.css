@@ -577,10 +577,9 @@ h2 {
 .dashboard-rank { min-width: 146px; }
 .dashboard-points strong { font-size: 34px; line-height: 1; letter-spacing: -.05em; }
 .dashboard-rank .rank-label, .dashboard-points .rank-label { margin-bottom: 10px; }
-.dashboard-metrics { margin-bottom: 18px; }
+.dashboard-metrics { grid-template-columns: repeat(5, minmax(0, 1fr)); margin-bottom: 18px; }
 .dashboard-metrics .metric { min-height: 116px; display: grid; align-content: space-between; }
 .dashboard-record { font-size: 20px !important; white-space: nowrap; }
-.dashboard-form .form-row { min-height: 34px; align-items: center; }
 .dashboard-panels { align-items: stretch; }
 .dashboard-panel { display: flex; flex-direction: column; }
 .dashboard-panel .card-head { margin-bottom: 10px; }
@@ -593,9 +592,6 @@ h2 {
 .next-match-date { margin-top: 14px; color: var(--muted); font-size: 13px; font-weight: 750; }
 .dashboard-panel-feature .next-match-teams { margin: 12px 0; font-size: 18px; font-weight: 850; }
 .dashboard-panel-feature .next-match p { display: flex; align-items: center; gap: 6px; margin: 0; color: var(--muted); font-size: 13px; }
-.dashboard-last-result { margin-top: auto; padding-top: 18px; }
-.dashboard-last-result .eyebrow { display: flex; align-items: center; gap: 5px; }
-
 @media (max-width: 560px) {
     .dashboard-hero .rank-block { width: 100%; justify-content: stretch; }
     .dashboard-rank, .dashboard-points { flex: 1; min-width: 0; }

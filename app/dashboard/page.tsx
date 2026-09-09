@@ -1,5 +1,5 @@
 import Link from "next/link";
-import {ArrowRight, CalendarDays, MapPin, Trophy} from "lucide-react";
+import {ArrowRight, CalendarDays, MapPin} from "lucide-react";
 import {ClubLogo} from "@/components/logo";
 import {EmptyTeam} from "@/components/empty-team";
 import {MatchTeamLabel} from "@/components/match-team-label";
@@ -19,7 +19,7 @@ export default async function Dashboard({searchParams}:{searchParams:Promise<{te
     db.standing.findFirst({where:{teamId:team.id}, orderBy:{lastSyncedAt:"desc"}}),
     db.match.findMany({where:{OR:[{homeTeamId:team.id}, {awayTeamId:team.id}]}, include:{homeTeam:true, awayTeam:true}, orderBy:{date:"desc"}}),
   ]);
-  const finished = matches.filter(match => match.status === "finished"), summary = StatisticsService.summary(finished, team.id), form = StatisticsService.form(finished, team.id, 5), now = new Date(), last = finished[0], next = [...matches].filter(match => match.date >= now && match.status === "scheduled").sort((a, b) => a.date.getTime() - b.date.getTime())[0];
+  const finished = matches.filter(match => match.status === "finished"), summary = StatisticsService.summary(finished, team.id), now = new Date(), next = [...matches].filter(match => match.date >= now && match.status === "scheduled").sort((a, b) => a.date.getTime() - b.date.getTime())[0];
   const record = standing ? `${standing.won} / ${standing.drawn} / ${standing.lost}` : `${summary.won} / ${summary.drawn} / ${summary.lost}`;
 
   return <PageShell user={user}>
@@ -39,7 +39,6 @@ export default async function Dashboard({searchParams}:{searchParams:Promise<{te
       <div className="metric"><span>Goals voor</span><strong>{standing?.goalsFor ?? summary.goalsFor}</strong></div>
       <div className="metric"><span>Goals tegen</span><strong>{standing?.goalsAgainst ?? summary.goalsAgainst}</strong></div>
       <div className="metric"><span>Doelsaldo</span><strong>{standing?.goalDifference ?? summary.goalsFor - summary.goalsAgainst}</strong></div>
-      <div className="metric dashboard-form"><span>Vorm</span><div className="form-row">{form.length ? form.map((result, index) => <span className={`form-dot ${result}`} key={index}>{result}</span>) : <strong>–</strong>}</div></div>
     </section>
 
     <div className="grid-2 dashboard-panels">
@@ -52,7 +51,6 @@ export default async function Dashboard({searchParams}:{searchParams:Promise<{te
       <section className="card dashboard-panel dashboard-panel-feature">
         <div className="card-head"><div><span className="eyebrow">Vooruitblik</span><h2>Op de kalender</h2></div><CalendarDays size={21} aria-hidden="true"/></div>
         {next ? <Link href={`/matches/${next.id}?team=${team.id}`} className="next-match"><span className="badge accent">Volgende wedstrijd</span><div className="next-match-date">{next.date.toLocaleDateString("nl-NL", {weekday:"long", day:"numeric", month:"long"})}{next.startTime && ` · ${next.startTime}`}</div><div className="next-match-teams"><MatchTeamLabel name={next.homeTeam.shortName} own={next.homeTeamId === team.id} side="home"/><span className="match-versus">tegen</span><MatchTeamLabel name={next.awayTeam.shortName} own={next.awayTeamId === team.id} side="away"/></div><p><MapPin size={15}/>{next.venue ?? "Locatie nog niet bekend"}</p></Link> : <div className="empty">Geen komende wedstrijd bekend.</div>}
-        {last && <div className="dashboard-last-result"><span className="eyebrow"><Trophy size={13}/> Laatste resultaat</span><div className="last-result"><MatchTeamLabel name={`${last.homeTeam.shortName} ${last.homeScore}`} own={last.homeTeamId === team.id} side="home"/><span>–</span><MatchTeamLabel name={`${last.awayScore} ${last.awayTeam.shortName}`} own={last.awayTeamId === team.id} side="away"/></div></div>}
       </section>
     </div>
   </PageShell>;
