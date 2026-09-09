@@ -4,7 +4,7 @@ import 'package:stickstat_mobile/main.dart';
 
 void main() {
   test('de standaardserver is de publieke StickStat-server', () {
-    expect(stickStatUrl, 'https://stickstat.liliananuzohra.com');
+    expect(stickStatUrl, 'https://stickstat.nl');
   });
 
   testWidgets('toont een bruikbare verbindingsfout', (tester) async {

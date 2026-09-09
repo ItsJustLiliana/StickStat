@@ -14,7 +14,7 @@ import 'package:image_picker/image_picker.dart';
 
 const stickStatUrl = String.fromEnvironment(
   'STICKSTAT_URL',
-  defaultValue: 'https://stickstat.liliananuzohra.com',
+  defaultValue: 'https://stickstat.nl',
 );
 
 void main() {
