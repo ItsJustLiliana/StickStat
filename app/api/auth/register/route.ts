@@ -12,6 +12,7 @@ export async function POST(request:NextRequest){
     try{rateLimit(`register:${ip}`,5,60*60_000)}catch{throw new HttpError(429,"RATE_LIMITED","Te veel registratiepogingen. Probeer later opnieuw.")}
     const input=registerSchema.parse(await request.json());
     if(process.env.ALLOW_REGISTRATION==="false"&&!input.inviteToken)throw new HttpError(403,"REGISTRATION_DISABLED","Registratie is uitgeschakeld");
+    if(!input.inviteToken&&(!input.clubId||!input.teamId))throw new HttpError(400,"TEAM_REQUIRED","Kies een club en team");
     if(await db.user.findUnique({where:{username:input.username},select:{id:true}}))throw new HttpError(409,"USERNAME_EXISTS","Deze gebruikersnaam is al in gebruik");
     const passwordHash=await hashPassword(input.password);
     const user=await db.$transaction(async transaction=>{
