@@ -570,6 +570,39 @@ h2 {
     background: var(--lime)
 }
 
+/* Dashboard: shared hierarchy for the team overview. */
+.dashboard-club-name { color: var(--lime); }
+.dashboard-hero .rank-block { align-items: stretch; gap: 12px; }
+.dashboard-rank, .dashboard-points { display: grid; align-content: end; min-width: 112px; padding: 14px 16px; border: 1px solid rgb(255 255 255 / .16); border-radius: 16px; background: rgb(0 0 0 / .12); }
+.dashboard-rank { min-width: 146px; }
+.dashboard-points strong { font-size: 34px; line-height: 1; letter-spacing: -.05em; }
+.dashboard-rank .rank-label, .dashboard-points .rank-label { margin-bottom: 10px; }
+.dashboard-metrics { margin-bottom: 18px; }
+.dashboard-metrics .metric { min-height: 116px; display: grid; align-content: space-between; }
+.dashboard-record { font-size: 20px !important; white-space: nowrap; }
+.dashboard-form .form-row { min-height: 34px; align-items: center; }
+.dashboard-panels { align-items: stretch; }
+.dashboard-panel { display: flex; flex-direction: column; }
+.dashboard-panel .card-head { margin-bottom: 10px; }
+.dashboard-panel .eyebrow { margin-bottom: 5px; }
+.dashboard-panel-link { display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; }
+.dashboard-panel .match-row { color: inherit; text-decoration: none; border-radius: 10px; transition: background .15s ease; }
+.dashboard-panel .match-row:hover { background: color-mix(in srgb, var(--lime) 14%, transparent); }
+.dashboard-panel-feature > .card-head > svg { color: var(--green); }
+.dashboard-panel-feature .next-match { display: block; padding: 18px; margin-top: 4px; border: 1px solid color-mix(in srgb, var(--green) 18%, var(--line)); border-radius: 14px; background: color-mix(in srgb, var(--lime) 12%, var(--card)); color: inherit; text-decoration: none; }
+.next-match-date { margin-top: 14px; color: var(--muted); font-size: 13px; font-weight: 750; }
+.dashboard-panel-feature .next-match-teams { margin: 12px 0; font-size: 18px; font-weight: 850; }
+.dashboard-panel-feature .next-match p { display: flex; align-items: center; gap: 6px; margin: 0; color: var(--muted); font-size: 13px; }
+.dashboard-last-result { margin-top: auto; padding-top: 18px; }
+.dashboard-last-result .eyebrow { display: flex; align-items: center; gap: 5px; }
+
+@media (max-width: 560px) {
+    .dashboard-hero .rank-block { width: 100%; justify-content: stretch; }
+    .dashboard-rank, .dashboard-points { flex: 1; min-width: 0; }
+    .dashboard-metrics .metric { min-height: 104px; }
+    .dashboard-panel-feature .next-match { padding: 16px; }
+}
+
 table {
     width: 100%;
     border-collapse: collapse
