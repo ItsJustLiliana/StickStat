@@ -34,11 +34,8 @@ export default async function Dashboard({searchParams}:{searchParams:Promise<{te
     </section>
 
     <section className="metrics dashboard-metrics" aria-label="Teamstatistieken">
-      <div className="metric"><span>Gespeeld</span><strong>{standing?.played ?? summary.played}</strong></div>
       <div className="metric"><span>Winst / gelijk / verlies</span><strong className="dashboard-record">{record}</strong></div>
-      <div className="metric"><span>Goals voor</span><strong>{standing?.goalsFor ?? summary.goalsFor}</strong></div>
-      <div className="metric"><span>Goals tegen</span><strong>{standing?.goalsAgainst ?? summary.goalsAgainst}</strong></div>
-      <div className="metric"><span>Doelsaldo</span><strong>{standing?.goalDifference ?? summary.goalsFor - summary.goalsAgainst}</strong></div>
+      <div className="metric"><span>Goals voor / tegen</span><strong className="dashboard-record">{standing ? `${standing.goalsFor} / ${standing.goalsAgainst}` : `${summary.goalsFor} / ${summary.goalsAgainst}`}</strong></div>
     </section>
 
     <div className="grid-2 dashboard-panels">
