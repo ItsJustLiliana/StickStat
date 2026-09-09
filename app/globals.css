@@ -3217,3 +3217,18 @@ html[data-theme="dark"] .time-popover button.selected {
 .supplemental-attendance {
     margin-top: 10px;
 }
+
+.android-app-download { position: relative; }
+.android-app-download > span { position: absolute; right: 0; top: calc(100% + 6px); z-index: 30; width: 210px; padding: 7px 9px; border: 1px solid var(--border); border-radius: 9px; background: var(--surface); color: var(--danger); font-size: 12px; font-weight: 700; }
+.android-app-dialog-backdrop { position: fixed; z-index: 50; inset: 0; display: grid; place-items: center; padding: 18px; background: rgb(0 0 0 / .58); }
+.android-app-dialog { position: relative; width: min(100%, 390px); padding: 26px; border: 1px solid var(--border); border-radius: 20px; background: var(--surface); box-shadow: 0 20px 60px rgb(0 0 0 / .35); }
+.android-app-dialog > .icon-button { position: absolute; top: 12px; right: 12px; }
+.android-app-dialog h2 { margin: 0 42px 10px 0; font-size: 21px; }
+.android-app-dialog p { margin: 0; color: var(--muted); line-height: 1.55; }
+.android-app-dialog > div { display: flex; justify-content: flex-end; gap: 9px; margin-top: 22px; }
+.android-app-dialog .button { min-height: 42px; }
+
+@media (max-width: 700px) {
+    .android-app-dialog-backdrop { place-items: end center; padding: 10px 10px max(10px, env(safe-area-inset-bottom)); }
+    .android-app-dialog { width: 100%; border-radius: 20px; }
+}
