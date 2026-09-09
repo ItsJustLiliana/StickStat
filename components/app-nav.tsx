@@ -9,15 +9,15 @@ import {NotificationsMenu} from "./notifications-menu";
 import {ThemeToggle} from "./theme-toggle";
 
 const links = [
-  {href: "/dashboard", label: "Dashboard", icon: LayoutDashboard}, {href: "/agenda", label: "Agenda", icon: CalendarDays},
-  {href: "/standings", label: "Stand", icon: Table2}, {href: "/players", label: "Spelers", icon: Users}, {href: "/statistics", label: "Statistieken", icon: BarChart3},
+  {href:"/dashboard", label:"Dashboard", icon:LayoutDashboard}, {href:"/agenda", label:"Agenda", icon:CalendarDays},
+  {href:"/standings", label:"Stand", icon:Table2}, {href:"/players", label:"Spelers", icon:Users}, {href:"/statistics", label:"Statistieken", icon:BarChart3},
 ];
 
-export function AppNav({name, photoPath, admin}:{name:string;photoPath:string|null;admin:boolean}) {
+export function AppNav({name, photoPath, admin}:{name:string; photoPath:string|null; admin:boolean}) {
   const pathname = usePathname(), isCurrent = (href:string) => pathname === href || pathname.startsWith(`${href}/`) || (href === "/agenda" && ["/matches", "/trainings"].some(root => pathname === root || pathname.startsWith(`${root}/`))) || (href === "/players" && ["/team-members"].some(root => pathname === root || pathname.startsWith(`${root}/`)));
   return <><header className="topbar">
     <Link className="brand" href="/dashboard"><span className="brand-mark">S</span>StickStat</Link>
-    <nav className="topnav" aria-label="Hoofdnavigatie">{links.map(link => <Link key={link.href} href={link.href} aria-current={isCurrent(link.href) ? "page" : undefined}>{link.label}</Link>)}{admin && <Link href="/admin" aria-current={isCurrent("/admin") ? "page" : undefined}><Shield size={14} style={{display:"inline", verticalAlign:"-2px", marginRight:4}}/>Platform</Link>}</nav>
-    <div className="account-actions"><AndroidAppDownload/><NotificationsMenu/><ThemeToggle/><Link className="avatar" href="/profile" aria-current={isCurrent("/profile") ? "page" : undefined} title={`${name} · Profiel`}>{photoPath ? <Image unoptimized width={36} height={36} src={photoPath} alt=""/> : name[0]?.toUpperCase()}</Link></div>
+    <nav className="topnav" aria-label="Hoofdnavigatie">{links.map(link => <Link key={link.href} href={link.href} aria-current={isCurrent(link.href) ? "page" : undefined}>{link.label}</Link>)}</nav>
+    <div className="account-actions"><AndroidAppDownload/>{admin && <Link className="theme-toggle platform-link" href="/admin" aria-current={isCurrent("/admin") ? "page" : undefined} title="Platformbeheer" aria-label="Platformbeheer"><Shield size={20}/></Link>}<NotificationsMenu/><ThemeToggle/><Link className="avatar" href="/profile" aria-current={isCurrent("/profile") ? "page" : undefined} title={`${name} · Profiel`}>{photoPath ? <Image unoptimized width={36} height={36} src={photoPath} alt=""/> : name[0]?.toUpperCase()}</Link></div>
   </header><nav className="mobile-nav" aria-label="Mobiele navigatie">{links.map(({href, label, icon:Icon}) => <Link key={href} href={href} aria-current={isCurrent(href) ? "page" : undefined}><Icon size={19}/>{label}</Link>)}</nav></>;
 }
