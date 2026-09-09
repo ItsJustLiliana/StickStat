@@ -17,8 +17,11 @@ export async function POST(request:NextRequest){
     const user=await db.$transaction(async transaction=>{
       const invite=input.inviteToken?await transaction.teamInvite.findUnique({where:{tokenHash:hashInviteToken(input.inviteToken)},select:{id:true,teamId:true,usedAt:true,expiresAt:true}}):null;
       if(input.inviteToken&&(!invite||invite.usedAt||invite.expiresAt<=new Date()))throw new HttpError(410,"INVITE_INVALID","Deze uitnodiging is verlopen of al gebruikt");
+      const requestedTeam=!invite&&input.teamId?await transaction.team.findFirst({where:{id:input.teamId,clubId:input.clubId},select:{id:true,clubId:true,name:true,club:{select:{name:true}},memberships:{where:{roles:{has:"team_admin"}},select:{userId:true}}}}):null;
+      if(!invite&&!requestedTeam)throw new HttpError(404,"TEAM_NOT_FOUND","Dit team bestaat niet bij de gekozen club");
       const created=await transaction.user.create({data:{name:input.name,username:input.username,passwordHash,platformRole:"user"},select:{id:true,name:true,username:true,platformRole:true}});
       if(invite){const claimed=await transaction.teamInvite.updateMany({where:{id:invite.id,usedAt:null,expiresAt:{gt:new Date()}},data:{usedAt:new Date(),usedById:created.id}});if(!claimed.count)throw new HttpError(410,"INVITE_INVALID","Deze uitnodiging is verlopen of al gebruikt");await transaction.teamMembership.create({data:{userId:created.id,teamId:invite.teamId,roles:[]}})}
+      if(requestedTeam){await transaction.teamJoinRequest.create({data:{userId:created.id,teamId:requestedTeam.id}});await transaction.notification.create({data:{userId:created.id,type:"general",title:"Teamaanmelding verstuurd",body:`Je aanmelding voor ${requestedTeam.club.name} · ${requestedTeam.name} wacht op goedkeuring van een teambeheerder.`}});if(requestedTeam.memberships.length)await transaction.notification.createMany({data:requestedTeam.memberships.map(membership=>({userId:membership.userId,type:"general",title:"Nieuwe teamaanmelding",body:`${created.name} wil lid worden van ${requestedTeam.club.name} · ${requestedTeam.name}.`,link:`/team-requests?team=${requestedTeam.id}`}))});}
       return created;
     });
     await createSession(user.id);

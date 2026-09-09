@@ -102,6 +102,11 @@ export type Player = Prisma.PlayerModel
  */
 export type MatchAttendance = Prisma.MatchAttendanceModel
 /**
+ * Model TeamJoinRequest
+ * 
+ */
+export type TeamJoinRequest = Prisma.TeamJoinRequestModel
+/**
  * Model MatchTask
  * 
  */

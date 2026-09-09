@@ -409,6 +409,7 @@ export const ModelName = {
   Standing: 'Standing',
   Player: 'Player',
   MatchAttendance: 'MatchAttendance',
+  TeamJoinRequest: 'TeamJoinRequest',
   MatchTask: 'MatchTask',
   Training: 'Training',
   TrainingAttendance: 'TrainingAttendance',
@@ -435,7 +436,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "session" | "club" | "clubMembership" | "team" | "teamMembership" | "season" | "teamSeason" | "match" | "standing" | "player" | "matchAttendance" | "matchTask" | "training" | "trainingAttendance" | "statisticPreference" | "notification" | "appRelease" | "playerMatchStats" | "matchEvent" | "syncRun" | "teamInvite" | "matchTeamPlan"
+    modelProps: "user" | "session" | "club" | "clubMembership" | "team" | "teamMembership" | "season" | "teamSeason" | "match" | "standing" | "player" | "matchAttendance" | "teamJoinRequest" | "matchTask" | "training" | "trainingAttendance" | "statisticPreference" | "notification" | "appRelease" | "playerMatchStats" | "matchEvent" | "syncRun" | "teamInvite" | "matchTeamPlan"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1324,6 +1325,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.MatchAttendanceCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.MatchAttendanceCountAggregateOutputType> | number
+        }
+      }
+    }
+    TeamJoinRequest: {
+      payload: Prisma.$TeamJoinRequestPayload<ExtArgs>
+      fields: Prisma.TeamJoinRequestFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.TeamJoinRequestFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamJoinRequestPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.TeamJoinRequestFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamJoinRequestPayload>
+        }
+        findFirst: {
+          args: Prisma.TeamJoinRequestFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamJoinRequestPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.TeamJoinRequestFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamJoinRequestPayload>
+        }
+        findMany: {
+          args: Prisma.TeamJoinRequestFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamJoinRequestPayload>[]
+        }
+        create: {
+          args: Prisma.TeamJoinRequestCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamJoinRequestPayload>
+        }
+        createMany: {
+          args: Prisma.TeamJoinRequestCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.TeamJoinRequestCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamJoinRequestPayload>[]
+        }
+        delete: {
+          args: Prisma.TeamJoinRequestDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamJoinRequestPayload>
+        }
+        update: {
+          args: Prisma.TeamJoinRequestUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamJoinRequestPayload>
+        }
+        deleteMany: {
+          args: Prisma.TeamJoinRequestDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.TeamJoinRequestUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.TeamJoinRequestUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamJoinRequestPayload>[]
+        }
+        upsert: {
+          args: Prisma.TeamJoinRequestUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamJoinRequestPayload>
+        }
+        aggregate: {
+          args: Prisma.TeamJoinRequestAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTeamJoinRequest>
+        }
+        groupBy: {
+          args: Prisma.TeamJoinRequestGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TeamJoinRequestGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.TeamJoinRequestCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TeamJoinRequestCountAggregateOutputType> | number
         }
       }
     }
@@ -2354,6 +2429,18 @@ export const MatchAttendanceScalarFieldEnum = {
 export type MatchAttendanceScalarFieldEnum = (typeof MatchAttendanceScalarFieldEnum)[keyof typeof MatchAttendanceScalarFieldEnum]
 
 
+export const TeamJoinRequestScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  teamId: 'teamId',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TeamJoinRequestScalarFieldEnum = (typeof TeamJoinRequestScalarFieldEnum)[keyof typeof TeamJoinRequestScalarFieldEnum]
+
+
 export const MatchTaskScalarFieldEnum = {
   id: 'id',
   matchId: 'matchId',
@@ -2674,6 +2761,20 @@ export type ListEnumAttendanceStatusFieldRefInput<$PrismaModel> = FieldRefInputT
 
 
 /**
+ * Reference to a field of type 'TeamJoinRequestStatus'
+ */
+export type EnumTeamJoinRequestStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TeamJoinRequestStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'TeamJoinRequestStatus[]'
+ */
+export type ListEnumTeamJoinRequestStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TeamJoinRequestStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'MatchTaskType'
  */
 export type EnumMatchTaskTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MatchTaskType'>
@@ -2919,6 +3020,7 @@ export type GlobalOmitConfig = {
   standing?: Prisma.StandingOmit
   player?: Prisma.PlayerOmit
   matchAttendance?: Prisma.MatchAttendanceOmit
+  teamJoinRequest?: Prisma.TeamJoinRequestOmit
   matchTask?: Prisma.MatchTaskOmit
   training?: Prisma.TrainingOmit
   trainingAttendance?: Prisma.TrainingAttendanceOmit

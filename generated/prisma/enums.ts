@@ -90,6 +90,15 @@ export const NotificationType = {
 export type NotificationType = (typeof NotificationType)[keyof typeof NotificationType]
 
 
+export const TeamJoinRequestStatus = {
+  pending: 'pending',
+  approved: 'approved',
+  declined: 'declined'
+} as const
+
+export type TeamJoinRequestStatus = (typeof TeamJoinRequestStatus)[keyof typeof TeamJoinRequestStatus]
+
+
 export const MatchTaskType = {
   balls: 'balls',
   driving: 'driving',

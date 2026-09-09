@@ -270,6 +270,23 @@ export type EnumAttendanceStatusWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumAttendanceStatusFilter<$PrismaModel>
 }
 
+export type EnumTeamJoinRequestStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.TeamJoinRequestStatus | Prisma.EnumTeamJoinRequestStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.TeamJoinRequestStatus[] | Prisma.ListEnumTeamJoinRequestStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.TeamJoinRequestStatus[] | Prisma.ListEnumTeamJoinRequestStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumTeamJoinRequestStatusFilter<$PrismaModel> | $Enums.TeamJoinRequestStatus
+}
+
+export type EnumTeamJoinRequestStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.TeamJoinRequestStatus | Prisma.EnumTeamJoinRequestStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.TeamJoinRequestStatus[] | Prisma.ListEnumTeamJoinRequestStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.TeamJoinRequestStatus[] | Prisma.ListEnumTeamJoinRequestStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumTeamJoinRequestStatusWithAggregatesFilter<$PrismaModel> | $Enums.TeamJoinRequestStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumTeamJoinRequestStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumTeamJoinRequestStatusFilter<$PrismaModel>
+}
+
 export type EnumMatchTaskTypeFilter<$PrismaModel = never> = {
   equals?: $Enums.MatchTaskType | Prisma.EnumMatchTaskTypeFieldRefInput<$PrismaModel>
   in?: $Enums.MatchTaskType[] | Prisma.ListEnumMatchTaskTypeFieldRefInput<$PrismaModel>
@@ -656,6 +673,23 @@ export type NestedEnumAttendanceStatusWithAggregatesFilter<$PrismaModel = never>
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumAttendanceStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumAttendanceStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumTeamJoinRequestStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.TeamJoinRequestStatus | Prisma.EnumTeamJoinRequestStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.TeamJoinRequestStatus[] | Prisma.ListEnumTeamJoinRequestStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.TeamJoinRequestStatus[] | Prisma.ListEnumTeamJoinRequestStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumTeamJoinRequestStatusFilter<$PrismaModel> | $Enums.TeamJoinRequestStatus
+}
+
+export type NestedEnumTeamJoinRequestStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.TeamJoinRequestStatus | Prisma.EnumTeamJoinRequestStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.TeamJoinRequestStatus[] | Prisma.ListEnumTeamJoinRequestStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.TeamJoinRequestStatus[] | Prisma.ListEnumTeamJoinRequestStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumTeamJoinRequestStatusWithAggregatesFilter<$PrismaModel> | $Enums.TeamJoinRequestStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumTeamJoinRequestStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumTeamJoinRequestStatusFilter<$PrismaModel>
 }
 
 export type NestedEnumMatchTaskTypeFilter<$PrismaModel = never> = {

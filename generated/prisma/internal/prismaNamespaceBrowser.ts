@@ -63,6 +63,7 @@ export const ModelName = {
   Standing: 'Standing',
   Player: 'Player',
   MatchAttendance: 'MatchAttendance',
+  TeamJoinRequest: 'TeamJoinRequest',
   MatchTask: 'MatchTask',
   Training: 'Training',
   TrainingAttendance: 'TrainingAttendance',
@@ -264,6 +265,18 @@ export const MatchAttendanceScalarFieldEnum = {
 } as const
 
 export type MatchAttendanceScalarFieldEnum = (typeof MatchAttendanceScalarFieldEnum)[keyof typeof MatchAttendanceScalarFieldEnum]
+
+
+export const TeamJoinRequestScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  teamId: 'teamId',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TeamJoinRequestScalarFieldEnum = (typeof TeamJoinRequestScalarFieldEnum)[keyof typeof TeamJoinRequestScalarFieldEnum]
 
 
 export const MatchTaskScalarFieldEnum = {
