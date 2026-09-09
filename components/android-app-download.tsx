@@ -2,6 +2,7 @@
 
 import {Download, X} from "lucide-react";
 import {useEffect, useState} from "react";
+import {createPortal} from "react-dom";
 
 type Release = {version:string;downloadUrl:string};
 
@@ -12,6 +13,18 @@ export function AndroidAppDownload() {
     const timer = window.setTimeout(() => setAvailable(/Android/i.test(navigator.userAgent) && !("StickStatApp" in window)), 0);
     return () => window.clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    if (!open) return;
+    const previousOverflow = document.body.style.overflow;
+    const closeOnEscape = (event: KeyboardEvent) => { if (event.key === "Escape") setOpen(false); };
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", closeOnEscape);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [open]);
 
   async function askToDownload() {
     setBusy(true); setMessage("");
@@ -24,14 +37,20 @@ export function AndroidAppDownload() {
   }
 
   if (!available) return null;
+  const dialog = open && createPortal(<div className="android-app-dialog-backdrop" role="presentation" onClick={() => setOpen(false)}>
+    <section className="android-app-dialog" role="dialog" aria-modal="true" aria-labelledby="android-download-title" aria-describedby="android-download-description" onClick={event => event.stopPropagation()}>
+      <button type="button" className="android-app-dialog-close" onClick={() => setOpen(false)} aria-label="Sluiten"><X size={23}/></button>
+      <span className="android-app-dialog-eyebrow">StickStat voor Android</span>
+      <Download className="android-app-dialog-icon" size={28} aria-hidden="true"/>
+      <h2 id="android-download-title">StickStat-app downloaden?</h2>
+      <p id="android-download-description">Versie {release?.version} wordt gedownload. Android vraagt daarna om de installatie te bevestigen.</p>
+      <div className="android-app-dialog-actions"><button type="button" className="button secondary" onClick={() => setOpen(false)}>Niet nu</button><a className="button" href={release?.downloadUrl} onClick={() => setOpen(false)}>Download app</a></div>
+    </section>
+  </div>, document.body);
+
   return <div className="android-app-download">
     <button type="button" className="theme-toggle" onClick={askToDownload} disabled={busy} title="StickStat-app downloaden" aria-label="StickStat-app downloaden"><Download size={20}/></button>
     {message && <span role="status">{message}</span>}
-    {open && <div className="android-app-dialog-backdrop" role="presentation" onClick={() => setOpen(false)}><section className="android-app-dialog" role="dialog" aria-modal="true" aria-labelledby="android-download-title" onClick={event => event.stopPropagation()}>
-      <button type="button" className="icon-button" onClick={() => setOpen(false)} aria-label="Sluiten"><X size={20}/></button>
-      <h2 id="android-download-title">StickStat-app downloaden?</h2>
-      <p>Versie {release?.version} wordt gedownload van liliananuzohra.com. Android vraagt daarna om de installatie te bevestigen.</p>
-      <div><button type="button" className="button secondary" onClick={() => setOpen(false)}>Nee</button><a className="button" href={release?.downloadUrl} onClick={() => setOpen(false)}>Ja, downloaden</a></div>
-    </section></div>}
+    {dialog}
   </div>;
 }

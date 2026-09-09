@@ -1657,12 +1657,13 @@ html[data-theme="dark"] body {
 }
 
 .agenda-list {
-    display: grid
+    display: grid;
+    gap: 10px
 }
 
 .agenda-row {
     display: grid;
-    grid-template-columns: 85px minmax(0, 1fr) auto;
+    grid-template-columns: 85px minmax(0, 1fr);
     gap: 16px;
     align-items: center;
     padding: 14px 0;
@@ -2558,20 +2559,30 @@ html[data-theme="dark"] .input {
 }
 
 .agenda-entry {
-    display: flex;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
     gap: 12px;
-    border-top: 1px solid var(--line);
+    padding: 14px;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: var(--card);
+    box-shadow: 0 3px 10px rgb(9 47 37 / .03);
 }
 
 .agenda-entry .agenda-row {
     flex: 1;
     min-width: 0;
+    padding: 0;
     border: 0;
 }
 
 .agenda-entry>.attendance-control {
     padding-right: 18px;
+}
+
+.agenda-week-separator + .agenda-entry {
+    border-top: 1px solid var(--line);
 }
 
 .back-to-agenda {
@@ -3090,32 +3101,29 @@ html[data-theme="dark"] .time-popover button.selected {
     }
 
     .agenda-entry {
-        position: relative;
-        display: flex;
-        gap: 6px;
-        flex-wrap: wrap;
+        grid-template-columns: 62px minmax(0, 1fr);
+        align-items: start;
+        column-gap: 9px;
+        row-gap: 10px;
+        padding: 14px;
     }
 
     .agenda-entry .agenda-row {
-        flex: 1 0 100%;
-        padding-right: 0;
+        grid-column: 1 / -1;
+        grid-template-columns: 62px minmax(0, 1fr);
+        gap: 9px;
+        padding: 0;
     }
 
     .agenda-entry .agenda-row>span {
         padding-right: 0;
     }
 
-    .agenda-entry:has(>.attendance-control) {
-        padding-bottom: 8px;
-    }
-
     .agenda-entry>.attendance-control {
-        position: absolute;
-        right: 0;
-        bottom: 2px;
+        grid-column: 2;
+        justify-self: end;
         margin: 0;
         padding: 0;
-        z-index: 1;
     }
 
     .agenda-entry .agenda-row>span>small:last-child {
@@ -3226,15 +3234,23 @@ html[data-theme="dark"] .time-popover button.selected {
 
 .android-app-download { position: relative; }
 .android-app-download > span { position: absolute; right: 0; top: calc(100% + 6px); z-index: 30; width: 210px; padding: 7px 9px; border: 1px solid var(--border); border-radius: 9px; background: var(--surface); color: var(--danger); font-size: 12px; font-weight: 700; }
-.android-app-dialog-backdrop { position: fixed; z-index: 50; inset: 0; display: grid; place-items: center; padding: 18px; background: rgb(0 0 0 / .58); }
-.android-app-dialog { position: relative; width: min(100%, 390px); padding: 26px; border: 1px solid var(--border); border-radius: 20px; background: var(--surface); box-shadow: 0 20px 60px rgb(0 0 0 / .35); }
-.android-app-dialog > .icon-button { position: absolute; top: 12px; right: 12px; }
-.android-app-dialog h2 { margin: 0 42px 10px 0; font-size: 21px; }
+.android-app-dialog-backdrop { position: fixed; z-index: 2000; inset: 0; display: grid; place-items: center; padding: 24px; background: rgb(3 16 11 / .58); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); animation: android-dialog-fade-in .18s ease-out; }
+.android-app-dialog { position: relative; width: min(100%, 410px); padding: 30px; border: 1px solid color-mix(in srgb, var(--line) 85%, white); border-radius: 24px; background: color-mix(in srgb, var(--card) 94%, transparent); box-shadow: 0 28px 80px rgb(0 0 0 / .38); animation: android-dialog-rise-in .22s ease-out; }
+.android-app-dialog-close { position: absolute; top: 14px; right: 14px; display: grid; place-items: center; width: 42px; height: 42px; padding: 0; border: 1px solid var(--line); border-radius: 50%; background: var(--card); color: var(--green); cursor: pointer; }
+.android-app-dialog-close:hover { background: var(--lime); color: #092f25; }
+.android-app-dialog-eyebrow { display: block; margin-bottom: 13px; color: var(--green); font-size: 11px; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }
+.android-app-dialog-icon { display: grid; width: 52px; height: 52px; padding: 12px; margin-bottom: 18px; border-radius: 16px; background: var(--lime); color: #092f25; }
+.android-app-dialog h2 { max-width: 280px; margin: 0 44px 10px 0; font-size: clamp(23px, 5vw, 28px); letter-spacing: -.035em; }
 .android-app-dialog p { margin: 0; color: var(--muted); line-height: 1.55; }
-.android-app-dialog > div { display: flex; justify-content: flex-end; gap: 9px; margin-top: 22px; }
-.android-app-dialog .button { min-height: 42px; }
+.android-app-dialog-actions { display: flex; justify-content: flex-end; gap: 9px; margin-top: 26px; }
+.android-app-dialog .button { min-height: 44px; }
+
+@keyframes android-dialog-fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes android-dialog-rise-in { from { opacity: 0; transform: translateY(12px) scale(.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
 
 @media (max-width: 700px) {
-    .android-app-dialog-backdrop { place-items: end center; padding: 10px 10px max(10px, env(safe-area-inset-bottom)); }
-    .android-app-dialog { width: 100%; border-radius: 20px; }
+    .android-app-dialog-backdrop { padding: 18px; }
+    .android-app-dialog { width: 100%; padding: 26px 22px 22px; border-radius: 22px; }
+    .android-app-dialog-actions { flex-direction: column-reverse; }
+    .android-app-dialog-actions .button { width: 100%; text-align: center; }
 }
