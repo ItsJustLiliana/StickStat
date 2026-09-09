@@ -3218,6 +3218,12 @@ html[data-theme="dark"] .time-popover button.selected {
     margin-top: 10px;
 }
 
+/* Keep all three attendance controls inside the card on compact 320 px phones. */
+@media (max-width: 360px) {
+    .attendance-options { gap: 5px; }
+    .attendance-choice { width: 32px; height: 32px; flex-basis: 32px; font-size: 16px; }
+}
+
 .android-app-download { position: relative; }
 .android-app-download > span { position: absolute; right: 0; top: calc(100% + 6px); z-index: 30; width: 210px; padding: 7px 9px; border: 1px solid var(--border); border-radius: 9px; background: var(--surface); color: var(--danger); font-size: 12px; font-weight: 700; }
 .android-app-dialog-backdrop { position: fixed; z-index: 50; inset: 0; display: grid; place-items: center; padding: 18px; background: rgb(0 0 0 / .58); }
