@@ -585,7 +585,7 @@ h2 {
 .dashboard-panel .card-head { margin-bottom: 10px; }
 .dashboard-panel .eyebrow { margin-bottom: 5px; }
 .dashboard-panel-link { display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; }
-.dashboard-panel .match-row { color: inherit; text-decoration: none; border-radius: 10px; transition: background .15s ease; }
+.dashboard-panel .match-row { color: inherit; text-decoration: none; border-radius: 10px; padding-inline: 14px; transition: background .15s ease; }
 .dashboard-panel .match-row:hover { background: color-mix(in srgb, var(--lime) 14%, transparent); }
 .dashboard-panel-feature > .card-head > svg { color: var(--green); }
 .dashboard-panel-feature .next-match { display: block; padding: 18px; margin-top: 4px; border: 1px solid color-mix(in srgb, var(--green) 18%, var(--line)); border-radius: 14px; background: color-mix(in srgb, var(--lime) 12%, var(--card)); color: inherit; text-decoration: none; }
@@ -917,6 +917,23 @@ td {
     background: #eaf2ed;
     color: var(--green)
 }
+
+/* Active backgrounds stay inset from the edge, like the other interactive rows. */
+.standings-table tr.active-row > td:first-child { padding-left: 16px; border-radius: 10px 0 0 10px; }
+.standings-table tr.active-row > td:last-child { padding-right: 16px; border-radius: 0 10px 10px 0; }
+
+.section-head { display: flex; align-items: end; justify-content: space-between; gap: 16px; margin: 30px 0 14px; }
+.section-head h2 { margin: 3px 0 0; }
+.section-head p { margin: 0; font-size: 13px; text-align: right; }
+.ranking-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.ranking-card { padding: 18px; }
+.ranking-card h3 { margin: 0 0 8px; font-size: 16px; letter-spacing: -.02em; }
+.ranking-row { display: grid; grid-template-columns: 28px minmax(0, 1fr) auto; align-items: center; gap: 10px; min-height: 44px; padding: 6px 0; border-top: 1px solid var(--line); color: inherit; text-decoration: none; }
+.ranking-row:hover strong { color: var(--green); }
+.ranking-position { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 8px; background: color-mix(in srgb, var(--green) 10%, var(--card)); color: var(--green); font-size: 12px; font-weight: 900; }
+.ranking-row strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 14px; }
+.ranking-row b { display: grid; place-items: center; min-width: 30px; height: 30px; padding: 0 8px; border-radius: 9px; background: color-mix(in srgb, var(--lime) 33%, var(--card)); color: var(--green); font-size: 13px; }
+.player-detail-metrics .metric small, .statistics-metrics .metric small { display: block; margin-top: 6px; color: var(--muted); font-size: 11px; font-weight: 700; line-height: 1.3; }
 
 .detail-toggle {
     display: inline-flex;
@@ -1473,6 +1490,13 @@ td {
     .standings-table .team-name {
         min-width: 190px
     }
+
+    .standings-table tr.active-row > td:first-child { padding-left: 12px; }
+    .standings-table tr.active-row > td:last-child { padding-right: 12px; }
+
+    .ranking-grid { grid-template-columns: 1fr; gap: 12px; }
+    .section-head { align-items: start; flex-direction: column; gap: 6px; }
+    .section-head p { text-align: left; }
 
 
     .filters {
