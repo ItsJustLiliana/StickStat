@@ -934,6 +934,24 @@ td {
 .ranking-row strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 14px; }
 .ranking-row b { display: grid; place-items: center; min-width: 30px; height: 30px; padding: 0 8px; border-radius: 9px; background: color-mix(in srgb, var(--lime) 33%, var(--card)); color: var(--green); font-size: 13px; }
 .player-detail-metrics .metric small, .statistics-metrics .metric small { display: block; margin-top: 6px; color: var(--muted); font-size: 11px; font-weight: 700; line-height: 1.3; }
+.player-leaderboard-positions { margin-top: 18px; }
+.player-leaderboard-positions .card-head { margin-bottom: 12px; }
+.player-leaderboard-positions > div:last-child { display: flex; flex-wrap: wrap; gap: 9px; }
+.player-leaderboard-position { display: inline-flex; align-items: center; gap: 7px; padding: 7px 10px 7px 7px; border: 1px solid color-mix(in srgb, var(--green) 16%, var(--line)); border-radius: 10px; background: color-mix(in srgb, var(--lime) 13%, var(--card)); color: var(--ink); font-size: 13px; font-weight: 800; }
+.player-leaderboard-position b { display: grid; place-items: center; min-width: 28px; height: 28px; padding: 0 6px; border-radius: 8px; background: var(--green); color: white; font-size: 12px; }
+.player-insights { margin-top: 18px; }
+.player-insights h2 { margin-bottom: 10px; }
+.player-insight-value { margin-bottom: 7px; color: var(--green); font-size: 38px; font-weight: 950; letter-spacing: -.06em; line-height: 1; }
+.player-insights .muted { margin-bottom: 0; line-height: 1.45; }
+.player-comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.player-comparison span { display: grid; gap: 3px; padding: 12px; border-radius: 12px; background: color-mix(in srgb, var(--green) 7%, var(--card)); color: var(--muted); font-size: 12px; font-weight: 750; }
+.player-comparison b { color: var(--ink); font-size: 22px; letter-spacing: -.04em; }
+.player-comparison small { font-size: 10px; }
+.player-records { margin-top: 30px; }
+.player-records .section-head { margin-top: 0; }
+.player-mvp-overview { margin-top: 18px; }
+.player-mvp-overview .card-head { margin-bottom: 10px; }
+.player-mvp-overview p:last-child { margin-bottom: 0; }
 
 .detail-toggle {
     display: inline-flex;
