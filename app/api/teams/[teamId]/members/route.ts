@@ -4,7 +4,7 @@ import {db} from "@/lib/db";
 import type {TeamRole} from "@/generated/prisma/client";
 import {z} from "zod";
 
-const role=z.enum(["team_admin","coach","trainer","player","viewer"]);
+const role=z.enum(["team_admin","coach","trainer","player"]);
 const saveSchema=z.object({userId:z.string().cuid(),playerId:z.string().cuid().nullable(),roles:z.array(role)});
 const removeSchema=z.object({userId:z.string().cuid()});
 

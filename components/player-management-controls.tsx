@@ -23,7 +23,7 @@ function splitPlayerName(value: string) {
   return { firstName: [parts[0], ...middle.slice(0, prefixStart)].join(" "), namePrefix: middle.slice(prefixStart).join(" ") || null, lastName };
 }
 
-function playerPayload(form: FormData) { const training = form.has("trainingMember"), match = form.has("matchMember"), name = splitPlayerName(String(form.get("fullName"))); return { ...name, shirtNumber: form.get("shirtNumber") ? Number(form.get("shirtNumber")) : null, position: String(form.get("position")) || null, trainingMember: training || !match, matchMember: match || !training, isSubstitute: form.has("isSubstitute"), staffRoles:[...(form.has("coach")?["coach" as const]:[]),...(form.has("trainer")?["trainer" as const]:[])] } }
+function playerPayload(form: FormData) { const training = form.has("trainingMember"), match = form.has("matchMember"), name = splitPlayerName(String(form.get("fullName"))),staffRoles=[...(form.has("coach")?["coach" as const]:[]),...(form.has("trainer")?["trainer" as const]:[])],staffOnly=staffRoles.length>0&&!form.has("alsoPlayer"); return { ...name, shirtNumber: form.get("shirtNumber") ? Number(form.get("shirtNumber")) : null, position: String(form.get("position")) || null, trainingMember: staffOnly?false:training || !match, matchMember: staffOnly?false:match || !training, isSubstitute: !staffOnly&&form.has("isSubstitute"), staffRoles } }
 
 function PlayerFields({ player }: { player?: PlayerInput }) {
   const fullName = player ? [player.firstName, player.namePrefix, player.lastName].filter(Boolean).join(" ") : "";
@@ -34,7 +34,7 @@ export function ManagementDialog({ title, onClose, children }: { title: string; 
   return <div className="management-dialog-backdrop" role="presentation" onMouseDown={event => { if (event.target === event.currentTarget) onClose() }}><section className="card management-dialog" role="dialog" aria-modal="true" aria-labelledby="management-dialog-title"><div className="card-head"><h2 id="management-dialog-title">{title}</h2><button className="icon-button" type="button" aria-label="Sluiten" onClick={onClose}><X size={18} /></button></div>{children}</section></div>;
 }
 
-function StaffRoleFields({ roles = [] }: { roles?: ("coach" | "trainer")[] }){return <fieldset><legend>Stafrol</legend><div className="role-options"><label><input type="checkbox" name="coach" defaultChecked={roles.includes("coach")} />Coach</label><label><input type="checkbox" name="trainer" defaultChecked={roles.includes("trainer")} />Trainer</label></div><small className="muted">Een staflid verschijnt apart onder Coaches of Trainers.</small></fieldset>}
+function StaffRoleFields({ roles = [], isPlayer = true }: { roles?: ("coach" | "trainer")[]; isPlayer?:boolean }){return <fieldset><legend>Stafrol</legend><div className="role-options"><label><input type="checkbox" name="coach" defaultChecked={roles.includes("coach")} />Coach</label><label><input type="checkbox" name="trainer" defaultChecked={roles.includes("trainer")} />Trainer</label><label><input type="checkbox" name="alsoPlayer" defaultChecked={isPlayer} />Ook speler</label></div><small className="muted">Zonder ‘Ook speler’ krijgt een coach/trainer alleen aanwezigheid en geen wedstrijdstatistieken.</small></fieldset>}
 
 export function PlayerCreateControl({ teamId }: { teamId: string }) {
   const router = useRouter(), [open, setOpen] = useState(false), [busy, setBusy] = useState(false), [message, setMessage] = useState("");

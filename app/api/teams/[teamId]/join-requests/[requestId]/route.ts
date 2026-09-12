@@ -19,7 +19,7 @@ export async function PATCH(request:Request, {params}:{params:Promise<{teamId:st
     }
     await db.$transaction(async transaction => {
       await transaction.teamJoinRequest.update({where:{id:joinRequest.id}, data:{status:"approved"}});
-      await transaction.teamMembership.upsert({where:{userId_teamId:{userId:joinRequest.userId, teamId}}, update:{roles:player?["player"]:undefined}, create:{userId:joinRequest.userId, teamId, roles:player?["player"]:["viewer"]}});
+      await transaction.teamMembership.upsert({where:{userId_teamId:{userId:joinRequest.userId, teamId}}, update:{roles:["player"]}, create:{userId:joinRequest.userId, teamId, roles:["player"]}});
       if (player) { await transaction.player.update({where:{id:player.id}, data:{userId:joinRequest.userId}}); await transaction.user.update({where:{id:joinRequest.userId}, data:{name:player.displayName}}); }
       await transaction.notification.create({data:{userId:joinRequest.userId, type:"general", title:"Welkom bij het team", body:`Je bent toegevoegd aan ${joinRequest.team.name}.`, link:"/dashboard"}});
     });

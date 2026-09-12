@@ -16,6 +16,10 @@ if [[ ! -d "${project_dir}/.git" ]]; then
   exit 1
 fi
 
+# npm scripts (notably the club-name normalizer) must resolve .env from this
+# checkout, independent of the directory from which systemd starts us.
+cd "${project_dir}"
+
 exec 9>"${lock_file}"
 if ! flock -n 9; then
   echo "A StickStat deployment is already running."

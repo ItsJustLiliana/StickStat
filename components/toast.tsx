@@ -5,9 +5,10 @@ import { useEffect, useRef } from "react";
 type Props = {
     message: string;
     onDismiss: () => void;
+    variant?: "error" | "success";
 };
 
-export function Toast({ message, onDismiss }: Props) {
+export function Toast({ message, onDismiss, variant = "error" }: Props) {
     const startX = useRef<number | null>(null);
 
     useEffect(() => {
@@ -17,7 +18,7 @@ export function Toast({ message, onDismiss }: Props) {
 
     return (
         <div
-            className="toast"
+            className={`toast toast-${variant}`}
             role="alert"
             onPointerDown={event => { startX.current = event.clientX; }}
             onPointerUp={event => {

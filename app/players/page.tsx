@@ -14,7 +14,6 @@ const sections: { role: TeamRole; title: string }[] = [
   { role: "player", title: "Spelers" },
   { role: "coach", title: "Coaches" },
   { role: "trainer", title: "Trainers" },
-  { role: "team_admin", title: "Teambeheerders" },
 ];
 const nameCollator = new Intl.Collator("nl", { sensitivity: "base" });
 function accountLastName(name: string) { return name.trim().split(/\s+/).at(-1) ?? name }
@@ -50,6 +49,7 @@ export default async function Players({ searchParams }: { searchParams: Promise<
     <div className="role-sections">
       {sections.map(section => { const people = memberships.filter(membership => membership.roles.includes(section.role) && (section.role !== "player" || (membership.user.player?.teamId === team.id && !membership.user.player.isSubstitute))).map(membership => memberPerson(membership, section.role)); if (section.role === "player") people.push(...regularUnlinked); sortByLastName(people); if (!people.length && !(section.role === "player" && substitutes.length)) return null; return <><>{people.length > 0 && <section key={section.role}><div className="role-section-head"><div><h2>{section.title}</h2></div><span className="badge">{people.length}</span></div><div className="roster-list">{people.map(person => <RosterListItem person={person} key={person.key} />)}</div></section>}</>{section.role === "player" && substitutes.length > 0 && <section><div className="role-section-head"><div><h2>Invalspelers</h2></div><span className="badge">{substitutes.length}</span></div><div className="roster-list">{substitutes.map(person => <RosterListItem person={person} key={person.key} />)}</div></section>}</> })}
       {[{role:"coach" as const,title:"Coaches"},{role:"trainer" as const,title:"Trainers"}].map(section=>{const people=createdStaff(section.role);return people.length?<section key={`created-${section.role}`}><div className="role-section-head"><div><h2>{section.title}</h2></div><span className="badge">{people.length}</span></div><div className="roster-list">{people.map(person=><RosterListItem person={person} key={person.key}/>)}</div></section>:null})}
+      {(()=>{const people=sortByLastName(memberships.filter(membership=>membership.roles.includes("team_admin")).map(membership=>memberPerson(membership,"team_admin")));return people.length?<section><div className="role-section-head"><div><h2>Teambeheerders</h2></div><span className="badge">{people.length}</span></div><div className="roster-list">{people.map(person=><RosterListItem person={person} key={person.key}/>)}</div></section>:null})()}
       {/* Regression marker for source-string test: Geregistreerde accounts zonder spelersprofiel */}
       {canAdmin && unlinkedAccounts.length > 0 && <section><div className="role-section-head"><div><h2>Nog niet aan een speler gekoppeld</h2></div><span className="badge">{unlinkedAccounts.length}</span></div><div className="roster-list">{unlinkedAccounts.map(person => <RosterListItem person={person} key={person.key} />)}</div></section>}
     </div>

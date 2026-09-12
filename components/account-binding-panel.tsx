@@ -6,7 +6,7 @@ import {useMemo, useState} from "react";
 type UserOption = {id:string; label:string};
 type TeamOption = {id:string; label:string};
 type PlayerOption = {id:string; teamId:string; label:string; linkedAccount?:string};
-const roles = [["team_admin", "Teambeheerder"], ["coach", "Coach"], ["trainer", "Trainer"], ["player", "Speler"], ["viewer", "Kijker"]] as const;
+const roles = [["team_admin", "Teambeheerder"], ["coach", "Coach"], ["trainer", "Trainer"], ["player", "Speler"]] as const;
 
 export function AccountBindingPanel({users, teams, players, currentUserId}:{users:UserOption[]; teams:TeamOption[]; players:PlayerOption[]; currentUserId:string}) {
   const router = useRouter(), [busy, setBusy] = useState(false), [message, setMessage] = useState(""), [teamId, setTeamId] = useState("");

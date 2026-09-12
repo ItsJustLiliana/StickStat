@@ -52,6 +52,7 @@ export default async function Agenda({ searchParams }: { searchParams: Promise<{
 
   const membership = user.teamMemberships.find(item => item.teamId === team.id);
   const canManage = user.platformRole === "admin" || Boolean(membership && hasAnyTeamRole(membership.roles, teamManagementRoles));
+  const viewerMode = user.platformRole !== "admin" && !membership;
 
   const canAdmin = user.platformRole === "admin" || Boolean(membership?.roles.includes("team_admin"));
   const ownPlayer = await db.player.findFirst({where: {teamId: team.id, userId: user.id, active: true}});
@@ -82,7 +83,7 @@ export default async function Agenda({ searchParams }: { searchParams: Promise<{
       homeTeam: match.homeTeam,
       awayTeam: match.awayTeam,
     })),
-    ...trainings.map(training => ({
+    ...(viewerMode ? [] : trainings.map(training => ({
       id: training.id,
       type: "training" as const,
       date: training.date,
@@ -94,7 +95,7 @@ export default async function Agenda({ searchParams }: { searchParams: Promise<{
       locked: training.attendanceLocked || isAttendanceAutoLocked(training.date),
       homeTeam: null,
       awayTeam: null,
-    })),
+    }))),
   ];
 
   const today = dateKey(new Date());
@@ -110,10 +111,8 @@ export default async function Agenda({ searchParams }: { searchParams: Promise<{
           <span className="eyebrow">Wedstrijden & trainingen</span>
           <h1>Agenda</h1>
         </div>
-        <TeamSelector teams={teams} current={team.id} />
+        <div className="member-actions">{canManage && <TrainingCreateForm teamId={team.id} />}<TeamSelector teams={teams} current={team.id} /></div>
       </div>
-
-      {canManage && <TrainingCreateForm teamId={team.id} />}
 
       <section className="card agenda-card">
         <div className="card-head">
@@ -133,7 +132,7 @@ export default async function Agenda({ searchParams }: { searchParams: Promise<{
                     <span>{weekLabel(item.date)}</span>
                   </div>
                 )}
-                <div className="agenda-entry"><Link className="agenda-row" href={item.href}>
+                <div className="agenda-entry"><Link className={`agenda-row ${viewerMode ? "agenda-row-readonly" : ""}`} href={viewerMode ? "#" : item.href} onClick={viewerMode ? event => event.preventDefault() : undefined}>
                   <time>
                     <strong>
                       {item.date.toLocaleDateString("nl-NL", { day: "2-digit", month: "short" })}
@@ -161,7 +160,7 @@ export default async function Agenda({ searchParams }: { searchParams: Promise<{
                     ) : (
                       <strong>{item.title}</strong>
                     )}
-                    <small>{item.venue ?? "Locatie onbekend"}</small>
+                    {!viewerMode && <small>{item.venue ?? "Locatie onbekend"}</small>}
                   </span>
                 </Link>
                 {ownPlayer && (item.type === "match" ? ownPlayer.matchMember : ownPlayer.trainingMember) && <AttendanceControls endpoint={`/api/${item.type === "match" ? "matches" : "trainings"}/${item.id}/attendance`} playerId={ownPlayer.id} name={ownPlayer.displayName} status={item.attendance.find(row => row.playerId === ownPlayer.id)?.status ?? "unknown"} disabled={item.locked && !canAdmin} locked={item.locked && !canAdmin}/>}

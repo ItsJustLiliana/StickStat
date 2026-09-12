@@ -3,7 +3,7 @@ import {requirePlatformAdmin} from "@/lib/auth";
 import {db} from "@/lib/db";
 import {z} from "zod";
 
-const role=z.enum(["team_admin","coach","trainer","player","viewer"]);
+const role=z.enum(["team_admin","coach","trainer","player"]);
 const schema=z.object({userId:z.string().cuid(),teamId:z.string().cuid(),playerId:z.string().cuid().nullable(),roles:z.array(role).min(1)});
 
 export async function POST(request:Request){

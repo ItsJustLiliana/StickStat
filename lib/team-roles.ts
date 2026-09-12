@@ -1,11 +1,10 @@
 import type {TeamRole} from "@/generated/prisma/client";
 
-export const teamRoleLabels:Record<TeamRole,string>={
+export const teamRoleLabels:Partial<Record<TeamRole,string>>={
   team_admin:"Teambeheerder",
   coach:"Coach",
   trainer:"Trainer",
   player:"Speler",
-  viewer:"Kijker",
 };
 
 export const teamWriteRoles:TeamRole[]=["team_admin","coach","trainer"];
