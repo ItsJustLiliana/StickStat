@@ -5,6 +5,11 @@ project_dir="${STICKSTAT_DIR:-/projects/StickStat}"
 lock_file="${XDG_RUNTIME_DIR:-/tmp}/stickstat-auto-update.lock"
 state_dir="${XDG_STATE_HOME:-${HOME}/.local/state}/stickstat"
 deployed_commit_file="${state_dir}/deployed-commit"
+maintenance_flag="${project_dir}/public/maintenance.flag"
+
+# A failed build must not leave the currently running app permanently in
+# maintenance mode. The next successful deployment creates the flag again.
+trap 'rm -f "${maintenance_flag}"' ERR
 
 if [[ ! -d "${project_dir}/.git" ]]; then
   echo "StickStat checkout not found at ${project_dir}." >&2
@@ -67,7 +72,7 @@ fi
 
 if [[ "${app_changed}" == "true" ]]; then
   # Existing requests receive the maintenance screen while this release builds.
-  touch "${project_dir}/public/maintenance.flag"
+  touch "${maintenance_flag}"
   if [[ ! -x "${project_dir}/node_modules/.bin/next" ]] || grep -Eq '^package(-lock)?\.json$' <<<"${changed_files}"; then
     npm --prefix "${project_dir}" ci
   else
@@ -120,7 +125,7 @@ if [[ "${app_changed}" == "true" || "${service_changed}" == "true" ]]; then
   if [[ "${app_changed}" == "true" ]]; then
     for attempt in {1..30}; do
       if curl --fail --silent --output /dev/null http://127.0.0.1:4000/; then
-        rm -f "${project_dir}/public/maintenance.flag"
+        rm -f "${maintenance_flag}"
         break
       fi
       sleep 1

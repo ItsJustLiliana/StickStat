@@ -11,7 +11,7 @@ import {StatisticsService} from "@/services/statistics";
 export const dynamic = "force-dynamic";
 
 export default async function Dashboard({searchParams}:{searchParams:Promise<{team?:string}>}) {
-  const q = await searchParams, {user, teams, team} = await pageContext(q.team);
+  const q = await searchParams, {user, teams, team, favoriteTeamIds} = await pageContext(q.team);
   if (!team) return <PageShell user={user}><section className="card viewer-welcome"><span className="eyebrow">Kijker</span><h1>Volg je hockey</h1><p className="muted">Zoek clubs, bewaar je favoriete teams en bekijk standen en uitslagen.</p><Link className="button" href="/clubs">Teams volgen</Link></section></PageShell>;
 
   const [standing, matches] = await Promise.all([
@@ -27,7 +27,7 @@ export default async function Dashboard({searchParams}:{searchParams:Promise<{te
     </div>
 
     <section className="hero dashboard-hero">
-      <TeamFollowSwitcher teams={teams} current={team.id} ownTeamIds={user.teamMemberships.map(membership=>membership.teamId)}/><div className="team-title"><ClubLogo name={team.club.name} path={team.club.logoLocalPath ?? team.club.logoUrl}/><div><span className="eyebrow dashboard-club-name">{team.club.name}</span><div className="team-title-name"><h1>{team.name}</h1></div><p>{standing?.competition ?? "Competitie wordt bij de eerste sync geladen"}</p></div></div>
+      <TeamFollowSwitcher teams={teams} current={team.id} ownTeamIds={user.teamMemberships.map(membership=>membership.teamId)} favoriteTeamIds={favoriteTeamIds}/><div className="team-title"><ClubLogo name={team.club.name} path={team.club.logoLocalPath ?? team.club.logoUrl}/><div><span className="eyebrow dashboard-club-name">{team.club.name}</span><div className="team-title-name"><h1>{team.name}</h1></div><p>{standing?.competition ?? "Competitie wordt bij de eerste sync geladen"}</p></div></div>
       <div className="rank-block"><div className="dashboard-rank"><div className="rank-label">Huidige positie</div><div className="rank-number mono">{standing?.position ?? "–"}</div></div><div className="dashboard-points"><div className="rank-label">Punten</div><strong>{standing?.points ?? summary.points}</strong></div></div>
     </section>
 

@@ -2089,13 +2089,15 @@ html[data-theme="dark"] body {
 .dashboard-hero > .team-follow-switcher { position:absolute; z-index:3; top:20px; right:20px; }
 .team-follow-switcher { position:relative; }
 .team-follow-trigger { display:grid; place-items:center; width:32px; height:32px; border:1px solid #ffffff38; border-radius:9px; background:#ffffff16; color:inherit; cursor:pointer; }
-.team-follow-menu { position:absolute; z-index:20; top:calc(100% + 8px); right:0; width:min(300px,78vw); display:grid; gap:5px; padding:10px; border:1px solid var(--line); border-radius:13px; background:var(--card); box-shadow:0 16px 32px #061d1738; color:var(--ink); }
-.team-follow-menu section { display:grid; gap:3px; }
-.team-follow-menu strong { padding:3px 6px 6px; font-size:12px; }
-.team-follow-menu .team-add-button { justify-content:center; margin-bottom:4px; background:var(--green); color:white; font-weight:800; }
-.team-follow-menu .team-add-button:hover { background:var(--green); filter:brightness(1.08); }
-.team-follow-menu button,.team-follow-menu a { display:flex; align-items:center; gap:7px; width:100%; padding:9px; border:0; border-radius:8px; background:transparent; color:inherit; text-align:left; font:inherit; cursor:pointer; text-decoration:none; }
-.team-follow-menu button:hover,.team-follow-menu button.active,.team-follow-menu a:hover { background:var(--soft); }
+.team-switch-modal-backdrop { position:fixed; inset:0; z-index:100; display:grid; place-items:center; padding:20px; background:#061d17a8; backdrop-filter:blur(4px); }
+.team-switch-modal { width:min(440px,100%); max-height:calc(100dvh - 40px); overflow:auto; display:grid; gap:16px; padding:20px; border:1px solid var(--line); border-radius:20px; background:var(--card); color:var(--ink); box-shadow:0 24px 70px #061d1780; }
+.team-switch-modal-head { display:flex; align-items:start; justify-content:space-between; gap:12px; }
+.team-switch-modal-head h2 { margin:4px 0 0; }
+.team-switch-modal section { display:grid; gap:4px; }
+.team-switch-modal strong { padding:3px 6px 6px; font-size:12px; }
+.team-switch-modal .team-add-button { display:flex; align-items:center; justify-content:center; gap:8px; padding:13px; border-radius:11px; background:var(--green); color:white; font-weight:800; text-decoration:none; }
+.team-switch-modal button:not(.icon-button) { display:flex; align-items:center; width:100%; padding:11px; border:0; border-radius:9px; background:transparent; color:inherit; text-align:left; font:inherit; cursor:pointer; }
+.team-switch-modal button:not(.icon-button):hover,.team-switch-modal button.active { background:var(--soft); }
 
 .viewer-welcome { display: grid; justify-items: start; gap: 12px; }
 .viewer-welcome h1,.viewer-welcome p { margin: 0; }
