@@ -87,6 +87,10 @@ if [[ "${app_changed}" == "true" ]]; then
     echo "Database schema unchanged; skipping migration check."
   fi
 
+  if grep -Eq '^(services/sync\.ts$|lib/team-names\.ts$|scripts/normalize-opponent-clubs\.ts$)' <<<"${changed_files}"; then
+    npm --prefix "${project_dir}" run normalize:opponent-clubs
+  fi
+
   git -C "${project_dir}" restore --worktree --source=HEAD -- generated/prisma
 else
   echo "No production application files changed; skipping tests and build."
