@@ -2079,6 +2079,11 @@ html[data-theme="dark"] body {
 
 }
 
+.attendance-control { display: flex; align-items: center; gap: 7px; }
+.late-toggle { display: grid; place-items: center; width: 32px; height: 32px; border: 1px solid var(--line); border-radius: 8px; background: var(--card); color: var(--muted); cursor: pointer; }
+.late-toggle.active { background: #fff0cd; color: #9a5d00; border-color: #e6b75a; }
+.late-clock { color: #b56b00; flex: none; }
+
 .performance-list { display: grid; gap: 22px; }
 .performance-section { display: grid; gap: 0; }
 .performance-section h3 { margin: 0; padding: 0 0 9px; font-size: 16px; }
@@ -2337,6 +2342,7 @@ html[data-theme="dark"] .match-tabs button[aria-selected="true"] {
 .agenda-week-separator+.agenda-entry {
     border-top: 0
 }
+.agenda-week-separator:before { content: ""; height: 2.5px; flex: 1; background: color-mix(in srgb, var(--green) 40%, var(--line)); border-radius: 2px; }
 
 .styled-picker-field {
     position: relative;

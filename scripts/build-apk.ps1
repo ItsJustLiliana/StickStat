@@ -32,7 +32,10 @@ if (-not $Version -and $BuildNumber -le 0) {
     if ($minor -gt 999 -or $patch -gt 999) {
         throw "Minor- en patchnummers mogen maximaal 999 zijn."
     }
-    $BuildNumber = $major * 1000000 + $minor * 1000 + $patch
+    # Iedere nieuwe commit (en dus iedere normale push) krijgt een hoger Android-buildnummer.
+    # De semantische versie blijft leidend voor wat gebruikers zien.
+    $commitCount = [int](& git -C $repoRoot rev-list --count HEAD)
+    $BuildNumber = $major * 1000000 + $minor * 1000 + $patch + $commitCount
     if ($BuildNumber -le 0 -or $BuildNumber -gt 2100000000) {
         throw "Versie $Version levert geen geldig Android-buildnummer op."
     }

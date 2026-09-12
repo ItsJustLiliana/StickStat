@@ -218,6 +218,7 @@ export type UserWhereInput = {
   publishedReleases?: Prisma.AppReleaseListRelationFilter
   assignedMatchTasks?: Prisma.MatchTaskListRelationFilter
   teamJoinRequests?: Prisma.TeamJoinRequestListRelationFilter
+  favoriteTeams?: Prisma.FavoriteTeamListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -241,6 +242,7 @@ export type UserOrderByWithRelationInput = {
   publishedReleases?: Prisma.AppReleaseOrderByRelationAggregateInput
   assignedMatchTasks?: Prisma.MatchTaskOrderByRelationAggregateInput
   teamJoinRequests?: Prisma.TeamJoinRequestOrderByRelationAggregateInput
+  favoriteTeams?: Prisma.FavoriteTeamOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -267,6 +269,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   publishedReleases?: Prisma.AppReleaseListRelationFilter
   assignedMatchTasks?: Prisma.MatchTaskListRelationFilter
   teamJoinRequests?: Prisma.TeamJoinRequestListRelationFilter
+  favoriteTeams?: Prisma.FavoriteTeamListRelationFilter
 }, "id" | "username">
 
 export type UserOrderByWithAggregationInput = {
@@ -318,6 +321,7 @@ export type UserCreateInput = {
   publishedReleases?: Prisma.AppReleaseCreateNestedManyWithoutPublishedByInput
   assignedMatchTasks?: Prisma.MatchTaskCreateNestedManyWithoutUserInput
   teamJoinRequests?: Prisma.TeamJoinRequestCreateNestedManyWithoutUserInput
+  favoriteTeams?: Prisma.FavoriteTeamCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -341,6 +345,7 @@ export type UserUncheckedCreateInput = {
   publishedReleases?: Prisma.AppReleaseUncheckedCreateNestedManyWithoutPublishedByInput
   assignedMatchTasks?: Prisma.MatchTaskUncheckedCreateNestedManyWithoutUserInput
   teamJoinRequests?: Prisma.TeamJoinRequestUncheckedCreateNestedManyWithoutUserInput
+  favoriteTeams?: Prisma.FavoriteTeamUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -364,6 +369,7 @@ export type UserUpdateInput = {
   publishedReleases?: Prisma.AppReleaseUpdateManyWithoutPublishedByNestedInput
   assignedMatchTasks?: Prisma.MatchTaskUpdateManyWithoutUserNestedInput
   teamJoinRequests?: Prisma.TeamJoinRequestUpdateManyWithoutUserNestedInput
+  favoriteTeams?: Prisma.FavoriteTeamUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -387,6 +393,7 @@ export type UserUncheckedUpdateInput = {
   publishedReleases?: Prisma.AppReleaseUncheckedUpdateManyWithoutPublishedByNestedInput
   assignedMatchTasks?: Prisma.MatchTaskUncheckedUpdateManyWithoutUserNestedInput
   teamJoinRequests?: Prisma.TeamJoinRequestUncheckedUpdateManyWithoutUserNestedInput
+  favoriteTeams?: Prisma.FavoriteTeamUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -625,6 +632,20 @@ export type UserUpdateOneRequiredWithoutPublishedReleasesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutPublishedReleasesInput, Prisma.UserUpdateWithoutPublishedReleasesInput>, Prisma.UserUncheckedUpdateWithoutPublishedReleasesInput>
 }
 
+export type UserCreateNestedOneWithoutFavoriteTeamsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutFavoriteTeamsInput, Prisma.UserUncheckedCreateWithoutFavoriteTeamsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFavoriteTeamsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutFavoriteTeamsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutFavoriteTeamsInput, Prisma.UserUncheckedCreateWithoutFavoriteTeamsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFavoriteTeamsInput
+  upsert?: Prisma.UserUpsertWithoutFavoriteTeamsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutFavoriteTeamsInput, Prisma.UserUpdateWithoutFavoriteTeamsInput>, Prisma.UserUncheckedUpdateWithoutFavoriteTeamsInput>
+}
+
 export type UserCreateNestedOneWithoutCreatedTeamInvitesInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutCreatedTeamInvitesInput, Prisma.UserUncheckedCreateWithoutCreatedTeamInvitesInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutCreatedTeamInvitesInput
@@ -675,6 +696,7 @@ export type UserCreateWithoutSessionsInput = {
   publishedReleases?: Prisma.AppReleaseCreateNestedManyWithoutPublishedByInput
   assignedMatchTasks?: Prisma.MatchTaskCreateNestedManyWithoutUserInput
   teamJoinRequests?: Prisma.TeamJoinRequestCreateNestedManyWithoutUserInput
+  favoriteTeams?: Prisma.FavoriteTeamCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSessionsInput = {
@@ -697,6 +719,7 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   publishedReleases?: Prisma.AppReleaseUncheckedCreateNestedManyWithoutPublishedByInput
   assignedMatchTasks?: Prisma.MatchTaskUncheckedCreateNestedManyWithoutUserInput
   teamJoinRequests?: Prisma.TeamJoinRequestUncheckedCreateNestedManyWithoutUserInput
+  favoriteTeams?: Prisma.FavoriteTeamUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSessionsInput = {
@@ -735,6 +758,7 @@ export type UserUpdateWithoutSessionsInput = {
   publishedReleases?: Prisma.AppReleaseUpdateManyWithoutPublishedByNestedInput
   assignedMatchTasks?: Prisma.MatchTaskUpdateManyWithoutUserNestedInput
   teamJoinRequests?: Prisma.TeamJoinRequestUpdateManyWithoutUserNestedInput
+  favoriteTeams?: Prisma.FavoriteTeamUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -757,6 +781,7 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   publishedReleases?: Prisma.AppReleaseUncheckedUpdateManyWithoutPublishedByNestedInput
   assignedMatchTasks?: Prisma.MatchTaskUncheckedUpdateManyWithoutUserNestedInput
   teamJoinRequests?: Prisma.TeamJoinRequestUncheckedUpdateManyWithoutUserNestedInput
+  favoriteTeams?: Prisma.FavoriteTeamUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutClubMembershipsInput = {
@@ -779,6 +804,7 @@ export type UserCreateWithoutClubMembershipsInput = {
   publishedReleases?: Prisma.AppReleaseCreateNestedManyWithoutPublishedByInput
   assignedMatchTasks?: Prisma.MatchTaskCreateNestedManyWithoutUserInput
   teamJoinRequests?: Prisma.TeamJoinRequestCreateNestedManyWithoutUserInput
+  favoriteTeams?: Prisma.FavoriteTeamCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutClubMembershipsInput = {
@@ -801,6 +827,7 @@ export type UserUncheckedCreateWithoutClubMembershipsInput = {
   publishedReleases?: Prisma.AppReleaseUncheckedCreateNestedManyWithoutPublishedByInput
   assignedMatchTasks?: Prisma.MatchTaskUncheckedCreateNestedManyWithoutUserInput
   teamJoinRequests?: Prisma.TeamJoinRequestUncheckedCreateNestedManyWithoutUserInput
+  favoriteTeams?: Prisma.FavoriteTeamUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutClubMembershipsInput = {
@@ -839,6 +866,7 @@ export type UserUpdateWithoutClubMembershipsInput = {
   publishedReleases?: Prisma.AppReleaseUpdateManyWithoutPublishedByNestedInput
   assignedMatchTasks?: Prisma.MatchTaskUpdateManyWithoutUserNestedInput
   teamJoinRequests?: Prisma.TeamJoinRequestUpdateManyWithoutUserNestedInput
+  favoriteTeams?: Prisma.FavoriteTeamUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutClubMembershipsInput = {
@@ -861,6 +889,7 @@ export type UserUncheckedUpdateWithoutClubMembershipsInput = {
   publishedReleases?: Prisma.AppReleaseUncheckedUpdateManyWithoutPublishedByNestedInput
   assignedMatchTasks?: Prisma.MatchTaskUncheckedUpdateManyWithoutUserNestedInput
   teamJoinRequests?: Prisma.TeamJoinRequestUncheckedUpdateManyWithoutUserNestedInput
+  favoriteTeams?: Prisma.FavoriteTeamUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutTeamMembershipsInput = {
@@ -883,6 +912,7 @@ export type UserCreateWithoutTeamMembershipsInput = {
   publishedReleases?: Prisma.AppReleaseCreateNestedManyWithoutPublishedByInput
   assignedMatchTasks?: Prisma.MatchTaskCreateNestedManyWithoutUserInput
   teamJoinRequests?: Prisma.TeamJoinRequestCreateNestedManyWithoutUserInput
+  favoriteTeams?: Prisma.FavoriteTeamCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutTeamMembershipsInput = {
@@ -905,6 +935,7 @@ export type UserUncheckedCreateWithoutTeamMembershipsInput = {
   publishedReleases?: Prisma.AppReleaseUncheckedCreateNestedManyWithoutPublishedByInput
   assignedMatchTasks?: Prisma.MatchTaskUncheckedCreateNestedManyWithoutUserInput
   teamJoinRequests?: Prisma.TeamJoinRequestUncheckedCreateNestedManyWithoutUserInput
+  favoriteTeams?: Prisma.FavoriteTeamUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutTeamMembershipsInput = {
@@ -943,6 +974,7 @@ export type UserUpdateWithoutTeamMembershipsInput = {
   publishedReleases?: Prisma.AppReleaseUpdateManyWithoutPublishedByNestedInput
   assignedMatchTasks?: Prisma.MatchTaskUpdateManyWithoutUserNestedInput
   teamJoinRequests?: Prisma.TeamJoinRequestUpdateManyWithoutUserNestedInput
+  favoriteTeams?: Prisma.FavoriteTeamUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTeamMembershipsInput = {
@@ -965,6 +997,7 @@ export type UserUncheckedUpdateWithoutTeamMembershipsInput = {
   publishedReleases?: Prisma.AppReleaseUncheckedUpdateManyWithoutPublishedByNestedInput
   assignedMatchTasks?: Prisma.MatchTaskUncheckedUpdateManyWithoutUserNestedInput
   teamJoinRequests?: Prisma.TeamJoinRequestUncheckedUpdateManyWithoutUserNestedInput
+  favoriteTeams?: Prisma.FavoriteTeamUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutPlayerInput = {
@@ -987,6 +1020,7 @@ export type UserCreateWithoutPlayerInput = {
   publishedReleases?: Prisma.AppReleaseCreateNestedManyWithoutPublishedByInput
   assignedMatchTasks?: Prisma.MatchTaskCreateNestedManyWithoutUserInput
   teamJoinRequests?: Prisma.TeamJoinRequestCreateNestedManyWithoutUserInput
+  favoriteTeams?: Prisma.FavoriteTeamCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutPlayerInput = {
@@ -1009,6 +1043,7 @@ export type UserUncheckedCreateWithoutPlayerInput = {
   publishedReleases?: Prisma.AppReleaseUncheckedCreateNestedManyWithoutPublishedByInput
   assignedMatchTasks?: Prisma.MatchTaskUncheckedCreateNestedManyWithoutUserInput
   teamJoinRequests?: Prisma.TeamJoinRequestUncheckedCreateNestedManyWithoutUserInput
+  favoriteTeams?: Prisma.FavoriteTeamUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutPlayerInput = {
@@ -1047,6 +1082,7 @@ export type UserUpdateWithoutPlayerInput = {
   publishedReleases?: Prisma.AppReleaseUpdateManyWithoutPublishedByNestedInput
   assignedMatchTasks?: Prisma.MatchTaskUpdateManyWithoutUserNestedInput
   teamJoinRequests?: Prisma.TeamJoinRequestUpdateManyWithoutUserNestedInput
+  favoriteTeams?: Prisma.FavoriteTeamUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPlayerInput = {
@@ -1069,6 +1105,7 @@ export type UserUncheckedUpdateWithoutPlayerInput = {
   publishedReleases?: Prisma.AppReleaseUncheckedUpdateManyWithoutPublishedByNestedInput
   assignedMatchTasks?: Prisma.MatchTaskUncheckedUpdateManyWithoutUserNestedInput
   teamJoinRequests?: Prisma.TeamJoinRequestUncheckedUpdateManyWithoutUserNestedInput
+  favoriteTeams?: Prisma.FavoriteTeamUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutTeamJoinRequestsInput = {
@@ -1091,6 +1128,7 @@ export type UserCreateWithoutTeamJoinRequestsInput = {
   statisticPreferences?: Prisma.StatisticPreferenceCreateNestedManyWithoutUserInput
   publishedReleases?: Prisma.AppReleaseCreateNestedManyWithoutPublishedByInput
   assignedMatchTasks?: Prisma.MatchTaskCreateNestedManyWithoutUserInput
+  favoriteTeams?: Prisma.FavoriteTeamCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutTeamJoinRequestsInput = {
@@ -1113,6 +1151,7 @@ export type UserUncheckedCreateWithoutTeamJoinRequestsInput = {
   statisticPreferences?: Prisma.StatisticPreferenceUncheckedCreateNestedManyWithoutUserInput
   publishedReleases?: Prisma.AppReleaseUncheckedCreateNestedManyWithoutPublishedByInput
   assignedMatchTasks?: Prisma.MatchTaskUncheckedCreateNestedManyWithoutUserInput
+  favoriteTeams?: Prisma.FavoriteTeamUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutTeamJoinRequestsInput = {
@@ -1151,6 +1190,7 @@ export type UserUpdateWithoutTeamJoinRequestsInput = {
   statisticPreferences?: Prisma.StatisticPreferenceUpdateManyWithoutUserNestedInput
   publishedReleases?: Prisma.AppReleaseUpdateManyWithoutPublishedByNestedInput
   assignedMatchTasks?: Prisma.MatchTaskUpdateManyWithoutUserNestedInput
+  favoriteTeams?: Prisma.FavoriteTeamUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTeamJoinRequestsInput = {
@@ -1173,6 +1213,7 @@ export type UserUncheckedUpdateWithoutTeamJoinRequestsInput = {
   statisticPreferences?: Prisma.StatisticPreferenceUncheckedUpdateManyWithoutUserNestedInput
   publishedReleases?: Prisma.AppReleaseUncheckedUpdateManyWithoutPublishedByNestedInput
   assignedMatchTasks?: Prisma.MatchTaskUncheckedUpdateManyWithoutUserNestedInput
+  favoriteTeams?: Prisma.FavoriteTeamUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutAssignedMatchTasksInput = {
@@ -1195,6 +1236,7 @@ export type UserCreateWithoutAssignedMatchTasksInput = {
   statisticPreferences?: Prisma.StatisticPreferenceCreateNestedManyWithoutUserInput
   publishedReleases?: Prisma.AppReleaseCreateNestedManyWithoutPublishedByInput
   teamJoinRequests?: Prisma.TeamJoinRequestCreateNestedManyWithoutUserInput
+  favoriteTeams?: Prisma.FavoriteTeamCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutAssignedMatchTasksInput = {
@@ -1217,6 +1259,7 @@ export type UserUncheckedCreateWithoutAssignedMatchTasksInput = {
   statisticPreferences?: Prisma.StatisticPreferenceUncheckedCreateNestedManyWithoutUserInput
   publishedReleases?: Prisma.AppReleaseUncheckedCreateNestedManyWithoutPublishedByInput
   teamJoinRequests?: Prisma.TeamJoinRequestUncheckedCreateNestedManyWithoutUserInput
+  favoriteTeams?: Prisma.FavoriteTeamUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutAssignedMatchTasksInput = {
@@ -1255,6 +1298,7 @@ export type UserUpdateWithoutAssignedMatchTasksInput = {
   statisticPreferences?: Prisma.StatisticPreferenceUpdateManyWithoutUserNestedInput
   publishedReleases?: Prisma.AppReleaseUpdateManyWithoutPublishedByNestedInput
   teamJoinRequests?: Prisma.TeamJoinRequestUpdateManyWithoutUserNestedInput
+  favoriteTeams?: Prisma.FavoriteTeamUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAssignedMatchTasksInput = {
@@ -1277,6 +1321,7 @@ export type UserUncheckedUpdateWithoutAssignedMatchTasksInput = {
   statisticPreferences?: Prisma.StatisticPreferenceUncheckedUpdateManyWithoutUserNestedInput
   publishedReleases?: Prisma.AppReleaseUncheckedUpdateManyWithoutPublishedByNestedInput
   teamJoinRequests?: Prisma.TeamJoinRequestUncheckedUpdateManyWithoutUserNestedInput
+  favoriteTeams?: Prisma.FavoriteTeamUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCreatedTrainingsInput = {
@@ -1299,6 +1344,7 @@ export type UserCreateWithoutCreatedTrainingsInput = {
   publishedReleases?: Prisma.AppReleaseCreateNestedManyWithoutPublishedByInput
   assignedMatchTasks?: Prisma.MatchTaskCreateNestedManyWithoutUserInput
   teamJoinRequests?: Prisma.TeamJoinRequestCreateNestedManyWithoutUserInput
+  favoriteTeams?: Prisma.FavoriteTeamCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCreatedTrainingsInput = {
@@ -1321,6 +1367,7 @@ export type UserUncheckedCreateWithoutCreatedTrainingsInput = {
   publishedReleases?: Prisma.AppReleaseUncheckedCreateNestedManyWithoutPublishedByInput
   assignedMatchTasks?: Prisma.MatchTaskUncheckedCreateNestedManyWithoutUserInput
   teamJoinRequests?: Prisma.TeamJoinRequestUncheckedCreateNestedManyWithoutUserInput
+  favoriteTeams?: Prisma.FavoriteTeamUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCreatedTrainingsInput = {
@@ -1359,6 +1406,7 @@ export type UserUpdateWithoutCreatedTrainingsInput = {
   publishedReleases?: Prisma.AppReleaseUpdateManyWithoutPublishedByNestedInput
   assignedMatchTasks?: Prisma.MatchTaskUpdateManyWithoutUserNestedInput
   teamJoinRequests?: Prisma.TeamJoinRequestUpdateManyWithoutUserNestedInput
+  favoriteTeams?: Prisma.FavoriteTeamUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedTrainingsInput = {
@@ -1381,6 +1429,7 @@ export type UserUncheckedUpdateWithoutCreatedTrainingsInput = {
   publishedReleases?: Prisma.AppReleaseUncheckedUpdateManyWithoutPublishedByNestedInput
   assignedMatchTasks?: Prisma.MatchTaskUncheckedUpdateManyWithoutUserNestedInput
   teamJoinRequests?: Prisma.TeamJoinRequestUncheckedUpdateManyWithoutUserNestedInput
+  favoriteTeams?: Prisma.FavoriteTeamUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutStatisticPreferencesInput = {
@@ -1403,6 +1452,7 @@ export type UserCreateWithoutStatisticPreferencesInput = {
   publishedReleases?: Prisma.AppReleaseCreateNestedManyWithoutPublishedByInput
   assignedMatchTasks?: Prisma.MatchTaskCreateNestedManyWithoutUserInput
   teamJoinRequests?: Prisma.TeamJoinRequestCreateNestedManyWithoutUserInput
+  favoriteTeams?: Prisma.FavoriteTeamCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutStatisticPreferencesInput = {
@@ -1425,6 +1475,7 @@ export type UserUncheckedCreateWithoutStatisticPreferencesInput = {
   publishedReleases?: Prisma.AppReleaseUncheckedCreateNestedManyWithoutPublishedByInput
   assignedMatchTasks?: Prisma.MatchTaskUncheckedCreateNestedManyWithoutUserInput
   teamJoinRequests?: Prisma.TeamJoinRequestUncheckedCreateNestedManyWithoutUserInput
+  favoriteTeams?: Prisma.FavoriteTeamUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutStatisticPreferencesInput = {
@@ -1463,6 +1514,7 @@ export type UserUpdateWithoutStatisticPreferencesInput = {
   publishedReleases?: Prisma.AppReleaseUpdateManyWithoutPublishedByNestedInput
   assignedMatchTasks?: Prisma.MatchTaskUpdateManyWithoutUserNestedInput
   teamJoinRequests?: Prisma.TeamJoinRequestUpdateManyWithoutUserNestedInput
+  favoriteTeams?: Prisma.FavoriteTeamUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutStatisticPreferencesInput = {
@@ -1485,6 +1537,7 @@ export type UserUncheckedUpdateWithoutStatisticPreferencesInput = {
   publishedReleases?: Prisma.AppReleaseUncheckedUpdateManyWithoutPublishedByNestedInput
   assignedMatchTasks?: Prisma.MatchTaskUncheckedUpdateManyWithoutUserNestedInput
   teamJoinRequests?: Prisma.TeamJoinRequestUncheckedUpdateManyWithoutUserNestedInput
+  favoriteTeams?: Prisma.FavoriteTeamUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutNotificationsInput = {
@@ -1507,6 +1560,7 @@ export type UserCreateWithoutNotificationsInput = {
   publishedReleases?: Prisma.AppReleaseCreateNestedManyWithoutPublishedByInput
   assignedMatchTasks?: Prisma.MatchTaskCreateNestedManyWithoutUserInput
   teamJoinRequests?: Prisma.TeamJoinRequestCreateNestedManyWithoutUserInput
+  favoriteTeams?: Prisma.FavoriteTeamCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutNotificationsInput = {
@@ -1529,6 +1583,7 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   publishedReleases?: Prisma.AppReleaseUncheckedCreateNestedManyWithoutPublishedByInput
   assignedMatchTasks?: Prisma.MatchTaskUncheckedCreateNestedManyWithoutUserInput
   teamJoinRequests?: Prisma.TeamJoinRequestUncheckedCreateNestedManyWithoutUserInput
+  favoriteTeams?: Prisma.FavoriteTeamUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutNotificationsInput = {
@@ -1567,6 +1622,7 @@ export type UserUpdateWithoutNotificationsInput = {
   publishedReleases?: Prisma.AppReleaseUpdateManyWithoutPublishedByNestedInput
   assignedMatchTasks?: Prisma.MatchTaskUpdateManyWithoutUserNestedInput
   teamJoinRequests?: Prisma.TeamJoinRequestUpdateManyWithoutUserNestedInput
+  favoriteTeams?: Prisma.FavoriteTeamUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutNotificationsInput = {
@@ -1589,6 +1645,7 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   publishedReleases?: Prisma.AppReleaseUncheckedUpdateManyWithoutPublishedByNestedInput
   assignedMatchTasks?: Prisma.MatchTaskUncheckedUpdateManyWithoutUserNestedInput
   teamJoinRequests?: Prisma.TeamJoinRequestUncheckedUpdateManyWithoutUserNestedInput
+  favoriteTeams?: Prisma.FavoriteTeamUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutPublishedReleasesInput = {
@@ -1611,6 +1668,7 @@ export type UserCreateWithoutPublishedReleasesInput = {
   statisticPreferences?: Prisma.StatisticPreferenceCreateNestedManyWithoutUserInput
   assignedMatchTasks?: Prisma.MatchTaskCreateNestedManyWithoutUserInput
   teamJoinRequests?: Prisma.TeamJoinRequestCreateNestedManyWithoutUserInput
+  favoriteTeams?: Prisma.FavoriteTeamCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutPublishedReleasesInput = {
@@ -1633,6 +1691,7 @@ export type UserUncheckedCreateWithoutPublishedReleasesInput = {
   statisticPreferences?: Prisma.StatisticPreferenceUncheckedCreateNestedManyWithoutUserInput
   assignedMatchTasks?: Prisma.MatchTaskUncheckedCreateNestedManyWithoutUserInput
   teamJoinRequests?: Prisma.TeamJoinRequestUncheckedCreateNestedManyWithoutUserInput
+  favoriteTeams?: Prisma.FavoriteTeamUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutPublishedReleasesInput = {
@@ -1671,6 +1730,7 @@ export type UserUpdateWithoutPublishedReleasesInput = {
   statisticPreferences?: Prisma.StatisticPreferenceUpdateManyWithoutUserNestedInput
   assignedMatchTasks?: Prisma.MatchTaskUpdateManyWithoutUserNestedInput
   teamJoinRequests?: Prisma.TeamJoinRequestUpdateManyWithoutUserNestedInput
+  favoriteTeams?: Prisma.FavoriteTeamUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPublishedReleasesInput = {
@@ -1691,6 +1751,115 @@ export type UserUncheckedUpdateWithoutPublishedReleasesInput = {
   createdTrainings?: Prisma.TrainingUncheckedUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   statisticPreferences?: Prisma.StatisticPreferenceUncheckedUpdateManyWithoutUserNestedInput
+  assignedMatchTasks?: Prisma.MatchTaskUncheckedUpdateManyWithoutUserNestedInput
+  teamJoinRequests?: Prisma.TeamJoinRequestUncheckedUpdateManyWithoutUserNestedInput
+  favoriteTeams?: Prisma.FavoriteTeamUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutFavoriteTeamsInput = {
+  id?: string
+  name: string
+  username: string
+  passwordHash: string
+  photoPath?: string | null
+  platformRole?: $Enums.PlatformRole
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  clubMemberships?: Prisma.ClubMembershipCreateNestedManyWithoutUserInput
+  teamMemberships?: Prisma.TeamMembershipCreateNestedManyWithoutUserInput
+  player?: Prisma.PlayerCreateNestedOneWithoutUserInput
+  createdTeamInvites?: Prisma.TeamInviteCreateNestedManyWithoutCreatedByInput
+  usedTeamInvites?: Prisma.TeamInviteCreateNestedManyWithoutUsedByInput
+  createdTrainings?: Prisma.TrainingCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  statisticPreferences?: Prisma.StatisticPreferenceCreateNestedManyWithoutUserInput
+  publishedReleases?: Prisma.AppReleaseCreateNestedManyWithoutPublishedByInput
+  assignedMatchTasks?: Prisma.MatchTaskCreateNestedManyWithoutUserInput
+  teamJoinRequests?: Prisma.TeamJoinRequestCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutFavoriteTeamsInput = {
+  id?: string
+  name: string
+  username: string
+  passwordHash: string
+  photoPath?: string | null
+  platformRole?: $Enums.PlatformRole
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  clubMemberships?: Prisma.ClubMembershipUncheckedCreateNestedManyWithoutUserInput
+  teamMemberships?: Prisma.TeamMembershipUncheckedCreateNestedManyWithoutUserInput
+  player?: Prisma.PlayerUncheckedCreateNestedOneWithoutUserInput
+  createdTeamInvites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutCreatedByInput
+  usedTeamInvites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutUsedByInput
+  createdTrainings?: Prisma.TrainingUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  statisticPreferences?: Prisma.StatisticPreferenceUncheckedCreateNestedManyWithoutUserInput
+  publishedReleases?: Prisma.AppReleaseUncheckedCreateNestedManyWithoutPublishedByInput
+  assignedMatchTasks?: Prisma.MatchTaskUncheckedCreateNestedManyWithoutUserInput
+  teamJoinRequests?: Prisma.TeamJoinRequestUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutFavoriteTeamsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutFavoriteTeamsInput, Prisma.UserUncheckedCreateWithoutFavoriteTeamsInput>
+}
+
+export type UserUpsertWithoutFavoriteTeamsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutFavoriteTeamsInput, Prisma.UserUncheckedUpdateWithoutFavoriteTeamsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutFavoriteTeamsInput, Prisma.UserUncheckedCreateWithoutFavoriteTeamsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutFavoriteTeamsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutFavoriteTeamsInput, Prisma.UserUncheckedUpdateWithoutFavoriteTeamsInput>
+}
+
+export type UserUpdateWithoutFavoriteTeamsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  platformRole?: Prisma.EnumPlatformRoleFieldUpdateOperationsInput | $Enums.PlatformRole
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  clubMemberships?: Prisma.ClubMembershipUpdateManyWithoutUserNestedInput
+  teamMemberships?: Prisma.TeamMembershipUpdateManyWithoutUserNestedInput
+  player?: Prisma.PlayerUpdateOneWithoutUserNestedInput
+  createdTeamInvites?: Prisma.TeamInviteUpdateManyWithoutCreatedByNestedInput
+  usedTeamInvites?: Prisma.TeamInviteUpdateManyWithoutUsedByNestedInput
+  createdTrainings?: Prisma.TrainingUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  statisticPreferences?: Prisma.StatisticPreferenceUpdateManyWithoutUserNestedInput
+  publishedReleases?: Prisma.AppReleaseUpdateManyWithoutPublishedByNestedInput
+  assignedMatchTasks?: Prisma.MatchTaskUpdateManyWithoutUserNestedInput
+  teamJoinRequests?: Prisma.TeamJoinRequestUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutFavoriteTeamsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  photoPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  platformRole?: Prisma.EnumPlatformRoleFieldUpdateOperationsInput | $Enums.PlatformRole
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  clubMemberships?: Prisma.ClubMembershipUncheckedUpdateManyWithoutUserNestedInput
+  teamMemberships?: Prisma.TeamMembershipUncheckedUpdateManyWithoutUserNestedInput
+  player?: Prisma.PlayerUncheckedUpdateOneWithoutUserNestedInput
+  createdTeamInvites?: Prisma.TeamInviteUncheckedUpdateManyWithoutCreatedByNestedInput
+  usedTeamInvites?: Prisma.TeamInviteUncheckedUpdateManyWithoutUsedByNestedInput
+  createdTrainings?: Prisma.TrainingUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  statisticPreferences?: Prisma.StatisticPreferenceUncheckedUpdateManyWithoutUserNestedInput
+  publishedReleases?: Prisma.AppReleaseUncheckedUpdateManyWithoutPublishedByNestedInput
   assignedMatchTasks?: Prisma.MatchTaskUncheckedUpdateManyWithoutUserNestedInput
   teamJoinRequests?: Prisma.TeamJoinRequestUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -1715,6 +1884,7 @@ export type UserCreateWithoutCreatedTeamInvitesInput = {
   publishedReleases?: Prisma.AppReleaseCreateNestedManyWithoutPublishedByInput
   assignedMatchTasks?: Prisma.MatchTaskCreateNestedManyWithoutUserInput
   teamJoinRequests?: Prisma.TeamJoinRequestCreateNestedManyWithoutUserInput
+  favoriteTeams?: Prisma.FavoriteTeamCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCreatedTeamInvitesInput = {
@@ -1737,6 +1907,7 @@ export type UserUncheckedCreateWithoutCreatedTeamInvitesInput = {
   publishedReleases?: Prisma.AppReleaseUncheckedCreateNestedManyWithoutPublishedByInput
   assignedMatchTasks?: Prisma.MatchTaskUncheckedCreateNestedManyWithoutUserInput
   teamJoinRequests?: Prisma.TeamJoinRequestUncheckedCreateNestedManyWithoutUserInput
+  favoriteTeams?: Prisma.FavoriteTeamUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCreatedTeamInvitesInput = {
@@ -1764,6 +1935,7 @@ export type UserCreateWithoutUsedTeamInvitesInput = {
   publishedReleases?: Prisma.AppReleaseCreateNestedManyWithoutPublishedByInput
   assignedMatchTasks?: Prisma.MatchTaskCreateNestedManyWithoutUserInput
   teamJoinRequests?: Prisma.TeamJoinRequestCreateNestedManyWithoutUserInput
+  favoriteTeams?: Prisma.FavoriteTeamCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutUsedTeamInvitesInput = {
@@ -1786,6 +1958,7 @@ export type UserUncheckedCreateWithoutUsedTeamInvitesInput = {
   publishedReleases?: Prisma.AppReleaseUncheckedCreateNestedManyWithoutPublishedByInput
   assignedMatchTasks?: Prisma.MatchTaskUncheckedCreateNestedManyWithoutUserInput
   teamJoinRequests?: Prisma.TeamJoinRequestUncheckedCreateNestedManyWithoutUserInput
+  favoriteTeams?: Prisma.FavoriteTeamUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutUsedTeamInvitesInput = {
@@ -1824,6 +1997,7 @@ export type UserUpdateWithoutCreatedTeamInvitesInput = {
   publishedReleases?: Prisma.AppReleaseUpdateManyWithoutPublishedByNestedInput
   assignedMatchTasks?: Prisma.MatchTaskUpdateManyWithoutUserNestedInput
   teamJoinRequests?: Prisma.TeamJoinRequestUpdateManyWithoutUserNestedInput
+  favoriteTeams?: Prisma.FavoriteTeamUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedTeamInvitesInput = {
@@ -1846,6 +2020,7 @@ export type UserUncheckedUpdateWithoutCreatedTeamInvitesInput = {
   publishedReleases?: Prisma.AppReleaseUncheckedUpdateManyWithoutPublishedByNestedInput
   assignedMatchTasks?: Prisma.MatchTaskUncheckedUpdateManyWithoutUserNestedInput
   teamJoinRequests?: Prisma.TeamJoinRequestUncheckedUpdateManyWithoutUserNestedInput
+  favoriteTeams?: Prisma.FavoriteTeamUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutUsedTeamInvitesInput = {
@@ -1879,6 +2054,7 @@ export type UserUpdateWithoutUsedTeamInvitesInput = {
   publishedReleases?: Prisma.AppReleaseUpdateManyWithoutPublishedByNestedInput
   assignedMatchTasks?: Prisma.MatchTaskUpdateManyWithoutUserNestedInput
   teamJoinRequests?: Prisma.TeamJoinRequestUpdateManyWithoutUserNestedInput
+  favoriteTeams?: Prisma.FavoriteTeamUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUsedTeamInvitesInput = {
@@ -1901,6 +2077,7 @@ export type UserUncheckedUpdateWithoutUsedTeamInvitesInput = {
   publishedReleases?: Prisma.AppReleaseUncheckedUpdateManyWithoutPublishedByNestedInput
   assignedMatchTasks?: Prisma.MatchTaskUncheckedUpdateManyWithoutUserNestedInput
   teamJoinRequests?: Prisma.TeamJoinRequestUncheckedUpdateManyWithoutUserNestedInput
+  favoriteTeams?: Prisma.FavoriteTeamUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -1920,6 +2097,7 @@ export type UserCountOutputType = {
   publishedReleases: number
   assignedMatchTasks: number
   teamJoinRequests: number
+  favoriteTeams: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1934,6 +2112,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   publishedReleases?: boolean | UserCountOutputTypeCountPublishedReleasesArgs
   assignedMatchTasks?: boolean | UserCountOutputTypeCountAssignedMatchTasksArgs
   teamJoinRequests?: boolean | UserCountOutputTypeCountTeamJoinRequestsArgs
+  favoriteTeams?: boolean | UserCountOutputTypeCountFavoriteTeamsArgs
 }
 
 /**
@@ -2023,6 +2202,13 @@ export type UserCountOutputTypeCountTeamJoinRequestsArgs<ExtArgs extends runtime
   where?: Prisma.TeamJoinRequestWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountFavoriteTeamsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.FavoriteTeamWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -2045,6 +2231,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   publishedReleases?: boolean | Prisma.User$publishedReleasesArgs<ExtArgs>
   assignedMatchTasks?: boolean | Prisma.User$assignedMatchTasksArgs<ExtArgs>
   teamJoinRequests?: boolean | Prisma.User$teamJoinRequestsArgs<ExtArgs>
+  favoriteTeams?: boolean | Prisma.User$favoriteTeamsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -2095,6 +2282,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   publishedReleases?: boolean | Prisma.User$publishedReleasesArgs<ExtArgs>
   assignedMatchTasks?: boolean | Prisma.User$assignedMatchTasksArgs<ExtArgs>
   teamJoinRequests?: boolean | Prisma.User$teamJoinRequestsArgs<ExtArgs>
+  favoriteTeams?: boolean | Prisma.User$favoriteTeamsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -2115,6 +2303,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     publishedReleases: Prisma.$AppReleasePayload<ExtArgs>[]
     assignedMatchTasks: Prisma.$MatchTaskPayload<ExtArgs>[]
     teamJoinRequests: Prisma.$TeamJoinRequestPayload<ExtArgs>[]
+    favoriteTeams: Prisma.$FavoriteTeamPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2531,6 +2720,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   publishedReleases<T extends Prisma.User$publishedReleasesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$publishedReleasesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AppReleasePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   assignedMatchTasks<T extends Prisma.User$assignedMatchTasksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$assignedMatchTasksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MatchTaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   teamJoinRequests<T extends Prisma.User$teamJoinRequestsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$teamJoinRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TeamJoinRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  favoriteTeams<T extends Prisma.User$favoriteTeamsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$favoriteTeamsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FavoriteTeamPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3241,6 +3431,30 @@ export type User$teamJoinRequestsArgs<ExtArgs extends runtime.Types.Extensions.I
   take?: number
   skip?: number
   distinct?: Prisma.TeamJoinRequestScalarFieldEnum | Prisma.TeamJoinRequestScalarFieldEnum[]
+}
+
+/**
+ * User.favoriteTeams
+ */
+export type User$favoriteTeamsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the FavoriteTeam
+   */
+  select?: Prisma.FavoriteTeamSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the FavoriteTeam
+   */
+  omit?: Prisma.FavoriteTeamOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FavoriteTeamInclude<ExtArgs> | null
+  where?: Prisma.FavoriteTeamWhereInput
+  orderBy?: Prisma.FavoriteTeamOrderByWithRelationInput | Prisma.FavoriteTeamOrderByWithRelationInput[]
+  cursor?: Prisma.FavoriteTeamWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.FavoriteTeamScalarFieldEnum | Prisma.FavoriteTeamScalarFieldEnum[]
 }
 
 /**

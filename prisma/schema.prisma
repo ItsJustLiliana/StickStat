@@ -95,6 +95,7 @@ model User {
   publishedReleases AppRelease[] @relation("ReleasePublisher")
   assignedMatchTasks MatchTask[] @relation("MatchTaskAssignee")
   teamJoinRequests TeamJoinRequest[]
+  favoriteTeams FavoriteTeam[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -154,6 +155,7 @@ model Team {
   trainings Training[]
   statisticPreferences StatisticPreference[]
   joinRequests TeamJoinRequest[]
+  favoritedBy FavoriteTeam[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   @@unique([clubId, name])
@@ -279,6 +281,7 @@ model MatchAttendance {
   playerId String
   player Player @relation(fields: [playerId], references: [id], onDelete: Cascade)
   status AttendanceStatus @default(unknown)
+  late Boolean @default(false)
   updatedById String
   updatedAt DateTime @updatedAt
   @@unique([matchId, playerId])
@@ -339,6 +342,7 @@ model TrainingAttendance {
   playerId String
   player Player @relation(fields: [playerId], references: [id], onDelete: Cascade)
   status AttendanceStatus @default(unknown)
+  late Boolean @default(false)
   updatedById String
   updatedAt DateTime @updatedAt
   @@unique([trainingId, playerId])
@@ -393,8 +397,20 @@ model PlayerMatchStats {
   assists Int @default(0)
   saves Int @default(0)
   mvp Boolean @default(false)
+  hatTrick Boolean @default(false)
   notes String?
   @@unique([matchId, playerId])
+}
+
+model FavoriteTeam {
+  id String @id @default(cuid())
+  userId String
+  teamId String
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  team Team @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  @@unique([userId, teamId])
+  @@index([userId, createdAt])
 }
 
 model MatchEvent {

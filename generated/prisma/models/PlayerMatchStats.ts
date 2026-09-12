@@ -50,6 +50,7 @@ export type PlayerMatchStatsMinAggregateOutputType = {
   assists: number | null
   saves: number | null
   mvp: boolean | null
+  hatTrick: boolean | null
   notes: string | null
 }
 
@@ -63,6 +64,7 @@ export type PlayerMatchStatsMaxAggregateOutputType = {
   assists: number | null
   saves: number | null
   mvp: boolean | null
+  hatTrick: boolean | null
   notes: string | null
 }
 
@@ -76,6 +78,7 @@ export type PlayerMatchStatsCountAggregateOutputType = {
   assists: number
   saves: number
   mvp: number
+  hatTrick: number
   notes: number
   _all: number
 }
@@ -105,6 +108,7 @@ export type PlayerMatchStatsMinAggregateInputType = {
   assists?: true
   saves?: true
   mvp?: true
+  hatTrick?: true
   notes?: true
 }
 
@@ -118,6 +122,7 @@ export type PlayerMatchStatsMaxAggregateInputType = {
   assists?: true
   saves?: true
   mvp?: true
+  hatTrick?: true
   notes?: true
 }
 
@@ -131,6 +136,7 @@ export type PlayerMatchStatsCountAggregateInputType = {
   assists?: true
   saves?: true
   mvp?: true
+  hatTrick?: true
   notes?: true
   _all?: true
 }
@@ -231,6 +237,7 @@ export type PlayerMatchStatsGroupByOutputType = {
   assists: number
   saves: number
   mvp: boolean
+  hatTrick: boolean
   notes: string | null
   _count: PlayerMatchStatsCountAggregateOutputType | null
   _avg: PlayerMatchStatsAvgAggregateOutputType | null
@@ -267,6 +274,7 @@ export type PlayerMatchStatsWhereInput = {
   assists?: Prisma.IntFilter<"PlayerMatchStats"> | number
   saves?: Prisma.IntFilter<"PlayerMatchStats"> | number
   mvp?: Prisma.BoolFilter<"PlayerMatchStats"> | boolean
+  hatTrick?: Prisma.BoolFilter<"PlayerMatchStats"> | boolean
   notes?: Prisma.StringNullableFilter<"PlayerMatchStats"> | string | null
   match?: Prisma.XOR<Prisma.MatchScalarRelationFilter, Prisma.MatchWhereInput>
   player?: Prisma.XOR<Prisma.PlayerScalarRelationFilter, Prisma.PlayerWhereInput>
@@ -282,6 +290,7 @@ export type PlayerMatchStatsOrderByWithRelationInput = {
   assists?: Prisma.SortOrder
   saves?: Prisma.SortOrder
   mvp?: Prisma.SortOrder
+  hatTrick?: Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   match?: Prisma.MatchOrderByWithRelationInput
   player?: Prisma.PlayerOrderByWithRelationInput
@@ -301,6 +310,7 @@ export type PlayerMatchStatsWhereUniqueInput = Prisma.AtLeast<{
   assists?: Prisma.IntFilter<"PlayerMatchStats"> | number
   saves?: Prisma.IntFilter<"PlayerMatchStats"> | number
   mvp?: Prisma.BoolFilter<"PlayerMatchStats"> | boolean
+  hatTrick?: Prisma.BoolFilter<"PlayerMatchStats"> | boolean
   notes?: Prisma.StringNullableFilter<"PlayerMatchStats"> | string | null
   match?: Prisma.XOR<Prisma.MatchScalarRelationFilter, Prisma.MatchWhereInput>
   player?: Prisma.XOR<Prisma.PlayerScalarRelationFilter, Prisma.PlayerWhereInput>
@@ -316,6 +326,7 @@ export type PlayerMatchStatsOrderByWithAggregationInput = {
   assists?: Prisma.SortOrder
   saves?: Prisma.SortOrder
   mvp?: Prisma.SortOrder
+  hatTrick?: Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.PlayerMatchStatsCountOrderByAggregateInput
   _avg?: Prisma.PlayerMatchStatsAvgOrderByAggregateInput
@@ -337,6 +348,7 @@ export type PlayerMatchStatsScalarWhereWithAggregatesInput = {
   assists?: Prisma.IntWithAggregatesFilter<"PlayerMatchStats"> | number
   saves?: Prisma.IntWithAggregatesFilter<"PlayerMatchStats"> | number
   mvp?: Prisma.BoolWithAggregatesFilter<"PlayerMatchStats"> | boolean
+  hatTrick?: Prisma.BoolWithAggregatesFilter<"PlayerMatchStats"> | boolean
   notes?: Prisma.StringNullableWithAggregatesFilter<"PlayerMatchStats"> | string | null
 }
 
@@ -348,6 +360,7 @@ export type PlayerMatchStatsCreateInput = {
   assists?: number
   saves?: number
   mvp?: boolean
+  hatTrick?: boolean
   notes?: string | null
   match: Prisma.MatchCreateNestedOneWithoutPlayerStatsInput
   player: Prisma.PlayerCreateNestedOneWithoutMatchStatsInput
@@ -363,6 +376,7 @@ export type PlayerMatchStatsUncheckedCreateInput = {
   assists?: number
   saves?: number
   mvp?: boolean
+  hatTrick?: boolean
   notes?: string | null
 }
 
@@ -374,6 +388,7 @@ export type PlayerMatchStatsUpdateInput = {
   assists?: Prisma.IntFieldUpdateOperationsInput | number
   saves?: Prisma.IntFieldUpdateOperationsInput | number
   mvp?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hatTrick?: Prisma.BoolFieldUpdateOperationsInput | boolean
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   match?: Prisma.MatchUpdateOneRequiredWithoutPlayerStatsNestedInput
   player?: Prisma.PlayerUpdateOneRequiredWithoutMatchStatsNestedInput
@@ -389,6 +404,7 @@ export type PlayerMatchStatsUncheckedUpdateInput = {
   assists?: Prisma.IntFieldUpdateOperationsInput | number
   saves?: Prisma.IntFieldUpdateOperationsInput | number
   mvp?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hatTrick?: Prisma.BoolFieldUpdateOperationsInput | boolean
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -402,6 +418,7 @@ export type PlayerMatchStatsCreateManyInput = {
   assists?: number
   saves?: number
   mvp?: boolean
+  hatTrick?: boolean
   notes?: string | null
 }
 
@@ -413,6 +430,7 @@ export type PlayerMatchStatsUpdateManyMutationInput = {
   assists?: Prisma.IntFieldUpdateOperationsInput | number
   saves?: Prisma.IntFieldUpdateOperationsInput | number
   mvp?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hatTrick?: Prisma.BoolFieldUpdateOperationsInput | boolean
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -426,6 +444,7 @@ export type PlayerMatchStatsUncheckedUpdateManyInput = {
   assists?: Prisma.IntFieldUpdateOperationsInput | number
   saves?: Prisma.IntFieldUpdateOperationsInput | number
   mvp?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hatTrick?: Prisma.BoolFieldUpdateOperationsInput | boolean
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -454,6 +473,7 @@ export type PlayerMatchStatsCountOrderByAggregateInput = {
   assists?: Prisma.SortOrder
   saves?: Prisma.SortOrder
   mvp?: Prisma.SortOrder
+  hatTrick?: Prisma.SortOrder
   notes?: Prisma.SortOrder
 }
 
@@ -474,6 +494,7 @@ export type PlayerMatchStatsMaxOrderByAggregateInput = {
   assists?: Prisma.SortOrder
   saves?: Prisma.SortOrder
   mvp?: Prisma.SortOrder
+  hatTrick?: Prisma.SortOrder
   notes?: Prisma.SortOrder
 }
 
@@ -487,6 +508,7 @@ export type PlayerMatchStatsMinOrderByAggregateInput = {
   assists?: Prisma.SortOrder
   saves?: Prisma.SortOrder
   mvp?: Prisma.SortOrder
+  hatTrick?: Prisma.SortOrder
   notes?: Prisma.SortOrder
 }
 
@@ -589,6 +611,7 @@ export type PlayerMatchStatsCreateWithoutMatchInput = {
   assists?: number
   saves?: number
   mvp?: boolean
+  hatTrick?: boolean
   notes?: string | null
   player: Prisma.PlayerCreateNestedOneWithoutMatchStatsInput
 }
@@ -602,6 +625,7 @@ export type PlayerMatchStatsUncheckedCreateWithoutMatchInput = {
   assists?: number
   saves?: number
   mvp?: boolean
+  hatTrick?: boolean
   notes?: string | null
 }
 
@@ -644,6 +668,7 @@ export type PlayerMatchStatsScalarWhereInput = {
   assists?: Prisma.IntFilter<"PlayerMatchStats"> | number
   saves?: Prisma.IntFilter<"PlayerMatchStats"> | number
   mvp?: Prisma.BoolFilter<"PlayerMatchStats"> | boolean
+  hatTrick?: Prisma.BoolFilter<"PlayerMatchStats"> | boolean
   notes?: Prisma.StringNullableFilter<"PlayerMatchStats"> | string | null
 }
 
@@ -655,6 +680,7 @@ export type PlayerMatchStatsCreateWithoutPlayerInput = {
   assists?: number
   saves?: number
   mvp?: boolean
+  hatTrick?: boolean
   notes?: string | null
   match: Prisma.MatchCreateNestedOneWithoutPlayerStatsInput
 }
@@ -668,6 +694,7 @@ export type PlayerMatchStatsUncheckedCreateWithoutPlayerInput = {
   assists?: number
   saves?: number
   mvp?: boolean
+  hatTrick?: boolean
   notes?: string | null
 }
 
@@ -706,6 +733,7 @@ export type PlayerMatchStatsCreateManyMatchInput = {
   assists?: number
   saves?: number
   mvp?: boolean
+  hatTrick?: boolean
   notes?: string | null
 }
 
@@ -717,6 +745,7 @@ export type PlayerMatchStatsUpdateWithoutMatchInput = {
   assists?: Prisma.IntFieldUpdateOperationsInput | number
   saves?: Prisma.IntFieldUpdateOperationsInput | number
   mvp?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hatTrick?: Prisma.BoolFieldUpdateOperationsInput | boolean
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   player?: Prisma.PlayerUpdateOneRequiredWithoutMatchStatsNestedInput
 }
@@ -730,6 +759,7 @@ export type PlayerMatchStatsUncheckedUpdateWithoutMatchInput = {
   assists?: Prisma.IntFieldUpdateOperationsInput | number
   saves?: Prisma.IntFieldUpdateOperationsInput | number
   mvp?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hatTrick?: Prisma.BoolFieldUpdateOperationsInput | boolean
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -742,6 +772,7 @@ export type PlayerMatchStatsUncheckedUpdateManyWithoutMatchInput = {
   assists?: Prisma.IntFieldUpdateOperationsInput | number
   saves?: Prisma.IntFieldUpdateOperationsInput | number
   mvp?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hatTrick?: Prisma.BoolFieldUpdateOperationsInput | boolean
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -754,6 +785,7 @@ export type PlayerMatchStatsCreateManyPlayerInput = {
   assists?: number
   saves?: number
   mvp?: boolean
+  hatTrick?: boolean
   notes?: string | null
 }
 
@@ -765,6 +797,7 @@ export type PlayerMatchStatsUpdateWithoutPlayerInput = {
   assists?: Prisma.IntFieldUpdateOperationsInput | number
   saves?: Prisma.IntFieldUpdateOperationsInput | number
   mvp?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hatTrick?: Prisma.BoolFieldUpdateOperationsInput | boolean
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   match?: Prisma.MatchUpdateOneRequiredWithoutPlayerStatsNestedInput
 }
@@ -778,6 +811,7 @@ export type PlayerMatchStatsUncheckedUpdateWithoutPlayerInput = {
   assists?: Prisma.IntFieldUpdateOperationsInput | number
   saves?: Prisma.IntFieldUpdateOperationsInput | number
   mvp?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hatTrick?: Prisma.BoolFieldUpdateOperationsInput | boolean
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -790,6 +824,7 @@ export type PlayerMatchStatsUncheckedUpdateManyWithoutPlayerInput = {
   assists?: Prisma.IntFieldUpdateOperationsInput | number
   saves?: Prisma.IntFieldUpdateOperationsInput | number
   mvp?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hatTrick?: Prisma.BoolFieldUpdateOperationsInput | boolean
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -805,6 +840,7 @@ export type PlayerMatchStatsSelect<ExtArgs extends runtime.Types.Extensions.Inte
   assists?: boolean
   saves?: boolean
   mvp?: boolean
+  hatTrick?: boolean
   notes?: boolean
   match?: boolean | Prisma.MatchDefaultArgs<ExtArgs>
   player?: boolean | Prisma.PlayerDefaultArgs<ExtArgs>
@@ -820,6 +856,7 @@ export type PlayerMatchStatsSelectCreateManyAndReturn<ExtArgs extends runtime.Ty
   assists?: boolean
   saves?: boolean
   mvp?: boolean
+  hatTrick?: boolean
   notes?: boolean
   match?: boolean | Prisma.MatchDefaultArgs<ExtArgs>
   player?: boolean | Prisma.PlayerDefaultArgs<ExtArgs>
@@ -835,6 +872,7 @@ export type PlayerMatchStatsSelectUpdateManyAndReturn<ExtArgs extends runtime.Ty
   assists?: boolean
   saves?: boolean
   mvp?: boolean
+  hatTrick?: boolean
   notes?: boolean
   match?: boolean | Prisma.MatchDefaultArgs<ExtArgs>
   player?: boolean | Prisma.PlayerDefaultArgs<ExtArgs>
@@ -850,10 +888,11 @@ export type PlayerMatchStatsSelectScalar = {
   assists?: boolean
   saves?: boolean
   mvp?: boolean
+  hatTrick?: boolean
   notes?: boolean
 }
 
-export type PlayerMatchStatsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "matchId" | "playerId" | "started" | "minutesPlayed" | "goals" | "assists" | "saves" | "mvp" | "notes", ExtArgs["result"]["playerMatchStats"]>
+export type PlayerMatchStatsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "matchId" | "playerId" | "started" | "minutesPlayed" | "goals" | "assists" | "saves" | "mvp" | "hatTrick" | "notes", ExtArgs["result"]["playerMatchStats"]>
 export type PlayerMatchStatsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   match?: boolean | Prisma.MatchDefaultArgs<ExtArgs>
   player?: boolean | Prisma.PlayerDefaultArgs<ExtArgs>
@@ -883,6 +922,7 @@ export type $PlayerMatchStatsPayload<ExtArgs extends runtime.Types.Extensions.In
     assists: number
     saves: number
     mvp: boolean
+    hatTrick: boolean
     notes: string | null
   }, ExtArgs["result"]["playerMatchStats"]>
   composites: {}
@@ -1318,6 +1358,7 @@ export interface PlayerMatchStatsFieldRefs {
   readonly assists: Prisma.FieldRef<"PlayerMatchStats", 'Int'>
   readonly saves: Prisma.FieldRef<"PlayerMatchStats", 'Int'>
   readonly mvp: Prisma.FieldRef<"PlayerMatchStats", 'Boolean'>
+  readonly hatTrick: Prisma.FieldRef<"PlayerMatchStats", 'Boolean'>
   readonly notes: Prisma.FieldRef<"PlayerMatchStats", 'String'>
 }
     

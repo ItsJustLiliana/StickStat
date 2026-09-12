@@ -417,6 +417,7 @@ export const ModelName = {
   Notification: 'Notification',
   AppRelease: 'AppRelease',
   PlayerMatchStats: 'PlayerMatchStats',
+  FavoriteTeam: 'FavoriteTeam',
   MatchEvent: 'MatchEvent',
   SyncRun: 'SyncRun',
   TeamInvite: 'TeamInvite',
@@ -436,7 +437,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "session" | "club" | "clubMembership" | "team" | "teamMembership" | "season" | "teamSeason" | "match" | "standing" | "player" | "matchAttendance" | "teamJoinRequest" | "matchTask" | "training" | "trainingAttendance" | "statisticPreference" | "notification" | "appRelease" | "playerMatchStats" | "matchEvent" | "syncRun" | "teamInvite" | "matchTeamPlan"
+    modelProps: "user" | "session" | "club" | "clubMembership" | "team" | "teamMembership" | "season" | "teamSeason" | "match" | "standing" | "player" | "matchAttendance" | "teamJoinRequest" | "matchTask" | "training" | "trainingAttendance" | "statisticPreference" | "notification" | "appRelease" | "playerMatchStats" | "favoriteTeam" | "matchEvent" | "syncRun" | "teamInvite" | "matchTeamPlan"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1920,6 +1921,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    FavoriteTeam: {
+      payload: Prisma.$FavoriteTeamPayload<ExtArgs>
+      fields: Prisma.FavoriteTeamFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.FavoriteTeamFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FavoriteTeamPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.FavoriteTeamFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FavoriteTeamPayload>
+        }
+        findFirst: {
+          args: Prisma.FavoriteTeamFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FavoriteTeamPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.FavoriteTeamFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FavoriteTeamPayload>
+        }
+        findMany: {
+          args: Prisma.FavoriteTeamFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FavoriteTeamPayload>[]
+        }
+        create: {
+          args: Prisma.FavoriteTeamCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FavoriteTeamPayload>
+        }
+        createMany: {
+          args: Prisma.FavoriteTeamCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.FavoriteTeamCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FavoriteTeamPayload>[]
+        }
+        delete: {
+          args: Prisma.FavoriteTeamDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FavoriteTeamPayload>
+        }
+        update: {
+          args: Prisma.FavoriteTeamUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FavoriteTeamPayload>
+        }
+        deleteMany: {
+          args: Prisma.FavoriteTeamDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.FavoriteTeamUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.FavoriteTeamUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FavoriteTeamPayload>[]
+        }
+        upsert: {
+          args: Prisma.FavoriteTeamUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FavoriteTeamPayload>
+        }
+        aggregate: {
+          args: Prisma.FavoriteTeamAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateFavoriteTeam>
+        }
+        groupBy: {
+          args: Prisma.FavoriteTeamGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FavoriteTeamGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.FavoriteTeamCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FavoriteTeamCountAggregateOutputType> | number
+        }
+      }
+    }
     MatchEvent: {
       payload: Prisma.$MatchEventPayload<ExtArgs>
       fields: Prisma.MatchEventFieldRefs
@@ -2422,6 +2497,7 @@ export const MatchAttendanceScalarFieldEnum = {
   matchId: 'matchId',
   playerId: 'playerId',
   status: 'status',
+  late: 'late',
   updatedById: 'updatedById',
   updatedAt: 'updatedAt'
 } as const
@@ -2477,6 +2553,7 @@ export const TrainingAttendanceScalarFieldEnum = {
   trainingId: 'trainingId',
   playerId: 'playerId',
   status: 'status',
+  late: 'late',
   updatedById: 'updatedById',
   updatedAt: 'updatedAt'
 } as const
@@ -2533,10 +2610,21 @@ export const PlayerMatchStatsScalarFieldEnum = {
   assists: 'assists',
   saves: 'saves',
   mvp: 'mvp',
+  hatTrick: 'hatTrick',
   notes: 'notes'
 } as const
 
 export type PlayerMatchStatsScalarFieldEnum = (typeof PlayerMatchStatsScalarFieldEnum)[keyof typeof PlayerMatchStatsScalarFieldEnum]
+
+
+export const FavoriteTeamScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  teamId: 'teamId',
+  createdAt: 'createdAt'
+} as const
+
+export type FavoriteTeamScalarFieldEnum = (typeof FavoriteTeamScalarFieldEnum)[keyof typeof FavoriteTeamScalarFieldEnum]
 
 
 export const MatchEventScalarFieldEnum = {
@@ -3028,6 +3116,7 @@ export type GlobalOmitConfig = {
   notification?: Prisma.NotificationOmit
   appRelease?: Prisma.AppReleaseOmit
   playerMatchStats?: Prisma.PlayerMatchStatsOmit
+  favoriteTeam?: Prisma.FavoriteTeamOmit
   matchEvent?: Prisma.MatchEventOmit
   syncRun?: Prisma.SyncRunOmit
   teamInvite?: Prisma.TeamInviteOmit

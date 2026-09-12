@@ -142,6 +142,11 @@ export type AppRelease = Prisma.AppReleaseModel
  */
 export type PlayerMatchStats = Prisma.PlayerMatchStatsModel
 /**
+ * Model FavoriteTeam
+ * 
+ */
+export type FavoriteTeam = Prisma.FavoriteTeamModel
+/**
  * Model MatchEvent
  * 
  */

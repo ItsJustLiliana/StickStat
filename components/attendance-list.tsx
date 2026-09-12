@@ -2,10 +2,10 @@
 import Image from "next/image";
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { ChevronDown, LockKeyhole } from "lucide-react";
+import { ChevronDown, Clock3, LockKeyhole } from "lucide-react";
 import { AttendanceControls, type AttendanceStatus } from "./attendance-controls";
 import { Toast } from "./toast";
-type Person = { playerId: string; name: string; photoPath: string | null; status: AttendanceStatus; editable: boolean; isSubstitute?: boolean; isSupplemental?: boolean };
+type Person = { playerId: string; name: string; photoPath: string | null; status: AttendanceStatus; late?: boolean; editable: boolean; isSubstitute?: boolean; isSupplemental?: boolean };
 
 function avatarInitials(name: string) {
   return name
@@ -36,8 +36,8 @@ export function AttendanceList({ endpoint, people: rows, canAdmin, locked, autoL
   }
   function playerRows(players: Person[]) {
     return <div className="attendance-list">{players.map(person => <div className="attendance-row" key={person.playerId}>
-      <span className="attendance-person">{person.photoPath ? <Image unoptimized src={person.photoPath} width={48} height={48} className="player-photo image" alt={`Profielfoto van ${person.name}`} /> : <span className="player-photo">{avatarInitials(person.name)}</span>}<strong title={person.name}>{person.name}</strong></span>
-      <AttendanceControls endpoint={endpoint} playerId={person.playerId} name={person.name} status={person.status} disabled={busy || refreshing || !person.editable || (effectiveLocked && !canAdmin)} locked={effectiveLocked && !canAdmin} />
+      <span className="attendance-person">{person.photoPath ? <Image unoptimized src={person.photoPath} width={48} height={48} className="player-photo image" alt={`Profielfoto van ${person.name}`} /> : <span className="player-photo">{avatarInitials(person.name)}</span>}<strong title={person.name}>{person.name}</strong>{person.late && <Clock3 className="late-clock" size={16} aria-label="Komt te laat" />}</span>
+      <AttendanceControls endpoint={endpoint} playerId={person.playerId} name={person.name} status={person.status} late={Boolean(person.late)} canMarkLate={canAdmin} disabled={busy || refreshing || !person.editable || (effectiveLocked && !canAdmin)} locked={effectiveLocked && !canAdmin} />
     </div>)}</div>;
   }
   return <section className="card attendance-card">

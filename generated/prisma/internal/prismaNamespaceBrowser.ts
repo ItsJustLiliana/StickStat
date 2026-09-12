@@ -71,6 +71,7 @@ export const ModelName = {
   Notification: 'Notification',
   AppRelease: 'AppRelease',
   PlayerMatchStats: 'PlayerMatchStats',
+  FavoriteTeam: 'FavoriteTeam',
   MatchEvent: 'MatchEvent',
   SyncRun: 'SyncRun',
   TeamInvite: 'TeamInvite',
@@ -260,6 +261,7 @@ export const MatchAttendanceScalarFieldEnum = {
   matchId: 'matchId',
   playerId: 'playerId',
   status: 'status',
+  late: 'late',
   updatedById: 'updatedById',
   updatedAt: 'updatedAt'
 } as const
@@ -315,6 +317,7 @@ export const TrainingAttendanceScalarFieldEnum = {
   trainingId: 'trainingId',
   playerId: 'playerId',
   status: 'status',
+  late: 'late',
   updatedById: 'updatedById',
   updatedAt: 'updatedAt'
 } as const
@@ -371,10 +374,21 @@ export const PlayerMatchStatsScalarFieldEnum = {
   assists: 'assists',
   saves: 'saves',
   mvp: 'mvp',
+  hatTrick: 'hatTrick',
   notes: 'notes'
 } as const
 
 export type PlayerMatchStatsScalarFieldEnum = (typeof PlayerMatchStatsScalarFieldEnum)[keyof typeof PlayerMatchStatsScalarFieldEnum]
+
+
+export const FavoriteTeamScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  teamId: 'teamId',
+  createdAt: 'createdAt'
+} as const
+
+export type FavoriteTeamScalarFieldEnum = (typeof FavoriteTeamScalarFieldEnum)[keyof typeof FavoriteTeamScalarFieldEnum]
 
 
 export const MatchEventScalarFieldEnum = {

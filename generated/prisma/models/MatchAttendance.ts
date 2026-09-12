@@ -29,6 +29,7 @@ export type MatchAttendanceMinAggregateOutputType = {
   matchId: string | null
   playerId: string | null
   status: $Enums.AttendanceStatus | null
+  late: boolean | null
   updatedById: string | null
   updatedAt: Date | null
 }
@@ -38,6 +39,7 @@ export type MatchAttendanceMaxAggregateOutputType = {
   matchId: string | null
   playerId: string | null
   status: $Enums.AttendanceStatus | null
+  late: boolean | null
   updatedById: string | null
   updatedAt: Date | null
 }
@@ -47,6 +49,7 @@ export type MatchAttendanceCountAggregateOutputType = {
   matchId: number
   playerId: number
   status: number
+  late: number
   updatedById: number
   updatedAt: number
   _all: number
@@ -58,6 +61,7 @@ export type MatchAttendanceMinAggregateInputType = {
   matchId?: true
   playerId?: true
   status?: true
+  late?: true
   updatedById?: true
   updatedAt?: true
 }
@@ -67,6 +71,7 @@ export type MatchAttendanceMaxAggregateInputType = {
   matchId?: true
   playerId?: true
   status?: true
+  late?: true
   updatedById?: true
   updatedAt?: true
 }
@@ -76,6 +81,7 @@ export type MatchAttendanceCountAggregateInputType = {
   matchId?: true
   playerId?: true
   status?: true
+  late?: true
   updatedById?: true
   updatedAt?: true
   _all?: true
@@ -158,6 +164,7 @@ export type MatchAttendanceGroupByOutputType = {
   matchId: string
   playerId: string
   status: $Enums.AttendanceStatus
+  late: boolean
   updatedById: string
   updatedAt: Date
   _count: MatchAttendanceCountAggregateOutputType | null
@@ -188,6 +195,7 @@ export type MatchAttendanceWhereInput = {
   matchId?: Prisma.StringFilter<"MatchAttendance"> | string
   playerId?: Prisma.StringFilter<"MatchAttendance"> | string
   status?: Prisma.EnumAttendanceStatusFilter<"MatchAttendance"> | $Enums.AttendanceStatus
+  late?: Prisma.BoolFilter<"MatchAttendance"> | boolean
   updatedById?: Prisma.StringFilter<"MatchAttendance"> | string
   updatedAt?: Prisma.DateTimeFilter<"MatchAttendance"> | Date | string
   match?: Prisma.XOR<Prisma.MatchScalarRelationFilter, Prisma.MatchWhereInput>
@@ -199,6 +207,7 @@ export type MatchAttendanceOrderByWithRelationInput = {
   matchId?: Prisma.SortOrder
   playerId?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  late?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   match?: Prisma.MatchOrderByWithRelationInput
@@ -214,6 +223,7 @@ export type MatchAttendanceWhereUniqueInput = Prisma.AtLeast<{
   matchId?: Prisma.StringFilter<"MatchAttendance"> | string
   playerId?: Prisma.StringFilter<"MatchAttendance"> | string
   status?: Prisma.EnumAttendanceStatusFilter<"MatchAttendance"> | $Enums.AttendanceStatus
+  late?: Prisma.BoolFilter<"MatchAttendance"> | boolean
   updatedById?: Prisma.StringFilter<"MatchAttendance"> | string
   updatedAt?: Prisma.DateTimeFilter<"MatchAttendance"> | Date | string
   match?: Prisma.XOR<Prisma.MatchScalarRelationFilter, Prisma.MatchWhereInput>
@@ -225,6 +235,7 @@ export type MatchAttendanceOrderByWithAggregationInput = {
   matchId?: Prisma.SortOrder
   playerId?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  late?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.MatchAttendanceCountOrderByAggregateInput
@@ -240,6 +251,7 @@ export type MatchAttendanceScalarWhereWithAggregatesInput = {
   matchId?: Prisma.StringWithAggregatesFilter<"MatchAttendance"> | string
   playerId?: Prisma.StringWithAggregatesFilter<"MatchAttendance"> | string
   status?: Prisma.EnumAttendanceStatusWithAggregatesFilter<"MatchAttendance"> | $Enums.AttendanceStatus
+  late?: Prisma.BoolWithAggregatesFilter<"MatchAttendance"> | boolean
   updatedById?: Prisma.StringWithAggregatesFilter<"MatchAttendance"> | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"MatchAttendance"> | Date | string
 }
@@ -247,6 +259,7 @@ export type MatchAttendanceScalarWhereWithAggregatesInput = {
 export type MatchAttendanceCreateInput = {
   id?: string
   status?: $Enums.AttendanceStatus
+  late?: boolean
   updatedById: string
   updatedAt?: Date | string
   match: Prisma.MatchCreateNestedOneWithoutAttendanceInput
@@ -258,6 +271,7 @@ export type MatchAttendanceUncheckedCreateInput = {
   matchId: string
   playerId: string
   status?: $Enums.AttendanceStatus
+  late?: boolean
   updatedById: string
   updatedAt?: Date | string
 }
@@ -265,6 +279,7 @@ export type MatchAttendanceUncheckedCreateInput = {
 export type MatchAttendanceUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumAttendanceStatusFieldUpdateOperationsInput | $Enums.AttendanceStatus
+  late?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updatedById?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   match?: Prisma.MatchUpdateOneRequiredWithoutAttendanceNestedInput
@@ -276,6 +291,7 @@ export type MatchAttendanceUncheckedUpdateInput = {
   matchId?: Prisma.StringFieldUpdateOperationsInput | string
   playerId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumAttendanceStatusFieldUpdateOperationsInput | $Enums.AttendanceStatus
+  late?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updatedById?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -285,6 +301,7 @@ export type MatchAttendanceCreateManyInput = {
   matchId: string
   playerId: string
   status?: $Enums.AttendanceStatus
+  late?: boolean
   updatedById: string
   updatedAt?: Date | string
 }
@@ -292,6 +309,7 @@ export type MatchAttendanceCreateManyInput = {
 export type MatchAttendanceUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumAttendanceStatusFieldUpdateOperationsInput | $Enums.AttendanceStatus
+  late?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updatedById?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -301,6 +319,7 @@ export type MatchAttendanceUncheckedUpdateManyInput = {
   matchId?: Prisma.StringFieldUpdateOperationsInput | string
   playerId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumAttendanceStatusFieldUpdateOperationsInput | $Enums.AttendanceStatus
+  late?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updatedById?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -325,6 +344,7 @@ export type MatchAttendanceCountOrderByAggregateInput = {
   matchId?: Prisma.SortOrder
   playerId?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  late?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -334,6 +354,7 @@ export type MatchAttendanceMaxOrderByAggregateInput = {
   matchId?: Prisma.SortOrder
   playerId?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  late?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -343,6 +364,7 @@ export type MatchAttendanceMinOrderByAggregateInput = {
   matchId?: Prisma.SortOrder
   playerId?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  late?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -438,6 +460,7 @@ export type EnumAttendanceStatusFieldUpdateOperationsInput = {
 export type MatchAttendanceCreateWithoutMatchInput = {
   id?: string
   status?: $Enums.AttendanceStatus
+  late?: boolean
   updatedById: string
   updatedAt?: Date | string
   player: Prisma.PlayerCreateNestedOneWithoutMatchAttendanceInput
@@ -447,6 +470,7 @@ export type MatchAttendanceUncheckedCreateWithoutMatchInput = {
   id?: string
   playerId: string
   status?: $Enums.AttendanceStatus
+  late?: boolean
   updatedById: string
   updatedAt?: Date | string
 }
@@ -485,6 +509,7 @@ export type MatchAttendanceScalarWhereInput = {
   matchId?: Prisma.StringFilter<"MatchAttendance"> | string
   playerId?: Prisma.StringFilter<"MatchAttendance"> | string
   status?: Prisma.EnumAttendanceStatusFilter<"MatchAttendance"> | $Enums.AttendanceStatus
+  late?: Prisma.BoolFilter<"MatchAttendance"> | boolean
   updatedById?: Prisma.StringFilter<"MatchAttendance"> | string
   updatedAt?: Prisma.DateTimeFilter<"MatchAttendance"> | Date | string
 }
@@ -492,6 +517,7 @@ export type MatchAttendanceScalarWhereInput = {
 export type MatchAttendanceCreateWithoutPlayerInput = {
   id?: string
   status?: $Enums.AttendanceStatus
+  late?: boolean
   updatedById: string
   updatedAt?: Date | string
   match: Prisma.MatchCreateNestedOneWithoutAttendanceInput
@@ -501,6 +527,7 @@ export type MatchAttendanceUncheckedCreateWithoutPlayerInput = {
   id?: string
   matchId: string
   status?: $Enums.AttendanceStatus
+  late?: boolean
   updatedById: string
   updatedAt?: Date | string
 }
@@ -535,6 +562,7 @@ export type MatchAttendanceCreateManyMatchInput = {
   id?: string
   playerId: string
   status?: $Enums.AttendanceStatus
+  late?: boolean
   updatedById: string
   updatedAt?: Date | string
 }
@@ -542,6 +570,7 @@ export type MatchAttendanceCreateManyMatchInput = {
 export type MatchAttendanceUpdateWithoutMatchInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumAttendanceStatusFieldUpdateOperationsInput | $Enums.AttendanceStatus
+  late?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updatedById?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   player?: Prisma.PlayerUpdateOneRequiredWithoutMatchAttendanceNestedInput
@@ -551,6 +580,7 @@ export type MatchAttendanceUncheckedUpdateWithoutMatchInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   playerId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumAttendanceStatusFieldUpdateOperationsInput | $Enums.AttendanceStatus
+  late?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updatedById?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -559,6 +589,7 @@ export type MatchAttendanceUncheckedUpdateManyWithoutMatchInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   playerId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumAttendanceStatusFieldUpdateOperationsInput | $Enums.AttendanceStatus
+  late?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updatedById?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -567,6 +598,7 @@ export type MatchAttendanceCreateManyPlayerInput = {
   id?: string
   matchId: string
   status?: $Enums.AttendanceStatus
+  late?: boolean
   updatedById: string
   updatedAt?: Date | string
 }
@@ -574,6 +606,7 @@ export type MatchAttendanceCreateManyPlayerInput = {
 export type MatchAttendanceUpdateWithoutPlayerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumAttendanceStatusFieldUpdateOperationsInput | $Enums.AttendanceStatus
+  late?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updatedById?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   match?: Prisma.MatchUpdateOneRequiredWithoutAttendanceNestedInput
@@ -583,6 +616,7 @@ export type MatchAttendanceUncheckedUpdateWithoutPlayerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   matchId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumAttendanceStatusFieldUpdateOperationsInput | $Enums.AttendanceStatus
+  late?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updatedById?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -591,6 +625,7 @@ export type MatchAttendanceUncheckedUpdateManyWithoutPlayerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   matchId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumAttendanceStatusFieldUpdateOperationsInput | $Enums.AttendanceStatus
+  late?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updatedById?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -602,6 +637,7 @@ export type MatchAttendanceSelect<ExtArgs extends runtime.Types.Extensions.Inter
   matchId?: boolean
   playerId?: boolean
   status?: boolean
+  late?: boolean
   updatedById?: boolean
   updatedAt?: boolean
   match?: boolean | Prisma.MatchDefaultArgs<ExtArgs>
@@ -613,6 +649,7 @@ export type MatchAttendanceSelectCreateManyAndReturn<ExtArgs extends runtime.Typ
   matchId?: boolean
   playerId?: boolean
   status?: boolean
+  late?: boolean
   updatedById?: boolean
   updatedAt?: boolean
   match?: boolean | Prisma.MatchDefaultArgs<ExtArgs>
@@ -624,6 +661,7 @@ export type MatchAttendanceSelectUpdateManyAndReturn<ExtArgs extends runtime.Typ
   matchId?: boolean
   playerId?: boolean
   status?: boolean
+  late?: boolean
   updatedById?: boolean
   updatedAt?: boolean
   match?: boolean | Prisma.MatchDefaultArgs<ExtArgs>
@@ -635,11 +673,12 @@ export type MatchAttendanceSelectScalar = {
   matchId?: boolean
   playerId?: boolean
   status?: boolean
+  late?: boolean
   updatedById?: boolean
   updatedAt?: boolean
 }
 
-export type MatchAttendanceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "matchId" | "playerId" | "status" | "updatedById" | "updatedAt", ExtArgs["result"]["matchAttendance"]>
+export type MatchAttendanceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "matchId" | "playerId" | "status" | "late" | "updatedById" | "updatedAt", ExtArgs["result"]["matchAttendance"]>
 export type MatchAttendanceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   match?: boolean | Prisma.MatchDefaultArgs<ExtArgs>
   player?: boolean | Prisma.PlayerDefaultArgs<ExtArgs>
@@ -664,6 +703,7 @@ export type $MatchAttendancePayload<ExtArgs extends runtime.Types.Extensions.Int
     matchId: string
     playerId: string
     status: $Enums.AttendanceStatus
+    late: boolean
     updatedById: string
     updatedAt: Date
   }, ExtArgs["result"]["matchAttendance"]>
@@ -1095,6 +1135,7 @@ export interface MatchAttendanceFieldRefs {
   readonly matchId: Prisma.FieldRef<"MatchAttendance", 'String'>
   readonly playerId: Prisma.FieldRef<"MatchAttendance", 'String'>
   readonly status: Prisma.FieldRef<"MatchAttendance", 'AttendanceStatus'>
+  readonly late: Prisma.FieldRef<"MatchAttendance", 'Boolean'>
   readonly updatedById: Prisma.FieldRef<"MatchAttendance", 'String'>
   readonly updatedAt: Prisma.FieldRef<"MatchAttendance", 'DateTime'>
 }
