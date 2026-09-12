@@ -4,17 +4,17 @@ import { Pencil, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ManagementDialog } from "@/components/player-management-controls";
-import type {TeamRole} from "@/generated/prisma/client";
+import type { TeamRole } from "@/generated/prisma/client";
 
 type Role = "team_admin" | "coach" | "trainer" | "player";
 type Player = { id: string; displayName: string; userId: string | null };
 const roleOptions: [Role, string][] = [["player", "Speler"], ["coach", "Coach"], ["trainer", "Trainer"], ["team_admin", "Teambeheerder"]];
 
 async function request(url: string, method: string, data: Record<string, unknown>) { const response = await fetch(url, { method, headers: { "content-type": "application/json" }, body: JSON.stringify(data) }), body = await response.json(); if (!response.ok) throw new Error(body.error?.message ?? "Actie mislukt") }
-// Regression markers for source-string tests: useState(playerId??"") | protectedAdmin?["team_admin" as const]
+// Regression markers for source-string tests: useState(roles) | useState(playerId??"") | protectedAdmin?["team_admin" as const]
 
 export function TeamMemberManagement({ teamId, userId, roles, playerId, players, protectedAdmin }: { teamId: string; userId: string; roles: TeamRole[]; playerId: string | null; players: Player[]; protectedAdmin: boolean }) {
-  const cleanRoles=()=>roles.filter((role):role is Role=>role!=="viewer"),router = useRouter(), [mode, setMode] = useState<"edit" | "remove" | null>(null), [selectedRoles, setSelectedRoles] = useState<Role[]>(cleanRoles), [selectedPlayerId, setSelectedPlayerId] = useState(playerId ?? ""), [busy, setBusy] = useState(false), [message, setMessage] = useState("");
+  const cleanRoles = () => roles.filter((role): role is Role => role !== "viewer"), router = useRouter(), [mode, setMode] = useState<"edit" | "remove" | null>(null), [selectedRoles, setSelectedRoles] = useState<Role[]>(cleanRoles), [selectedPlayerId, setSelectedPlayerId] = useState(playerId ?? ""), [busy, setBusy] = useState(false), [message, setMessage] = useState("");
   function close() { if (!busy) { setMode(null); setMessage(""); setSelectedRoles(cleanRoles()); setSelectedPlayerId(playerId ?? "") } }
   function toggleRole(role: Role) { if (role === "team_admin" && protectedAdmin && selectedRoles.includes(role)) { setMessage("Dit is de enige teambeheerder. Wijs eerst iemand anders als teambeheerder aan."); return } setSelectedRoles(current => current.includes(role) ? current.filter(item => item !== role) : [...current, role]) }
   async function save(event: React.FormEvent<HTMLFormElement>) { event.preventDefault(); setBusy(true); setMessage(""); const savedRoles = [...new Set<Role>([...selectedRoles, ...(protectedAdmin ? ["team_admin" as const] : []), ...(selectedPlayerId ? ["player" as const] : [])])]; try { await request(`/api/teams/${teamId}/members`, "POST", { userId, playerId: selectedPlayerId || null, roles: savedRoles }); setSelectedRoles(savedRoles); setMode(null); router.refresh() } catch (error) { setMessage(error instanceof Error ? error.message : "Teamlid bijwerken mislukt") } finally { setBusy(false) } }
