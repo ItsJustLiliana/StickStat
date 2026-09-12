@@ -1,2 +1,3 @@
-"use client";import {useRouter,useSearchParams} from "next/navigation";import {usePlatformAdmin} from "./access-context";
-export function TeamSelector({teams,current}:{teams:{id:string;name:string;club:{name:string}}[];current:string}){const router=useRouter(),search=useSearchParams(),platformAdmin=usePlatformAdmin();if(!platformAdmin)return null;return <select className="team-switch" value={current} onChange={e=>{const p=new URLSearchParams(search);p.set("team",e.target.value);router.push(`?${p}`)}} aria-label="Selecteer team">{teams.map(t=><option value={t.id} key={t.id}>{t.club.name} · {t.name}</option>)}</select>}
+"use client";
+// Team switching is intentionally handled by the dashboard modal.
+export function TeamSelector({}: {teams:{id:string;name:string;club:{name:string}}[];current:string}){return null}

@@ -44,7 +44,7 @@ export function AndroidAppDownload() {
       <Download className="android-app-dialog-icon" size={28} aria-hidden="true"/>
       <h2 id="android-download-title">StickStat-app downloaden?</h2>
       <p id="android-download-description">Versie {release?.version} wordt gedownload. Android vraagt daarna om de installatie te bevestigen.</p>
-      <div className="android-app-dialog-actions"><button type="button" className="button secondary" onClick={() => setOpen(false)}>Niet nu</button><a className="button" href={release?.downloadUrl} onClick={() => setOpen(false)}>Download app</a></div>
+      <div className="android-app-dialog-actions"><a className="button" href={release?.downloadUrl} onClick={() => setOpen(false)}>Download app</a></div>
     </section>
   </div>, document.body);
 
