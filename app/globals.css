@@ -2080,7 +2080,7 @@ html[data-theme="dark"] body {
 }
 
 .maintenance-page { min-height: 100dvh; display: grid; place-items: center; padding: 24px; background: radial-gradient(circle at 80% 0,#1c5c45 0,transparent 34rem),#092f25; }
-.maintenance-card { width: min(480px,100%); display: grid; justify-items: start; gap: 14px; padding: 36px; border-radius: 20px; background: #fff; color: #092f25; box-shadow: 0 24px 70px #041c1599; }
+.maintenance-card { width: min(480px,100%); display: grid; justify-items: start; gap: 14px; padding: 36px; border-radius: 20px; background: var(--card); color: var(--ink); box-shadow: 0 24px 70px #041c1599; }
 .maintenance-card .brand-mark { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 12px; background: var(--lime); font-weight: 950; font-size: 22px; }
 .maintenance-card h1,.maintenance-card p { margin: 0; }
 .maintenance-card p { color: var(--muted); line-height: 1.6; }
@@ -2090,7 +2090,10 @@ html[data-theme="dark"] body {
 .team-follow-switcher { position:relative; }
 .team-follow-trigger { display:grid; place-items:center; width:32px; height:32px; border:1px solid #ffffff38; border-radius:9px; background:#ffffff16; color:inherit; cursor:pointer; }
 .team-follow-menu { position:absolute; z-index:20; top:calc(100% + 8px); right:0; width:min(300px,78vw); display:grid; gap:5px; padding:10px; border:1px solid var(--line); border-radius:13px; background:var(--card); box-shadow:0 16px 32px #061d1738; color:var(--ink); }
+.team-follow-menu section { display:grid; gap:3px; }
 .team-follow-menu strong { padding:3px 6px 6px; font-size:12px; }
+.team-follow-menu .team-add-button { justify-content:center; margin-bottom:4px; background:var(--green); color:white; font-weight:800; }
+.team-follow-menu .team-add-button:hover { background:var(--green); filter:brightness(1.08); }
 .team-follow-menu button,.team-follow-menu a { display:flex; align-items:center; gap:7px; width:100%; padding:9px; border:0; border-radius:8px; background:transparent; color:inherit; text-align:left; font:inherit; cursor:pointer; text-decoration:none; }
 .team-follow-menu button:hover,.team-follow-menu button.active,.team-follow-menu a:hover { background:var(--soft); }
 
@@ -2106,6 +2109,9 @@ html[data-theme="dark"] body {
 .club-team-list { display:grid; gap:12px; }
 .club-team-list .card-head { margin-bottom:4px; }
 .club-team-row>a { display:grid; gap:4px; color:inherit; text-decoration:none; }
+.join-team-cta { display:grid; justify-items:start; gap:8px; margin-bottom:18px; }
+.join-team-cta .button { min-height:52px; padding-inline:22px; font-size:16px; }
+.join-team-cta p { margin:0; }
 
 .attendance-control { display: flex; align-items: center; gap: 7px; }
 .late-toggle { display: grid; place-items: center; width: 32px; height: 32px; border: 1px solid var(--line); border-radius: 8px; background: var(--card); color: var(--muted); cursor: pointer; }

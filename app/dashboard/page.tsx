@@ -27,7 +27,7 @@ export default async function Dashboard({searchParams}:{searchParams:Promise<{te
     </div>
 
     <section className="hero dashboard-hero">
-      <TeamFollowSwitcher teams={teams} current={team.id}/><div className="team-title"><ClubLogo name={team.club.name} path={team.club.logoLocalPath ?? team.club.logoUrl}/><div><span className="eyebrow dashboard-club-name">{team.club.name}</span><div className="team-title-name"><h1>{team.name}</h1></div><p>{standing?.competition ?? "Competitie wordt bij de eerste sync geladen"}</p></div></div>
+      <TeamFollowSwitcher teams={teams} current={team.id} ownTeamIds={user.teamMemberships.map(membership=>membership.teamId)}/><div className="team-title"><ClubLogo name={team.club.name} path={team.club.logoLocalPath ?? team.club.logoUrl}/><div><span className="eyebrow dashboard-club-name">{team.club.name}</span><div className="team-title-name"><h1>{team.name}</h1></div><p>{standing?.competition ?? "Competitie wordt bij de eerste sync geladen"}</p></div></div>
       <div className="rank-block"><div className="dashboard-rank"><div className="rank-label">Huidige positie</div><div className="rank-number mono">{standing?.position ?? "–"}</div></div><div className="dashboard-points"><div className="rank-label">Punten</div><strong>{standing?.points ?? summary.points}</strong></div></div>
     </section>
 
