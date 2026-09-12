@@ -1,21 +1,7 @@
-import {EmptyTeam} from "@/components/empty-team";
 import {PageShell} from "@/components/page-shell";
 import {StandingsView} from "@/components/standings-view";
+import {currentUser} from "@/lib/auth";
 import {db} from "@/lib/db";
-import {pageContext} from "@/lib/page-data";
-
+import {redirect} from "next/navigation";
 export const dynamic="force-dynamic";
-
-export default async function Standings({searchParams}:{searchParams:Promise<{team?:string}>}){
-  const query=await searchParams,{user,teams,team}=await pageContext(query.team);
-  if(!team)return <PageShell user={user}><EmptyTeam/></PageShell>;
-
-  const own=await db.standing.findFirst({where:{teamId:team.id},orderBy:{lastSyncedAt:"desc"}});
-  const rows=own?await db.standing.findMany({
-    where:{seasonId:own.seasonId,competition:own.competition},
-    include:{team:true},
-    orderBy:{position:"asc"},
-  }):[];
-
-  return <PageShell user={user}><StandingsView competition={own?.competition??"Competitie"} teams={teams} currentTeamId={team.id} rows={rows.map(row=>({id:row.id,teamId:row.teamId,teamName:row.team.name,position:row.position,played:row.played,won:row.won,drawn:row.drawn,lost:row.lost,goalsFor:row.goalsFor,goalsAgainst:row.goalsAgainst,goalDifference:row.goalDifference,points:row.points}))}/></PageShell>;
-}
+export default async function Standings({searchParams}:{searchParams:Promise<{team?:string}>}){const query=await searchParams,user=await currentUser();if(!user)redirect("/login");const [favorites,requested]=await Promise.all([db.team.findMany({where:{OR:[{memberships:{some:{userId:user.id}}},{favoritedBy:{some:{userId:user.id}}}]},include:{club:true},orderBy:{name:"asc"}}),query.team?db.team.findUnique({where:{id:query.team},include:{club:true}}):Promise.resolve(null)]);const team=requested??favorites[0];if(!team)return <PageShell user={user}><section className="card"><p>Zoek eerst een team om een stand te bekijken.</p></section></PageShell>;const own=await db.standing.findFirst({where:{teamId:team.id},orderBy:{lastSyncedAt:"desc"}}),rows=own?await db.standing.findMany({where:{seasonId:own.seasonId,competition:own.competition},include:{team:true},orderBy:{position:"asc"}}):[],scores=own?await db.match.findMany({where:{seasonId:own.seasonId,competition:own.competition,status:"finished"},include:{homeTeam:true,awayTeam:true},orderBy:{date:"desc"}}):[];return <PageShell user={user}><StandingsView competition={own?.competition??"Competitie"} teams={favorites} currentTeamId={team.id} rows={rows.map(row=>({id:row.id,teamId:row.teamId,teamName:row.team.name,position:row.position,played:row.played,won:row.won,drawn:row.drawn,lost:row.lost,goalsFor:row.goalsFor,goalsAgainst:row.goalsAgainst,goalDifference:row.goalDifference,points:row.points}))} scores={scores.map(match=>({id:match.id,date:match.date.toISOString(),home:match.homeTeam.shortName,away:match.awayTeam.shortName,homeScore:match.homeScore,awayScore:match.awayScore}))}/></PageShell>}

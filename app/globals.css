@@ -2083,6 +2083,7 @@ html[data-theme="dark"] body {
 .late-toggle { display: grid; place-items: center; width: 32px; height: 32px; border: 1px solid var(--line); border-radius: 8px; background: var(--card); color: var(--muted); cursor: pointer; }
 .late-toggle.active { background: #fff0cd; color: #9a5d00; border-color: #e6b75a; }
 .late-clock { color: #b56b00; flex: none; }
+.linked-player-check { margin-left: 8px; color: var(--green); vertical-align: -3px; }
 
 .performance-list { display: grid; gap: 22px; }
 .performance-section { display: grid; gap: 0; }

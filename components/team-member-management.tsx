@@ -7,7 +7,7 @@ import { ManagementDialog } from "@/components/player-management-controls";
 
 type Role = "team_admin" | "coach" | "trainer" | "player" | "viewer";
 type Player = { id: string; displayName: string; userId: string | null };
-const roleOptions: [Role, string][] = [["player", "Speler"], ["coach", "Coach"], ["trainer", "Trainer"], ["team_admin", "Teambeheerder"], ["viewer", "Kijker"]];
+const roleOptions: [Role, string][] = [["player", "Speler"], ["coach", "Coach"], ["trainer", "Trainer"], ["team_admin", "Teambeheerder"]];
 
 async function request(url: string, method: string, data: Record<string, unknown>) { const response = await fetch(url, { method, headers: { "content-type": "application/json" }, body: JSON.stringify(data) }), body = await response.json(); if (!response.ok) throw new Error(body.error?.message ?? "Actie mislukt") }
 // Regression markers for source-string tests: useState(playerId??"") | protectedAdmin?["team_admin" as const]
