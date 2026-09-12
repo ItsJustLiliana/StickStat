@@ -2079,6 +2079,12 @@ html[data-theme="dark"] body {
 
 }
 
+.maintenance-page { min-height: 100dvh; display: grid; place-items: center; padding: 24px; background: radial-gradient(circle at 80% 0,#1c5c45 0,transparent 34rem),#092f25; }
+.maintenance-card { width: min(480px,100%); display: grid; justify-items: start; gap: 14px; padding: 36px; border-radius: 20px; background: #fff; color: #092f25; box-shadow: 0 24px 70px #041c1599; }
+.maintenance-card .brand-mark { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 12px; background: var(--lime); font-weight: 950; font-size: 22px; }
+.maintenance-card h1,.maintenance-card p { margin: 0; }
+.maintenance-card p { color: var(--muted); line-height: 1.6; }
+
 .attendance-control { display: flex; align-items: center; gap: 7px; }
 .late-toggle { display: grid; place-items: center; width: 32px; height: 32px; border: 1px solid var(--line); border-radius: 8px; background: var(--card); color: var(--muted); cursor: pointer; }
 .late-toggle.active { background: #fff0cd; color: #9a5d00; border-color: #e6b75a; }

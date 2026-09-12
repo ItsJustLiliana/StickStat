@@ -66,6 +66,8 @@ if [[ "${force_full_deploy}" == "true" ]]; then
 fi
 
 if [[ "${app_changed}" == "true" ]]; then
+  # Existing requests receive the maintenance screen while this release builds.
+  touch "${project_dir}/public/maintenance.flag"
   if [[ ! -x "${project_dir}/node_modules/.bin/next" ]] || grep -Eq '^package(-lock)?\.json$' <<<"${changed_files}"; then
     npm --prefix "${project_dir}" ci
   else
@@ -111,6 +113,15 @@ systemctl --user enable --now stickstat-backup.timer
 if [[ "${app_changed}" == "true" || "${service_changed}" == "true" ]]; then
   systemctl --user restart stickstat.service
   systemctl --user is-active --quiet stickstat.service
+  if [[ "${app_changed}" == "true" ]]; then
+    for attempt in {1..30}; do
+      if curl --fail --silent --output /dev/null http://127.0.0.1:4000/; then
+        rm -f "${project_dir}/public/maintenance.flag"
+        break
+      fi
+      sleep 1
+    done
+  fi
 else
   echo "A service restart is not required."
 fi

@@ -15,7 +15,6 @@ const sections: { role: TeamRole; title: string }[] = [
   { role: "coach", title: "Coaches" },
   { role: "trainer", title: "Trainers" },
   { role: "team_admin", title: "Teambeheerders" },
-  { role: "viewer", title: "Kijkers" },
 ];
 const nameCollator = new Intl.Collator("nl", { sensitivity: "base" });
 function accountLastName(name: string) { return name.trim().split(/\s+/).at(-1) ?? name }
@@ -44,7 +43,7 @@ export default async function Players({ searchParams }: { searchParams: Promise<
     ...memberships.filter(membership => membership.roles.includes("player") && membership.user.player?.teamId === team.id && membership.user.player.isSubstitute).map(membership => memberPerson(membership, "player")),
     ...unlinkedPlayers.filter(player => player.isSubstitute).map(unlinkedPerson),
   ]);
-  const unlinkedAccounts = sortByLastName(memberships.filter(membership => !membership.user.player).map(membership => memberPerson(membership, "unassigned")));
+  const unlinkedAccounts = sortByLastName(memberships.filter(membership => !membership.user.player && !membership.roles.includes("viewer")).map(membership => memberPerson(membership, "unassigned")));
   return <PageShell user={user}>
     <div className="page-head"><div><span className="eyebrow">Selectie & staf</span><h1>Teamleden</h1></div><div className="member-actions"><TeamSelector teams={teams} current={team.id} />{canAdmin && <><PlayerCreateControl teamId={team.id} /><TeamSettingsControl teamId={team.id} club={{ id: team.club.id, name: team.club.name, logoPath: team.club.logoLocalPath ?? team.club.logoUrl }} invites={invites.map(invite => ({ id: invite.id, expiresAt: invite.expiresAt.toISOString(), createdBy: invite.createdBy.name }))} /></>}</div></div>
     <div className="role-sections">

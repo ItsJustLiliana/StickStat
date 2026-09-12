@@ -1,7 +1,6 @@
 import Link from "next/link";
 import {ArrowRight, CalendarDays, MapPin} from "lucide-react";
 import {ClubLogo} from "@/components/logo";
-import {EmptyTeam} from "@/components/empty-team";
 import {MatchTeamLabel} from "@/components/match-team-label";
 import {PageShell} from "@/components/page-shell";
 import {TeamSelector} from "@/components/team-selector";
@@ -13,7 +12,7 @@ export const dynamic = "force-dynamic";
 
 export default async function Dashboard({searchParams}:{searchParams:Promise<{team?:string}>}) {
   const q = await searchParams, {user, teams, team} = await pageContext(q.team);
-  if (!team) return <PageShell user={user}><EmptyTeam/></PageShell>;
+  if (!team) return <PageShell user={user}><section className="card"><span className="eyebrow">Kijker</span><h1>Volg je hockey</h1><p className="muted">Zoek clubs, bewaar je favoriete teams en bekijk standen en uitslagen.</p><Link className="button" href="/clubs">Teams volgen</Link></section></PageShell>;
 
   const [standing, matches] = await Promise.all([
     db.standing.findFirst({where:{teamId:team.id}, orderBy:{lastSyncedAt:"desc"}}),

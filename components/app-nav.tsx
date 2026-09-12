@@ -11,7 +11,7 @@ import {ThemeToggle} from "./theme-toggle";
 
 const links = [
   {href:"/dashboard", label:"Dashboard", icon:LayoutDashboard}, {href:"/agenda", label:"Agenda", icon:CalendarDays},
-  {href:"/standings", label:"Stand", icon:Table2}, {href:"/players", label:"Spelers", icon:Users}, {href:"/statistics", label:"Statistieken", icon:BarChart3},
+  {href:"/standings", label:"Stand", icon:Table2}, {href:"/clubs", label:"Teams", icon:Users}, {href:"/players", label:"Spelers", icon:Users}, {href:"/statistics", label:"Statistieken", icon:BarChart3},
 ];
 
 export function AppNav({name, photoPath, admin, teamAdmin}:{name:string; photoPath:string|null; admin:boolean; teamAdmin:boolean}) {
