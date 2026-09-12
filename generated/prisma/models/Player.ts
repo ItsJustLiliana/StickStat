@@ -87,6 +87,7 @@ export type PlayerCountAggregateOutputType = {
   trainingMember: number
   matchMember: number
   isSubstitute: number
+  staffRoles: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -154,6 +155,7 @@ export type PlayerCountAggregateInputType = {
   trainingMember?: true
   matchMember?: true
   isSubstitute?: true
+  staffRoles?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -260,6 +262,7 @@ export type PlayerGroupByOutputType = {
   trainingMember: boolean
   matchMember: boolean
   isSubstitute: boolean
+  staffRoles: $Enums.TeamRole[]
   createdAt: Date
   updatedAt: Date
   _count: PlayerCountAggregateOutputType | null
@@ -302,6 +305,7 @@ export type PlayerWhereInput = {
   trainingMember?: Prisma.BoolFilter<"Player"> | boolean
   matchMember?: Prisma.BoolFilter<"Player"> | boolean
   isSubstitute?: Prisma.BoolFilter<"Player"> | boolean
+  staffRoles?: Prisma.EnumTeamRoleNullableListFilter<"Player">
   createdAt?: Prisma.DateTimeFilter<"Player"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Player"> | Date | string
   team?: Prisma.XOR<Prisma.TeamScalarRelationFilter, Prisma.TeamWhereInput>
@@ -329,6 +333,7 @@ export type PlayerOrderByWithRelationInput = {
   trainingMember?: Prisma.SortOrder
   matchMember?: Prisma.SortOrder
   isSubstitute?: Prisma.SortOrder
+  staffRoles?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   team?: Prisma.TeamOrderByWithRelationInput
@@ -359,6 +364,7 @@ export type PlayerWhereUniqueInput = Prisma.AtLeast<{
   trainingMember?: Prisma.BoolFilter<"Player"> | boolean
   matchMember?: Prisma.BoolFilter<"Player"> | boolean
   isSubstitute?: Prisma.BoolFilter<"Player"> | boolean
+  staffRoles?: Prisma.EnumTeamRoleNullableListFilter<"Player">
   createdAt?: Prisma.DateTimeFilter<"Player"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Player"> | Date | string
   team?: Prisma.XOR<Prisma.TeamScalarRelationFilter, Prisma.TeamWhereInput>
@@ -386,6 +392,7 @@ export type PlayerOrderByWithAggregationInput = {
   trainingMember?: Prisma.SortOrder
   matchMember?: Prisma.SortOrder
   isSubstitute?: Prisma.SortOrder
+  staffRoles?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.PlayerCountOrderByAggregateInput
@@ -413,6 +420,7 @@ export type PlayerScalarWhereWithAggregatesInput = {
   trainingMember?: Prisma.BoolWithAggregatesFilter<"Player"> | boolean
   matchMember?: Prisma.BoolWithAggregatesFilter<"Player"> | boolean
   isSubstitute?: Prisma.BoolWithAggregatesFilter<"Player"> | boolean
+  staffRoles?: Prisma.EnumTeamRoleNullableListFilter<"Player">
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Player"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Player"> | Date | string
 }
@@ -430,6 +438,7 @@ export type PlayerCreateInput = {
   trainingMember?: boolean
   matchMember?: boolean
   isSubstitute?: boolean
+  staffRoles?: Prisma.PlayerCreatestaffRolesInput | $Enums.TeamRole[]
   createdAt?: Date | string
   updatedAt?: Date | string
   team: Prisma.TeamCreateNestedOneWithoutPlayersInput
@@ -457,6 +466,7 @@ export type PlayerUncheckedCreateInput = {
   trainingMember?: boolean
   matchMember?: boolean
   isSubstitute?: boolean
+  staffRoles?: Prisma.PlayerCreatestaffRolesInput | $Enums.TeamRole[]
   createdAt?: Date | string
   updatedAt?: Date | string
   matchTasks?: Prisma.MatchTaskUncheckedCreateNestedManyWithoutPlayerInput
@@ -480,6 +490,7 @@ export type PlayerUpdateInput = {
   trainingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSubstitute?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  staffRoles?: Prisma.PlayerUpdatestaffRolesInput | $Enums.TeamRole[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   team?: Prisma.TeamUpdateOneRequiredWithoutPlayersNestedInput
@@ -507,6 +518,7 @@ export type PlayerUncheckedUpdateInput = {
   trainingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSubstitute?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  staffRoles?: Prisma.PlayerUpdatestaffRolesInput | $Enums.TeamRole[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   matchTasks?: Prisma.MatchTaskUncheckedUpdateManyWithoutPlayerNestedInput
@@ -532,6 +544,7 @@ export type PlayerCreateManyInput = {
   trainingMember?: boolean
   matchMember?: boolean
   isSubstitute?: boolean
+  staffRoles?: Prisma.PlayerCreatestaffRolesInput | $Enums.TeamRole[]
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -549,6 +562,7 @@ export type PlayerUpdateManyMutationInput = {
   trainingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSubstitute?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  staffRoles?: Prisma.PlayerUpdatestaffRolesInput | $Enums.TeamRole[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -568,6 +582,7 @@ export type PlayerUncheckedUpdateManyInput = {
   trainingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSubstitute?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  staffRoles?: Prisma.PlayerUpdatestaffRolesInput | $Enums.TeamRole[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -602,6 +617,7 @@ export type PlayerCountOrderByAggregateInput = {
   trainingMember?: Prisma.SortOrder
   matchMember?: Prisma.SortOrder
   isSubstitute?: Prisma.SortOrder
+  staffRoles?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -731,8 +747,17 @@ export type PlayerUncheckedUpdateManyWithoutTeamNestedInput = {
   deleteMany?: Prisma.PlayerScalarWhereInput | Prisma.PlayerScalarWhereInput[]
 }
 
+export type PlayerCreatestaffRolesInput = {
+  set: $Enums.TeamRole[]
+}
+
 export type BoolFieldUpdateOperationsInput = {
   set?: boolean
+}
+
+export type PlayerUpdatestaffRolesInput = {
+  set?: $Enums.TeamRole[]
+  push?: $Enums.TeamRole | $Enums.TeamRole[]
 }
 
 export type PlayerCreateNestedOneWithoutMatchAttendanceInput = {
@@ -838,6 +863,7 @@ export type PlayerCreateWithoutUserInput = {
   trainingMember?: boolean
   matchMember?: boolean
   isSubstitute?: boolean
+  staffRoles?: Prisma.PlayerCreatestaffRolesInput | $Enums.TeamRole[]
   createdAt?: Date | string
   updatedAt?: Date | string
   team: Prisma.TeamCreateNestedOneWithoutPlayersInput
@@ -863,6 +889,7 @@ export type PlayerUncheckedCreateWithoutUserInput = {
   trainingMember?: boolean
   matchMember?: boolean
   isSubstitute?: boolean
+  staffRoles?: Prisma.PlayerCreatestaffRolesInput | $Enums.TeamRole[]
   createdAt?: Date | string
   updatedAt?: Date | string
   matchTasks?: Prisma.MatchTaskUncheckedCreateNestedManyWithoutPlayerInput
@@ -902,6 +929,7 @@ export type PlayerUpdateWithoutUserInput = {
   trainingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSubstitute?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  staffRoles?: Prisma.PlayerUpdatestaffRolesInput | $Enums.TeamRole[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   team?: Prisma.TeamUpdateOneRequiredWithoutPlayersNestedInput
@@ -927,6 +955,7 @@ export type PlayerUncheckedUpdateWithoutUserInput = {
   trainingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSubstitute?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  staffRoles?: Prisma.PlayerUpdatestaffRolesInput | $Enums.TeamRole[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   matchTasks?: Prisma.MatchTaskUncheckedUpdateManyWithoutPlayerNestedInput
@@ -950,6 +979,7 @@ export type PlayerCreateWithoutTeamInput = {
   trainingMember?: boolean
   matchMember?: boolean
   isSubstitute?: boolean
+  staffRoles?: Prisma.PlayerCreatestaffRolesInput | $Enums.TeamRole[]
   createdAt?: Date | string
   updatedAt?: Date | string
   user?: Prisma.UserCreateNestedOneWithoutPlayerInput
@@ -975,6 +1005,7 @@ export type PlayerUncheckedCreateWithoutTeamInput = {
   trainingMember?: boolean
   matchMember?: boolean
   isSubstitute?: boolean
+  staffRoles?: Prisma.PlayerCreatestaffRolesInput | $Enums.TeamRole[]
   createdAt?: Date | string
   updatedAt?: Date | string
   matchTasks?: Prisma.MatchTaskUncheckedCreateNestedManyWithoutPlayerInput
@@ -1029,6 +1060,7 @@ export type PlayerScalarWhereInput = {
   trainingMember?: Prisma.BoolFilter<"Player"> | boolean
   matchMember?: Prisma.BoolFilter<"Player"> | boolean
   isSubstitute?: Prisma.BoolFilter<"Player"> | boolean
+  staffRoles?: Prisma.EnumTeamRoleNullableListFilter<"Player">
   createdAt?: Prisma.DateTimeFilter<"Player"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Player"> | Date | string
 }
@@ -1046,6 +1078,7 @@ export type PlayerCreateWithoutMatchAttendanceInput = {
   trainingMember?: boolean
   matchMember?: boolean
   isSubstitute?: boolean
+  staffRoles?: Prisma.PlayerCreatestaffRolesInput | $Enums.TeamRole[]
   createdAt?: Date | string
   updatedAt?: Date | string
   team: Prisma.TeamCreateNestedOneWithoutPlayersInput
@@ -1072,6 +1105,7 @@ export type PlayerUncheckedCreateWithoutMatchAttendanceInput = {
   trainingMember?: boolean
   matchMember?: boolean
   isSubstitute?: boolean
+  staffRoles?: Prisma.PlayerCreatestaffRolesInput | $Enums.TeamRole[]
   createdAt?: Date | string
   updatedAt?: Date | string
   matchTasks?: Prisma.MatchTaskUncheckedCreateNestedManyWithoutPlayerInput
@@ -1110,6 +1144,7 @@ export type PlayerUpdateWithoutMatchAttendanceInput = {
   trainingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSubstitute?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  staffRoles?: Prisma.PlayerUpdatestaffRolesInput | $Enums.TeamRole[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   team?: Prisma.TeamUpdateOneRequiredWithoutPlayersNestedInput
@@ -1136,6 +1171,7 @@ export type PlayerUncheckedUpdateWithoutMatchAttendanceInput = {
   trainingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSubstitute?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  staffRoles?: Prisma.PlayerUpdatestaffRolesInput | $Enums.TeamRole[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   matchTasks?: Prisma.MatchTaskUncheckedUpdateManyWithoutPlayerNestedInput
@@ -1158,6 +1194,7 @@ export type PlayerCreateWithoutMatchTasksInput = {
   trainingMember?: boolean
   matchMember?: boolean
   isSubstitute?: boolean
+  staffRoles?: Prisma.PlayerCreatestaffRolesInput | $Enums.TeamRole[]
   createdAt?: Date | string
   updatedAt?: Date | string
   team: Prisma.TeamCreateNestedOneWithoutPlayersInput
@@ -1184,6 +1221,7 @@ export type PlayerUncheckedCreateWithoutMatchTasksInput = {
   trainingMember?: boolean
   matchMember?: boolean
   isSubstitute?: boolean
+  staffRoles?: Prisma.PlayerCreatestaffRolesInput | $Enums.TeamRole[]
   createdAt?: Date | string
   updatedAt?: Date | string
   matchStats?: Prisma.PlayerMatchStatsUncheckedCreateNestedManyWithoutPlayerInput
@@ -1222,6 +1260,7 @@ export type PlayerUpdateWithoutMatchTasksInput = {
   trainingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSubstitute?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  staffRoles?: Prisma.PlayerUpdatestaffRolesInput | $Enums.TeamRole[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   team?: Prisma.TeamUpdateOneRequiredWithoutPlayersNestedInput
@@ -1248,6 +1287,7 @@ export type PlayerUncheckedUpdateWithoutMatchTasksInput = {
   trainingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSubstitute?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  staffRoles?: Prisma.PlayerUpdatestaffRolesInput | $Enums.TeamRole[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   matchStats?: Prisma.PlayerMatchStatsUncheckedUpdateManyWithoutPlayerNestedInput
@@ -1270,6 +1310,7 @@ export type PlayerCreateWithoutTrainingAttendanceInput = {
   trainingMember?: boolean
   matchMember?: boolean
   isSubstitute?: boolean
+  staffRoles?: Prisma.PlayerCreatestaffRolesInput | $Enums.TeamRole[]
   createdAt?: Date | string
   updatedAt?: Date | string
   team: Prisma.TeamCreateNestedOneWithoutPlayersInput
@@ -1296,6 +1337,7 @@ export type PlayerUncheckedCreateWithoutTrainingAttendanceInput = {
   trainingMember?: boolean
   matchMember?: boolean
   isSubstitute?: boolean
+  staffRoles?: Prisma.PlayerCreatestaffRolesInput | $Enums.TeamRole[]
   createdAt?: Date | string
   updatedAt?: Date | string
   matchTasks?: Prisma.MatchTaskUncheckedCreateNestedManyWithoutPlayerInput
@@ -1334,6 +1376,7 @@ export type PlayerUpdateWithoutTrainingAttendanceInput = {
   trainingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSubstitute?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  staffRoles?: Prisma.PlayerUpdatestaffRolesInput | $Enums.TeamRole[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   team?: Prisma.TeamUpdateOneRequiredWithoutPlayersNestedInput
@@ -1360,6 +1403,7 @@ export type PlayerUncheckedUpdateWithoutTrainingAttendanceInput = {
   trainingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSubstitute?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  staffRoles?: Prisma.PlayerUpdatestaffRolesInput | $Enums.TeamRole[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   matchTasks?: Prisma.MatchTaskUncheckedUpdateManyWithoutPlayerNestedInput
@@ -1382,6 +1426,7 @@ export type PlayerCreateWithoutMatchStatsInput = {
   trainingMember?: boolean
   matchMember?: boolean
   isSubstitute?: boolean
+  staffRoles?: Prisma.PlayerCreatestaffRolesInput | $Enums.TeamRole[]
   createdAt?: Date | string
   updatedAt?: Date | string
   team: Prisma.TeamCreateNestedOneWithoutPlayersInput
@@ -1408,6 +1453,7 @@ export type PlayerUncheckedCreateWithoutMatchStatsInput = {
   trainingMember?: boolean
   matchMember?: boolean
   isSubstitute?: boolean
+  staffRoles?: Prisma.PlayerCreatestaffRolesInput | $Enums.TeamRole[]
   createdAt?: Date | string
   updatedAt?: Date | string
   matchTasks?: Prisma.MatchTaskUncheckedCreateNestedManyWithoutPlayerInput
@@ -1446,6 +1492,7 @@ export type PlayerUpdateWithoutMatchStatsInput = {
   trainingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSubstitute?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  staffRoles?: Prisma.PlayerUpdatestaffRolesInput | $Enums.TeamRole[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   team?: Prisma.TeamUpdateOneRequiredWithoutPlayersNestedInput
@@ -1472,6 +1519,7 @@ export type PlayerUncheckedUpdateWithoutMatchStatsInput = {
   trainingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSubstitute?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  staffRoles?: Prisma.PlayerUpdatestaffRolesInput | $Enums.TeamRole[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   matchTasks?: Prisma.MatchTaskUncheckedUpdateManyWithoutPlayerNestedInput
@@ -1494,6 +1542,7 @@ export type PlayerCreateWithoutEventsInput = {
   trainingMember?: boolean
   matchMember?: boolean
   isSubstitute?: boolean
+  staffRoles?: Prisma.PlayerCreatestaffRolesInput | $Enums.TeamRole[]
   createdAt?: Date | string
   updatedAt?: Date | string
   team: Prisma.TeamCreateNestedOneWithoutPlayersInput
@@ -1520,6 +1569,7 @@ export type PlayerUncheckedCreateWithoutEventsInput = {
   trainingMember?: boolean
   matchMember?: boolean
   isSubstitute?: boolean
+  staffRoles?: Prisma.PlayerCreatestaffRolesInput | $Enums.TeamRole[]
   createdAt?: Date | string
   updatedAt?: Date | string
   matchTasks?: Prisma.MatchTaskUncheckedCreateNestedManyWithoutPlayerInput
@@ -1547,6 +1597,7 @@ export type PlayerCreateWithoutRelatedEventsInput = {
   trainingMember?: boolean
   matchMember?: boolean
   isSubstitute?: boolean
+  staffRoles?: Prisma.PlayerCreatestaffRolesInput | $Enums.TeamRole[]
   createdAt?: Date | string
   updatedAt?: Date | string
   team: Prisma.TeamCreateNestedOneWithoutPlayersInput
@@ -1573,6 +1624,7 @@ export type PlayerUncheckedCreateWithoutRelatedEventsInput = {
   trainingMember?: boolean
   matchMember?: boolean
   isSubstitute?: boolean
+  staffRoles?: Prisma.PlayerCreatestaffRolesInput | $Enums.TeamRole[]
   createdAt?: Date | string
   updatedAt?: Date | string
   matchTasks?: Prisma.MatchTaskUncheckedCreateNestedManyWithoutPlayerInput
@@ -1611,6 +1663,7 @@ export type PlayerUpdateWithoutEventsInput = {
   trainingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSubstitute?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  staffRoles?: Prisma.PlayerUpdatestaffRolesInput | $Enums.TeamRole[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   team?: Prisma.TeamUpdateOneRequiredWithoutPlayersNestedInput
@@ -1637,6 +1690,7 @@ export type PlayerUncheckedUpdateWithoutEventsInput = {
   trainingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSubstitute?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  staffRoles?: Prisma.PlayerUpdatestaffRolesInput | $Enums.TeamRole[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   matchTasks?: Prisma.MatchTaskUncheckedUpdateManyWithoutPlayerNestedInput
@@ -1670,6 +1724,7 @@ export type PlayerUpdateWithoutRelatedEventsInput = {
   trainingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSubstitute?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  staffRoles?: Prisma.PlayerUpdatestaffRolesInput | $Enums.TeamRole[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   team?: Prisma.TeamUpdateOneRequiredWithoutPlayersNestedInput
@@ -1696,6 +1751,7 @@ export type PlayerUncheckedUpdateWithoutRelatedEventsInput = {
   trainingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSubstitute?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  staffRoles?: Prisma.PlayerUpdatestaffRolesInput | $Enums.TeamRole[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   matchTasks?: Prisma.MatchTaskUncheckedUpdateManyWithoutPlayerNestedInput
@@ -1719,6 +1775,7 @@ export type PlayerCreateManyTeamInput = {
   trainingMember?: boolean
   matchMember?: boolean
   isSubstitute?: boolean
+  staffRoles?: Prisma.PlayerCreatestaffRolesInput | $Enums.TeamRole[]
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1736,6 +1793,7 @@ export type PlayerUpdateWithoutTeamInput = {
   trainingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSubstitute?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  staffRoles?: Prisma.PlayerUpdatestaffRolesInput | $Enums.TeamRole[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneWithoutPlayerNestedInput
@@ -1761,6 +1819,7 @@ export type PlayerUncheckedUpdateWithoutTeamInput = {
   trainingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSubstitute?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  staffRoles?: Prisma.PlayerUpdatestaffRolesInput | $Enums.TeamRole[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   matchTasks?: Prisma.MatchTaskUncheckedUpdateManyWithoutPlayerNestedInput
@@ -1785,6 +1844,7 @@ export type PlayerUncheckedUpdateManyWithoutTeamInput = {
   trainingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isSubstitute?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  staffRoles?: Prisma.PlayerUpdatestaffRolesInput | $Enums.TeamRole[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1880,6 +1940,7 @@ export type PlayerSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   trainingMember?: boolean
   matchMember?: boolean
   isSubstitute?: boolean
+  staffRoles?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   team?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
@@ -1908,6 +1969,7 @@ export type PlayerSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   trainingMember?: boolean
   matchMember?: boolean
   isSubstitute?: boolean
+  staffRoles?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   team?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
@@ -1929,6 +1991,7 @@ export type PlayerSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   trainingMember?: boolean
   matchMember?: boolean
   isSubstitute?: boolean
+  staffRoles?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   team?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
@@ -1950,11 +2013,12 @@ export type PlayerSelectScalar = {
   trainingMember?: boolean
   matchMember?: boolean
   isSubstitute?: boolean
+  staffRoles?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type PlayerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "teamId" | "userId" | "firstName" | "namePrefix" | "lastName" | "displayName" | "shirtNumber" | "position" | "photoPath" | "active" | "trainingMember" | "matchMember" | "isSubstitute" | "createdAt" | "updatedAt", ExtArgs["result"]["player"]>
+export type PlayerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "teamId" | "userId" | "firstName" | "namePrefix" | "lastName" | "displayName" | "shirtNumber" | "position" | "photoPath" | "active" | "trainingMember" | "matchMember" | "isSubstitute" | "staffRoles" | "createdAt" | "updatedAt", ExtArgs["result"]["player"]>
 export type PlayerInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   team?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
   user?: boolean | Prisma.Player$userArgs<ExtArgs>
@@ -2002,6 +2066,7 @@ export type $PlayerPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     trainingMember: boolean
     matchMember: boolean
     isSubstitute: boolean
+    staffRoles: $Enums.TeamRole[]
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["player"]>
@@ -2449,6 +2514,7 @@ export interface PlayerFieldRefs {
   readonly trainingMember: Prisma.FieldRef<"Player", 'Boolean'>
   readonly matchMember: Prisma.FieldRef<"Player", 'Boolean'>
   readonly isSubstitute: Prisma.FieldRef<"Player", 'Boolean'>
+  readonly staffRoles: Prisma.FieldRef<"Player", 'TeamRole[]'>
   readonly createdAt: Prisma.FieldRef<"Player", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Player", 'DateTime'>
 }

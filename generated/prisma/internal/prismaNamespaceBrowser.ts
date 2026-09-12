@@ -249,6 +249,7 @@ export const PlayerScalarFieldEnum = {
   trainingMember: 'trainingMember',
   matchMember: 'matchMember',
   isSubstitute: 'isSubstitute',
+  staffRoles: 'staffRoles',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

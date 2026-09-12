@@ -292,7 +292,9 @@ h2 {
     display: flex;
     align-items: center;
     gap: 18px;
-    min-width: 0
+    min-width: 0;
+    position: relative;
+    z-index: 2
 }
 
 .team-title>div:last-child {
@@ -918,7 +920,9 @@ td {
     color: var(--green)
 }
 
-/* Active backgrounds stay inset from the edge, like the other interactive rows. */
+/* An active row is one rounded block: divider lines must not run through its corners. */
+.standings-table tr.active-row > td { border-top-color: transparent; }
+.standings-table tr.active-row + tr > td { border-top-color: transparent; }
 .standings-table tr.active-row > td:first-child { padding-left: 16px; border-radius: 10px 0 0 10px; }
 .standings-table tr.active-row > td:last-child { padding-right: 16px; border-radius: 0 10px 10px 0; }
 
@@ -2120,8 +2124,7 @@ html[data-theme="dark"] body {
 .late-toggle { display: grid; place-items: center; width: 32px; height: 32px; border: 1px solid var(--line); border-radius: 8px; background: var(--card); color: var(--muted); cursor: pointer; }
 .late-toggle.active { background: #fff0cd; color: #9a5d00; border-color: #e6b75a; }
 .late-clock { color: #b56b00; flex: none; }
-.linked-player-check { margin-left: 8px; color: var(--green); vertical-align: -3px; }
-.page-head h1 { display:flex; align-items:center; gap:8px; }
+.linked-player-status{position:relative;display:inline-flex;align-items:center;flex:none;color:var(--green);cursor:help}.linked-player-check{display:block}.linked-player-status::after{content:attr(data-tooltip);position:absolute;z-index:20;top:calc(100% + 8px);left:50%;width:max-content;max-width:min(260px,70vw);padding:8px 10px;border-radius:8px;background:var(--ink);color:white;font:600 12px/1.3 var(--font-sans);box-shadow:0 8px 20px #0003;transform:translate(-50%,-4px);opacity:0;pointer-events:none;transition:opacity .15s,transform .15s}.linked-player-status:hover::after,.linked-player-status:focus-visible::after{opacity:1;transform:translate(-50%,0)}.page-head h1{display:flex;align-items:center;flex-wrap:wrap;gap:8px}
 
 .performance-list { display: grid; gap: 22px; }
 .performance-section { display: grid; gap: 0; }
@@ -2241,7 +2244,7 @@ html[data-theme="dark"] body {
     border: 1.5px solid var(--line);
     border-radius: 14px;
     background: var(--card);
-    box-shadow: 0 2px 8px #0000080a
+    box-shadow: 0 1px 3px #00000008
 }
 
 .agenda-tabs a {
@@ -2261,7 +2264,7 @@ html[data-theme="dark"] body {
 .agenda-tabs a.active {
     background: var(--green);
     color: var(--lime);
-    box-shadow: 0 4px 12px color-mix(in srgb, var(--green) 20%, #000000);
+    box-shadow: 0 2px 6px color-mix(in srgb, var(--green) 12%, #000000);
     font-weight: 900
 }
 
@@ -2279,8 +2282,8 @@ html[data-theme="dark"] body {
     border: 1.5px solid var(--line);
     border-radius: 14px;
     background: var(--card);
-    box-shadow: 0 2px 8px #0000080a;
-    width: max-content;
+    box-shadow: 0 1px 3px #00000008;
+    width: 100%;
     max-width: 100%;
 }
 
@@ -2294,6 +2297,8 @@ html[data-theme="dark"] body {
     font-weight: 850;
     cursor: pointer;
     transition: all 0.2s ease;
+    flex: 1 1 0;
+    text-align: center;
 }
 
 .match-tabs button:hover {
@@ -2304,7 +2309,7 @@ html[data-theme="dark"] body {
 .match-tabs button[aria-selected="true"] {
     background: var(--green);
     color: var(--lime);
-    box-shadow: 0 4px 12px color-mix(in srgb, var(--green) 20%, #000000);
+    box-shadow: 0 2px 6px color-mix(in srgb, var(--green) 12%, #000000);
     font-weight: 900;
 }
 
@@ -2580,12 +2585,7 @@ html[data-theme="dark"] .input {
         text-align: center
     }
 
-    .match-tabs {
-        width: 100%;
-        display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: 4px;
-    }
+    .match-tabs { gap: 4px; }
 
     .match-tabs button {
         padding: 10px 2px;

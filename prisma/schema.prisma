@@ -264,6 +264,7 @@ model Player {
   trainingMember Boolean @default(true)
   matchMember Boolean @default(true)
   isSubstitute Boolean @default(false)
+  staffRoles TeamRole[] @default([])
   matchStats PlayerMatchStats[]
   events MatchEvent[] @relation("EventPlayer")
   relatedEvents MatchEvent[] @relation("RelatedPlayer")
