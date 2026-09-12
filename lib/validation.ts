@@ -1,5 +1,5 @@
 import { z } from "zod";
-export const usernameSchema=z.string().trim().min(3).max(32).regex(/^[a-zA-Z0-9_.-]+$/,"Gebruik alleen letters, cijfers, punt, streepje of underscore").transform(value=>value.toLowerCase());
+export const usernameSchema=z.string().min(3).max(32).refine(value=>!/[\s]/.test(value),"Een gebruikersnaam mag geen spaties bevatten").regex(/^[a-zA-Z0-9_.-]+$/,"Gebruik alleen letters, cijfers, punt, streepje of underscore").transform(value=>value.toLowerCase());
 export const loginSchema = z.object({ username: usernameSchema, password: z.string().min(8).max(128) });
 export const strongPasswordSchema=z.string().min(12).max(128).regex(/[a-z]/,"Gebruik een kleine letter").regex(/[A-Z]/,"Gebruik een hoofdletter").regex(/[0-9]/,"Gebruik een cijfer");
 export const registerSchema = z.object({

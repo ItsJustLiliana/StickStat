@@ -2085,6 +2085,28 @@ html[data-theme="dark"] body {
 .maintenance-card h1,.maintenance-card p { margin: 0; }
 .maintenance-card p { color: var(--muted); line-height: 1.6; }
 
+.team-title-name { display:flex; align-items:center; gap:8px; }
+.dashboard-hero > .team-follow-switcher { position:absolute; z-index:3; top:20px; right:20px; }
+.team-follow-switcher { position:relative; }
+.team-follow-trigger { display:grid; place-items:center; width:32px; height:32px; border:1px solid #ffffff38; border-radius:9px; background:#ffffff16; color:inherit; cursor:pointer; }
+.team-follow-menu { position:absolute; z-index:20; top:calc(100% + 8px); right:0; width:min(300px,78vw); display:grid; gap:5px; padding:10px; border:1px solid var(--line); border-radius:13px; background:var(--card); box-shadow:0 16px 32px #061d1738; color:var(--ink); }
+.team-follow-menu strong { padding:3px 6px 6px; font-size:12px; }
+.team-follow-menu button,.team-follow-menu a { display:flex; align-items:center; gap:7px; width:100%; padding:9px; border:0; border-radius:8px; background:transparent; color:inherit; text-align:left; font:inherit; cursor:pointer; text-decoration:none; }
+.team-follow-menu button:hover,.team-follow-menu button.active,.team-follow-menu a:hover { background:var(--soft); }
+
+.viewer-welcome { display: grid; justify-items: start; gap: 12px; }
+.viewer-welcome h1,.viewer-welcome p { margin: 0; }
+.viewer-welcome .button { margin-top: 4px; }
+.club-browser-card { display:grid; justify-items:start; gap:18px; }
+.club-browser-card .card-head { width:100%; }
+.club-search-results { width:100%; display:grid; gap:8px; }
+.club-search-result,.club-team-row { display:flex; align-items:center; justify-content:space-between; gap:16px; padding:13px 14px; border:1px solid var(--line); border-radius:12px; color:inherit; text-decoration:none; }
+.club-search-result span,.club-team-row small { color:var(--muted); font-size:12px; }
+.club-search-result:hover { background:var(--soft); }
+.club-team-list { display:grid; gap:12px; }
+.club-team-list .card-head { margin-bottom:4px; }
+.club-team-row>a { display:grid; gap:4px; color:inherit; text-decoration:none; }
+
 .attendance-control { display: flex; align-items: center; gap: 7px; }
 .late-toggle { display: grid; place-items: center; width: 32px; height: 32px; border: 1px solid var(--line); border-radius: 8px; background: var(--card); color: var(--muted); cursor: pointer; }
 .late-toggle.active { background: #fff0cd; color: #9a5d00; border-color: #e6b75a; }

@@ -3,7 +3,7 @@ import {ArrowRight, CalendarDays, MapPin} from "lucide-react";
 import {ClubLogo} from "@/components/logo";
 import {MatchTeamLabel} from "@/components/match-team-label";
 import {PageShell} from "@/components/page-shell";
-import {TeamSelector} from "@/components/team-selector";
+import {TeamFollowSwitcher} from "@/components/team-follow-switcher";
 import {db} from "@/lib/db";
 import {pageContext} from "@/lib/page-data";
 import {StatisticsService} from "@/services/statistics";
@@ -12,7 +12,7 @@ export const dynamic = "force-dynamic";
 
 export default async function Dashboard({searchParams}:{searchParams:Promise<{team?:string}>}) {
   const q = await searchParams, {user, teams, team} = await pageContext(q.team);
-  if (!team) return <PageShell user={user}><section className="card"><span className="eyebrow">Kijker</span><h1>Volg je hockey</h1><p className="muted">Zoek clubs, bewaar je favoriete teams en bekijk standen en uitslagen.</p><Link className="button" href="/clubs">Teams volgen</Link></section></PageShell>;
+  if (!team) return <PageShell user={user}><section className="card viewer-welcome"><span className="eyebrow">Kijker</span><h1>Volg je hockey</h1><p className="muted">Zoek clubs, bewaar je favoriete teams en bekijk standen en uitslagen.</p><Link className="button" href="/clubs">Teams volgen</Link></section></PageShell>;
 
   const [standing, matches] = await Promise.all([
     db.standing.findFirst({where:{teamId:team.id}, orderBy:{lastSyncedAt:"desc"}}),
@@ -24,11 +24,10 @@ export default async function Dashboard({searchParams}:{searchParams:Promise<{te
   return <PageShell user={user}>
     <div className="page-head">
       <div><span className="eyebrow">Teamoverzicht</span><h1>Dashboard</h1></div>
-      <TeamSelector teams={teams} current={team.id}/>
     </div>
 
     <section className="hero dashboard-hero">
-      <div className="team-title"><ClubLogo name={team.club.name} path={team.club.logoLocalPath ?? team.club.logoUrl}/><div><span className="eyebrow dashboard-club-name">{team.club.name}</span><h1>{team.name}</h1><p>{standing?.competition ?? "Competitie wordt bij de eerste sync geladen"}</p></div></div>
+      <TeamFollowSwitcher teams={teams} current={team.id}/><div className="team-title"><ClubLogo name={team.club.name} path={team.club.logoLocalPath ?? team.club.logoUrl}/><div><span className="eyebrow dashboard-club-name">{team.club.name}</span><div className="team-title-name"><h1>{team.name}</h1></div><p>{standing?.competition ?? "Competitie wordt bij de eerste sync geladen"}</p></div></div>
       <div className="rank-block"><div className="dashboard-rank"><div className="rank-label">Huidige positie</div><div className="rank-number mono">{standing?.position ?? "–"}</div></div><div className="dashboard-points"><div className="rank-label">Punten</div><strong>{standing?.points ?? summary.points}</strong></div></div>
     </section>
 

@@ -8,8 +8,8 @@ export function RegisterForm({inviteToken, teamName}:{inviteToken?:string; teamN
   const [error, setError] = useState(""), [loading, setLoading] = useState(false), router = useRouter();
 
   async function submit(event:React.FormEvent<HTMLFormElement>) {
-    event.preventDefault(); setLoading(true); setError("");
-    const form = new FormData(event.currentTarget), response = await fetch("/api/auth/register", {method:"POST", headers:{"content-type":"application/json"}, body:JSON.stringify({name:form.get("name"), username:form.get("username"), password:form.get("password"), confirmPassword:form.get("confirmPassword"), inviteToken})}), body = await response.json();
+    event.preventDefault(); const form = new FormData(event.currentTarget), username=String(form.get("username")??""); if(/\s/.test(username)){setError("Een gebruikersnaam mag geen spaties bevatten.");return;} setLoading(true); setError("");
+    const response = await fetch("/api/auth/register", {method:"POST", headers:{"content-type":"application/json"}, body:JSON.stringify({name:form.get("name"), username, password:form.get("password"), confirmPassword:form.get("confirmPassword"), inviteToken})}), body = await response.json();
     setLoading(false);
     if (!response.ok) return setError(body.error?.message ?? "Registreren mislukt");
     router.replace("/dashboard");
@@ -19,7 +19,7 @@ export function RegisterForm({inviteToken, teamName}:{inviteToken?:string; teamN
     <span className="eyebrow">{teamName ? `Uitnodiging voor ${teamName}` : "Nieuw bij StickStat"}</span><h2 style={{fontSize:36, margin:"9px 0 5px"}}>Maak je account</h2>
     <p className="muted">{teamName ? "Na registratie word je direct aan het team toegevoegd." : "Je komt direct in StickStat als kijker. Voeg daarna je favoriete teams toe."}</p>
     <label htmlFor="name">Jouw naam</label><input className="input" id="name" name="name" autoComplete="name" required minLength={2}/><small className="muted">Gebruik je eigen voor- en achternaam, zodat de teambeheerder weet wie je bent.</small>
-    <label htmlFor="username">Gebruikersnaam</label><input className="input" id="username" name="username" autoComplete="username" required minLength={3} maxLength={32} pattern="[A-Za-z0-9_.-]+"/><small className="muted">Toegestane tekens: . - _ — geen spaties.</small>
+    <label htmlFor="username">Gebruikersnaam</label><input className="input" id="username" name="username" autoComplete="username" required minLength={3} maxLength={32} pattern="[A-Za-z0-9_.-]+"/><small className="muted">Toegestane tekens: . - _</small>
     <label htmlFor="password">Wachtwoord</label><input className="input" id="password" name="password" type="password" autoComplete="new-password" minLength={12} required/><small className="muted">Minimaal 12 tekens, met hoofdletter, kleine letter en cijfer.</small>
     <label htmlFor="confirmPassword">Herhaal wachtwoord</label><input className="input" id="confirmPassword" name="confirmPassword" type="password" autoComplete="new-password" minLength={12} required/>
     {error && <div className="error" role="alert">{error}</div>}<button className="button" disabled={loading}>{loading ? "Account maken…" : "Account maken"}</button><p className="muted" style={{textAlign:"center", marginTop:18}}>Al een account? <Link className="link" href={inviteToken ? `/login?next=${encodeURIComponent(`/join/${inviteToken}`)}` : "/login"}>Log in</Link></p>
