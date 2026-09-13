@@ -21,6 +21,16 @@ const dateParts = new Intl.DateTimeFormat("nl-NL", {
   day: "2-digit",
 });
 
+function uniqueMatches<T extends { homeTeamId: string; awayTeamId: string; date: Date; venue: string | null; startTime: string | null }>(matches: T[]) {
+  const byFixture = new Map<string, T>();
+  for (const match of matches) {
+    const key = `${match.homeTeamId}:${match.awayTeamId}:${dateKey(match.date)}`;
+    const current = byFixture.get(key);
+    if (!current || (!current.venue && Boolean(match.venue)) || (!current.startTime && Boolean(match.startTime))) byFixture.set(key, match);
+  }
+  return [...byFixture.values()];
+}
+
 function dateKey(date: Date) {
   const parts = Object.fromEntries(dateParts.formatToParts(date).map(part => [part.type, part.value]));
   return `${parts.year}-${parts.month}-${parts.day}`;
@@ -56,7 +66,7 @@ export default async function Agenda({ searchParams }: { searchParams: Promise<{
 
   const canAdmin = user.platformRole === "admin" || Boolean(membership?.roles.includes("team_admin"));
   const ownPlayer = await db.player.findFirst({where: {teamId: team.id, userId: user.id, active: true}});
-  const [matches, trainings] = await Promise.all([
+  const [syncedMatches, trainings] = await Promise.all([
     db.match.findMany({
       where: { OR: [{ homeTeamId: team.id }, { awayTeamId: team.id }] },
       include: { homeTeam: true, awayTeam: true, plans: {where: {teamId: team.id}}, attendance: { where: { player: { teamId: team.id } } } },
@@ -68,6 +78,7 @@ export default async function Agenda({ searchParams }: { searchParams: Promise<{
       orderBy: [{ date: "asc" }, { startTime: "asc" }],
     }),
   ]);
+  const matches = uniqueMatches(syncedMatches);
 
   const items = [
     ...matches.map(match => ({
@@ -106,7 +117,7 @@ export default async function Agenda({ searchParams }: { searchParams: Promise<{
 
   return (
     <PageShell user={user}>
-      <div className="page-head">
+      <div className="page-head page-head-action-title">
         <div>
           <span className="eyebrow">Wedstrijden & trainingen</span>
           <h1>Agenda</h1>

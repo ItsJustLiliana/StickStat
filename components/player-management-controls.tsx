@@ -386,7 +386,7 @@ export function PlayerCreateControl({
         }}
       >
         <Plus size={16} />
-        Teamlid toevoegen
+        Teamlid
       </button>
 
       {open && (
