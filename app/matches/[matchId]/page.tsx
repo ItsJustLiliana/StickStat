@@ -36,7 +36,7 @@ export default async function MatchDetail({ params, searchParams }: { params: Pr
     <section className="training-header match-event-header">
       <div className="training-heading"><div><div className="match-scoreboard">
         <div className="match-score-team"><ClubLogo name={match.homeTeam.club.name} path={match.homeTeam.club.logoLocalPath ?? match.homeTeam.club.logoUrl} /><MatchTeamLabel name={match.homeTeam.shortName} own={match.homeTeamId === ownTeam?.id} side="home" /></div>
-        {match.teamPhotoPath && <MatchPhoto src={match.teamPhotoPath} alt="Teamfoto van de wedstrijd" className="match-team-photo" />}
+        {match.teamPhotoPath && <MatchPhoto src={match.teamPhotoPath} alt="Teamfoto van de wedstrijd" className="match-team-photo" showZoomControl />}
         <div className="rank-number mono match-score">{match.homeScore ?? "–"} <span className="match-score-divider">–</span> {match.awayScore ?? "–"}</div>
         <div className="match-score-team"><ClubLogo name={match.awayTeam.club.name} path={match.awayTeam.club.logoLocalPath ?? match.awayTeam.club.logoUrl} /><MatchTeamLabel name={match.awayTeam.shortName} own={match.awayTeamId === ownTeam?.id} side="away" /></div>
       </div></div></div>

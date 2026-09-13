@@ -87,7 +87,7 @@ export default async function Admin() {
             <AppReleasePanel latestVersion={release?.version ?? null} />
             <section className="card" style={{ marginTop: 18 }}>
                 <div className="card-head">
-                    <h2>Synchronisatie</h2>
+                    <h2>Teams synchroniseren</h2>
                     <span className="badge">IEDER UUR</span>
                 </div>
                 {teams
