@@ -18,9 +18,8 @@ export async function PUT(request: Request, { params }: { params: Promise<{ matc
     if (uniquePlayerIds.size !== input.rows.length) throw new HttpError(400, "DUPLICATE_PLAYER", "Een speler staat meerdere keren in de invoer");
     const substitutionPlayerIds = input.substitutions.flatMap(item => [item.playerInId, item.playerOutId]);
     const allPlayerIds = new Set([...uniquePlayerIds, ...substitutionPlayerIds]);
-    const validPlayers = await db.player.count({ where: { teamId: input.teamId, id: { in: [...allPlayerIds] } } });
+    const validPlayers = await db.player.count({ where: { teamId: input.teamId, active: true, id: { in: [...allPlayerIds] } } });
     if (validPlayers !== allPlayerIds.size) throw new HttpError(400, "PLAYER_TEAM_MISMATCH", "Niet alle spelers horen bij dit team");
-    if (input.rows.filter(item => item.mvp && item.participation !== "absent").length > 1) throw new HttpError(400, "MULTIPLE_MVPS", "Kies maximaal één MVP");
     const ownScore = match.homeTeamId === input.teamId ? match.homeScore : match.awayScore, totalGoals = input.rows.reduce((total, item) => total + (item.participation === "absent" ? 0 : item.goals), 0);
     if (ownScore !== null && totalGoals > ownScore) throw new HttpError(400, "TOO_MANY_GOALS", "Spelersgoals kunnen niet hoger zijn dan de teamscore");
     await db.$transaction(async transaction => {

@@ -13,7 +13,7 @@ describe("eenvoudige wedstrijdinvoer", () => {
   it("is vooraf invulbaar voor teambeheerders en bewaakt de teamscore", () => {
     expect(route).not.toContain("MATCH_NOT_STARTED");
     expect(route).toContain("TOO_MANY_GOALS");
-    expect(route).toContain("MULTIPLE_MVPS");
+    expect(route).not.toContain("MULTIPLE_MVPS");
     expect(route).toContain("PLAYER_TEAM_MISMATCH");
     expect(route).toContain("authorizeTeamManagement");
   });

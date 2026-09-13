@@ -58,6 +58,9 @@ export default async function PlayerDetail({
               status: "finished",
             },
           },
+          include: {
+            match: true,
+          },
         },
 
         matchAttendance: true,
@@ -72,6 +75,7 @@ export default async function PlayerDetail({
 
   if (
     !player ||
+    !player.active ||
     !teams.some(
       team =>
         team.id === player.teamId
@@ -102,6 +106,7 @@ export default async function PlayerDetail({
       where: {
         teamId:
           player.teamId,
+        active: true,
       },
       include: {
         matchStats: {
@@ -115,6 +120,9 @@ export default async function PlayerDetail({
           where: {
             match:
               teamMatchFilter,
+          },
+          include: {
+            match: true,
           },
         },
       },
@@ -174,6 +182,9 @@ export default async function PlayerDetail({
     ).length;
 
   const mvps =
+    player.events.filter(
+      event => event.type === "mvp"
+    ).length +
     player.matchStats.filter(
       stat => stat.mvp
     ).length;
@@ -304,10 +315,14 @@ export default async function PlayerDetail({
         rank:
           leaderboardRank(
             teamPlayer =>
-              teamPlayer.matchStats.filter(
-                stat =>
-                  stat.mvp
-              ).length
+            teamPlayer.events.filter(
+              event =>
+                event.type === "mvp"
+            ).length +
+            teamPlayer.matchStats.filter(
+              stat =>
+                stat.mvp
+            ).length
           ),
       },
 
@@ -513,6 +528,10 @@ export default async function PlayerDetail({
             teamPlayer.displayName,
 
           count:
+            teamPlayer.events.filter(
+              event =>
+                event.type === "mvp"
+            ).length +
             teamPlayer.matchStats.filter(
               stat =>
                 stat.mvp
@@ -547,11 +566,13 @@ export default async function PlayerDetail({
       );
 
   const mvpMatches = [
-    ...player.matchStats,
-  ]
-    .filter(
+    ...player.events.filter(
+      event => event.type === "mvp"
+    ),
+    ...player.matchStats.filter(
       stat => stat.mvp
-    )
+    ),
+  ]
     .sort(
       (a, b) =>
         b.match.date.getTime() -

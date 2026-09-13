@@ -17,7 +17,7 @@ async function matchAndAuthorize(matchId: string, teamId: string) {
 async function validatePlayers(teamId: string, playerIds: (string | null | undefined)[]) {
   const ids = [...new Set(playerIds.filter((id): id is string => Boolean(id)))];
   if (!ids.length) return;
-  const count = await db.player.count({ where: { id: { in: ids }, teamId } });
+  const count = await db.player.count({ where: { id: { in: ids }, teamId, active: true } });
   if (count !== ids.length) throw new HttpError(400, "PLAYER_TEAM_MISMATCH", "Niet alle spelers horen bij dit team");
 }
 
@@ -25,12 +25,6 @@ async function assertOwnedEvent(matchId: string, eventId: string, teamId: string
   const event = await db.matchEvent.findFirst({ where: { id: eventId, matchId }, include: { player: { select: { teamId: true } }, relatedPlayer: { select: { teamId: true } } } });
   if (!event) throw new HttpError(404, "NOT_FOUND", "Gebeurtenis niet gevonden");
   if (event.player?.teamId !== teamId && event.relatedPlayer?.teamId !== teamId) throw new HttpError(403, "FORBIDDEN", "Deze gebeurtenis hoort niet bij dit team");
-}
-
-async function keepOneMvp(matchId: string, teamId: string, exceptId?: string) {
-  const existing = await db.matchEvent.findMany({ where: { matchId, type: "mvp", ...(exceptId ? { id: { not: exceptId } } : {}) }, include: { player: { select: { teamId: true } } } });
-  const ids = existing.filter(event => event.player?.teamId === teamId).map(event => event.id);
-  if (ids.length) await db.matchEvent.deleteMany({ where: { id: { in: ids } } });
 }
 
 function validateEvent(data: z.infer<typeof eventSchema>) {
@@ -42,7 +36,6 @@ export async function POST(request: Request, { params }: { params: Promise<{ mat
   try {
     const { matchId } = await params, body = await request.json(), teamId = z.string().cuid().parse(body.teamId), data = eventSchema.parse(body);
     await matchAndAuthorize(matchId, teamId); validateEvent(data); await validatePlayers(teamId, [data.playerId, data.relatedPlayerId]);
-    if (data.type === "mvp") await keepOneMvp(matchId, teamId);
     return ok(await db.matchEvent.create({ data: { matchId, ...data } }), { status: 201 });
   } catch (error) { return apiError(error); }
 }
@@ -51,7 +44,6 @@ export async function PUT(request: Request, { params }: { params: Promise<{ matc
   try {
     const { matchId } = await params, body = await request.json(), teamId = z.string().cuid().parse(body.teamId), data = editSchema.parse(body);
     await matchAndAuthorize(matchId, teamId); await assertOwnedEvent(matchId, data.eventId, teamId); validateEvent(data); await validatePlayers(teamId, [data.playerId, data.relatedPlayerId]);
-    if (data.type === "mvp") await keepOneMvp(matchId, teamId, data.eventId);
     const { eventId, ...update } = data;
     return ok(await db.matchEvent.update({ where: { id: eventId }, data: update }));
   } catch (error) { return apiError(error); }

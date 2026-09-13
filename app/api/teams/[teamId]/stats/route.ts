@@ -16,7 +16,7 @@ export async function GET(_:Request,{params}:{params:Promise<{teamId:string}>}){
     const [matches,players]=await Promise.all([
       db.match.findMany({where:matchFilter,orderBy:{date:"asc"}}),
       db.player.findMany({
-        where:{teamId},
+        where:{teamId,active:true},
         orderBy:[{lastName:"asc"},{namePrefix:"asc"},{firstName:"asc"}],
         include:{
           matchStats:{where:{match:matchFilter}},
@@ -33,7 +33,7 @@ export async function GET(_:Request,{params}:{params:Promise<{teamId:string}>}){
         name:player.displayName,
         goals:player.matchStats.reduce((total,stat)=>total+stat.goals,0),
         assists:player.matchStats.reduce((total,stat)=>total+stat.assists,0),
-        mvp:player.matchStats.filter(stat=>stat.mvp).length,
+        mvp:player.events.filter(event=>event.type==="mvp").length+player.matchStats.filter(stat=>stat.mvp).length,
         cards:player.events.filter(event=>event.type.endsWith("_card")).length,
       })),
     });
