@@ -2,6 +2,7 @@ import * as cheerio from "cheerio";
 import type {ExternalMatch,ExternalStanding,ExternalTeam,HockeyDataProvider} from "./types";
 
 const baseUrl="https://hockeystanden.nl/team/";
+const siteUrl="https://hockeystanden.nl";
 const number=(value:string)=>Number.parseInt(value.trim(),10)||0;
 
 export class HockeyStandenProvider implements HockeyDataProvider{
@@ -12,9 +13,11 @@ export class HockeyStandenProvider implements HockeyDataProvider{
   }
   async getClub(identifier:string){const team=await this.getTeam(identifier);return team?.clubName?{name:team.clubName,logoUrl:team.logoUrl}:null}
   async getTeam(identifier:string){return parseHockeyStandenTeam(await this.html(identifier))}
-  async getMatches(identifier:string){return parseHockeyStandenMatches(await this.html(identifier))}
+  async getMatches(identifier:string){const teamPage=await this.html(identifier),path=parseHockeyStandenPoolPath(teamPage);if(!path)return parseHockeyStandenMatches(teamPage);const response=await fetch(`${siteUrl}${path}`,{headers:{"user-agent":"StickStat/1.0 (+self-hosted hockey statistics)"},signal:AbortSignal.timeout(15000),cache:"no-store"});if(!response.ok)throw new Error(`Hockeystanden poule HTTP ${response.status}`);return parseHockeyStandenMatches(await response.text())}
   async getStandings(identifier:string){return parseHockeyStandenStandings(await this.html(identifier))}
 }
+
+export function parseHockeyStandenPoolPath(html:string){const $=cheerio.load(html),href=$("a[href^='/standen/']").filter((_,link)=>/alle (wedstrijden|uitslagen) in de poule/i.test($(link).text())).first().attr("href");return href?.match(/^\/standen\/[^?#]+$/)?href:undefined}
 
 function jsonLd($:cheerio.CheerioAPI){
   return $("script[type='application/ld+json']").map((_,el)=>{try{return JSON.parse($(el).text())}catch{return null}}).get().flat().filter(Boolean) as Array<Record<string,unknown>>;
@@ -29,16 +32,17 @@ export function parseHockeyStandenTeam(html:string):ExternalTeam|null{
   return{name:heading,clubName:member?.name,logoUrl:logo?.startsWith("/")?`https://hockeystanden.nl${logo}`:logo};
 }
 
-function parseDate(value:string){
+function parseDate(value:string,seasonYear?:number){
   const match=value.match(/(\d{1,2})[-/](\d{1,2})(?:[-/](\d{2,4}))?/);
-  if(!match)return null;
-  const year=match[3]?Number(match[3].length===2?`20${match[3]}`:match[3]):new Date().getFullYear();
-  const date=new Date(Date.UTC(year,Number(match[2])-1,Number(match[1])));
+  const dutch=value.toLowerCase().match(/(\d{1,2})\s+(jan|feb|mrt|apr|mei|jun|jul|aug|sep|okt|nov|dec)/),months=["jan","feb","mrt","apr","mei","jun","jul","aug","sep","okt","nov","dec"];
+  if(!match&&!dutch)return null;
+  const day=Number(match?.[1]??dutch?.[1]),month=match?Number(match[2])-1:months.indexOf(dutch![2]),year=match?.[3]?Number(match[3].length===2?`20${match[3]}`:match[3]):seasonYear?(month>=7?seasonYear:seasonYear+1):new Date().getFullYear();
+  const date=new Date(Date.UTC(year,month,day));
   return Number.isNaN(date.getTime())?null:date;
 }
 
 export function parseHockeyStandenMatches(html:string):ExternalMatch[]{
-  const $=cheerio.load(html),structured=jsonLd($).filter(x=>x["@type"]==="SportsEvent");
+  const $=cheerio.load(html),structured=jsonLd($).filter(x=>x["@type"]==="SportsEvent"),activeSeason=$('.season-nav [aria-current="page"], .mlh__season-text').first().text(),seasonYear=Number(activeSeason.match(/20\d{2}/)?.[0]??$("body").text().match(/\b(20\d{2})\s*[\/-]\s*20\d{2}\b/)?.[1]);
   if(structured.length)return structured.flatMap(x=>{
     const home=x.homeTeam as {name?:string;score?:number}|undefined,away=x.awayTeam as {name?:string;score?:number}|undefined,date=new Date(String(x.startDate??""));
     if(!home?.name||!away?.name||Number.isNaN(date.getTime()))return[];
@@ -51,7 +55,7 @@ export function parseHockeyStandenMatches(html:string):ExternalMatch[]{
   });
   const result:ExternalMatch[]=[];
   $(".ml__item, table tr, .match, [data-match]").each((_,el)=>{
-    const cells=$(el).find("td").map((__,x)=>$(x).text().trim()).get(),text=$(el).text().replace(/\s+/g," ").trim(),date=parseDate(cells[0]??text),score=text.match(/(\d+)\s*[-–]\s*(\d+)/);
+    const cells=$(el).find("td").map((__,x)=>$(x).text().trim()).get(),text=$(el).text().replace(/\s+/g," ").trim(),date=parseDate(cells[0]??text,Number.isFinite(seasonYear)?seasonYear:undefined),score=text.match(/(\d+)\s*[-–]\s*(\d+)/);
     const home=$(el).find(".ml__home .ml__name, [data-home], .home-team").first().text().trim(),away=$(el).find(".ml__away .ml__name, [data-away], .away-team").first().text().trim();
     if(!date||!home||!away)return;
     const id=$(el).attr("data-match")||`${date.toISOString().slice(0,10)}:${home}:${away}`;
@@ -76,3 +80,4 @@ export function parseHockeyStandenStandings(html:string):ExternalStanding[]{
 }
 
 function unique<T>(items:T[],key:(x:T)=>string){return[...new Map(items.map(x=>[key(x),x])).values()]}
+

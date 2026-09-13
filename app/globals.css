@@ -2397,6 +2397,11 @@ html[data-theme="dark"] .match-tabs button[aria-selected="true"] {
 }
 .agenda-week-separator:before { content: ""; height: 2.5px; flex: 1; background: color-mix(in srgb, var(--green) 40%, var(--line)); border-radius: 2px; }
 
+.score-list { margin-top: 4px; }
+.score-weekend .agenda-week-separator { margin-bottom: 4px; }
+.score-weekend .match-row { padding: 14px 4px; }
+.score-weekend .score { min-width: 48px; padding: 5px 8px; border-radius: 8px; background: color-mix(in srgb, var(--green) 12%, var(--surface)); text-align: center; font-weight: 900; }
+
 .styled-picker-field {
     position: relative;
     display: grid;
