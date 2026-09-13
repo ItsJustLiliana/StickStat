@@ -3,6 +3,8 @@ import {imageExtension,validImageBytes} from "../lib/image-upload";
 import {readFileSync} from "node:fs";
 
 const editor=readFileSync("components/profile-photo-editor.tsx","utf8");
+const matchPhotoManager=readFileSync("components/match-photo-manager.tsx","utf8");
+const browserImage=readFileSync("lib/browser-image.ts","utf8");
 const photoRoute=readFileSync("app/uploads/users/[filename]/route.ts","utf8");
 
 describe("profielfoto-upload",()=>{
@@ -26,5 +28,12 @@ describe("profielfoto-upload",()=>{
     expect(editor).toContain("Sleep de foto");
     expect(editor).not.toContain("Horizontaal");
     expect(editor).not.toContain("Verticaal");
+  });
+
+  it("accepteert mobiele HEIC-foto's en zet die lokaal om voor de upload",()=>{
+    expect(editor).toContain(".heic,.heif");
+    expect(matchPhotoManager).toContain(".heic,.heif");
+    expect(browserImage).toContain("image/jpeg");
+    expect(browserImage).toContain("createImageBitmap");
   });
 });

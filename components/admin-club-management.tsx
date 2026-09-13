@@ -4,6 +4,7 @@ import { Upload } from "lucide-react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { resizePhotoTo1080p } from "@/lib/browser-image";
 
 type Club = {
     id: string;
@@ -29,7 +30,7 @@ export function AdminClubManagement({ clubs }: { clubs: Club[] }) {
 
         try {
             const formData = new FormData();
-            formData.append("logo", file);
+            formData.append("logo", await resizePhotoTo1080p(file, 2_000_000));
 
             const response = await fetch(`/api/clubs/${clubId}/logo`, {
                 method: "POST",
