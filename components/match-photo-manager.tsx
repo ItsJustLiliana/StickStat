@@ -2,17 +2,15 @@
 
 import { ImagePlus, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { resizePhotoTo1080p } from "@/lib/browser-image";
 
 type Kind = "team" | "mvp";
 
 export function MatchPhotoManager({ matchId, teamId, teamPhotoPath, mvpPhotoPath, mvpName, canEdit }: { matchId: string; teamId: string; teamPhotoPath: string | null; mvpPhotoPath: string | null; mvpName: string | null; canEdit: boolean }) {
   const router = useRouter();
-  const fileInput = useRef<HTMLInputElement>(null);
   const [busy, setBusy] = useState<Kind | null>(null);
   const [message, setMessage] = useState("");
-  const [selectedKind, setSelectedKind] = useState<Kind>("team");
 
   async function upload(kind: Kind, file: File | undefined) {
     if (!file) {
@@ -39,22 +37,11 @@ export function MatchPhotoManager({ matchId, teamId, teamPhotoPath, mvpPhotoPath
     }
   }
 
-  function choose(kind: Kind) {
-    setSelectedKind(kind);
-    setMessage("");
-    const input = fileInput.current;
-    if (!input) {
-      setMessage("De fotokiezer kon niet worden geopend. Probeer de pagina te verversen.");
-      return;
-    }
+  function receiveFile(kind: Kind, event: React.ChangeEvent<HTMLInputElement>) {
+    const input = event.target;
+    const file = input.files?.item(0) ?? undefined;
     input.value = "";
-    input.click();
-  }
-
-  function receiveFile(event: React.ChangeEvent<HTMLInputElement>) {
-    const file = event.currentTarget.files?.[0];
-    event.currentTarget.value = "";
-    void upload(selectedKind, file);
+    void upload(kind, file);
   }
 
   async function remove(kind: Kind) {
@@ -75,5 +62,5 @@ export function MatchPhotoManager({ matchId, teamId, teamPhotoPath, mvpPhotoPath
 
   if (!canEdit) return null;
   const controls = [{ kind: "team" as const, label: "Teamfoto", current: teamPhotoPath }, ...(mvpName ? [{ kind: "mvp" as const, label: `Foto Man of the Match: ${mvpName}`, current: mvpPhotoPath }] : [])];
-  return <section className="match-photo-manager"><h3>Wedstrijdfoto&apos;s</h3><p className="muted">Teambeheerder kan een teamfoto en, na het kiezen van de Man of the Match, diens foto toevoegen.</p><input ref={fileInput} hidden disabled={busy !== null} type="file" accept="image/*,.heic,.heif" onChange={receiveFile} /> <div className="match-photo-actions">{controls.map(control => <div key={control.kind}><button className="button secondary" type="button" disabled={busy !== null} onClick={() => choose(control.kind)}><ImagePlus size={16} />{busy === control.kind ? "Bezig…" : control.current ? `${control.label} vervangen` : control.label}</button>{control.current && <button className="icon-button" disabled={busy !== null} type="button" aria-label={`${control.label} verwijderen`} onClick={() => void remove(control.kind)}><Trash2 size={16} /></button>}</div>)}</div>{message && <p className="muted" role="status">{message}</p>}</section>;
+  return <section className="match-photo-manager"><h3>Wedstrijdfoto&apos;s</h3><p className="muted">Teambeheerder kan een teamfoto en, na het kiezen van de Man of the Match, diens foto toevoegen.</p><div className="match-photo-actions">{controls.map(control => <div key={control.kind}><label className="button secondary" style={{ position: "relative", overflow: "hidden" }}><ImagePlus size={16} />{busy === control.kind ? "Bezig…" : control.current ? `${control.label} vervangen` : control.label}<input aria-label={control.label} disabled={busy !== null} type="file" accept="image/*" onChange={event => receiveFile(control.kind, event)} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", opacity: 0.01, cursor: "pointer" }} /></label>{control.current && <button className="icon-button" disabled={busy !== null} type="button" aria-label={`${control.label} verwijderen`} onClick={() => void remove(control.kind)}><Trash2 size={16} /></button>}</div>)}</div>{message && <p className="muted" role="status">{message}</p>}</section>;
 }

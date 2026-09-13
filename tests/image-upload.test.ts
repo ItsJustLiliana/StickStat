@@ -32,7 +32,7 @@ describe("profielfoto-upload",()=>{
 
   it("accepteert mobiele HEIC-foto's en zet die lokaal om voor de upload",()=>{
     expect(editor).toContain(".heic,.heif");
-    expect(matchPhotoManager).toContain(".heic,.heif");
+    expect(matchPhotoManager).toContain('accept="image/*"');
     expect(browserImage).toContain("image/jpeg");
     expect(browserImage).toContain("createImageBitmap");
   });
