@@ -2127,6 +2127,13 @@ html[data-theme="dark"] body {
 .club-team-list { display:grid; gap:12px; }
 .club-team-list .card-head { margin-bottom:4px; }
 .club-team-row>a { display:grid; gap:4px; color:inherit; text-decoration:none; }
+.club-browser-card > .muted { margin-top: -4px; }
+.club-search-results,.catalog-team-results,.saved-clubs { display:grid; gap:8px; margin-top:14px; }
+.club-search-result,.catalog-team-row { display:flex; align-items:center; justify-content:space-between; gap:12px; width:100%; padding:12px 14px; border:1px solid var(--line); border-radius:12px; background:var(--card); color:var(--ink); text-align:left; text-decoration:none; }
+button.club-search-result { cursor:pointer; font:inherit; }
+.club-search-result span { color:var(--muted); font-size:12px; font-weight:750; }
+.catalog-team-results .card-head { margin:4px 0 2px; }
+.catalog-team-results h3 { margin:4px 0 0; font-size:18px; }
 .join-team-cta { display:grid; justify-items:start; gap:8px; margin-bottom:18px; }
 .join-team-cta .button { min-height:52px; padding-inline:22px; font-size:16px; }
 .join-team-cta p { margin:0; }
@@ -2813,6 +2820,7 @@ html[data-theme="dark"] .input {
 .match-photo-button.match-team-photo { position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; transform: none; border-radius: inherit; }
 .match-photo-button.match-team-photo::before { content: ""; position: absolute; inset: 0; z-index: 1; background: rgba(8, 20, 15, .42); pointer-events: none; }
 .match-photo-button .match-photo-zoom { position: absolute; z-index: 4; top: 7px; right: 7px; display: grid; place-items: center; width: 30px; height: 30px; border: 1px solid #ffffffa8; border-radius: 9px; background: #07150ed1; color: white; box-shadow: 0 3px 10px #0005; pointer-events: none; }
+.match-photo-button.match-team-photo .match-photo-zoom { top: auto; right: 7px; bottom: 7px; background: #07150ed1; }
 
 .match-event-header .match-score-divider {
     color: var(--muted);

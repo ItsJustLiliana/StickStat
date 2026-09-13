@@ -1,2 +1,2 @@
-import { apiError, ok } from "@/lib/api"; import { authorizeTeam } from "@/lib/auth"; import { syncTeam } from "@/services/sync";
-export async function POST(_:Request,{params}:{params:Promise<{teamId:string}>}){try{const {teamId}=await params;await authorizeTeam(teamId,true);return ok(await syncTeam(teamId));}catch(e){return apiError(e);}}
+import { Prisma } from "@/generated/prisma/client"; import { apiError, ok } from "@/lib/api"; import { authorizeTeam } from "@/lib/auth"; import { syncTeam } from "@/services/sync";
+export async function POST(_:Request,{params}:{params:Promise<{teamId:string}>}){try{const {teamId}=await params;await authorizeTeam(teamId,true);return ok(await syncTeam(teamId));}catch(e){if(e instanceof Prisma.PrismaClientKnownRequestError&&e.code==="P2002")return ok({alreadySynced:true});return apiError(e);}}
