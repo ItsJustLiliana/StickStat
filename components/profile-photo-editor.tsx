@@ -10,7 +10,7 @@ type Point={x:number;y:number};
 type DragState=Point&{pointerId:number;startX:number;startY:number};
 
 export function ProfilePhotoEditor({currentPhoto,name}:{currentPhoto:string|null;name:string}){
-  const canvas=useRef<HTMLCanvasElement>(null),imageSize=useRef({width:outputSize,height:outputSize}),drag=useRef<DragState|null>(null),router=useRouter();
+  const canvas=useRef<HTMLCanvasElement>(null),imageSize=useRef({width:outputSize,height:outputSize}),drag=useRef<DragState|null>(null),pointers=useRef(new Map<number,Point>()),pinch=useRef<{distance:number;zoom:number}|null>(null),router=useRouter();
   const [source,setSource]=useState<string|null>(null),[zoom,setZoom]=useState(1),[offset,setOffset]=useState<Point>({x:0,y:0}),[busy,setBusy]=useState(false),[message,setMessage]=useState("");
 
   function constrained(point:Point,nextZoom=zoom){
@@ -33,9 +33,9 @@ export function ProfilePhotoEditor({currentPhoto,name}:{currentPhoto:string|null
     setSource(URL.createObjectURL(file));setZoom(1);setOffset({x:0,y:0});setMessage("");
   }
 
-  function startDrag(event:ReactPointerEvent<HTMLDivElement>){event.currentTarget.setPointerCapture(event.pointerId);drag.current={pointerId:event.pointerId,startX:event.clientX,startY:event.clientY,...offset}}
-  function moveDrag(event:ReactPointerEvent<HTMLDivElement>){const active=drag.current;if(!active||active.pointerId!==event.pointerId)return;const ratio=outputSize/event.currentTarget.getBoundingClientRect().width;setOffset(constrained({x:active.x+(event.clientX-active.startX)*ratio,y:active.y+(event.clientY-active.startY)*ratio}))}
-  function stopDrag(event:ReactPointerEvent<HTMLDivElement>){if(drag.current?.pointerId===event.pointerId)drag.current=null}
+  function startDrag(event:ReactPointerEvent<HTMLDivElement>){event.preventDefault();event.currentTarget.setPointerCapture(event.pointerId);pointers.current.set(event.pointerId,{x:event.clientX,y:event.clientY});if(pointers.current.size===1)drag.current={pointerId:event.pointerId,startX:event.clientX,startY:event.clientY,...offset};else if(pointers.current.size===2){const [first,second]=[...pointers.current.values()],distance=Math.hypot(first.x-second.x,first.y-second.y);drag.current=null;pinch.current={distance,zoom}}}
+  function moveDrag(event:ReactPointerEvent<HTMLDivElement>){event.preventDefault();if(!pointers.current.has(event.pointerId))return;pointers.current.set(event.pointerId,{x:event.clientX,y:event.clientY});if(pointers.current.size===2&&pinch.current){const [first,second]=[...pointers.current.values()],distance=Math.hypot(first.x-second.x,first.y-second.y),nextZoom=Math.max(1,Math.min(3,pinch.current.zoom*distance/pinch.current.distance));setZoom(nextZoom);setOffset(current=>constrained(current,nextZoom));return}const active=drag.current;if(!active||active.pointerId!==event.pointerId)return;const ratio=outputSize/event.currentTarget.getBoundingClientRect().width;setOffset(constrained({x:active.x+(event.clientX-active.startX)*ratio,y:active.y+(event.clientY-active.startY)*ratio}));}
+  function stopDrag(event:ReactPointerEvent<HTMLDivElement>){pointers.current.delete(event.pointerId);if(drag.current?.pointerId===event.pointerId)drag.current=null;if(pointers.current.size<2)pinch.current=null}
   function changeZoom(nextZoom:number){setZoom(nextZoom);setOffset(current=>constrained(current,nextZoom))}
 
   async function save(){
