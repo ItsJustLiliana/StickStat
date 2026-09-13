@@ -2864,6 +2864,8 @@ html[data-theme="dark"] .input {
     width: min(80vw, 800px);
     max-height: 85dvh;
     overflow: auto;
+    touch-action: none;
+    overscroll-behavior: contain;
 }
 
 .photo-lightbox-content img {
