@@ -7,6 +7,10 @@ void main() {
     expect(stickStatUrl, 'https://stickstat.nl');
   });
 
+  test('bestandskeuze voor de Android-WebView gebruikt een file-URI', () {
+    expect(webViewFileUri('/data/user/0/nl.stickstat.app/cache/foto.jpg'), startsWith('file:///'));
+  });
+
   testWidgets('toont een bruikbare verbindingsfout', (tester) async {
     await tester.pumpWidget(
       StickStatApp(

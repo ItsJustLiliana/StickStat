@@ -12,15 +12,9 @@ export function MatchPhotoManager({ matchId, teamId, teamPhotoPath, mvpPhotoPath
   const [busy, setBusy] = useState<Kind | null>(null);
   const [message, setMessage] = useState("");
 
-  function diagnostic(title: string, details: string[]) {
-    window.alert(["Tijdelijke foto-uploaddiagnose", title, ...details].join("\n"));
-  }
-
   async function upload(kind: Kind, file: File | undefined) {
     if (!file) {
-      const error = "Er is geen foto ontvangen. Kies de foto opnieuw.";
-      setMessage(error);
-      diagnostic("Stap 1: de Android-kiezer gaf geen bestand terug.", ["files.length: 0", `browser: ${navigator.userAgent}`]);
+      setMessage("Er is geen foto ontvangen. Kies de foto opnieuw.");
       return;
     }
     setBusy(kind);
@@ -37,9 +31,7 @@ export function MatchPhotoManager({ matchId, teamId, teamPhotoPath, mvpPhotoPath
       setMessage("Foto opgeslagen.");
       router.refresh();
     } catch (error) {
-      const text = error instanceof Error ? error.message : "Uploaden mislukt";
-      setMessage(text);
-      diagnostic("Stap 2: de foto kon niet worden verwerkt of verstuurd.", [`bestandsnaam: ${file.name}`, `type: ${file.type || "onbekend"}`, `grootte: ${file.size} bytes`, `fout: ${text}`, `browser: ${navigator.userAgent}`]);
+      setMessage(error instanceof Error ? error.message : "Uploaden mislukt");
     } finally {
       setBusy(null);
     }
@@ -48,7 +40,6 @@ export function MatchPhotoManager({ matchId, teamId, teamPhotoPath, mvpPhotoPath
   function receiveFile(kind: Kind, event: React.ChangeEvent<HTMLInputElement>) {
     const input = event.target;
     const file = input.files?.item(0) ?? undefined;
-    if (file) diagnostic("Stap 1 gelukt: bestand ontvangen.", [`bestandsnaam: ${file.name}`, `type: ${file.type || "onbekend"}`, `grootte: ${file.size} bytes`, "De upload start nu."]);
     input.value = "";
     void upload(kind, file);
   }

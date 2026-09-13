@@ -17,6 +17,8 @@ const stickStatUrl = String.fromEnvironment(
   defaultValue: 'https://stickstat.nl',
 );
 
+String webViewFileUri(String path) => Uri.file(path).toString();
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(
@@ -122,7 +124,9 @@ class _StickStatWebAppState extends State<StickStatWebApp> {
 
   Future<List<String>> _selectImageFile(FileSelectorParams _) async {
     final image = await _imagePicker.pickImage(source: ImageSource.gallery, imageQuality: 100);
-    return image == null ? const <String>[] : <String>[image.path];
+    // Android WebView expects URIs here. A bare filesystem path is parsed as
+    // a scheme-less URI and arrives in the website as an empty FileList.
+    return image == null ? const <String>[] : <String>[webViewFileUri(image.path)];
   }
 
   static List<int> _versionParts(String value) => value.split('.').map((part) => int.tryParse(part) ?? 0).toList();
