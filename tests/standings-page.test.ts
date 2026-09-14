@@ -27,7 +27,16 @@ describe("standpagina",()=>{
   });
   it("haalt eigen scores ook zonder stand op",async()=>{
     await Standings({searchParams:Promise.resolve({})});
-    expect(db.match.findMany).toHaveBeenCalledWith(expect.objectContaining({where:{seasonId:undefined,status:"finished",OR:[{homeTeamId:"rapide"},{awayTeamId:"rapide"}]}}));
+    expect(db.match.findMany).toHaveBeenCalledWith(expect.objectContaining({where:{seasonId:undefined,status:"finished",homeTeamId:{in:["rapide"]},awayTeamId:{in:["rapide"]}}}));
+  });
+  it("haalt alle scores uit de geselecteerde poule op",async()=>{
+    db.standing.findFirst.mockResolvedValue({seasonId:"season",competition:"poule"});
+    db.standing.findMany.mockResolvedValue([
+      {id:"standing-1",teamId:"rapide",team:{name:"Rapide"},position:1,played:1,won:1,drawn:0,lost:0,goalsFor:2,goalsAgainst:0,goalDifference:2,points:3},
+      {id:"standing-2",teamId:"opponent",team:{name:"Opponent"},position:2,played:1,won:0,drawn:0,lost:1,goalsFor:0,goalsAgainst:2,goalDifference:-2,points:0},
+    ]);
+    await Standings({searchParams:Promise.resolve({})});
+    expect(db.match.findMany).toHaveBeenCalledWith(expect.objectContaining({where:expect.objectContaining({homeTeamId:{in:["rapide","opponent"]},awayTeamId:{in:["rapide","opponent"]}})}));
   });
   it("respecteert een rechtstreeks geopende teampagina",async()=>{
     db.team.findUnique.mockResolvedValue({id:"other"});
