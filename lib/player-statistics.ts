@@ -1,6 +1,11 @@
 type MatchStat={matchId:string;goals:number;assists:number;saves:number;mvp:boolean};
 type MatchEvent={matchId:string;type:string;playerId:string|null;relatedPlayerId:string|null};
 
+export function playerMatchPerformances<T extends {date: Date}>(playerId:string,stats:(MatchStat & {match:T})[],events:(MatchEvent & {match:T})[]){
+  const matches=new Map([...stats,...events].map(item=>[item.matchId,item.match]));
+  return [...matches].map(([matchId,match])=>({matchId,match,...playerTotals(playerId,stats.filter(stat=>stat.matchId===matchId),events.filter(event=>event.matchId===matchId))})).sort((a,b)=>a.match.date.getTime()-b.match.date.getTime());
+}
+
 export function playerTotals(playerId:string,stats:MatchStat[],events:MatchEvent[]){
   const eventMatches={goals:new Set<string>(),assists:new Set<string>(),saves:new Set<string>(),mvps:new Set<string>()};
   let goals=0,assists=0,saves=0,mvps=0;

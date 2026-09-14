@@ -1,3 +1,5 @@
+import {playerTotals,playerMatchPerformances} from "@/lib/player-statistics";
+import {playerRankingPositions} from "@/lib/player-rankings";
 import { ProfilePhoto } from "@/components/profile-photo";
 import { notFound } from "next/navigation";
 import { PageShell } from "@/components/page-shell";
@@ -63,6 +65,7 @@ export default async function PlayerDetail({
           },
         },
 
+        relatedEvents: {where: {match: {status: "finished"}}, include: {match: true}},
         matchAttendance: true,
 
         trainingAttendance: {
@@ -109,6 +112,9 @@ export default async function PlayerDetail({
         active: true,
       },
       include: {
+        relatedEvents: {where: {match: teamMatchFilter}},
+        matchAttendance: true,
+        trainingAttendance: {include: {training: true}},
         matchStats: {
           where: {
             match:
@@ -153,41 +159,8 @@ export default async function PlayerDetail({
       stat => stat.started
     ).length;
 
-  const goals =
-    player.matchStats.reduce(
-      (total, stat) =>
-        total + stat.goals,
-      0
-    );
-
-  const assists =
-    player.matchStats.reduce(
-      (total, stat) =>
-        total + stat.assists,
-      0
-    );
-
-  const saves =
-    player.matchStats.reduce(
-      (total, stat) =>
-        total + stat.saves,
-      0
-    );
-
-  const cards =
-    player.events.filter(event =>
-      event.type.endsWith(
-        "_card"
-      )
-    ).length;
-
-  const mvps =
-    player.events.filter(
-      event => event.type === "mvp"
-    ).length +
-    player.matchStats.filter(
-      stat => stat.mvp
-    ).length;
+  const {goals, assists, saves, mvps} = playerTotals(player.id, player.matchStats, [...player.events, ...player.relatedEvents]);
+  const cards = player.events.filter(event => event.type.endsWith("_card")).length;
 
   const photo =
     player.user?.photoPath ??
@@ -236,120 +209,23 @@ export default async function PlayerDetail({
       )
       : 0;
 
-  const leaderboardRank = (
-    value: (
-      teamPlayer: (typeof teamPlayers)[number]
-    ) => number
-  ) => {
-    const own =
-      teamPlayers.find(
-        teamPlayer =>
-          teamPlayer.id ===
-          player.id
-      );
 
-    const ownValue = own
-      ? value(own)
-      : 0;
-
-    if (ownValue === 0) {
-      return null;
-    }
-
-    return (
-      1 +
-      new Set(
-        teamPlayers
-          .map(value)
-          .filter(
-            score =>
-              score >
-              ownValue
-          )
-      ).size
-    );
-  };
-
-  const leaderboardPositions =
-    [
-      {
-        label:
-          "Topscorers",
-
-        rank:
-          leaderboardRank(
-            teamPlayer =>
-              teamPlayer.matchStats.reduce(
-                (
-                  total,
-                  stat
-                ) =>
-                  total +
-                  stat.goals,
-                0
-              )
-          ),
-      },
-
-      {
-        label: "Assists",
-
-        rank:
-          leaderboardRank(
-            teamPlayer =>
-              teamPlayer.matchStats.reduce(
-                (
-                  total,
-                  stat
-                ) =>
-                  total +
-                  stat.assists,
-                0
-              )
-          ),
-      },
-
-      {
-        label: "MVP's",
-
-        rank:
-          leaderboardRank(
-            teamPlayer =>
-            teamPlayer.events.filter(
-              event =>
-                event.type === "mvp"
-            ).length +
-            teamPlayer.matchStats.filter(
-              stat =>
-                stat.mvp
-            ).length
-          ),
-      },
-
-      {
-        label: "Kaarten",
-
-        rank:
-          leaderboardRank(
-            teamPlayer =>
-              teamPlayer.events.filter(
-                event =>
-                  event.type.endsWith(
-                    "_card"
-                  )
-              ).length
-          ),
-      },
-    ].filter(
-      (
-        position
-      ): position is {
-        label: string;
-        rank: number;
-      } =>
-        position.rank !==
-        null
-    );
+  const rankingPlayers = teamPlayers
+    .filter(teamPlayer => !(teamPlayer.staffRoles.length > 0 && !teamPlayer.trainingMember && !teamPlayer.matchMember))
+    .map(teamPlayer => {
+      const totals = playerTotals(teamPlayer.id, teamPlayer.matchStats, [...teamPlayer.events, ...teamPlayer.relatedEvents]);
+      const trainings = teamPlayer.trainingAttendance.filter(item => item.training.date < now);
+      return {
+        id: teamPlayer.id,
+        matches: teamPlayer.matchStats.length,
+        starts: teamPlayer.matchStats.filter(stat => stat.started).length,
+        ...totals,
+        cards: teamPlayer.events.filter(event => event.type.endsWith("_card")).length,
+        matchAttendance: attendancePercentage(teamPlayer.matchAttendance.filter(item => item.status === "present").length, teamPlayer.matchAttendance.filter(item => item.status === "absent").length),
+        trainingAttendance: attendancePercentage(trainings.filter(item => item.status === "present").length, trainings.filter(item => item.status === "absent").length),
+      };
+    });
+  const leaderboardPositions = playerRankingPositions(rankingPlayers, player.id);
 
   const resultFor = (match: {
     homeTeamId: string;
@@ -456,45 +332,11 @@ export default async function PlayerDetail({
       playersWithMatches.length
       : 0;
 
-  const teamGoalsPerGame =
-    teamAverage(
-      teamPlayer =>
-        teamPlayer.matchStats.reduce(
-          (
-            total,
-            stat
-          ) =>
-            total +
-            stat.goals,
-          0
-        ) /
-        teamPlayer.matchStats
-          .length
-    );
 
-  const teamAssistsPerGame =
-    teamAverage(
-      teamPlayer =>
-        teamPlayer.matchStats.reduce(
-          (
-            total,
-            stat
-          ) =>
-            total +
-            stat.assists,
-          0
-        ) /
-        teamPlayer.matchStats
-          .length
-    );
-
-  const orderedStats = [
-    ...player.matchStats,
-  ].sort(
-    (a, b) =>
-      a.match.date.getTime() -
-      b.match.date.getTime()
-  );
+  const teamGoalsPerGame = teamAverage(teamPlayer => playerTotals(teamPlayer.id, teamPlayer.matchStats, [...teamPlayer.events, ...teamPlayer.relatedEvents]).goals / teamPlayer.matchStats.length);
+  const teamAssistsPerGame = teamAverage(teamPlayer => playerTotals(teamPlayer.id, teamPlayer.matchStats, [...teamPlayer.events, ...teamPlayer.relatedEvents]).assists / teamPlayer.matchStats.length);
+  const orderedStats = playerMatchPerformances(player.id, player.matchStats, [...player.events, ...player.relatedEvents]);
+  const personalBestAssists = Math.max(0, ...orderedStats.map(stat => stat.assists));
 
   const personalBest =
     Math.max(
@@ -519,65 +361,6 @@ export default async function PlayerDetail({
         scoringRun
       );
   }
-
-  const mvpLeaders =
-    teamPlayers
-      .map(
-        teamPlayer => ({
-          name:
-            teamPlayer.displayName,
-
-          count:
-            teamPlayer.events.filter(
-              event =>
-                event.type === "mvp"
-            ).length +
-            teamPlayer.matchStats.filter(
-              stat =>
-                stat.mvp
-            ).length,
-        })
-      )
-      .filter(
-        teamPlayer =>
-          teamPlayer.count >
-          0
-      )
-      .sort(
-        (a, b) =>
-          b.count -
-          a.count
-      );
-
-  const topMvpCount =
-    mvpLeaders[0]?.count ??
-    0;
-
-  const topMvpNames =
-    mvpLeaders
-      .filter(
-        teamPlayer =>
-          teamPlayer.count ===
-          topMvpCount
-      )
-      .map(
-        teamPlayer =>
-          teamPlayer.name
-      );
-
-  const mvpMatches = [
-    ...player.events.filter(
-      event => event.type === "mvp"
-    ),
-    ...player.matchStats.filter(
-      stat => stat.mvp
-    ),
-  ]
-    .sort(
-      (a, b) =>
-        b.match.date.getTime() -
-        a.match.date.getTime()
-    );
 
   const chart =
     orderedStats.map(
@@ -868,6 +651,7 @@ export default async function PlayerDetail({
               </div>
             </div>
 
+            <p className="muted">Positie binnen het team per categorie. Een streepje betekent dat er nog geen score is.</p>
             <div>
               {leaderboardPositions.map(
                 position => (
@@ -878,10 +662,7 @@ export default async function PlayerDetail({
                     }
                   >
                     <b>
-                      #
-                      {
-                        position.rank
-                      }
+                      {position.rank === null ? "–" : `#${position.rank}`}
                     </b>
 
                     {
@@ -1003,7 +784,7 @@ export default async function PlayerDetail({
 
             <small>
               {personalBest
-                ? "Persoonlijk seizoensrecord"
+                ? "Persoonlijk record"
                 : "Nog geen goals geregistreerd"}
             </small>
           </article>
@@ -1025,95 +806,24 @@ export default async function PlayerDetail({
             </strong>
 
             <small>
-              Achter elkaar
-              gescoord
+              Achter elkaar gescoord. Huidige reeks: {scoringRun} {scoringRun === 1 ? "wedstrijd" : "wedstrijden"}.
             </small>
           </article>
 
           <article className="record-card">
             <span>
-              Huidige
-              scorereeks
+              Meeste assists in een duel
             </span>
 
             <strong>
-              {scoringRun}{" "}
-              {scoringRun === 1
-                ? "wedstrijd"
-                : "wedstrijden"}
+              {personalBestAssists}
             </strong>
 
             <small>
-              In de meest
-              recente duels
+              {personalBestAssists ? "Persoonlijk record" : "Nog geen assists geregistreerd"}
             </small>
           </article>
         </div>
-      </section>
-
-      <section className="card player-mvp-overview">
-        <div className="card-head">
-          <div>
-            <span className="eyebrow">
-              Man of the Match
-            </span>
-
-            <h2>
-              MVP-overzicht
-            </h2>
-          </div>
-        </div>
-
-        {topMvpCount ? (
-          <>
-            <p>
-              <strong>
-                {topMvpNames.join(
-                  " & "
-                )}
-              </strong>{" "}
-              {topMvpNames.length ===
-                1
-                ? "is"
-                : "zijn"}{" "}
-              het vaakst MVP:{" "}
-              {topMvpCount}{" "}
-              {topMvpCount ===
-                1
-                ? "keer"
-                : "keer"}
-              .
-            </p>
-
-            {mvpMatches.length >
-              0 && (
-                <p className="muted">
-                  {
-                    player.displayName
-                  }{" "}
-                  was MVP op{" "}
-                  {mvpMatches
-                    .map(stat =>
-                      stat.match.date.toLocaleDateString(
-                        "nl-NL",
-                        {
-                          day: "numeric",
-                          month:
-                            "short",
-                        }
-                      )
-                    )
-                    .join(", ")}
-                  .
-                </p>
-              )}
-          </>
-        ) : (
-          <p className="muted">
-            Er is nog geen MVP
-            gekozen dit seizoen.
-          </p>
-        )}
       </section>
 
       <StatsCharts
