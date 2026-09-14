@@ -28,7 +28,7 @@ export function AdminClubManagement({ clubs }: { clubs: Club[] }) {
         setMessage("");
         try {
             const formData = new FormData();
-            formData.append("logo", await resizePhotoTo1080p(file, 2_000_000));
+            formData.append("logo", await resizePhotoTo1080p(file, 2_000_000, true));
             const response = await fetch(`/api/clubs/${clubId}/logo`, { method: "POST", body: formData });
             const body = await response.json();
             if (!response.ok) throw new Error(body.error?.message ?? "Upload mislukt");

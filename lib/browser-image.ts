@@ -3,6 +3,7 @@
 const maxWidth = 1920;
 const maxHeight = 1080;
 const supportedTypes = new Set(["image/jpeg", "image/png", "image/webp"]);
+const transparentTypes = new Set(["image/png", "image/webp"]);
 
 export function isImageFile(file: File) {
   return file.type.startsWith("image/") || /\.(avif|heic|heif|jpe?g|png|webp)$/i.test(file.name);
@@ -33,7 +34,7 @@ async function loadImage(file: File) {
   }
 }
 
-export async function resizePhotoTo1080p(file: File, maxBytes = 4_000_000) {
+export async function resizePhotoTo1080p(file: File, maxBytes = 4_000_000, preserveTransparency = false) {
   if (!isImageFile(file) || typeof document === "undefined") throw new Error("Kies een foto uit je fotobibliotheek.");
   const needsConversion = !supportedTypes.has(file.type) || file.size > maxBytes;
   let source: Awaited<ReturnType<typeof loadImage>> | null = null;
@@ -47,9 +48,12 @@ export async function resizePhotoTo1080p(file: File, maxBytes = 4_000_000) {
     const context = canvas.getContext("2d");
     if (!context) throw new Error("De foto kan niet worden verwerkt.");
     context.drawImage(source.image, 0, 0, canvas.width, canvas.height);
-    const blob = await new Promise<Blob | null>(resolve => canvas.toBlob(resolve, "image/jpeg", .86));
+    // JPEG has no alpha channel. Club-logo uploads opt in to retaining alpha.
+    const outputType = preserveTransparency && transparentTypes.has(file.type) ? "image/png" : "image/jpeg";
+    const blob = await new Promise<Blob | null>(resolve => canvas.toBlob(resolve, outputType, .86));
     if (!blob) throw new Error("De foto kan niet worden verwerkt.");
-    return new File([blob], `${file.name.replace(/\.[^.]+$/, "") || "foto"}.jpg`, { type: "image/jpeg" });
+    const extension = outputType === "image/png" ? "png" : "jpg";
+    return new File([blob], `${file.name.replace(/\.[^.]+$/, "") || "foto"}.${extension}`, { type: outputType });
   } finally {
     source?.dispose();
   }

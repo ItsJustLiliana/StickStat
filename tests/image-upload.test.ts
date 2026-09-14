@@ -36,4 +36,11 @@ describe("profielfoto-upload",()=>{
     expect(browserImage).toContain("image/jpeg");
     expect(browserImage).toContain("createImageBitmap");
   });
+
+  it("behoudt transparantie alleen wanneer een logo-upload daar om vraagt",()=>{
+    expect(browserImage).toContain('const transparentTypes = new Set(["image/png", "image/webp"])');
+    expect(browserImage).toContain('const outputType = preserveTransparency && transparentTypes.has(file.type) ? "image/png" : "image/jpeg"');
+    expect(readFileSync("components/club-logo-editor.tsx","utf8")).toContain("resizePhotoTo1080p(file,2_000_000,true)");
+    expect(readFileSync("components/admin-club-management.tsx","utf8")).toContain("resizePhotoTo1080p(file, 2_000_000, true)");
+  });
 });
