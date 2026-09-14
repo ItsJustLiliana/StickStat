@@ -55,6 +55,7 @@ export type StandingMinAggregateOutputType = {
   seasonId: string | null
   competition: string | null
   teamId: string | null
+  sourceTeamId: string | null
   position: number | null
   played: number | null
   won: number | null
@@ -72,6 +73,7 @@ export type StandingMaxAggregateOutputType = {
   seasonId: string | null
   competition: string | null
   teamId: string | null
+  sourceTeamId: string | null
   position: number | null
   played: number | null
   won: number | null
@@ -89,6 +91,7 @@ export type StandingCountAggregateOutputType = {
   seasonId: number
   competition: number
   teamId: number
+  sourceTeamId: number
   position: number
   played: number
   won: number
@@ -132,6 +135,7 @@ export type StandingMinAggregateInputType = {
   seasonId?: true
   competition?: true
   teamId?: true
+  sourceTeamId?: true
   position?: true
   played?: true
   won?: true
@@ -149,6 +153,7 @@ export type StandingMaxAggregateInputType = {
   seasonId?: true
   competition?: true
   teamId?: true
+  sourceTeamId?: true
   position?: true
   played?: true
   won?: true
@@ -166,6 +171,7 @@ export type StandingCountAggregateInputType = {
   seasonId?: true
   competition?: true
   teamId?: true
+  sourceTeamId?: true
   position?: true
   played?: true
   won?: true
@@ -270,6 +276,7 @@ export type StandingGroupByOutputType = {
   seasonId: string
   competition: string
   teamId: string
+  sourceTeamId: string
   position: number
   played: number
   won: number
@@ -310,6 +317,7 @@ export type StandingWhereInput = {
   seasonId?: Prisma.StringFilter<"Standing"> | string
   competition?: Prisma.StringFilter<"Standing"> | string
   teamId?: Prisma.StringFilter<"Standing"> | string
+  sourceTeamId?: Prisma.StringFilter<"Standing"> | string
   position?: Prisma.IntFilter<"Standing"> | number
   played?: Prisma.IntFilter<"Standing"> | number
   won?: Prisma.IntFilter<"Standing"> | number
@@ -322,6 +330,7 @@ export type StandingWhereInput = {
   lastSyncedAt?: Prisma.DateTimeFilter<"Standing"> | Date | string
   season?: Prisma.XOR<Prisma.SeasonScalarRelationFilter, Prisma.SeasonWhereInput>
   team?: Prisma.XOR<Prisma.TeamScalarRelationFilter, Prisma.TeamWhereInput>
+  sourceTeam?: Prisma.XOR<Prisma.TeamScalarRelationFilter, Prisma.TeamWhereInput>
 }
 
 export type StandingOrderByWithRelationInput = {
@@ -329,6 +338,7 @@ export type StandingOrderByWithRelationInput = {
   seasonId?: Prisma.SortOrder
   competition?: Prisma.SortOrder
   teamId?: Prisma.SortOrder
+  sourceTeamId?: Prisma.SortOrder
   position?: Prisma.SortOrder
   played?: Prisma.SortOrder
   won?: Prisma.SortOrder
@@ -341,17 +351,19 @@ export type StandingOrderByWithRelationInput = {
   lastSyncedAt?: Prisma.SortOrder
   season?: Prisma.SeasonOrderByWithRelationInput
   team?: Prisma.TeamOrderByWithRelationInput
+  sourceTeam?: Prisma.TeamOrderByWithRelationInput
 }
 
 export type StandingWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  seasonId_competition_teamId?: Prisma.StandingSeasonIdCompetitionTeamIdCompoundUniqueInput
+  seasonId_competition_sourceTeamId_teamId?: Prisma.StandingSeasonIdCompetitionSourceTeamIdTeamIdCompoundUniqueInput
   AND?: Prisma.StandingWhereInput | Prisma.StandingWhereInput[]
   OR?: Prisma.StandingWhereInput[]
   NOT?: Prisma.StandingWhereInput | Prisma.StandingWhereInput[]
   seasonId?: Prisma.StringFilter<"Standing"> | string
   competition?: Prisma.StringFilter<"Standing"> | string
   teamId?: Prisma.StringFilter<"Standing"> | string
+  sourceTeamId?: Prisma.StringFilter<"Standing"> | string
   position?: Prisma.IntFilter<"Standing"> | number
   played?: Prisma.IntFilter<"Standing"> | number
   won?: Prisma.IntFilter<"Standing"> | number
@@ -364,13 +376,15 @@ export type StandingWhereUniqueInput = Prisma.AtLeast<{
   lastSyncedAt?: Prisma.DateTimeFilter<"Standing"> | Date | string
   season?: Prisma.XOR<Prisma.SeasonScalarRelationFilter, Prisma.SeasonWhereInput>
   team?: Prisma.XOR<Prisma.TeamScalarRelationFilter, Prisma.TeamWhereInput>
-}, "id" | "seasonId_competition_teamId">
+  sourceTeam?: Prisma.XOR<Prisma.TeamScalarRelationFilter, Prisma.TeamWhereInput>
+}, "id" | "seasonId_competition_sourceTeamId_teamId">
 
 export type StandingOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   seasonId?: Prisma.SortOrder
   competition?: Prisma.SortOrder
   teamId?: Prisma.SortOrder
+  sourceTeamId?: Prisma.SortOrder
   position?: Prisma.SortOrder
   played?: Prisma.SortOrder
   won?: Prisma.SortOrder
@@ -396,6 +410,7 @@ export type StandingScalarWhereWithAggregatesInput = {
   seasonId?: Prisma.StringWithAggregatesFilter<"Standing"> | string
   competition?: Prisma.StringWithAggregatesFilter<"Standing"> | string
   teamId?: Prisma.StringWithAggregatesFilter<"Standing"> | string
+  sourceTeamId?: Prisma.StringWithAggregatesFilter<"Standing"> | string
   position?: Prisma.IntWithAggregatesFilter<"Standing"> | number
   played?: Prisma.IntWithAggregatesFilter<"Standing"> | number
   won?: Prisma.IntWithAggregatesFilter<"Standing"> | number
@@ -423,6 +438,7 @@ export type StandingCreateInput = {
   lastSyncedAt: Date | string
   season: Prisma.SeasonCreateNestedOneWithoutStandingsInput
   team: Prisma.TeamCreateNestedOneWithoutStandingsInput
+  sourceTeam: Prisma.TeamCreateNestedOneWithoutSourcedStandingsInput
 }
 
 export type StandingUncheckedCreateInput = {
@@ -430,6 +446,7 @@ export type StandingUncheckedCreateInput = {
   seasonId: string
   competition: string
   teamId: string
+  sourceTeamId: string
   position: number
   played?: number
   won?: number
@@ -457,6 +474,7 @@ export type StandingUpdateInput = {
   lastSyncedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   season?: Prisma.SeasonUpdateOneRequiredWithoutStandingsNestedInput
   team?: Prisma.TeamUpdateOneRequiredWithoutStandingsNestedInput
+  sourceTeam?: Prisma.TeamUpdateOneRequiredWithoutSourcedStandingsNestedInput
 }
 
 export type StandingUncheckedUpdateInput = {
@@ -464,6 +482,7 @@ export type StandingUncheckedUpdateInput = {
   seasonId?: Prisma.StringFieldUpdateOperationsInput | string
   competition?: Prisma.StringFieldUpdateOperationsInput | string
   teamId?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceTeamId?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.IntFieldUpdateOperationsInput | number
   played?: Prisma.IntFieldUpdateOperationsInput | number
   won?: Prisma.IntFieldUpdateOperationsInput | number
@@ -481,6 +500,7 @@ export type StandingCreateManyInput = {
   seasonId: string
   competition: string
   teamId: string
+  sourceTeamId: string
   position: number
   played?: number
   won?: number
@@ -513,6 +533,7 @@ export type StandingUncheckedUpdateManyInput = {
   seasonId?: Prisma.StringFieldUpdateOperationsInput | string
   competition?: Prisma.StringFieldUpdateOperationsInput | string
   teamId?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceTeamId?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.IntFieldUpdateOperationsInput | number
   played?: Prisma.IntFieldUpdateOperationsInput | number
   won?: Prisma.IntFieldUpdateOperationsInput | number
@@ -535,9 +556,10 @@ export type StandingOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type StandingSeasonIdCompetitionTeamIdCompoundUniqueInput = {
+export type StandingSeasonIdCompetitionSourceTeamIdTeamIdCompoundUniqueInput = {
   seasonId: string
   competition: string
+  sourceTeamId: string
   teamId: string
 }
 
@@ -546,6 +568,7 @@ export type StandingCountOrderByAggregateInput = {
   seasonId?: Prisma.SortOrder
   competition?: Prisma.SortOrder
   teamId?: Prisma.SortOrder
+  sourceTeamId?: Prisma.SortOrder
   position?: Prisma.SortOrder
   played?: Prisma.SortOrder
   won?: Prisma.SortOrder
@@ -575,6 +598,7 @@ export type StandingMaxOrderByAggregateInput = {
   seasonId?: Prisma.SortOrder
   competition?: Prisma.SortOrder
   teamId?: Prisma.SortOrder
+  sourceTeamId?: Prisma.SortOrder
   position?: Prisma.SortOrder
   played?: Prisma.SortOrder
   won?: Prisma.SortOrder
@@ -592,6 +616,7 @@ export type StandingMinOrderByAggregateInput = {
   seasonId?: Prisma.SortOrder
   competition?: Prisma.SortOrder
   teamId?: Prisma.SortOrder
+  sourceTeamId?: Prisma.SortOrder
   position?: Prisma.SortOrder
   played?: Prisma.SortOrder
   won?: Prisma.SortOrder
@@ -623,10 +648,24 @@ export type StandingCreateNestedManyWithoutTeamInput = {
   connect?: Prisma.StandingWhereUniqueInput | Prisma.StandingWhereUniqueInput[]
 }
 
+export type StandingCreateNestedManyWithoutSourceTeamInput = {
+  create?: Prisma.XOR<Prisma.StandingCreateWithoutSourceTeamInput, Prisma.StandingUncheckedCreateWithoutSourceTeamInput> | Prisma.StandingCreateWithoutSourceTeamInput[] | Prisma.StandingUncheckedCreateWithoutSourceTeamInput[]
+  connectOrCreate?: Prisma.StandingCreateOrConnectWithoutSourceTeamInput | Prisma.StandingCreateOrConnectWithoutSourceTeamInput[]
+  createMany?: Prisma.StandingCreateManySourceTeamInputEnvelope
+  connect?: Prisma.StandingWhereUniqueInput | Prisma.StandingWhereUniqueInput[]
+}
+
 export type StandingUncheckedCreateNestedManyWithoutTeamInput = {
   create?: Prisma.XOR<Prisma.StandingCreateWithoutTeamInput, Prisma.StandingUncheckedCreateWithoutTeamInput> | Prisma.StandingCreateWithoutTeamInput[] | Prisma.StandingUncheckedCreateWithoutTeamInput[]
   connectOrCreate?: Prisma.StandingCreateOrConnectWithoutTeamInput | Prisma.StandingCreateOrConnectWithoutTeamInput[]
   createMany?: Prisma.StandingCreateManyTeamInputEnvelope
+  connect?: Prisma.StandingWhereUniqueInput | Prisma.StandingWhereUniqueInput[]
+}
+
+export type StandingUncheckedCreateNestedManyWithoutSourceTeamInput = {
+  create?: Prisma.XOR<Prisma.StandingCreateWithoutSourceTeamInput, Prisma.StandingUncheckedCreateWithoutSourceTeamInput> | Prisma.StandingCreateWithoutSourceTeamInput[] | Prisma.StandingUncheckedCreateWithoutSourceTeamInput[]
+  connectOrCreate?: Prisma.StandingCreateOrConnectWithoutSourceTeamInput | Prisma.StandingCreateOrConnectWithoutSourceTeamInput[]
+  createMany?: Prisma.StandingCreateManySourceTeamInputEnvelope
   connect?: Prisma.StandingWhereUniqueInput | Prisma.StandingWhereUniqueInput[]
 }
 
@@ -644,6 +683,20 @@ export type StandingUpdateManyWithoutTeamNestedInput = {
   deleteMany?: Prisma.StandingScalarWhereInput | Prisma.StandingScalarWhereInput[]
 }
 
+export type StandingUpdateManyWithoutSourceTeamNestedInput = {
+  create?: Prisma.XOR<Prisma.StandingCreateWithoutSourceTeamInput, Prisma.StandingUncheckedCreateWithoutSourceTeamInput> | Prisma.StandingCreateWithoutSourceTeamInput[] | Prisma.StandingUncheckedCreateWithoutSourceTeamInput[]
+  connectOrCreate?: Prisma.StandingCreateOrConnectWithoutSourceTeamInput | Prisma.StandingCreateOrConnectWithoutSourceTeamInput[]
+  upsert?: Prisma.StandingUpsertWithWhereUniqueWithoutSourceTeamInput | Prisma.StandingUpsertWithWhereUniqueWithoutSourceTeamInput[]
+  createMany?: Prisma.StandingCreateManySourceTeamInputEnvelope
+  set?: Prisma.StandingWhereUniqueInput | Prisma.StandingWhereUniqueInput[]
+  disconnect?: Prisma.StandingWhereUniqueInput | Prisma.StandingWhereUniqueInput[]
+  delete?: Prisma.StandingWhereUniqueInput | Prisma.StandingWhereUniqueInput[]
+  connect?: Prisma.StandingWhereUniqueInput | Prisma.StandingWhereUniqueInput[]
+  update?: Prisma.StandingUpdateWithWhereUniqueWithoutSourceTeamInput | Prisma.StandingUpdateWithWhereUniqueWithoutSourceTeamInput[]
+  updateMany?: Prisma.StandingUpdateManyWithWhereWithoutSourceTeamInput | Prisma.StandingUpdateManyWithWhereWithoutSourceTeamInput[]
+  deleteMany?: Prisma.StandingScalarWhereInput | Prisma.StandingScalarWhereInput[]
+}
+
 export type StandingUncheckedUpdateManyWithoutTeamNestedInput = {
   create?: Prisma.XOR<Prisma.StandingCreateWithoutTeamInput, Prisma.StandingUncheckedCreateWithoutTeamInput> | Prisma.StandingCreateWithoutTeamInput[] | Prisma.StandingUncheckedCreateWithoutTeamInput[]
   connectOrCreate?: Prisma.StandingCreateOrConnectWithoutTeamInput | Prisma.StandingCreateOrConnectWithoutTeamInput[]
@@ -655,6 +708,20 @@ export type StandingUncheckedUpdateManyWithoutTeamNestedInput = {
   connect?: Prisma.StandingWhereUniqueInput | Prisma.StandingWhereUniqueInput[]
   update?: Prisma.StandingUpdateWithWhereUniqueWithoutTeamInput | Prisma.StandingUpdateWithWhereUniqueWithoutTeamInput[]
   updateMany?: Prisma.StandingUpdateManyWithWhereWithoutTeamInput | Prisma.StandingUpdateManyWithWhereWithoutTeamInput[]
+  deleteMany?: Prisma.StandingScalarWhereInput | Prisma.StandingScalarWhereInput[]
+}
+
+export type StandingUncheckedUpdateManyWithoutSourceTeamNestedInput = {
+  create?: Prisma.XOR<Prisma.StandingCreateWithoutSourceTeamInput, Prisma.StandingUncheckedCreateWithoutSourceTeamInput> | Prisma.StandingCreateWithoutSourceTeamInput[] | Prisma.StandingUncheckedCreateWithoutSourceTeamInput[]
+  connectOrCreate?: Prisma.StandingCreateOrConnectWithoutSourceTeamInput | Prisma.StandingCreateOrConnectWithoutSourceTeamInput[]
+  upsert?: Prisma.StandingUpsertWithWhereUniqueWithoutSourceTeamInput | Prisma.StandingUpsertWithWhereUniqueWithoutSourceTeamInput[]
+  createMany?: Prisma.StandingCreateManySourceTeamInputEnvelope
+  set?: Prisma.StandingWhereUniqueInput | Prisma.StandingWhereUniqueInput[]
+  disconnect?: Prisma.StandingWhereUniqueInput | Prisma.StandingWhereUniqueInput[]
+  delete?: Prisma.StandingWhereUniqueInput | Prisma.StandingWhereUniqueInput[]
+  connect?: Prisma.StandingWhereUniqueInput | Prisma.StandingWhereUniqueInput[]
+  update?: Prisma.StandingUpdateWithWhereUniqueWithoutSourceTeamInput | Prisma.StandingUpdateWithWhereUniqueWithoutSourceTeamInput[]
+  updateMany?: Prisma.StandingUpdateManyWithWhereWithoutSourceTeamInput | Prisma.StandingUpdateManyWithWhereWithoutSourceTeamInput[]
   deleteMany?: Prisma.StandingScalarWhereInput | Prisma.StandingScalarWhereInput[]
 }
 
@@ -722,12 +789,14 @@ export type StandingCreateWithoutTeamInput = {
   points?: number
   lastSyncedAt: Date | string
   season: Prisma.SeasonCreateNestedOneWithoutStandingsInput
+  sourceTeam: Prisma.TeamCreateNestedOneWithoutSourcedStandingsInput
 }
 
 export type StandingUncheckedCreateWithoutTeamInput = {
   id?: string
   seasonId: string
   competition: string
+  sourceTeamId: string
   position: number
   played?: number
   won?: number
@@ -747,6 +816,50 @@ export type StandingCreateOrConnectWithoutTeamInput = {
 
 export type StandingCreateManyTeamInputEnvelope = {
   data: Prisma.StandingCreateManyTeamInput | Prisma.StandingCreateManyTeamInput[]
+  skipDuplicates?: boolean
+}
+
+export type StandingCreateWithoutSourceTeamInput = {
+  id?: string
+  competition: string
+  position: number
+  played?: number
+  won?: number
+  drawn?: number
+  lost?: number
+  goalsFor?: number
+  goalsAgainst?: number
+  goalDifference?: number
+  points?: number
+  lastSyncedAt: Date | string
+  season: Prisma.SeasonCreateNestedOneWithoutStandingsInput
+  team: Prisma.TeamCreateNestedOneWithoutStandingsInput
+}
+
+export type StandingUncheckedCreateWithoutSourceTeamInput = {
+  id?: string
+  seasonId: string
+  competition: string
+  teamId: string
+  position: number
+  played?: number
+  won?: number
+  drawn?: number
+  lost?: number
+  goalsFor?: number
+  goalsAgainst?: number
+  goalDifference?: number
+  points?: number
+  lastSyncedAt: Date | string
+}
+
+export type StandingCreateOrConnectWithoutSourceTeamInput = {
+  where: Prisma.StandingWhereUniqueInput
+  create: Prisma.XOR<Prisma.StandingCreateWithoutSourceTeamInput, Prisma.StandingUncheckedCreateWithoutSourceTeamInput>
+}
+
+export type StandingCreateManySourceTeamInputEnvelope = {
+  data: Prisma.StandingCreateManySourceTeamInput | Prisma.StandingCreateManySourceTeamInput[]
   skipDuplicates?: boolean
 }
 
@@ -774,6 +887,7 @@ export type StandingScalarWhereInput = {
   seasonId?: Prisma.StringFilter<"Standing"> | string
   competition?: Prisma.StringFilter<"Standing"> | string
   teamId?: Prisma.StringFilter<"Standing"> | string
+  sourceTeamId?: Prisma.StringFilter<"Standing"> | string
   position?: Prisma.IntFilter<"Standing"> | number
   played?: Prisma.IntFilter<"Standing"> | number
   won?: Prisma.IntFilter<"Standing"> | number
@@ -784,6 +898,22 @@ export type StandingScalarWhereInput = {
   goalDifference?: Prisma.IntFilter<"Standing"> | number
   points?: Prisma.IntFilter<"Standing"> | number
   lastSyncedAt?: Prisma.DateTimeFilter<"Standing"> | Date | string
+}
+
+export type StandingUpsertWithWhereUniqueWithoutSourceTeamInput = {
+  where: Prisma.StandingWhereUniqueInput
+  update: Prisma.XOR<Prisma.StandingUpdateWithoutSourceTeamInput, Prisma.StandingUncheckedUpdateWithoutSourceTeamInput>
+  create: Prisma.XOR<Prisma.StandingCreateWithoutSourceTeamInput, Prisma.StandingUncheckedCreateWithoutSourceTeamInput>
+}
+
+export type StandingUpdateWithWhereUniqueWithoutSourceTeamInput = {
+  where: Prisma.StandingWhereUniqueInput
+  data: Prisma.XOR<Prisma.StandingUpdateWithoutSourceTeamInput, Prisma.StandingUncheckedUpdateWithoutSourceTeamInput>
+}
+
+export type StandingUpdateManyWithWhereWithoutSourceTeamInput = {
+  where: Prisma.StandingScalarWhereInput
+  data: Prisma.XOR<Prisma.StandingUpdateManyMutationInput, Prisma.StandingUncheckedUpdateManyWithoutSourceTeamInput>
 }
 
 export type StandingCreateWithoutSeasonInput = {
@@ -800,12 +930,14 @@ export type StandingCreateWithoutSeasonInput = {
   points?: number
   lastSyncedAt: Date | string
   team: Prisma.TeamCreateNestedOneWithoutStandingsInput
+  sourceTeam: Prisma.TeamCreateNestedOneWithoutSourcedStandingsInput
 }
 
 export type StandingUncheckedCreateWithoutSeasonInput = {
   id?: string
   competition: string
   teamId: string
+  sourceTeamId: string
   position: number
   played?: number
   won?: number
@@ -848,6 +980,24 @@ export type StandingCreateManyTeamInput = {
   id?: string
   seasonId: string
   competition: string
+  sourceTeamId: string
+  position: number
+  played?: number
+  won?: number
+  drawn?: number
+  lost?: number
+  goalsFor?: number
+  goalsAgainst?: number
+  goalDifference?: number
+  points?: number
+  lastSyncedAt: Date | string
+}
+
+export type StandingCreateManySourceTeamInput = {
+  id?: string
+  seasonId: string
+  competition: string
+  teamId: string
   position: number
   played?: number
   won?: number
@@ -874,12 +1024,14 @@ export type StandingUpdateWithoutTeamInput = {
   points?: Prisma.IntFieldUpdateOperationsInput | number
   lastSyncedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   season?: Prisma.SeasonUpdateOneRequiredWithoutStandingsNestedInput
+  sourceTeam?: Prisma.TeamUpdateOneRequiredWithoutSourcedStandingsNestedInput
 }
 
 export type StandingUncheckedUpdateWithoutTeamInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   seasonId?: Prisma.StringFieldUpdateOperationsInput | string
   competition?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceTeamId?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.IntFieldUpdateOperationsInput | number
   played?: Prisma.IntFieldUpdateOperationsInput | number
   won?: Prisma.IntFieldUpdateOperationsInput | number
@@ -896,6 +1048,58 @@ export type StandingUncheckedUpdateManyWithoutTeamInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   seasonId?: Prisma.StringFieldUpdateOperationsInput | string
   competition?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceTeamId?: Prisma.StringFieldUpdateOperationsInput | string
+  position?: Prisma.IntFieldUpdateOperationsInput | number
+  played?: Prisma.IntFieldUpdateOperationsInput | number
+  won?: Prisma.IntFieldUpdateOperationsInput | number
+  drawn?: Prisma.IntFieldUpdateOperationsInput | number
+  lost?: Prisma.IntFieldUpdateOperationsInput | number
+  goalsFor?: Prisma.IntFieldUpdateOperationsInput | number
+  goalsAgainst?: Prisma.IntFieldUpdateOperationsInput | number
+  goalDifference?: Prisma.IntFieldUpdateOperationsInput | number
+  points?: Prisma.IntFieldUpdateOperationsInput | number
+  lastSyncedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type StandingUpdateWithoutSourceTeamInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  competition?: Prisma.StringFieldUpdateOperationsInput | string
+  position?: Prisma.IntFieldUpdateOperationsInput | number
+  played?: Prisma.IntFieldUpdateOperationsInput | number
+  won?: Prisma.IntFieldUpdateOperationsInput | number
+  drawn?: Prisma.IntFieldUpdateOperationsInput | number
+  lost?: Prisma.IntFieldUpdateOperationsInput | number
+  goalsFor?: Prisma.IntFieldUpdateOperationsInput | number
+  goalsAgainst?: Prisma.IntFieldUpdateOperationsInput | number
+  goalDifference?: Prisma.IntFieldUpdateOperationsInput | number
+  points?: Prisma.IntFieldUpdateOperationsInput | number
+  lastSyncedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  season?: Prisma.SeasonUpdateOneRequiredWithoutStandingsNestedInput
+  team?: Prisma.TeamUpdateOneRequiredWithoutStandingsNestedInput
+}
+
+export type StandingUncheckedUpdateWithoutSourceTeamInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  seasonId?: Prisma.StringFieldUpdateOperationsInput | string
+  competition?: Prisma.StringFieldUpdateOperationsInput | string
+  teamId?: Prisma.StringFieldUpdateOperationsInput | string
+  position?: Prisma.IntFieldUpdateOperationsInput | number
+  played?: Prisma.IntFieldUpdateOperationsInput | number
+  won?: Prisma.IntFieldUpdateOperationsInput | number
+  drawn?: Prisma.IntFieldUpdateOperationsInput | number
+  lost?: Prisma.IntFieldUpdateOperationsInput | number
+  goalsFor?: Prisma.IntFieldUpdateOperationsInput | number
+  goalsAgainst?: Prisma.IntFieldUpdateOperationsInput | number
+  goalDifference?: Prisma.IntFieldUpdateOperationsInput | number
+  points?: Prisma.IntFieldUpdateOperationsInput | number
+  lastSyncedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type StandingUncheckedUpdateManyWithoutSourceTeamInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  seasonId?: Prisma.StringFieldUpdateOperationsInput | string
+  competition?: Prisma.StringFieldUpdateOperationsInput | string
+  teamId?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.IntFieldUpdateOperationsInput | number
   played?: Prisma.IntFieldUpdateOperationsInput | number
   won?: Prisma.IntFieldUpdateOperationsInput | number
@@ -912,6 +1116,7 @@ export type StandingCreateManySeasonInput = {
   id?: string
   competition: string
   teamId: string
+  sourceTeamId: string
   position: number
   played?: number
   won?: number
@@ -938,12 +1143,14 @@ export type StandingUpdateWithoutSeasonInput = {
   points?: Prisma.IntFieldUpdateOperationsInput | number
   lastSyncedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   team?: Prisma.TeamUpdateOneRequiredWithoutStandingsNestedInput
+  sourceTeam?: Prisma.TeamUpdateOneRequiredWithoutSourcedStandingsNestedInput
 }
 
 export type StandingUncheckedUpdateWithoutSeasonInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   competition?: Prisma.StringFieldUpdateOperationsInput | string
   teamId?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceTeamId?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.IntFieldUpdateOperationsInput | number
   played?: Prisma.IntFieldUpdateOperationsInput | number
   won?: Prisma.IntFieldUpdateOperationsInput | number
@@ -960,6 +1167,7 @@ export type StandingUncheckedUpdateManyWithoutSeasonInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   competition?: Prisma.StringFieldUpdateOperationsInput | string
   teamId?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceTeamId?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.IntFieldUpdateOperationsInput | number
   played?: Prisma.IntFieldUpdateOperationsInput | number
   won?: Prisma.IntFieldUpdateOperationsInput | number
@@ -979,6 +1187,7 @@ export type StandingSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   seasonId?: boolean
   competition?: boolean
   teamId?: boolean
+  sourceTeamId?: boolean
   position?: boolean
   played?: boolean
   won?: boolean
@@ -991,6 +1200,7 @@ export type StandingSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   lastSyncedAt?: boolean
   season?: boolean | Prisma.SeasonDefaultArgs<ExtArgs>
   team?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
+  sourceTeam?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["standing"]>
 
 export type StandingSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -998,6 +1208,7 @@ export type StandingSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   seasonId?: boolean
   competition?: boolean
   teamId?: boolean
+  sourceTeamId?: boolean
   position?: boolean
   played?: boolean
   won?: boolean
@@ -1010,6 +1221,7 @@ export type StandingSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   lastSyncedAt?: boolean
   season?: boolean | Prisma.SeasonDefaultArgs<ExtArgs>
   team?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
+  sourceTeam?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["standing"]>
 
 export type StandingSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1017,6 +1229,7 @@ export type StandingSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   seasonId?: boolean
   competition?: boolean
   teamId?: boolean
+  sourceTeamId?: boolean
   position?: boolean
   played?: boolean
   won?: boolean
@@ -1029,6 +1242,7 @@ export type StandingSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   lastSyncedAt?: boolean
   season?: boolean | Prisma.SeasonDefaultArgs<ExtArgs>
   team?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
+  sourceTeam?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["standing"]>
 
 export type StandingSelectScalar = {
@@ -1036,6 +1250,7 @@ export type StandingSelectScalar = {
   seasonId?: boolean
   competition?: boolean
   teamId?: boolean
+  sourceTeamId?: boolean
   position?: boolean
   played?: boolean
   won?: boolean
@@ -1048,18 +1263,21 @@ export type StandingSelectScalar = {
   lastSyncedAt?: boolean
 }
 
-export type StandingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "seasonId" | "competition" | "teamId" | "position" | "played" | "won" | "drawn" | "lost" | "goalsFor" | "goalsAgainst" | "goalDifference" | "points" | "lastSyncedAt", ExtArgs["result"]["standing"]>
+export type StandingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "seasonId" | "competition" | "teamId" | "sourceTeamId" | "position" | "played" | "won" | "drawn" | "lost" | "goalsFor" | "goalsAgainst" | "goalDifference" | "points" | "lastSyncedAt", ExtArgs["result"]["standing"]>
 export type StandingInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   season?: boolean | Prisma.SeasonDefaultArgs<ExtArgs>
   team?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
+  sourceTeam?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
 }
 export type StandingIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   season?: boolean | Prisma.SeasonDefaultArgs<ExtArgs>
   team?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
+  sourceTeam?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
 }
 export type StandingIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   season?: boolean | Prisma.SeasonDefaultArgs<ExtArgs>
   team?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
+  sourceTeam?: boolean | Prisma.TeamDefaultArgs<ExtArgs>
 }
 
 export type $StandingPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1067,12 +1285,14 @@ export type $StandingPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   objects: {
     season: Prisma.$SeasonPayload<ExtArgs>
     team: Prisma.$TeamPayload<ExtArgs>
+    sourceTeam: Prisma.$TeamPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     seasonId: string
     competition: string
     teamId: string
+    sourceTeamId: string
     position: number
     played: number
     won: number
@@ -1479,6 +1699,7 @@ export interface Prisma__StandingClient<T, Null = never, ExtArgs extends runtime
   readonly [Symbol.toStringTag]: "PrismaPromise"
   season<T extends Prisma.SeasonDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SeasonDefaultArgs<ExtArgs>>): Prisma.Prisma__SeasonClient<runtime.Types.Result.GetResult<Prisma.$SeasonPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   team<T extends Prisma.TeamDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TeamDefaultArgs<ExtArgs>>): Prisma.Prisma__TeamClient<runtime.Types.Result.GetResult<Prisma.$TeamPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  sourceTeam<T extends Prisma.TeamDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TeamDefaultArgs<ExtArgs>>): Prisma.Prisma__TeamClient<runtime.Types.Result.GetResult<Prisma.$TeamPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1512,6 +1733,7 @@ export interface StandingFieldRefs {
   readonly seasonId: Prisma.FieldRef<"Standing", 'String'>
   readonly competition: Prisma.FieldRef<"Standing", 'String'>
   readonly teamId: Prisma.FieldRef<"Standing", 'String'>
+  readonly sourceTeamId: Prisma.FieldRef<"Standing", 'String'>
   readonly position: Prisma.FieldRef<"Standing", 'Int'>
   readonly played: Prisma.FieldRef<"Standing", 'Int'>
   readonly won: Prisma.FieldRef<"Standing", 'Int'>

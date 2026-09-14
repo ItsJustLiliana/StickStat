@@ -67,7 +67,7 @@ export async function syncTeam(teamId: string) {
       const seasonData = seasonFor(new Date());
       const season = await db.season.upsert({ where: { name: seasonData.name }, update: {}, create: seasonData });
       const standingTeam = [team.name, team.shortName].some(name => row.team.toLowerCase().includes(name.toLowerCase())) ? team : await opponentTeam(row.team);
-      await db.standing.upsert({ where: { seasonId_competition_teamId: { seasonId: season.id, competition: row.competition, teamId: standingTeam.id } }, update: { ...row, team: undefined, lastSyncedAt: new Date() }, create: { seasonId: season.id, competition: row.competition, teamId: standingTeam.id, position: row.position, played: row.played, won: row.won, drawn: row.drawn, lost: row.lost, goalsFor: row.goalsFor, goalsAgainst: row.goalsAgainst, goalDifference: row.goalDifference, points: row.points, lastSyncedAt: new Date() } });
+      await db.standing.upsert({ where: { seasonId_competition_sourceTeamId_teamId: { seasonId: season.id, competition: row.competition, sourceTeamId: team.id, teamId: standingTeam.id } }, update: { ...row, team: undefined, sourceTeamId: undefined, lastSyncedAt: new Date() }, create: { seasonId: season.id, competition: row.competition, sourceTeamId: team.id, teamId: standingTeam.id, position: row.position, played: row.played, won: row.won, drawn: row.drawn, lost: row.lost, goalsFor: row.goalsFor, goalsAgainst: row.goalsAgainst, goalDifference: row.goalDifference, points: row.points, lastSyncedAt: new Date() } });
     }
     await db.syncRun.update({ where: { id: run.id }, data: { status: "success", completedAt: new Date(), newMatches: created, updatedMatches: updated } });
     logger.info("Sync voltooid", { teamId, created, updated });

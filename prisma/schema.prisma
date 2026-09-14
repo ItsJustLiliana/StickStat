@@ -149,6 +149,7 @@ model Team {
   homeMatches Match[] @relation("HomeTeam")
   awayMatches Match[] @relation("AwayTeam")
   standings Standing[]
+  sourcedStandings Standing[] @relation("StandingSource")
   players Player[]
   syncRuns SyncRun[]
   invites TeamInvite[]
@@ -233,6 +234,8 @@ model Standing {
   competition String
   teamId String
   team Team @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  sourceTeamId String
+  sourceTeam Team @relation("StandingSource", fields: [sourceTeamId], references: [id], onDelete: Cascade)
   position Int
   played Int @default(0)
   won Int @default(0)
@@ -243,7 +246,8 @@ model Standing {
   goalDifference Int @default(0)
   points Int @default(0)
   lastSyncedAt DateTime
-  @@unique([seasonId, competition, teamId])
+  @@unique([seasonId, competition, sourceTeamId, teamId])
+  @@index([sourceTeamId, seasonId, competition])
 }
 
 model Player {

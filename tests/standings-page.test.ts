@@ -23,15 +23,15 @@ describe("standpagina",()=>{
   });
   it("kiest het eigen team boven een alfabetisch eerder favoriet",async()=>{
     await Standings({searchParams:Promise.resolve({})});
-    expect(db.standing.findFirst).toHaveBeenCalledWith(expect.objectContaining({where:{teamId:"rapide"}}));
+    expect(db.standing.findFirst).toHaveBeenCalledWith(expect.objectContaining({where:{teamId:"rapide",sourceTeamId:"rapide"}}));
   });
   it("haalt eigen scores ook zonder stand op",async()=>{
     await Standings({searchParams:Promise.resolve({})});
-    expect(db.match.findMany).toHaveBeenCalledWith(expect.objectContaining({where:{seasonId:undefined,status:"finished",OR:[{homeTeamId:{in:["rapide"]}},{awayTeamId:{in:["rapide"]}}]}}));
+    expect(db.match.findMany).toHaveBeenCalledWith(expect.objectContaining({where:{seasonId:undefined,status:"finished",OR:[{homeTeamId:"rapide"},{awayTeamId:"rapide"}]}}));
   });
   it("respecteert een rechtstreeks geopende teampagina",async()=>{
     db.team.findUnique.mockResolvedValue({id:"other"});
     await Standings({searchParams:Promise.resolve({team:"other"})});
-    expect(db.standing.findFirst).toHaveBeenCalledWith(expect.objectContaining({where:{teamId:"other"}}));
+    expect(db.standing.findFirst).toHaveBeenCalledWith(expect.objectContaining({where:{teamId:"other",sourceTeamId:"other"}}));
   });
 });

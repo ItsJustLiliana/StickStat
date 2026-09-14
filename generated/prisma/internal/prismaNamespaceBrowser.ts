@@ -219,6 +219,7 @@ export const StandingScalarFieldEnum = {
   seasonId: 'seasonId',
   competition: 'competition',
   teamId: 'teamId',
+  sourceTeamId: 'sourceTeamId',
   position: 'position',
   played: 'played',
   won: 'won',
