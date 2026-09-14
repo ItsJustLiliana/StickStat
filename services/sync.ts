@@ -30,16 +30,19 @@ async function saveMatch(team: { id: string; name: string; shortName: string }, 
   const dayStart = new Date(Date.UTC(external.date.getUTCFullYear(), external.date.getUTCMonth(), external.date.getUTCDate()));
   const dayEnd = new Date(dayStart.getTime() + 86_400_000);
   // Natural-match fallback: date:{gte:dayStart,lt:dayEnd}
-  const where = { OR: [{ externalProvider: provider, externalId: external.externalId }, { seasonId: season.id, homeTeamId: home.id, awayTeamId: away.id, date: { gte: dayStart, lt: dayEnd } }] };
+  const externalMatch = { externalProvider: provider, externalId: external.externalId };
+  const naturalMatch = { seasonId: season.id, homeTeamId: home.id, awayTeamId: away.id, date: { gte: dayStart, lt: dayEnd } };
   const data = { externalProvider: provider, externalId: external.externalId, seasonId: season.id, competition: external.competition, homeTeamId: home.id, awayTeamId: away.id, date: external.date, startTime: external.startTime, venue: external.venue, status: external.status, homeScore: external.homeScore, awayScore: external.awayScore, lastSyncedAt: new Date() };
-  const existing = await db.match.findFirst({ where, orderBy: { createdAt: "asc" } });
+  // The provider ID is authoritative. Prefer it over a same-day fallback so a
+  // legacy duplicate cannot be assigned an ID that already belongs elsewhere.
+  const existing = await db.match.findFirst({ where: externalMatch }) ?? await db.match.findFirst({ where: naturalMatch, orderBy: { createdAt: "asc" } });
   if (existing) { await db.match.update({ where: { id: existing.id }, data: { ...data, date: existing.date } }); return "updated" as const; }
   try {
     await db.match.create({ data });
     return "created" as const;
   } catch (error) {
     if (!(error instanceof Prisma.PrismaClientKnownRequestError) || error.code !== "P2002") throw error;
-    const concurrent = await db.match.findFirst({ where, orderBy: { createdAt: "asc" } });
+    const concurrent = await db.match.findFirst({ where: externalMatch }) ?? await db.match.findFirst({ where: naturalMatch, orderBy: { createdAt: "asc" } });
     if (!concurrent) throw error;
     await db.match.update({ where: { id: concurrent.id }, data: { ...data, date: concurrent.date } });
     return "updated" as const;
