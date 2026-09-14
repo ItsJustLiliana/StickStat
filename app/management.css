@@ -70,3 +70,4 @@ html[data-theme="dark"] .recharts-default-tooltip{background-color:var(--card)!i
 html[data-theme="dark"] .statistics-table tbody tr:hover{background:#1d332a}
 html[data-theme="dark"] .record-card{background:linear-gradient(135deg,var(--card),#192d24)}
 html[data-theme="dark"] .contribution-total{background:#20372d}
+.club-logo-preview:not(.placeholder){border-radius:0}

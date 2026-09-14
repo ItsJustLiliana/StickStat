@@ -106,7 +106,7 @@
     padding: 0;
 }
 
-.club-logo-preview:not(.placeholder) { background: transparent; border: 0; }
+.club-logo-preview:not(.placeholder) { background: transparent; border: 0; border-radius: 0; }
 .club-logo-dialog { width: min(100%, 680px); }
 .club-logo-list { display: grid; gap: 8px; }
 .club-logo-list-item { display: grid; grid-template-columns: 60px minmax(0, 1fr) auto; align-items: center; gap: 12px; padding: 10px; border: 1px solid var(--line); border-radius: 12px; }

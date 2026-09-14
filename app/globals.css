@@ -317,6 +317,7 @@ h2 {
 }
 
 img.logo { background: transparent; box-shadow: none; }
+img.logo.logo-uploaded { border-radius: 0; }
 
 .hero .logo {
     width: 76px;
